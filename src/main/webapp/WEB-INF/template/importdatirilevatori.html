@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+	<link href="css/plugins/dropzone/basic.css" rel="stylesheet">
+    <link href="css/plugins/dropzone/dropzone.css" rel="stylesheet">
+    
+   <script type="text/javascript">
+	
+		function inviaScarico(){
+	        $("#scaricoACS26").submit();
+		}
+		
+		var nomeFileArray = [<#list NOME_FILE_ARRAY as nomeFile> "${nomeFile}"<#if nomeFile_has_next>,</#if></#list> ];
+	
+		$(function(){
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			
+			$("#ID_CONDOMINIO").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 ",false]);
+			
+			$( "#scarica" ).click(function() {
+				$("#scaricoACS26").submit();
+        	});
+			
+			$( "#scarica_tutti" ).click(function() {
+				$("#scaricoACS26").submit();
+        	});
+			
+			
+			
+			$("#Inserimento").validate();
+			
+			$("#Inserimento").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();			
+				
+				
+				if (id!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+				} else {
+					$("#OPERATION_TYPE").val("INSERT");
+				}
+				
+				
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					var result = eval('('+response+')');
+					if (result.result) {
+						$("#ID_MODULO").val(result.id);
+						$( ".alert-success" ).text( result.message ).fadeIn( "slow").delay( 1500 ).fadeOut("slow" );
+					} else {
+						$( ".alert-danger" ).text( result.message ).fadeIn( "slow").delay( 1500 ).fadeOut("slow" );
+					}
+				});
+
+			});			
+		});		
+		
+		
+    </script> 
+    
+</head>
+
+<body>
+
+     <div id="wrapper">
+
+    	<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+        <div id="page-wrapper" class="gray-bg">
+		
+        	<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+        	
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+            	
+            		<div class="col-lg-12">
+
+	                	<div class="ibox float-e-margins">
+	                    
+		            	<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+			            <div class="ibox-content">
+			            							
+					
+           						
+									
+									
+									<div class="tabs-container">
+				                        <ul class="nav nav-tabs">
+				                            <li class="active"><a data-toggle="tab" href="#tab-1">Scarico con file locale</a></li>
+				                            <li class=""><a data-toggle="tab" href="#tab-2">Scarico da remoto</a></li>
+				                        </ul>
+				                        <div class="tab-content">
+				                            <div id="tab-1" class="tab-pane active">
+				                                <div class="panel-body">
+													<div class="row">
+									                	<div class="col-lg-12">
+										                	<div class="ibox float-e-margins">
+												                <div class="ibox-content">
+												                    <form id="my-awesome-dropzone" class="dropzone" name="filesForm" method="post" action="astro?FUNCTIONID=FileUploadDatiRilevatori" enctype="multipart/form-data">
+												                        <div class="dropzone-previews"></div>
+												                        <#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+												                        	<button type="submit" class="btn btn-primary pull-right">Carica</button>
+												                        </#if>
+												                    </form>
+												                    <div>
+												                        <div class="m text-right">Selezionare il file BIL o XML contenente lo scarico dati rilevatori da caricare</div>
+												                    </div>
+												                   <div id="progressBar" class="text-center" style="display: none;">
+																	  <p class="text-success" style="font-weight: bold;color:black">Importazione dati in corso... L'operazione potrebbe richiedere qualche minuto.</p>
+																	  <div class="progress" style="height: 25px;">
+																	   		<div class="progress-bar progress-bar progress-bar-striped active" 
+																			     role="progressbar"
+																			     aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"
+																			     style="width: 100%;">
+																			</div>
+																	  </div>
+																	</div>
+																	
+												                </div>
+									           				</div>
+											            </div>
+										            </div>
+				                                </div>
+				                            </div>
+				                            <div id="tab-2" class="tab-pane">
+				                                <div class="panel-body">
+				                                    <form action="astro" method="post" id="scaricoACS26" name="scaricoACS26" class="form-horizontal">
+			            								<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="ScaricoDatiManuale" />
+														<div class="row">
+															<div class="form-group"><label class="col-sm-2 control-label">Condominio</label>
+							                                    <div class="col-sm-4">
+																	<select id="ID_CONDOMINIO" name="ID_CONDOMINIO" class="form-control">
+																	</select>
+							                                    </div>
+							                                </div>
+						                                </div>
+						                                
+														<button class="btn btn-primary btn-sm" type="button" id="scarica" name="scarica">Scarica</button>
+														<button class="btn btn-primary btn-sm" type="button" id="scarica_tutti" name="scarica_tutti">Scarica tutti i condomini</button>
+													</form>
+				                                </div>
+				                            </div>
+				                        </div>
+			                        </div>
+                        
+                        
+									
+											
+				                   
+	                       			
+		                </div>   <!-- chiude box content -->
+            		</div>       <!-- chiude ibox float-e-margins -->     
+	            </div>	<!-- col-lg-12 -->
+            </div>	<!-- chiude row -->
+            
+            
+        
+        
+        
+        	<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+        	
+        </div>
+	</div>
+	
+	    <!-- DROPZONE -->
+    <script src="js/plugins/dropzone/dropzone.js"></script>
+
+
+    <script>
+    
+	    function progress(timeleft, timetotal, $element) {
+	        var progressBarWidth = timeleft * $element.width() / timetotal;
+	        $element.find('div').animate({ width: progressBarWidth }, 500).html("Caricamento in corso - tempo rimanente: "+Math.floor(timeleft/60) + "min "+ timeleft%60+ "sec");
+	        if(timeleft > 0) {
+	            setTimeout(function() {
+	                progress(timeleft - 1, timetotal, $element);
+	            }, 1000);
+	        }
+	    };
+	
+	   
+    
+    
+    
+    
+        $(document).ready(function(){
+        	
+        	
+
+            Dropzone.options.myAwesomeDropzone = {
+
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                parallelUploads: 100,
+                maxFiles:1,
+                
+
+                // Dropzone settings
+                init: function() {
+                    var myDropzone = this;
+					this.hiddenFileInput.removeAttribute('multiple');
+                    this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
+                    	
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        
+                        if (myDropzone.files.length === 0) {
+    		                Swal.fire({
+    		                    title: 'Nessun file selezionato!',
+    		                    text: 'Seleziona un file BIL o XML o CSV prima di procedere.',
+    		                    icon: 'warning',
+    		                    confirmButtonText: 'OK',
+    		                    confirmButtonColor: '#1ab394', // arancione warning
+    		                    reverseButtons: true,
+    		                    allowOutsideClick: false,
+    		                    allowEscapeKey: false,
+    		                    customClass: {
+    		                        popup: 'swal-wide'
+    		                    }
+    		                });
+    		                return;
+    		            }
+    		            
+    		            const allowedExtensions = ['csv', 'xml', 'bil'];
+						const file = myDropzone.files[0];
+						const ext = file.name.split('.').pop().toLowerCase();
+						
+						if (nomeFileArray.includes(file.name.toLowerCase())) {
+							Swal.fire({
+    		                    title: 'File già caricato!',
+    		                    html: 'Il file <b>'+file.name.toLowerCase()+'</b> è già stato caricato in precedenza',
+    		                    icon: 'warning',
+    		                    confirmButtonText: 'OK',
+    		                    confirmButtonColor: '#1ab394', // arancione warning
+    		                    reverseButtons: true,
+    		                    allowOutsideClick: false,
+    		                    allowEscapeKey: false,
+    		                    customClass: {
+    		                        popup: 'swal-wide'
+    		                    }
+    		                });
+						    return;
+						    
+						} else {
+						    //alert("File nuovo, procedo con l'upload.");
+						}
+						
+						
+						if (!allowedExtensions.includes(ext)) {
+						 	Swal.fire({
+    		                    title: 'Formato non valido!',
+    		                    text: 'Sono ammessi solo file con estensione CSV, XML o BIL',
+    		                    icon: 'warning',
+    		                    confirmButtonText: 'OK',
+    		                    confirmButtonColor: '#1ab394', // arancione warning
+    		                    reverseButtons: true,
+    		                    allowOutsideClick: false,
+    		                    allowEscapeKey: false,
+    		                    customClass: {
+    		                        popup: 'swal-wide'
+    		                    }
+    		                });
+						    return;
+						}
+						
+						
+				      	
+						
+
+					    $("#progressBar").show();
+					    
+					    
+					    // Simula avanzamento 1% al secondo fino al 100% (dovrebbe essere 1024 ma 750 per impiegare poco più tempo)
+					    const fileSizeKB = file.size / 750;
+					    const estimatedSeconds = Math.ceil(fileSizeKB);
+					    let elapsed = 0;
+					    const bar = document.querySelector(".progress-bar");
+					    
+					    
+					    const interval = setInterval(function () {
+					        elapsed++;
+					        let percent = Math.min(100, Math.round((elapsed / estimatedSeconds) * 100));
+					        let remaining = Math.max(0, estimatedSeconds - elapsed);
+
+					        bar.style.width = percent + "%";
+					        bar.textContent = percent + "% - Mancano " + remaining + " secondi";
+
+					        if (elapsed >= estimatedSeconds) {
+					            clearInterval(interval);
+
+					            // Mostra Swal e poi redirect al clic
+					            Swal.fire({
+					                title: 'Caricamento completato!',
+					                text: 'Il file è stato caricato correttamente.',
+					                icon: 'success',
+					                confirmButtonText: 'OK',
+					                confirmButtonColor: '#1ab394', // arancione warning
+					                allowOutsideClick: false,
+					                timerProgressBar: false,
+					                allowEscapeKey: false,
+					                customClass: {
+					                    popup: 'swal-wide'
+					                }
+					            }).then(function () {
+					                location.href = "astro?FUNCTIONID=RiepilogoDatiRilevatori";
+					            });
+					        }
+					    }, 1000);
+
+					    myDropzone.processQueue();
+
+					    this.on("queuecomplete", function () {
+        		            $("#progressBar").hide();
+        		            Swal.fire({
+        		                title: 'Caricamento completato!',
+        		                text: 'Il file è stato caricato correttamente.',
+        		                icon: 'success',
+        		                showConfirmButton: false,
+        		                timer: 3000,
+        		                timerProgressBar: false,
+        		                allowOutsideClick: false,
+        		                allowEscapeKey: false,
+        		                customClass: {
+        		                    popup: 'swal-wide'
+        		                }
+        		            });
+        		        });
+					    
+					   
+                    });
+                    this.on("sendingmultiple", function() {
+                    	
+                    });
+                    this.on("successmultiple", function(files, response) {
+	                    window.location.href = "astro?FUNCTIONID=RiepilogoDatiRilevatori";
+                    });
+                    this.on("errormultiple", function(files, response) {
+                    	
+                    });
+                }
+
+            }
+
+       });
+    </script>
+
+
+</body>
+
+</html>

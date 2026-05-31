@@ -1,0 +1,35 @@
+UPDATE UTENZE SET MILLESIMI=0 WHERE MILLESIMI=''
+UPDATE UTENZE SET MILLESIMI_CLIMA=0 WHERE MILLESIMI_CLIMA IS NULL
+UPDATE UTENZE SET MILLESIMI_ACS=0 WHERE MILLESIMI_ACS IS NULL
+
+
+
+  SELECT 
+  ROW_NUMBER() over (order by stabile,denominazione) as id_modulo, 
+  1 as id_azienda, 
+  coalesce((select id_modulo from export1 where export1.id_condominio=stabile),0) as id_condominio,  
+  denominazione, 
+  locatario, 
+       scala, 
+	   piano, 
+	   interno, 
+	   n_telefono, 
+	   millesimi, 
+	   millesimi_clima, 
+       millesimi_acs, 
+	   ROW_NUMBER() over (order by stabile,denominazione)  as nr_modulo, 
+	   '2018/09/06' as dt_modulo, 
+	   'DRA' as stato, 
+	   '' as lista_allegati, 
+	   '' as id_modulo_parent, 
+       '' as tabella_parent, 
+	   '2018-09-26 16:00:51.671' as	ts_ins, 
+	   1 as id_utente_ins, 
+	   '' as ts_mod, 
+	   '' as id_utente_mod
+  FROM utenze;
+
+  
+  
+-- sostituire le , nei numeri con il .
+-- replace di ;,00 con ;0.00 e anche gli altri con una replace generale delle , con i . (non fa danni)

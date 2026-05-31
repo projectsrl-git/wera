@@ -1,0 +1,1 @@
+﻿alter table dati_rilevatori add column fattore_energia character varying(50)

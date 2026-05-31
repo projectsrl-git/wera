@@ -1,0 +1,9 @@
+aziende
+utenti
+associare amministratori a condomini
+controllare e sistemare su ripartizioni standard il valore di PU_CR (fare confronto con db sql, alcuni dati non li ha riportati in fase di test)
+
+consigliabile fare uno scarico in modo da settare correttamente i rilevatori in errore (in automatico lo fa il programma)
+
+
+PIANIFICARE SCARICO AUTOMATICO COI BAT GIA' PRESENTI SU WEBAPP

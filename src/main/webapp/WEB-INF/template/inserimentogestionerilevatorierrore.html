@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+    
+	<script type="text/javascript">
+		$(function(){
+			
+			$("#ID_AZIENDA").trigger("loadDataSet",["DataSetAziende","ID_AZIENDA","RAGSOC","<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>"," WHERE 1=1 "]);
+			$("#ID_CONDOMINIO").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 "]);
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			
+			$("#ID_MODULO").val("<#if ID_MODULO?exists>${ID_MODULO}</#if>");
+			$("#ID_CONDOMINIO").val("<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>").change();
+			$("#N_FABBRICA_DISPOSITIVO").val("<#if N_FABBRICA_DISPOSITIVO?exists>${N_FABBRICA_DISPOSITIVO}</#if>");
+			$("#DATA_VIS").val("<#if DATA_VIS?exists>${DATA_VIS}</#if>");
+			$('#VISIBILE').prop('checked','<#if VISIBILE?exists && VISIBILE!=''>${VISIBILE}<#else>false</#if>'==='true')
+			$("#DENOMINAZIONE").val("<#if DENOMINAZIONE?exists>${DENOMINAZIONE}</#if>");
+			$("#ID_CONDOMINIO").attr("disabled", true);
+			
+			
+			
+			$("#NOME_FILE").val("<#if NOME_FILE?exists>${NOME_FILE}</#if>");
+			$("#DATA_IMPORT").val("<#if DATA_IMPORT?exists>${DATA_IMPORT}</#if>");
+			$("#ORA_IMPORT").val("<#if ORA_IMPORT?exists>${ORA_IMPORT}</#if>");
+			$("#N_CLIENTE_NETWORK").val("<#if N_CLIENTE_NETWORK?exists>${N_CLIENTE_NETWORK}</#if>");
+			$("#N_FABBRICA_NETWORK").val("<#if N_FABBRICA_NETWORK?exists>${N_FABBRICA_NETWORK}</#if>");
+			$("#VERSIONE_SOFTWARE_I").val("<#if VERSIONE_SOFTWARE_I?exists>${VERSIONE_SOFTWARE_I}</#if>");
+			$("#DATA_DI_LETTURA_I").val("<#if DATA_DI_LETTURA_I?exists>${DATA_DI_LETTURA_I}</#if>");
+			$("#GIORNO_SETTIMANA").val("<#if GIORNO_SETTIMANA?exists>${GIORNO_SETTIMANA}</#if>");
+			$("#ORA_DI_LETTURA_I").val("<#if ORA_DI_LETTURA_I?exists>${ORA_DI_LETTURA_I}</#if>");
+			$("#OPERAT_HOURS").val("<#if OPERAT_HOURS?exists>${OPERAT_HOURS}</#if>");
+			$("#ANOMALIA_I").val("<#if ANOMALIA_I?exists>${ANOMALIA_I}</#if>");
+			$("#DATA_ANOMALIA_I").val("<#if DATA_ANOMALIA_I?exists>${DATA_ANOMALIA_I}</#if>");
+			$("#ORA_ANOMALIA_I").val("<#if ORA_ANOMALIA_I?exists>${ORA_ANOMALIA_I}</#if>");
+			$("#DISP_RADIO_TROVATI").val("<#if DISP_RADIO_TROVATI?exists>${DISP_RADIO_TROVATI}</#if>");
+			$("#MODELLO_ANTENNA").val("<#if MODELLO_ANTENNA?exists>${MODELLO_ANTENNA}</#if>");
+			
+			$("#N_PROGRESSIVO_DISPOSITIVO").val("<#if N_PROGRESSIVO_DISPOSITIVO?exists>${N_PROGRESSIVO_DISPOSITIVO}</#if>");
+			$("#ANTENNA_DI_RIFERIMENTO").val("<#if ANTENNA_DI_RIFERIMENTO?exists>${ANTENNA_DI_RIFERIMENTO}</#if>");
+			$("#DATA_DI_LETTURA").val("<#if DATA_DI_LETTURA?exists>${DATA_DI_LETTURA}</#if>");
+			$("#ORA_DI_LETTURA").val("<#if ORA_DI_LETTURA?exists>${ORA_DI_LETTURA}</#if>");
+			
+			$("#CODICE_DI_PRODUZIONE").val("<#if CODICE_DI_PRODUZIONE?exists>${CODICE_DI_PRODUZIONE}</#if>");
+			$("#VERSIONE_SOFTWARE").val("<#if VERSIONE_SOFTWARE?exists>${VERSIONE_SOFTWARE}</#if>");
+			$("#ANOMALIA").val("<#if ANOMALIA?exists>${ANOMALIA}</#if>");
+			$("#DATA_ANOMALIA").val("<#if DATA_ANOMALIA?exists>${DATA_ANOMALIA}</#if>");
+			$("#ORA_ANOMALIA").val("<#if ORA_ANOMALIA?exists>${ORA_ANOMALIA}</#if>");
+			$("#LETTURA_ATTUALE").val("<#if LETTURA_ATTUALE?exists>${LETTURA_ATTUALE}</#if>");
+			$("#UNITA_DI_MISURA").val("<#if UNITA_DI_MISURA?exists>${UNITA_DI_MISURA}</#if>");
+			$("#VOLUME_ATTUALE").val("<#if VOLUME_ATTUALE?exists>${VOLUME_ATTUALE}</#if>");
+			$("#UNITA_DI_MISURA1").val("<#if UNITA_DI_MISURA1?exists>${UNITA_DI_MISURA1}</#if>");
+			$("#FATTORE_ENERGIA").val("<#if FATTORE_ENERGIA?exists>${FATTORE_ENERGIA}</#if>");
+			$("#LETTURA_A_DATA_DI_SCARICO").val("<#if LETTURA_A_DATA_DI_SCARICO?exists>${LETTURA_A_DATA_DI_SCARICO}</#if>");
+			$("#UNITA_DI_MISURA2").val("<#if UNITA_DI_MISURA2?exists>${UNITA_DI_MISURA2}</#if>");
+			$("#DATA_DI_SCARICO").val("<#if DATA_DI_SCARICO?exists>${DATA_DI_SCARICO}</#if>");
+			$("#DATA_INIZIO_STATISTICA").val("<#if DATA_INIZIO_STATISTICA?exists>${DATA_INIZIO_STATISTICA}</#if>");
+			$("#STAT_VALUE1").val("<#if STAT_VALUE1?exists>${STAT_VALUE1}</#if>");
+			$("#STAT_VALUE2").val("<#if STAT_VALUE2?exists>${STAT_VALUE2}</#if>");
+			$("#STAT_VALUE3").val("<#if STAT_VALUE3?exists>${STAT_VALUE3}</#if>");
+			$("#STAT_VALUE4").val("<#if STAT_VALUE4?exists>${STAT_VALUE4}</#if>");
+			$("#STAT_VALUE5").val("<#if STAT_VALUE5?exists>${STAT_VALUE5}</#if>");
+			$("#STAT_VALUE6").val("<#if STAT_VALUE6?exists>${STAT_VALUE6}</#if>");
+			$("#STAT_VALUE7").val("<#if STAT_VALUE7?exists>${STAT_VALUE7}</#if>");
+			$("#STAT_VALUE8").val("<#if STAT_VALUE8?exists>${STAT_VALUE8}</#if>");
+			$("#STAT_VALUE9").val("<#if STAT_VALUE9?exists>${STAT_VALUE9}</#if>");
+			$("#STAT_VALUE10").val("<#if STAT_VALUE10?exists>${STAT_VALUE10}</#if>");
+			$("#STAT_VALUE11").val("<#if STAT_VALUE11?exists>${STAT_VALUE11}</#if>");
+			$("#STAT_VALUE12").val("<#if STAT_VALUE12?exists>${STAT_VALUE12}</#if>");
+			$("#STAT_VALUE13").val("<#if STAT_VALUE13?exists>${STAT_VALUE13}</#if>");
+			$("#STAT_VALUE14").val("<#if STAT_VALUE14?exists>${STAT_VALUE14}</#if>");
+			$("#STAT_VALUE15").val("<#if STAT_VALUE15?exists>${STAT_VALUE15}</#if>");
+			$("#STAT_VALUE16").val("<#if STAT_VALUE16?exists>${STAT_VALUE16}</#if>");
+			$("#STAT_VALUE17").val("<#if STAT_VALUE17?exists>${STAT_VALUE17}</#if>");
+			$("#STAT_VALUE18").val("<#if STAT_VALUE18?exists>${STAT_VALUE18}</#if>");
+			$("#UNIT_OF_STAT").val("<#if UNIT_OF_STAT?exists>${UNIT_OF_STAT}</#if>");
+			$("#CURRVALUE_OF_TARIFF1").val("<#if CURRVALUE_OF_TARIFF1?exists>${CURRVALUE_OF_TARIFF1}</#if>");
+			$("#UNIT_OF_TARIFF1").val("<#if UNIT_OF_TARIFF1?exists>${UNIT_OF_TARIFF1}</#if>");
+			$("#SET_DAY_VAL_OF_TARIFF1").val("<#if SET_DAY_VAL_OF_TARIFF1?exists>${SET_DAY_VAL_OF_TARIFF1}</#if>");
+			$("#SET_DAY_UNIT_OF_TARIFF1").val("<#if SET_DAY_UNIT_OF_TARIFF1?exists>${SET_DAY_UNIT_OF_TARIFF1}</#if>");
+			
+			$("#KDEVADR292").val("<#if KDEVADR292?exists>${KDEVADR292}</#if>");
+			$("#ZDAT").val("<#if ZDAT?exists>${ZDAT}</#if>");
+			$("#ZUHR").val("<#if ZUHR?exists>${ZUHR}</#if>");
+			$("#CBS104").val("<#if CBS104?exists>${CBS104}</#if>");
+			$("#ZFDAUER251").val("<#if ZFDAUER251?exists>${ZFDAUER251}</#if>");
+			$("#VOLUMECUMUL").val("<#if VOLUMECUMUL?exists>${VOLUMECUMUL}</#if>");
+			$("#UNVOLUMECUMUL").val("<#if UNVOLUMECUMUL?exists>${UNVOLUMECUMUL}</#if>");
+			$("#CVOLSTLVAL108").val("<#if CVOLSTLVAL108?exists>${CVOLSTLVAL108}</#if>");
+			$("#CVOLSTLDIM108").val("<#if CVOLSTLDIM108?exists>${CVOLSTLDIM108}</#if>");
+			$("#CENSTVLVAL111").val("<#if CENSTVLVAL111?exists>${CENSTVLVAL111}</#if>");
+			$("#CENSTVLDIM111").val("<#if CENSTVLDIM111?exists>${CENSTVLDIM111}</#if>");
+			$("#CVOLSTVLVAL112").val("<#if CVOLSTVLVAL112?exists>${CVOLSTVLVAL112}</#if>");
+			$("#CVOLSTVLDIM112").val("<#if CVOLSTVLDIM112?exists>${CVOLSTVLDIM112}</#if>");
+			$("#ZDATSTVL114").val("<#if ZDATSTVL114?exists>${ZDATSTVL114}</#if>");
+			$("#CPQMWMAXVAL169").val("<#if CPQMWMAXVAL169?exists>${CPQMWMAXVAL169}</#if>");
+			$("#CPQMWMAXDIM169").val("<#if CPQMWMAXDIM169?exists>${CPQMWMAXDIM169}</#if>");
+			$("#ZDATMWMAX170").val("<#if ZDATMWMAX170?exists>${ZDATMWMAX170}</#if>");
+			$("#VALCUMULTAR1").val("<#if VALCUMULTAR1?exists>${VALCUMULTAR1}</#if>");
+			$("#UMVALCUMULTAR1").val("<#if UMVALCUMULTAR1?exists>${UMVALCUMULTAR1}</#if>");
+			$("#CVXTAR2VAL194").val("<#if CVXTAR2VAL194?exists>${CVXTAR2VAL194}</#if>");
+			$("#CVXTAR2DIM194").val("<#if CVXTAR2DIM194?exists>${CVXTAR2DIM194}</#if>");
+			$("#CVXTAR1STLVAL193").val("<#if CVXTAR1STLVAL193?exists>${CVXTAR1STLVAL193}</#if>");
+			$("#CVXTAR1STLDIM193").val("<#if CVXTAR1STLDIM193?exists>${CVXTAR1STLDIM193}</#if>");
+			$("#CVXTAR2STLVAL194").val("<#if CVXTAR2STLVAL194?exists>${CVXTAR2STLVAL194}</#if>");
+			$("#CVXTAR2STLDIM194").val("<#if CVXTAR2STLDIM194?exists>${CVXTAR2STLDIM194}</#if>");
+			$("#ORA_IMPORT_COMPLETA").val("<#if ORA_IMPORT_COMPLETA?exists>${ORA_IMPORT_COMPLETA}</#if>");
+			$("#ERRORE_SISTEMATO").val("<#if ERRORE_SISTEMATO?exists>${ERRORE_SISTEMATO}</#if>");
+
+
+			$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+            
+			$("#Inserimento").validate();
+			
+			$("#Inserimento").submit(function(event) {
+				document.getElementById("salva").style.display="none";
+				/* stop form from submitting normally */
+				event.preventDefault();			
+			
+				if (!$("#Inserimento").valid()) {
+					document.getElementById("salva").style.display="block";
+					return false;
+				}
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+				
+				
+				
+				
+				var id=$("#ID_MODULO").val();
+				if (id!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+				} else {
+					$("#OPERATION_TYPE").val("INSERT");
+				}
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 3000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+				});
+
+			});			
+		});		
+		
+		
+    </script> 
+    
+</head>
+
+<body>
+
+     <div id="wrapper">
+
+    	<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+        <div id="page-wrapper" class="gray-bg">
+		
+        	<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+        	
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+            	
+            		<div class="col-lg-12">
+
+	                	<div class="ibox float-e-margins">
+	                    
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+			            <div class="ibox-content">
+			            	<form action="astro" method="post" id="Inserimento"  class="form-horizontal">
+			            	
+			            		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoGestioneRilevatoriErrore" />
+								<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE">
+								<input type="hidden" id="ID_MODULO" name="ID_MODULO">
+								<input type="hidden" id="ID_AZIENDA" name="ID_AZIENDA">				
+								
+								<input type="hidden" id="NOME_FILE" name="NOME_FILE">
+								<input type="hidden" id="DATA_IMPORT" name="DATA_IMPORT">
+								<input type="hidden" id="ORA_IMPORT" name="ORA_IMPORT">
+								<input type="hidden" id="N_CLIENTE_NETWORK" name="N_CLIENTE_NETWORK">
+								<input type="hidden" id="N_FABBRICA_NETWORK" name="N_FABBRICA_NETWORK">
+								<input type="hidden" id="VERSIONE_SOFTWARE_I" name="VERSIONE_SOFTWARE_I">
+								<input type="hidden" id="DATA_DI_LETTURA_I" name="DATA_DI_LETTURA_I">
+								<input type="hidden" id="GIORNO_SETTIMANA" name="GIORNO_SETTIMANA">
+								<input type="hidden" id="ORA_DI_LETTURA_I" name="ORA_DI_LETTURA_I">
+								<input type="hidden" id="OPERAT_HOURS" name="OPERAT_HOURS">
+								<input type="hidden" id="ANOMALIA_I" name="ANOMALIA_I">
+								<input type="hidden" id="DATA_ANOMALIA_I" name="DATA_ANOMALIA_I">
+								<input type="hidden" id="ORA_ANOMALIA_I" name="ORA_ANOMALIA_I">
+								<input type="hidden" id="DISP_RADIO_TROVATI" name="DISP_RADIO_TROVATI">
+								<input type="hidden" id="MODELLO_ANTENNA" name="MODELLO_ANTENNA">
+								
+								<input type="hidden" id="N_PROGRESSIVO_DISPOSITIVO" name="N_PROGRESSIVO_DISPOSITIVO">
+								<input type="hidden" id="ANTENNA_DI_RIFERIMENTO" name="ANTENNA_DI_RIFERIMENTO">
+								<input type="hidden" id="DATA_DI_LETTURA" name="DATA_DI_LETTURA">
+								<input type="hidden" id="ORA_DI_LETTURA" name="ORA_DI_LETTURA">
+								
+								<input type="hidden" id="CODICE_DI_PRODUZIONE" name="CODICE_DI_PRODUZIONE">
+								<input type="hidden" id="VERSIONE_SOFTWARE" name="VERSIONE_SOFTWARE">
+								<input type="hidden" id="ANOMALIA" name="ANOMALIA">
+								<input type="hidden" id="DATA_ANOMALIA" name="DATA_ANOMALIA">
+								<input type="hidden" id="ORA_ANOMALIA" name="ORA_ANOMALIA">
+								<input type="hidden" id="LETTURA_ATTUALE" name="LETTURA_ATTUALE">
+								<input type="hidden" id="UNITA_DI_MISURA" name="UNITA_DI_MISURA">
+								<input type="hidden" id="VOLUME_ATTUALE" name="VOLUME_ATTUALE">
+								<input type="hidden" id="UNITA_DI_MISURA1" name="UNITA_DI_MISURA1">
+								<input type="hidden" id="FATTORE_ENERGIA" name="FATTORE_ENERGIA">
+								<input type="hidden" id="LETTURA_A_DATA_DI_SCARICO" name="LETTURA_A_DATA_DI_SCARICO">
+								<input type="hidden" id="UNITA_DI_MISURA2" name="UNITA_DI_MISURA2">
+								<input type="hidden" id="DATA_DI_SCARICO" name="DATA_DI_SCARICO">
+								<input type="hidden" id="DATA_INIZIO_STATISTICA" name="DATA_INIZIO_STATISTICA">
+								<input type="hidden" id="STAT_VALUE1" name="STAT_VALUE1">
+								<input type="hidden" id="STAT_VALUE2" name="STAT_VALUE2">
+								<input type="hidden" id="STAT_VALUE3" name="STAT_VALUE3">
+								<input type="hidden" id="STAT_VALUE4" name="STAT_VALUE4">
+								<input type="hidden" id="STAT_VALUE5" name="STAT_VALUE5">
+								<input type="hidden" id="STAT_VALUE6" name="STAT_VALUE6">
+								<input type="hidden" id="STAT_VALUE7" name="STAT_VALUE7">
+								<input type="hidden" id="STAT_VALUE8" name="STAT_VALUE8">
+								<input type="hidden" id="STAT_VALUE9" name="STAT_VALUE9">
+								<input type="hidden" id="STAT_VALUE10" name="STAT_VALUE10">
+								<input type="hidden" id="STAT_VALUE11" name="STAT_VALUE11">
+								<input type="hidden" id="STAT_VALUE12" name="STAT_VALUE12">
+								<input type="hidden" id="STAT_VALUE13" name="STAT_VALUE13">
+								<input type="hidden" id="STAT_VALUE14" name="STAT_VALUE14">
+								<input type="hidden" id="STAT_VALUE15" name="STAT_VALUE15">
+								<input type="hidden" id="STAT_VALUE16" name="STAT_VALUE16">
+								<input type="hidden" id="STAT_VALUE17" name="STAT_VALUE17">
+								<input type="hidden" id="STAT_VALUE18" name="STAT_VALUE18">
+								<input type="hidden" id="UNIT_OF_STAT" name="UNIT_OF_STAT">
+								<input type="hidden" id="CURRVALUE_OF_TARIFF1" name="CURRVALUE_OF_TARIFF1">
+								<input type="hidden" id="UNIT_OF_TARIFF1" name="UNIT_OF_TARIFF1">
+								<input type="hidden" id="SET_DAY_VAL_OF_TARIFF1" name="SET_DAY_VAL_OF_TARIFF1">
+								<input type="hidden" id="SET_DAY_UNIT_OF_TARIFF1" name="SET_DAY_UNIT_OF_TARIFF1">
+								
+								<input type="hidden" id="KDEVADR292" name="KDEVADR292">
+								<input type="hidden" id="ZDAT" name="ZDAT">
+								<input type="hidden" id="ZUHR" name="ZUHR">
+								<input type="hidden" id="CBS104" name="CBS104">
+								<input type="hidden" id="ZFDAUER251" name="ZFDAUER251">
+								<input type="hidden" id="VOLUMECUMUL" name="VOLUMECUMUL">
+								<input type="hidden" id="UNVOLUMECUMUL" name="UNVOLUMECUMUL">
+								<input type="hidden" id="CVOLSTLVAL108" name="CVOLSTLVAL108">
+								<input type="hidden" id="CVOLSTLDIM108" name="CVOLSTLDIM108">
+								<input type="hidden" id="CENSTVLVAL111" name="CENSTVLVAL111">
+								<input type="hidden" id="CENSTVLDIM111" name="CENSTVLDIM111">
+								<input type="hidden" id="CVOLSTVLVAL112" name="CVOLSTVLVAL112">
+								<input type="hidden" id="CVOLSTVLDIM112" name="CVOLSTVLDIM112">
+								<input type="hidden" id="ZDATSTVL114" name="ZDATSTVL114">
+								<input type="hidden" id="CPQMWMAXVAL169" name="CPQMWMAXVAL169">
+								<input type="hidden" id="CPQMWMAXDIM169" name="CPQMWMAXDIM169">
+								<input type="hidden" id="ZDATMWMAX170" name="ZDATMWMAX170">
+								<input type="hidden" id="VALCUMULTAR1" name="VALCUMULTAR1">
+								<input type="hidden" id="UMVALCUMULTAR1" name="UMVALCUMULTAR1">
+								<input type="hidden" id="CVXTAR2VAL194" name="CVXTAR2VAL194">
+								<input type="hidden" id="CVXTAR2DIM194" name="CVXTAR2DIM194">
+								<input type="hidden" id="CVXTAR1STLVAL193" name="CVXTAR1STLVAL193">
+								<input type="hidden" id="CVXTAR1STLDIM193" name="CVXTAR1STLDIM193">
+								<input type="hidden" id="CVXTAR2STLVAL194" name="CVXTAR2STLVAL194">
+								<input type="hidden" id="CVXTAR2STLDIM194" name="CVXTAR2STLDIM194">
+								<input type="hidden" id="ORA_IMPORT_COMPLETA" name="ORA_IMPORT_COMPLETA">
+								<input type="hidden" id="ERRORE_SISTEMATO" name="ERRORE_SISTEMATO">
+				
+								
+                                <div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Condominio</label>
+	                                    <div class="col-sm-4">
+											<select id="ID_CONDOMINIO" name="ID_CONDOMINIO" class="form-control" readonly>
+											</select>
+	                                    </div>
+	                                </div>
+                                </div>
+
+								
+								<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Denominazione</label>
+										<div class="col-sm-4">
+											<input type="text"class="form-control" id="DENOMINAZIONE" name="DENOMINAZIONE" readonly>
+										</div>
+									</div>
+                            	</div>
+                            	
+                            	
+			                	<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Rilevatore</label>
+										<div class="col-sm-4">
+											<input type="text"class="form-control" id="N_FABBRICA_DISPOSITIVO" name="N_FABBRICA_DISPOSITIVO" readonly>
+										</div>
+									</div>
+                            	</div>
+                            	
+								  
+								<div class="row">
+					                <div class="form-group"><label class="col-sm-2 control-label">Visibilit&#224;</label>
+	                                    <div class="col-sm-10">
+	                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="VISIBILE" id="VISIBILE"> </label>
+	                                   </div>
+	                                </div>
+	                            </div>
+                            	
+                            	
+                                
+                                <div class="row">
+					                <div class="form-group"><label class="col-sm-2 control-label">Visibile dal</label>
+					                	<div class="col-sm-2">
+	                                    	<div class="input-group date">
+												<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="DATA_VIS" id="DATA_VIS" value="<#if DATA_VIS?exists>${DATA_VIS}</#if>" required>
+											</div>
+										</div>
+	                                </div>
+	                            </div>
+                                
+                                
+                              			  
+                                <div class="hr-line-dashed"></div>
+								
+                                <div class="form-group">
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-primary btn-sm" id="salva" type="submit">${label_save}</button>
+                                    </div>
+                                </div>
+								
+							
+		                          
+				            </form> 							
+			                
+				                   
+	                       			
+		                </div>   <!-- chiude box content -->
+            		</div>       <!-- chiude ibox float-e-margins -->     
+	            </div>	<!-- col-lg-12 -->
+            </div>	<!-- chiude row -->
+            
+            
+        
+        
+        
+        	<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+        	
+        </div>
+	</div>
+
+
+</body>
+
+</html>

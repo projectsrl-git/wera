@@ -1,0 +1,57 @@
+/****** Oggetto:  View [dbo].[EXPORT1]    Data script: 09/02/2013 12:35:00 ******/
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[GERARCHIA_AZIENDE]'))
+DROP VIEW [dbo].[EXPORT1]
+GO
+
+
+
+CREATE VIEW [dbo].[EXPORT1]
+AS
+
+	
+SELECT 
+ID_CONDOMINIO,
+ROW_NUMBER() over (order by denominazione) as id_modulo, 
+1 as id_azienda, 
+denominazione, 
+indirizzo, 
+localita, 
+provincia, 
+cap, 
+replace(sim,'/','') as sim, 
+scarico, 
+'' as id_amministratore, 
+codfisc, 
+data_primo_scarico, 
+case when gen='S' then 'true' else 'false' end as gen, 
+case when feb='S' then 'true' else 'false' end as feb, 
+case when mar='S' then 'true' else 'false' end as mar, 
+case when apr='S' then 'true' else 'false' end as apr, 
+case when mag='S' then 'true' else 'false' end as mag, 
+case when giu='S' then 'true' else 'false' end as giu, 
+case when lug='S' then 'true' else 'false' end as lug, 
+case when ago='S' then 'true' else 'false' end as ago, 
+case when sett='S' then 'true' else 'false' end as sett, 
+case when ott='S' then 'true' else 'false' end as ott, 
+case when nov='S' then 'true' else 'false' end as nov, 
+case when dic='S' then 'true' else 'false' end as dic, 
+perdite_impianto, 
+fabbisogno_annuo_clima, 
+fabbisogno_annuo_acs, 
+rendimento_caldaia, 
+tipo, 
+ROW_NUMBER() over (order by denominazione) as nr_modulo, 
+'2018/09/06' as dt_modulo, 
+'DRA' as stato, 
+'' as lista_allegati, 
+'2018-09-26 16:00:51.671' as ts_ins, 
+1 as id_utente_ins, 
+'' as ts_mod, 
+'' as id_utente_mod, 
+'' as gg_segnalazione, 
+'' as data_prima_segnalazione, 
+'' as tipo_contabilizzazione
+  FROM condomini;
+
+GO
+

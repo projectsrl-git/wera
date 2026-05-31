@@ -1,0 +1,52 @@
+select * from (
+
+SELECT 
+ROW_NUMBER() over (order by rilevatore,anno,mese) as id_modulo,  
+1 as id_azienda, 
+
+  coalesce((select export1.id_modulo from export1 where export1.id_condominio=id_scarico),0) as id_condominio,  
+
+iif(nome_file_dr='','sconosciuto',nome_file_dr) as nome_file_dr, 
+rilevatore, 
+       lettura, 
+	   lettura_acs, 
+	   mese, anno, 
+	   iif(data_import='','2000/01/01',data_import) as data_import, 
+	   iif(ora_import='','00.00',ora_import) as ora_import, 
+	   --data_di_lettura,
+	   case when len(data_di_lettura)>10 then 
+			case when charindex('/', data_di_lettura)=3 then
+			SUBSTRING(DATA_DI_LETTURA,7,4)+'/'+SUBSTRING(data_di_lettura,4,2)+'/'+SUBSTRING(data_di_lettura,1,2)
+			else ltrim(rtrim(SUBSTRING(data_di_lettura,1,10))) end
+	   else DATA_DI_LETTURA end as data_di_lettura, 
+	   
+	   case when len(data_di_lettura)>10 then ltrim(rtrim(SUBSTRING(data_di_lettura,11,LEN(data_di_lettura)))) else ora_di_lettura end as ora_di_lettura, 
+       --ora_di_lettura, 
+	   anomalia, 
+	   data_anomalia, 
+	   ora_anomalia, 
+	   iif(lettura_attuale like '%x%','0.00',lettura_attuale) as lettura_attuale, 
+       unita_di_misura, 
+	   data_lettura_attuale, 
+	   unit_of_stat, 
+	   volume_attuale, 
+       null as lettura_prec, 
+	   null as lettura_acs_prec, 
+ROW_NUMBER() over (order by rilevatore,anno,mese) as nr_modulo,  
+'2018/09/06'	as   dt_modulo, 
+	   'DRA' as stato, 
+       '' as lista_allegati, 
+	   '2018-09-26 16:00:51.671' as ts_ins, 
+	   1 as id_utente_ins, 
+	   '' as ts_mod, 
+	   '' as id_utente_mod
+  FROM dati_rilevatori
+
+  ) as tab where id_modulo between 180001 and 240000
+  order by id_modulo
+
+
+
+-- replace ;,000 con ;0.000
+--replace ;, con 0.
+-- replace , con .

@@ -1,0 +1,26 @@
+update ripartizioni_uni set tipo_ripartizione='C';
+
+-- dopo aver sistemato il tipo contabilizzazione a mano in anagrafica condomini
+update ripartizioni_uni set tipo_contabilizzazione=(select tipo_contabilizzazione from condomini where condomini.id_modulo=ripartizioni_uni.id_condominio);
+
+
+update scarico set data_di_lettura= substring(data_di_lettura,1,6)||20||substring(data_di_lettura,7,2) where length(data_di_lettura)=8  and data_di_lettura<>'--/--/--';
+
+update scarico set data_anomalia= substring(data_anomalia,1,6)||20||substring(data_anomalia,7,2) where length(data_anomalia)=8 and data_anomalia<>'--/--/--';
+
+update scarico set data_di_scarico= substring(data_di_scarico,1,6)||20||substring(data_di_scarico,7,2) where length(data_di_scarico)=8 and data_di_scarico<>'--/--/--';
+
+update scarico set data_inizio_statistica= substring(data_inizio_statistica,1,6)||20||substring(data_inizio_statistica,7,2) where length(data_inizio_statistica)=8 and data_inizio_statistica<>'--/--/--';
+
+
+
+delete from elenco_file_importati_rilevatori;
+insert into elenco_file_importati_rilevatori (nome_file,id_azienda,data_import,ora_import,nr_modulo,stato,ts_ins,id_utente_ins) (select distinct nome_file,1,'2018/10/22','00.01',0,'DRA','2018-10-22 00:01:00.001' at time zone 'Etc/UTC',0 from scarico);
+update elenco_file_importati_rilevatori set nr_modulo=id_modulo;
+
+update ripartizioni_letture set tipo_ripartizione='L';
+
+
+SELECT setval(pg_get_serial_sequence('ripartizioni_letture', 'id_modulo'), count(*)+1) FROM ripartizioni_letture;
+SELECT setval(pg_get_serial_sequence('ripartizioni', 'id_modulo'), count(*)+1) FROM ripartizioni;
+SELECT setval(pg_get_serial_sequence('ripartizioni_uni', 'id_modulo'), count(*)+1) FROM ripartizioni_uni;

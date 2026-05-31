@@ -1,0 +1,69 @@
+						<div class="flex-grow-1"
+						
+						<div class="row" style="margin-bottom: 20px;">
+						 <div class="col-sm-6">
+						  <div class="vertical-align-wrapper">
+						    <div class="vertical-align-content">
+						      <h4 class="page-title"><b>
+						      
+						      <#assign i=0>
+						     	<#list SELECTED_MENU_ITEM.getPathDescriChain() as descriChain>
+						     	<#assign path = SELECTED_MENU_ITEM.getPathDescriChain()>
+					     	    <#assign size = path?size>
+					     	    
+					     	    <#if size == 1>
+								    <#assign targetIndex = 0>
+								<#elseif size == 2>
+								    <#assign targetIndex = 1>
+								<#elseif size == 3>
+								    <#assign targetIndex = 2>
+								<#else>
+								    <#assign targetIndex = size - 2>
+								</#if>
+
+
+								<#if i == targetIndex-1 && i==1>
+						            ${descriChain?upper_case} | 
+						        </#if>
+						        <#if i == targetIndex>
+						            ${descriChain?upper_case}
+						        </#if>
+            			        
+						        <#assign i=i+1>
+						        </#list>
+						      
+						      </b></h4>
+						    </div>
+						  </div>
+						</div>
+
+
+						  <div class="col-sm-6 text-right">
+						  <div class="vertical-align-wrapper">
+						    <div class="vertical-align-content">
+						    <ol class="breadcrumb" style="margin: 0;">
+						      <#assign i=0>
+						      <#list SELECTED_MENU_ITEM.getPathDescriChain() as descriChain>
+						        <#if i<SELECTED_MENU_ITEM.getItemLevel()>
+						          <li>
+						            <a href="${SELECTED_MENU_ITEM.getLinkChain()[i]}">${descriChain}</a>
+						          </li>
+						        <#else>
+						          <li class="active">
+						            <strong>${descriChain}</strong>
+						          </li>
+						        </#if>
+						        <#assign i=i+1>
+						      </#list>
+						    </ol>
+						    </div></div>
+						  </div>
+						</div>
+						
+						<div>
+
+						
+						<div class="alert alert-success alert-message hidden-div">Salvataggio dati terminato con successo</div>
+						<div class="alert alert-info alert-message hidden-div"></div>
+						<div class="alert alert-warning alert-message hidden-div"></div>
+						<div class="alert alert-danger alert-message hidden-div"></div>

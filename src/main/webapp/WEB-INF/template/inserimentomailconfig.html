@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+	
+	<link href="css/plugins/summernote/summernote.css" rel="stylesheet">
+    <link href="css/plugins/summernote/summernote-bs3.css" rel="stylesheet">
+    
+    <script type="text/javascript">
+	
+		$(function(){
+
+			$("#ID_MAIL_CONFIG").val("<#if ID_MAIL_CONFIG?exists>${ID_MAIL_CONFIG}</#if>");
+			$("#STATO_INIZIALE").trigger("loadDataSet",["DSParametri","CODICE","DESCRIZIONE","<#if STATO_INIZIALE?exists && STATO_INIZIALE!=''>${STATO_INIZIALE}</#if>"," WHERE DOMINIO='STA' "]);
+			$("#STATO_FINALE").trigger("loadDataSet",["DSParametri","CODICE","DESCRIZIONE","<#if STATO_FINALE?exists && STATO_FINALE!=''>${STATO_FINALE}</#if>"," WHERE DOMINIO='STA' "]);
+			$("#MODULO").val("<#if MODULO?exists>${MODULO}</#if>");
+			$("#WORKFLOW_ACTION").val("<#if WORKFLOW_ACTION?exists>${WORKFLOW_ACTION}</#if>");
+			$("#OGGETTO").val("<#if OGGETTO?exists>${OGGETTO}</#if>");
+			$("#MITTENTE").val("<#if MITTENTE?exists>${MITTENTE}</#if>");
+
+			$("#formInserimento").validate();
+
+			$("#formInserimento").submit(function(event) {
+				/* stop form from submitting normally */
+				event.preventDefault();			
+
+				if (!$("#formInserimento").valid()) {
+					return false;
+				}
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+				
+				var textareaValue = $("#TESTO_MAIL_HTML").code();
+				$('#TESTO_MAIL').val(textareaValue);
+			
+				
+				document.getElementById("salva").style.display="none";
+				
+				
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					document.getElementById("salva").style.display="block";
+					
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+				});
+
+			});
+
+		});
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- titolo form-->
+									
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+
+							<form action="astro" class="form-horizontal" method="post" id="formInserimento" name="formInserimento">
+								
+								<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoMailConfig">
+								<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE" value="<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>">
+								<input type="hidden" id="ID_MAIL_CONFIG" name="ID_MAIL_CONFIG">
+								<input type="hidden" id="TESTO_MAIL" name="TESTO_MAIL">
+								
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">Modulo</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="MODULO" id="MODULO" required></div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">WorkFlow Action</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="WORKFLOW_ACTION" id="WORKFLOW_ACTION" required></div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">Stato iniziale</label>
+                                    <div class="col-sm-10">
+										<select id="STATO_INIZIALE" name="STATO_INIZIALE" class="form-control" required>
+										</select>
+                                    </div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">Stato finale</label>
+                                    <div class="col-sm-10">
+										<select id="STATO_FINALE" name="STATO_FINALE" class="form-control" required>
+										</select>
+                                    </div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">Oggetto</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="OGGETTO" id="OGGETTO" required></div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">Testo mail</label>
+                                    <div class="col-sm-10">
+                                    
+			                        <div class="TESTO_MAIL_HTML" id="TESTO_MAIL_HTML"><#if TESTO_MAIL?exists>${TESTO_MAIL}</#if>
+			                        </div>
+                                    
+                                    
+                                    </div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">Mittente</label>
+                                    <div class="col-sm-10"><input type="email" placeholder="${label_placeholder_email}" class="form-control" name="MITTENTE" id="MITTENTE" required></div>
+                                </div>
+								
+								
+                                <div class="hr-line-dashed"></div>
+								
+								<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+	                                <div class="form-group">
+	                                    <div class="col-sm-4 col-sm-offset-2">
+	                                        <button class="btn btn-primary btn-sm" id="salva" type="submit">${label_save}</button>
+	                                    </div>
+	                                </div>
+	                            </#if>
+								
+                            </form>
+
+                        </div>
+						
+                    </div>
+                </div>
+            </div>
+			
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+
+    <!-- SUMMERNOTE -->
+    <script src="js/plugins/summernote/summernote.min.js"></script>
+
+    <script>
+        $(document).ready(function(){
+
+            $('.TESTO_MAIL_HTML').summernote();
+
+       });
+        var edit = function() {
+            $('.click2edit').summernote({focus: true});
+        };
+        var save = function() {
+            var aHTML = $('.click2edit').code(); //save HTML If you need(aHTML: array).
+            $('.click2edit').destroy();
+        };
+    </script>	
+		
+
+</body>
+
+</html>

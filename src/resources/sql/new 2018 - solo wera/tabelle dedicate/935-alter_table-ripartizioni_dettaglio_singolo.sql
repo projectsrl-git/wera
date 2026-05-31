@@ -1,0 +1,1 @@
+﻿alter table RIPARTIZIONI_DETTAGLIO_SINGOLO add column lettura_acs numeric(10,2);

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if> 
+	
+    <script type="text/javascript">
+    	var profilo="<#if PROFILO?exists>${PROFILO}</#if>";
+		var flagRicerca=false;
+		var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSRipartizioniUNI2018&columns=ID_MODULO,ID_MODULO,ID_MODULO,NR_MODULO,DENOMINAZIONE,INDIRIZZO,LOCALITA,PROVINCIA,PERIODO,TIPOLOGIA_RIPARTIZIONE,TIPO_RIPARTIZIONE,DESCR_TIPO_CONTABILIZZAZIONE,STATO,DESCR_STATO,DATA_INSERIMENTO,ORA_INSERIMENTO&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if WHERECONDITION?exists>${WHERECONDITION}</#if>";
+
+
+		
+		$(function(){
+			
+			var defaultPeriodo = "<#if PERIODO?exists>${PERIODO}<#else>003</#if>";
+			$("#PERIODO").trigger("loadDataSet",["DSPeriodoImport","CODICE","DESCRIZIONE", defaultPeriodo, " WHERE 1=1 "]);
+			
+
+			// Setup - add a text input to each footer cell
+		    $('#dt thead tr').clone(true).appendTo( '#dt thead' );
+		    $('#dt thead tr:eq(1) th').each( function (i) {
+		        var title = $(this).text();
+		        if (title!=''){
+		        	$(this).html( '<input type="text" placeholder="Filtra '+title+'" />' );
+		        }
+		        
+		 
+		        $( 'input', this ).on( 'keyup change', function () {
+		            if ( table.column(i).search() !== this.value ) {
+		                table
+		                    .column(i)
+		                    .search( this.value )
+		                    .draw();
+		            }
+		        } );
+		    } );
+
+			
+			$("#ID_UTENTE").val(<#if ID_UTENTE?exists>${ID_UTENTE}</#if>);
+			
+	        var table = $('#dt').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax+dtWhereCondition,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								if (data[12]=='APP'){
+									data = '<a href="#" class="viewRow" title="${label_view}"><i class="fa fa-search fa-color-auto" aria-hidden="true"></i></a>';
+								}else{
+									data = '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+								}
+								
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:1,
+						visible: <#if PROFILO?contains('ADM') && VALIDITA_CREDITI?contains('true')>true<#else>false</#if>,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="deleteRow" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:2,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								if (data[12]=='APP'){
+									data = '<a href="#" class="pdfA4Row" title="Stampa A4"><i class="fa fa-file-pdf-o fa-color-auto" aria-hidden="true"></i></a>';
+								}else{
+									data = '';
+								}
+								
+							}
+
+							return data;
+						}
+			            
+					},
+					{
+						targets:9,
+						visible: false,
+					},
+					{
+						targets:12,
+						visible: false,
+					},
+					
+					{
+						
+						targets:13,
+						className: 'dt-body-center'
+						
+					},
+					
+					
+					{
+						
+						targets:15,
+						className: 'dt-body-right'
+						
+					},
+					
+					{
+						targets:14,
+						type: "date-euro",
+						className: 'dt-body-right'
+					}
+					
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+		
+	        $('#free-text-search').keyup(function(){
+	        	$('#dt').DataTable().search($(this).val()).draw() ;
+	        })	        
+	        
+			
+			$("#formDelete").submit(function(event) {
+			    event.preventDefault(); // Evita l'invio immediato del form
+			
+			    Swal.fire({
+			        title: 'Cancella selezionato',
+			        text: 'Confermi la cancellazione dell\'elemento selezionato?',
+			        icon: 'warning',
+			        showCancelButton: true,
+			        confirmButtonText: 'Conferma',
+			        confirmButtonColor: '#e08e0b', 
+			        cancelButtonText: 'Annulla',
+			        reverseButtons: true,
+			        allowOutsideClick: false,
+			        allowEscapeKey: false,
+			        customClass: {
+			            popup: 'swal-wide'
+			        }
+			    }).then((result) => {
+			        if (result.isConfirmed) {
+			            // Mostra un loader durante la cancellazione
+			            Swal.fire({
+			                title: 'Cancellazione in corso...',
+			                icon: 'info',
+			                allowOutsideClick: false,
+			                allowEscapeKey: false,
+			                showConfirmButton: false,
+			                didOpen: () => {
+			                    Swal.showLoading();
+			                },
+			                customClass: {
+			                    popup: 'swal-wide'
+			                }
+			            });
+			
+			            // Invio effettivo del form via POST
+			            $.post($(this).attr('action'), $(this).serialize(), function(response) {
+			                Swal.close();
+			
+			                if (response == null || response == '') {
+			                    Swal.fire({
+			                        title: 'Cancellazione non riuscita!',
+			                        text: 'Si è verificato un errore, cancellazione non riuscita.',
+			                        icon: 'error',
+			                        showConfirmButton: false,
+			                        timer: 2000,
+			                        allowOutsideClick: false,
+			                        allowEscapeKey: false,
+			                        customClass: {
+			                            popup: 'swal-wide'
+			                        }
+			                    });
+			                } else {
+			                    var result = eval('(' + response + ')');
+			                    if (result.result) {
+			                        $("#dt").DataTable().ajax.reload();
+			
+			                        Swal.fire({
+			                            title: 'Cancellazione completata!',
+			                            text: 'Cancellazione effettuata con successo.',
+			                            icon: 'success',
+			                            showConfirmButton: false,
+			                            timer: 2000,
+			                            allowOutsideClick: false,
+			                            allowEscapeKey: false,
+			                            customClass: {
+			                                popup: 'swal-wide'
+			                            }
+			                        });
+			                    }
+			                }
+			            });
+			        }
+			    });
+			});		
+			
+			
+	        $('#dt tbody').on( 'click', '.viewRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#TIPOLOGIA_RIPARTIZIONE').val(data[9]);
+				$('#TIPO_CONTABILIZZAZIONE').val(data[10]);
+				$('#FUNCTIONID_EDIT').val("InserimentoRipartizioniUNI2018");
+				$('#READONLY').val("Y");
+				$("#formEdit").submit();
+	        } );
+	        
+	        $('#dt tbody').on( 'click', '.editRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#TIPOLOGIA_RIPARTIZIONE').val(data[9]);
+				$('#TIPO_CONTABILIZZAZIONE').val(data[10]);
+				$('#FUNCTIONID_EDIT').val("InserimentoRipartizioniUNI2018");
+				$('#READONLY').val("N");
+				$("#formEdit").submit();
+	        } );
+	        
+	        
+	        $('#dt tbody').on( 'click', '.deleteRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_MODULO");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("EliminaRipartizioniUNI2018");
+				$('#formDelete').submit();
+	        } );	
+	        
+	        $('#dt tbody').on( 'click', '.pdfA4Row', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO_STAMPA').val(data[0]);
+				$('#TIPO_RIPARTIZIONE_STAMPA').val(data[10]);
+				$('#formStampa').submit();
+	    	});
+		
+	        
+	        
+			$( "#report" ).click(function() {
+	    		var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+	    		if(dataCount>200) {
+					$('.modal-title').html('Attenzione!');
+					$('.modal-text').html('Il report che si desidera stampare supera le 200 righe. Si consiglia di restringere la ricerca');
+					$("#modalAlert").modal({backdrop: true});
+					$('#modalAlert').collapse("show");	    			
+	    		} else {
+		    		$('#dt').DataTable().button( 2 ).trigger();
+	    		}
+	    		
+	    	});
+	    	
+	    	$( "#excel" ).click(function() {
+	    		$('#dt').DataTable().button( 1 ).trigger();
+	    	});
+	    	
+	    	$( "#csv" ).click(function() {
+	    		$('#dt').DataTable().button( 0 ).trigger();
+	    	});				
+				        
+	    	
+			$("#formSearch").validate();
+			
+			$("#formSearch").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();			
+
+				if (!$("#formSearch").valid()) {
+					return false;
+				}		
+				
+				flagRicerca=true;
+				
+				
+				var dtWhereCondition="";
+				
+				var periodo = $("#PERIODO").val();
+
+				function formatDate(date) {
+				    var y = date.getFullYear();
+				    var m = ('0' + (date.getMonth() + 1)).slice(-2);
+				    var d = ('0' + date.getDate()).slice(-2);
+				    return y + '/' + m + '/' + d;
+				}
+
+				function getStartOfWeek(d) {
+				    var date = new Date(d);
+				    var day = date.getDay() || 7;
+				    if (day !== 1) date.setDate(date.getDate() - (day - 1));
+				    date.setHours(0, 0, 0, 0);
+				    return date;
+				}
+
+				function getEndOfWeek(start) {
+				    var end = new Date(start);
+				    end.setDate(end.getDate() + 6);
+				    return end;
+				}
+
+				function getStartOfMonth(date) {
+				    return new Date(date.getFullYear(), date.getMonth(), 1);
+				}
+
+				function getEndOfMonth(date) {
+				    return new Date(date.getFullYear(), date.getMonth() + 1, 0);
+				}
+
+				if (periodo !== "") {
+				    var today = new Date();
+				    var fromDate = null;
+				    var toDate = null;
+
+				    switch (periodo) {
+				        case "001": // Settimana corrente
+				            fromDate = getStartOfWeek(today);
+				            toDate = getEndOfWeek(fromDate);
+				            break;
+
+				        case "002": // Settimana precedente
+				            today.setDate(today.getDate() - 7);
+				            fromDate = getStartOfWeek(today);
+				            toDate = getEndOfWeek(fromDate);
+				            break;
+
+				        case "003": // Mese corrente
+				            fromDate = getStartOfMonth(today);
+				            toDate = getEndOfMonth(today);
+				            break;
+
+				        case "004": // Mese precedente
+				            var prevMonth = new Date(today.getFullYear(), today.getMonth() - 1, 1);
+				            fromDate = getStartOfMonth(prevMonth);
+				            toDate = getEndOfMonth(prevMonth);
+				            break;
+
+				        case "005": // Anno corrente
+				            fromDate = new Date(today.getFullYear(), 0, 1);
+				            toDate = new Date(today.getFullYear(), 11, 31);
+				            break;
+
+				        case "006": // Anno precedente
+				            fromDate = new Date(today.getFullYear() - 1, 0, 1);
+				            toDate = new Date(today.getFullYear() - 1, 11, 31);
+				            break;
+
+				        case "007": // Tutto
+				            dtWhereCondition = "";
+				            break;
+				    }
+
+				    if (fromDate && toDate) {
+				    	
+				        dtWhereCondition = " AND to_char(DATE (ru.ts_ins::timestamp::date), 'YYYY/MM/DD') BETWEEN '" + formatDate(fromDate) + "' AND '" + formatDate(toDate) + "' ";
+				    }
+				}
+				
+				$( "#dt" ).DataTable().ajax.url( dtAjax+dtWhereCondition ).load();
+				
+			});		
+		
+		});	        
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<form action="astro" method="post" id="formStampa" name="formStampa">
+		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="StampaRipartizioniUNI2018">	
+		<input type="hidden" id="ID_MODULO_STAMPA" name="ID_MODULO">
+		<input type="hidden" id="TIPO_RIPARTIZIONE_STAMPA" name="TIPO_RIPARTIZIONE">
+	</form>
+
+
+	<form action="astro" method="post" id="formDelete" name="formDelete">
+		<input type="hidden" id="FUNCTIONID_DELETE" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="DELETE">
+		<input type="hidden" id="keyField" name="keyField">
+		<input type="hidden" id="keyValue" name="keyValue">
+	</form>
+	
+	
+	<form action="astro" method="get" id="formEdit" name="formEdit">
+		<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+		<input type="hidden" id="READONLY" name="READONLY" value="N">
+		<input type="hidden" id="ID_MODULO" name="ID_MODULO">
+		<input type="hidden" id="TIPOLOGIA_RIPARTIZIONE" name="TIPOLOGIA_RIPARTIZIONE">
+		<input type="hidden" id="TIPO_CONTABILIZZAZIONE" name="TIPO_CONTABILIZZAZIONE">
+		
+	</form>		
+	
+
+	
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+           
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->
+	                    
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>						
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							<div class="row">
+								<div class="col-sm-12">							
+							
+									<form action="astro" method="get" id="formSearch" name="formSearch" class="form-horizontal">
+										<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="RicercaRipartizioniUNI2018">
+										<input type="hidden" id="ID_UTENTE" name="ID_UTENTE">
+										
+		                                <!-- <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Descrizione</label>
+		                                    <div class="col-sm-10"><input type="text" class="form-control" id="TITOLO" name="TITOLO"></div>
+		                                </div> -->
+		                                
+		                                
+		                                 <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Data ripartizione:</label>
+		                                    <div class="col-sm-2">
+												<select id="PERIODO" name="PERIODO" class="form-control" required>
+												</select>
+		                                    </div>
+		                                 </div>
+		                                 
+		                                
+										<div class="form-group">
+										
+		                                	<label class="col-sm-2 control-label-left">Ricerca in linea:</label>
+		                                    <div class="col-sm-10">
+				                                <input type="text" id="free-text-search" name="free-text-search"  class="form-control" placeholder="digita il testo che vuoi cercare per aggiornare subito i risultati">
+											</div>
+											
+										</div>												
+		                                
+										<div class="form-group">
+										
+											<div class="col-sm-3">
+												<button class="btn btn-primary btn-sm" id="ricerca" type="submit" name="ricerca">${label_search}</button>
+												<button class="btn btn-primary btn-sm" type="button" id="report" name="report">PDF</button>
+												<button class="btn btn-primary btn-sm" type="button" id="excel" name="excel">XLS</button>
+												<button class="btn btn-primary btn-sm" type="button" id="csv" name="csv">CSV</button>
+											</div>
+											
+											<div class="col-sm-9">
+												<fieldset>
+													${label_legenda}:
+													<i class="fa fa-pencil" aria-hidden="true"></i>${label_edit}
+													<i class="fa fa-trash-o" aria-hidden="true"></i>${label_delete}
+													<i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF
+												</fieldset>
+											</div>
+										</div>			
+										
+
+										
+									
+									</form>
+									
+									<div class="hr-line-dashed"></div>
+						
+									
+			
+			                        <div class="table-responsive">
+										<table id="dt" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+	            	    	    					<th></th>
+	            	    	    					<th></th>
+	            	    	    					<th>Nr.</th>
+							                        <th>Denominazione</th>
+									                <th>Indirizzo</th>
+									                <th>Località</th>
+									                <th>Provincia</th>
+									                <th>Periodo</th>
+									                <th></th>
+									                <th>Tipo ripartizione (dato anagrafico)</th>
+									                <th>Tipo contabilizzazione</th>
+									                <th></th>
+									                <th>Stato</th>
+									                <th>Data</th>
+									                <th>Ora</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+
+                    			</div>
+					
+                			</div>
+						</div>
+            		</div>
+				</div>
+			</div>
+						
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+
+</body>
+
+</html>

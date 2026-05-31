@@ -1,0 +1,923 @@
+
+-- view [V_SITIQHSE]
+DROP VIEW IF exists V_SITIQHSE;
+
+CREATE VIEW V_SITIQHSE
+AS
+SELECT AZI.* 
+	,coalesce(ATA.valore_attributo,'N') as sito_aifa
+FROM AZIENDE AS AZI
+left outer join ATTRIBUTI_AZIENDA as ATA on AZI.id_azienda = ATA.id_azienda and ATA.codice_attributo='SITO_AIFA'
+WHERE TIPO_AZIENDA LIKE '%HSE%'
+;
+
+
+
+-- view [V_ALIMOD20]
+DROP VIEW IF exists V_ALIMOD20_MASTER CASCADE;
+DROP VIEW IF exists V_ALIMOD20;
+DROP VIEW IF exists V_ALIMOD20_DETTAGLIO;
+
+CREATE VIEW V_ALIMOD20
+AS
+	SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+		,coalesce(chk.conta,0) as NR_CHK
+		,coalesce(clo.conta,0) as NR_CLO
+		,coalesce(clo.conta,0)+coalesce(chk.conta,0)  AS NR_AZIONI_CLO
+		,coalesce(tot.conta,0) AS NR_AZIONI_TOT
+	FROM ALIMOD20 AS MOD
+	LEFT OUTER JOIN PARAMETRI AS BL	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	LEFT OUTER JOIN AZIENDE AS AZ ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	LEFT OUTER JOIN V_UTENTI AS CON	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+	left outer join (select count(*) as conta, id_modulo from ALIMOD20_dettagli where stato_azione='CHK' group by id_modulo ) as chk
+	on chk.id_modulo = mod.id_modulo
+	left outer join (select count(*) as conta, id_modulo from ALIMOD20_dettagli where stato_azione='CLO' group by id_modulo ) as clo
+	on clo.id_modulo = mod.id_modulo
+	left outer join (select count(*) as conta, id_modulo from ALIMOD20_dettagli group by id_modulo ) as tot
+	on tot.id_modulo = mod.id_modulo
+;
+
+-- view [V_ALIMOD20_DETTAGLIO]
+
+CREATE VIEW V_ALIMOD20_DETTAGLIO
+AS
+SELECT 
+	DET.* 
+	,'' as NUMERO_AZIONE
+	,'' as PERC_AVANZAMENTO
+	,SAZ.DESCRIZIONE AS DESCR_STATO_AZIONE
+	,CLA.DESCRIZIONE AS DESCR_CLASSIFICAZIONE
+	,ACT.DESCRIZIONE AS DESCR_TIPO_AZIONE
+	,INS.NOME || ' ' || INS.COGNOME AS NOME_COGNOME_INS
+	,RES.NOME || ' ' || RES.COGNOME AS NOME_COGNOME_RES
+FROM ALIMOD20_DETTAGLI AS DET
+LEFT OUTER JOIN PARAMETRI AS SAZ
+ON SAZ.CODICE=DET.STATO_AZIONE AND SAZ.DOMINIO = 'SAZ'
+LEFT OUTER JOIN PARAMETRI AS CLA
+ON CLA.CODICE=DET.CODICE_CLASSIFICAZIONE AND CLA.DOMINIO = 'CLA'
+LEFT OUTER JOIN PARAMETRI AS ACT
+ON ACT.CODICE=DET.CODICE_TIPO_AZIONE AND ACT.DOMINIO = 'ACT'
+LEFT OUTER JOIN UTENTI AS INS
+ON INS.ID_UTENTE=DET.ID_UTENTE_INS 
+LEFT OUTER JOIN UTENTI AS RES
+ON RES.ID_UTENTE=DET.ID_UTENTE_RES 
+;
+
+	
+
+-- view [V_ALIMOD20_MASTER]
+CREATE VIEW V_ALIMOD20_MASTER
+AS
+select
+	tt.id_modulo
+	,dd.id_dettaglio
+	,st.id_alimod20_storico
+	,tt.id_azienda
+	,tt.codice_bl
+	,tt.descr_sito
+	,tt.descr_bl
+    ,tt.DESCR_CON
+    ,tt.nr_modulo
+	,tt.dt_modulo
+	,tt.stato
+	,tt.descr_stato
+	,tt.titolo
+	,dd.nr_dettaglio
+	,dd.DESCR_TIPO_AZIONE
+	,dd.DESCR_CLASSIFICAZIONE
+	,dd.descr_stato_azione
+	,dd.descrizione
+	,dd.riferimento_origine
+	,dd.dt_scadenza
+	,dd.NOME_COGNOME_RES
+	,dd.assegnatario
+	,dd.altro_email
+	,dd.dt_chiusura
+	,dd.costo_azione
+	,dd.effort
+	,dd.avanzamento
+	,st.nr_azione_rif
+	,st.titolo_azione 
+	,st.dettaglio_azione 
+	,st.perc_non_conformita 
+	,st.perc_prev 
+	,st.perc_eff 
+	,st.dt_progress
+	,st.gg_ritardo 
+	,st.verifica_effic 
+	,st.perc_progress 
+	,st.utente_progress 
+	,st.note_progress 	
+from v_alimod20 AS tt 
+LEFT OUTER JOIN V_ALIMOD20_DETTAGLIO as dd on tt.id_modulo=dd.id_modulo
+LEFT OUTER JOIN alimod20_storico_azioni AS st ON dd.id_dettaglio = st.id_dettaglio
+;
+
+
+
+-- view V_REPORT_ALIMOD20
+DROP VIEW IF EXISTS V_REPORT_ALIMOD20;
+CREATE VIEW V_REPORT_ALIMOD20 
+AS
+
+select
+	t1.*
+	, round(nr_azioni_chiuse::numeric/nr_azioni_registrate::numeric* 100,0) as perc_chiuse_registrate
+	, case when nr_azioni_aperte>0 then  round(nr_azioni_scadute::numeric/nr_azioni_aperte::numeric* 100,0) else 0 end as perc_scadute_aperte
+from (
+select 
+	descr_bl
+	,id_azienda
+	,descr_sito
+	,count(*) as nr_azioni_registrate
+	,sum(case when descr_stato_azione='Aperta' then 1 else 0 end) as nr_azioni_aperte
+	,sum(case when descr_stato_azione='Completata' or descr_stato_azione='Verificata' then 1 else 0 end) as nr_azioni_chiuse
+	,sum(case when dt_chiusura is not null and dt_chiusura!='' and (dt_chiusura ::date +interval '30 day' > dt_scadenza::date)  then 1 else 0 end ) as nr_azioni_chiuse_ritardo
+	,sum(case when (dt_chiusura is null OR dt_chiusura='') and (CURRENT_DATE ::date +interval '30 day' > dt_scadenza::date)  then 1 else 0 end ) as nr_azioni_scadute
+from v_alimod20_master
+group by 
+	descr_bl
+	,id_azienda	
+	,descr_sito
+) as t1
+;
+
+-- view [V_ALIMOD50]
+DROP VIEW IF exists V_ALIMOD50 CASCADE;
+
+CREATE VIEW V_ALIMOD50
+AS
+	SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,VER.DESCRIZIONE AS DESCR_TIPO_VERIFICA
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+	FROM ALIMOD50 AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	LEFT OUTER JOIN PARAMETRI AS VER
+	ON VER.CODICE=MOD.CODICE_TIPO_VERIFICA AND VER.DOMINIO = 'VER'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+;
+
+
+-- view [V_ALIMOD51]
+DROP VIEW IF exists V_ALIMOD51;
+
+CREATE VIEW V_ALIMOD51
+AS
+	SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+	FROM ALIMOD51 AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+;
+
+
+
+-- view [V_ALIMOD52]
+DROP VIEW IF exists V_ALIMOD52;
+
+CREATE VIEW V_ALIMOD52
+AS
+	SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+		,CASE
+		  WHEN (MESE ='01') THEN 'Gennaio'
+		  WHEN (MESE ='02') THEN 'Febbraio'
+		  WHEN (MESE ='03') THEN 'Marzo'
+		  WHEN (MESE ='04') THEN 'Aprile'
+		  WHEN (MESE ='05') THEN 'Maggio'
+		  WHEN (MESE ='06') THEN 'Giugno'
+		  WHEN (MESE ='07') THEN 'Luglio'
+		  WHEN (MESE ='08') THEN 'Agosto'
+		  WHEN (MESE ='09') THEN 'Settembre'
+		  WHEN (MESE ='10') THEN 'Ottobre'
+		  WHEN (MESE ='11') THEN 'Novembre'
+		  WHEN (MESE ='12') THEN 'Dicembre'
+		  ELSE ''
+		END AS DESCR_MESE
+	FROM ALIMOD52 AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+;
+
+
+-- view [V_ALIMOD80]
+DROP VIEW IF exists V_ALIMOD80 CASCADE;
+
+CREATE VIEW V_ALIMOD80
+AS
+	SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+		,TIM.DESCRIZIONE AS DESCR_TIPO_IMPIANTO
+		,NEV.DESCRIZIONE AS DESCR_NATURA_EVENTO
+		,PPE.DESCRIZIONE AS DESCR_PRODOTTO_PERTINENTE
+		,RCA.DESCRIZIONE AS DESCR_ALBERO_CAUSE
+		,CPR1.DESCRIZIONE AS DESCR_CATEGORIA_PRINCIPALE
+		,CSE1.DESCRIZIONE AS DESCR_SOTTOCATEGORIA_PRINCIPALE
+		,CPR2.DESCRIZIONE AS DESCR_CATEGORIA_SECONDARIA
+		,CSE2.DESCRIZIONE AS DESCR_SOTTOCATEGORIA_SECONDARIA
+		,ATI.DESCRIZIONE AS DESCR_AFF_ATTREZZATURA_INTERESSATA
+		,CAI.DESCRIZIONE AS DESCR_AFF_COMP_ATTR_INTERESSATA
+		,EUR.DESCRIZIONE AS DESCR_COSTI_EURO
+		,INL.DESCRIZIONE AS DESCR_LIVELLO_INCIDENTE
+		,CLI.DESCRIZIONE AS DESCR_CLIENTE
+		,PCO.DESCRIZIONE AS DESCR_PARTE_INTERESSATA
+		,PPE2.DESCRIZIONE AS DESCR_PRODOTTO_RILASCIATO
+		,INL2.DESCRIZIONE AS DESCR_LIVELLO_INCIDENTE_2
+		,PCO2.DESCRIZIONE AS DESCR_PARTE_INTERESSATA_PCO2
+		,OOE2.DESCRIZIONE AS DESCR_ORA_LOCALE
+		,MME2.DESCRIZIONE AS DESCR_MIN_LOCALE
+		,GGE.DESCRIZIONE AS DESCR_GIORNI_EVENTO
+		,OOE.DESCRIZIONE AS DESCR_ORA_EVENTO
+		,MME.DESCRIZIONE AS DESCR_MIN_EVENTO
+		,UNI1.DESCRIZIONE AS DESCR_UNITA_RILASCIATA
+		,UNI2.DESCRIZIONE AS DESCR_UNITA_MAX_PERMESSA
+	FROM ALIMOD80 AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+	LEFT OUTER JOIN PARAMETRI AS TIM
+	ON TIM.CODICE = MOD.CODICE_TIPO_IMPIANTO AND TIM.DOMINIO ='TIM'
+	LEFT OUTER JOIN PARAMETRI AS NEV
+	ON NEV.CODICE = MOD.CODICE_NATURA_EVENTO AND NEV.DOMINIO ='NEV'
+	LEFT OUTER JOIN PARAMETRI AS PPE
+	ON PPE.CODICE = MOD.CODICE_PRODOTTO_PERTINENTE AND PPE.DOMINIO ='PPE'
+	LEFT OUTER JOIN PARAMETRI AS RCA
+	ON RCA.CODICE = MOD.ALBERO_CAUSE AND RCA.DOMINIO ='RCA'
+	LEFT OUTER JOIN PARAMETRI AS CPR1
+	ON CPR1.CODICE = MOD.CATEGORIA_PRINCIPALE AND CPR1.DOMINIO ='CPR'
+	LEFT OUTER JOIN PARAMETRI AS CSE1
+	ON CSE1.CODICE = MOD.SOTTOCATEGORIA_PRINCIPALE AND CSE1.DOMINIO ='CSE'
+	LEFT OUTER JOIN PARAMETRI AS CPR2
+	ON CPR2.CODICE = MOD.CATEGORIA_SECONDARIA AND CPR2.DOMINIO ='CPR'
+	LEFT OUTER JOIN PARAMETRI AS CSE2
+	ON CSE2.CODICE = MOD.SOTTOCATEGORIA_SECONDARIA AND CSE2.DOMINIO ='CSE'
+	LEFT OUTER JOIN PARAMETRI AS ATI
+		ON MOD.CODICE_AFF_ATTREZZATURA_INTERESSATA = ATI.CODICE AND ATI.DOMINIO ='ATI'
+	LEFT OUTER JOIN PARAMETRI AS CAI
+		ON MOD.CODICE_AFF_COMP_ATTR_INTERESSATA = CAI.CODICE AND CAI.DOMINIO ='CAI'
+	LEFT OUTER JOIN PARAMETRI AS EUR
+		ON MOD.CODICE_COSTI_EURO = EUR.CODICE AND EUR.DOMINIO ='EUR'
+	LEFT OUTER JOIN PARAMETRI AS INL
+		ON MOD.CODICE_LIVELLO_INCIDENTE =INL.CODICE AND INL.DOMINIO ='INL'
+	LEFT OUTER JOIN PARAMETRI AS CLI
+		ON MOD.CODICE_CLIENTE = CLI.CODICE AND CLI.DOMINIO ='CLI'
+	LEFT OUTER JOIN PARAMETRI AS PCO
+		ON MOD.PARTE_INTERESSATA = PCO.CODICE AND PPE.DOMINIO ='PCO'
+	LEFT OUTER JOIN PARAMETRI AS PPE2
+		ON MOD.PRODOTTO_RILASCIATO = PPE2.CODICE AND PPE2.DOMINIO ='PPE'
+	LEFT OUTER JOIN PARAMETRI AS INL2
+		ON MOD.LIVELLO_INCIDENTE = INL2.CODICE AND INL2.DOMINIO ='INL'
+	LEFT OUTER JOIN PARAMETRI AS PCO2
+		ON MOD.PARTE_INTERESSATA = PCO2.CODICE AND PCO2.DOMINIO ='PCO'
+	LEFT OUTER JOIN PARAMETRI AS OOE2
+		ON MOD.CODICE_ORE_LOCALE = OOE2.CODICE AND OOE2.DOMINIO ='OOE'
+	LEFT OUTER JOIN PARAMETRI AS MME2
+		ON MOD.CODICE_MIN_LOCALE = MME2.CODICE AND MME2.DOMINIO ='MME'
+	LEFT OUTER JOIN PARAMETRI AS GGE
+		ON MOD.CODICE_GIORNI = GGE.CODICE AND GGE.DOMINIO ='GGE'
+	LEFT OUTER JOIN PARAMETRI AS OOE
+		ON MOD.CODICE_ORE = OOE.CODICE AND OOE.DOMINIO ='OOE'
+	LEFT OUTER JOIN PARAMETRI AS MME
+		ON MOD.CODICE_MIN = MME.CODICE AND MME.DOMINIO ='MME'
+	LEFT OUTER JOIN PARAMETRI AS UNI1
+		ON MOD.UNITA_RILASCIATA = UNI1.CODICE AND UNI1.DOMINIO ='UNI'
+	LEFT OUTER JOIN PARAMETRI AS UNI2
+		ON MOD.UNITA_MAX_PERMESSA = UNI2.CODICE AND UNI2.DOMINIO ='UNI'
+
+;
+
+
+
+
+
+-- view [V_LIMOD13]
+DROP VIEW IF exists V_LIMOD13;
+
+CREATE VIEW V_LIMOD13
+AS
+SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+	FROM LIMOD13 AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+;
+
+
+
+-- view [V_LIMOD53]
+DROP VIEW IF exists V_LIMOD53;
+
+CREATE VIEW V_LIMOD53
+AS
+SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+	FROM LIMOD53 AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+;
+
+
+
+
+-- view [V_ALIMOD52]
+DROP VIEW IF exists V_LIMOD53;
+
+CREATE VIEW V_LIMOD53
+AS
+SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+	FROM LIMOD53 AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+;
+
+
+
+
+
+-- view [V_ALIMOD50_DETTAGLIO]
+DROP VIEW IF exists V_ALIMOD50_DETTAGLIO;
+
+CREATE VIEW V_ALIMOD50_DETTAGLIO
+AS
+SELECT 
+	DET.* 
+	,SAZ.DESCRIZIONE AS DESCR_STATO_AZIONE
+	,ACT.DESCRIZIONE AS DESCR_TIPO_AZIONE
+	,INS.NOME || ' ' || INS.COGNOME AS NOME_COGNOME_INS
+FROM ALIMOD50_DETTAGLI AS DET
+LEFT OUTER JOIN PARAMETRI AS SAZ
+ON SAZ.CODICE=DET.STATO_AZIONE AND SAZ.DOMINIO = 'SAZ'
+LEFT OUTER JOIN PARAMETRI AS ACT
+ON ACT.CODICE=DET.CODICE_TIPO_AZIONE AND act.DOMINIO = 'ACT'
+LEFT OUTER JOIN UTENTI AS INS
+ON INS.ID_UTENTE=DET.ID_UTENTE_INS 
+
+;
+
+
+
+DROP VIEW IF exists V_ALIMOD50_MASTER;
+-- view [V_ALIMOD50_MASTER]
+CREATE VIEW V_ALIMOD50_MASTER
+AS
+select 
+	codice_bl
+	id_azienda,
+	nr_modulo,
+	dt_modulo,
+	codice_tipo_verifica,
+	stato,
+	titolo,
+	id_utente_con,
+	id_utente_app,
+	id_modulo_parent,
+	lista_allegati,	
+    descr_stato,
+    descr_bl,
+    descr_tipo_verifica,
+    descr_sito,
+    descr_con,
+	vad.* 	
+from v_alimod50 as va
+left outer join v_alimod50_dettaglio as vad
+on va.id_modulo=vad.id_modulo order by va.id_modulo desc
+;
+
+
+
+
+-- view [V_ALIMOD51_DETTAGLIO]
+DROP VIEW IF exists V_ALIMOD51_DETTAGLIO;
+
+CREATE VIEW V_ALIMOD51_DETTAGLIO
+AS
+SELECT 
+	DET.* 
+	,INS.NOME || ' ' || INS.COGNOME AS NOME_COGNOME_INS
+FROM ALIMOD51_DETTAGLI AS DET
+LEFT OUTER JOIN UTENTI AS INS
+ON INS.ID_UTENTE=DET.ID_UTENTE_INS 
+;
+
+
+-- view [V_LIMOD53_DETTAGLIO]
+DROP VIEW IF exists V_LIMOD53_DETTAGLIO;
+
+CREATE VIEW V_LIMOD53_DETTAGLIO
+AS
+SELECT 
+	DET.* 
+	,INS.NOME || ' ' || INS.COGNOME AS NOME_COGNOME_INS
+FROM LIMOD53_DETTAGLI AS DET
+LEFT OUTER JOIN UTENTI AS INS
+ON INS.ID_UTENTE=DET.ID_UTENTE_INS 
+;
+
+
+
+
+-- view [V_ALIMOD52_DETTAGLIO]
+DROP VIEW IF exists V_ALIMOD52_DETTAGLIO;
+
+CREATE VIEW V_ALIMOD52_DETTAGLIO
+AS
+SELECT 
+	DET.* 
+	,INS.NOME || ' ' || INS.COGNOME AS NOME_COGNOME_INS
+	,STA.DESCRIZIONE AS DESCR_TIPO_DETTAGLIO
+,CASE
+  WHEN (MESE_RIUNIONE ='01') THEN 'Gennaio'
+  WHEN (MESE_RIUNIONE ='02') THEN 'Febbraio'
+  WHEN (MESE_RIUNIONE ='03') THEN 'Marzo'
+  WHEN (MESE_RIUNIONE ='04') THEN 'Aprile'
+  WHEN (MESE_RIUNIONE ='05') THEN 'Maggio'
+  WHEN (MESE_RIUNIONE ='06') THEN 'Giugno'
+  WHEN (MESE_RIUNIONE ='07') THEN 'Luglio'
+  WHEN (MESE_RIUNIONE ='08') THEN 'Agosto'
+  WHEN (MESE_RIUNIONE ='09') THEN 'Settembre'
+  WHEN (MESE_RIUNIONE ='10') THEN 'Ottobre'
+  WHEN (MESE_RIUNIONE ='11') THEN 'Novembre'
+  WHEN (MESE_RIUNIONE ='12') THEN 'Dicembre'
+  ELSE ''
+END AS DESCR_MESE
+FROM ALIMOD52_DETTAGLI AS DET
+LEFT OUTER JOIN UTENTI AS INS
+ON INS.ID_UTENTE=DET.ID_UTENTE_INS 
+LEFT OUTER JOIN PARAMETRI AS STA
+ON STA.CODICE = DET.TIPO_DETTAGLIO AND STA.DOMINIO ='M52'
+;
+
+
+
+
+-- view [V_ALIMOD80_DETTAGLIO]
+DROP VIEW IF exists V_ALIMOD80_DETTAGLIO;
+
+CREATE VIEW V_ALIMOD80_DETTAGLIO
+AS
+SELECT 
+	DET.* 
+	,INS.NOME || ' ' || INS.COGNOME AS NOME_COGNOME_INS
+	,P1.DESCRIZIONE AS DESCR_CATEGORIA_PERSONALE
+	,P2.DESCRIZIONE AS DESCR_TIPO_INFORTUNIO
+	,P3.DESCRIZIONE AS DESCR_ATTREZZATURA_INTERESSATA
+	,P4.DESCRIZIONE AS DESCR_COMP_ATTR_INTERESSATA
+	,P5.DESCRIZIONE AS DESCR_GG_PROGNOSI
+	,P6.DESCRIZIONE AS DESCR_LESIONE_MAGGIORE
+	,P7.DESCRIZIONE AS DESCR_PARTE_CORPO
+	,P8.DESCRIZIONE AS DESCR_ALTRE_LESIONI
+	,P9.DESCRIZIONE AS DESCR_ALTRE_LESIONI_PARTE_CORPO
+FROM ALIMOD80_DETTAGLI AS DET
+LEFT OUTER JOIN UTENTI AS INS
+ON INS.ID_UTENTE=DET.ID_UTENTE_INS 
+LEFT OUTER JOIN  PARAMETRI AS P1
+	ON DET.CODICE_CODICE_CATEGORIA_PERSONALE = P1.CODICE AND P1.DOMINIO ='CPE'
+LEFT OUTER JOIN  PARAMETRI AS P2
+	ON DET.CODICE_CODICE_TIPO_INFORTUNIO = P2.CODICE AND P2.DOMINIO ='TIF'
+LEFT OUTER JOIN  PARAMETRI AS P3
+	ON DET.CODICE_CODICE_ATTREZZATURA_INTERESSATA = P3.CODICE AND P3.DOMINIO ='ATI'
+LEFT OUTER JOIN PARAMETRI AS P4
+	ON DET.CODICE_COMP_ATTR_INTERESSATA = P4.CODICE AND P4.DOMINIO ='CAI'
+LEFT OUTER JOIN  PARAMETRI AS P5
+	ON DET.CODICE_GG_PROGNOSI = P5.CODICE AND P5.DOMINIO ='GGP'
+LEFT OUTER JOIN PARAMETRI AS P6
+	ON DET.CODICE_LESIONE_MAGGIORE = P6.CODICE AND P6.DOMINIO ='LES'
+LEFT OUTER JOIN PARAMETRI AS P7
+	ON DET.CODICE_PARTE_CORPO = P7.CODICE AND P7.DOMINIO ='PCO'
+LEFT OUTER JOIN PARAMETRI AS P8
+	ON DET.CODICE_ALTRE_LESIONI = P8.CODICE AND P8.DOMINIO ='LES'
+LEFT OUTER JOIN PARAMETRI AS P9
+	ON DET.CODICE_ALTRE_LESIONI_PARTE_CORPO = P9.CODICE AND P9.DOMINIO ='PCO'
+;
+
+
+DROP VIEW IF exists V_ALIMOD80_MASTER;
+-- view [V_ALIMOD50_MASTER]
+CREATE VIEW V_ALIMOD80_MASTER
+AS
+select *
+from V_ALIMOD80
+;
+
+
+-- view [V_ALIMOD67]
+DROP VIEW IF exists V_ALIMOD67 CASCADE;
+CREATE VIEW V_ALIMOD67
+AS
+	SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+	FROM ALIMOD67 AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+;
+
+
+
+-- view [V_ALIMOD67_DETTAGLIO]
+DROP VIEW IF exists V_ALIMOD67_DETTAGLIO CASCADE;
+
+CREATE VIEW V_ALIMOD67_DETTAGLIO
+AS
+SELECT 
+		DET.* 
+	,'' as NUMERO_AZIONE
+	,'' as PERC_AVANZAMENTO
+	,SAZ.DESCRIZIONE AS DESCR_STATO_AZIONE
+	,ACT.DESCRIZIONE AS DESCR_TIPO_AZIONE
+	,INS.NOME || ' ' || INS.COGNOME AS NOME_COGNOME_INS
+FROM ALIMOD67_DETTAGLI AS DET
+LEFT OUTER JOIN PARAMETRI AS SAZ
+ON SAZ.CODICE=DET.STATO_AZIONE AND SAZ.DOMINIO = 'SAZ'
+LEFT OUTER JOIN PARAMETRI AS ACT
+ON ACT.CODICE=DET.stato_azione AND act.DOMINIO = 'ACT'
+LEFT OUTER JOIN UTENTI AS INS
+ON INS.ID_UTENTE=DET.ID_UTENTE_INS 
+;
+
+
+DROP VIEW IF exists V_ALIMOD67_MASTER;
+-- view [V_ALIMOD67_MASTER]
+CREATE VIEW V_ALIMOD67_MASTER
+AS
+select
+	*
+from V_ALIMOD67 as dd
+;
+
+
+
+
+-- view [V_ALIMOD05]
+DROP VIEW IF exists V_ALIMOD05;
+CREATE VIEW V_ALIMOD05
+AS
+	SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		,CON.NOME_COGNOME DESCR_CON
+	FROM ALIMOD05 AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+;
+
+
+
+-- view [V_ALIMOD05_DETTAGLIO]
+DROP VIEW IF exists V_ALIMOD05_DETTAGLIO;
+
+CREATE VIEW V_ALIMOD05_DETTAGLIO
+AS
+SELECT 
+	DET.* 
+	,'' as NUMERO_AZIONE
+	,'' as PERC_AVANZAMENTO
+	,INS.NOME || ' ' || INS.COGNOME AS NOME_COGNOME_INS
+	,RES.NOME || ' ' || RES.COGNOME AS NOME_COGNOME_RES
+FROM ALIMOD05_DETTAGLI AS DET
+LEFT OUTER JOIN UTENTI AS INS
+ON INS.ID_UTENTE=DET.ID_UTENTE_INS 
+LEFT OUTER JOIN UTENTI AS RES
+ON RES.ID_UTENTE=DET.ID_UTENTE_RES_1 
+;
+
+
+
+-- view [V_CHECKLIST]
+DROP VIEW IF exists V_CHECKLIST;
+
+CREATE VIEW V_CHECKLIST
+AS
+SELECT 
+		MOD.*
+		,STA.DESCRIZIONE AS DESCR_STATO
+		,BL.DESCRIZIONE AS DESCR_BL 
+		,AZ.RAGSOC AS DESCR_SITO
+		--,CON.NOME_COGNOME DESCR_CON
+		,MOD.REFERENTE AS DESCR_CON
+	FROM checklist_agenzie AS MOD
+	INNER JOIN PARAMETRI AS BL
+	ON MOD.CODICE_BL = BL.CODICE AND BL.DOMINIO ='BSN'
+	INNER JOIN AZIENDE AS AZ
+	ON MOD.ID_AZIENDA = AZ.ID_AZIENDA
+	INNER JOIN V_UTENTI AS CON
+	ON MOD.ID_UTENTE_CON = CON.ID_UTENTE
+	LEFT OUTER JOIN PARAMETRI AS STA
+	ON STA.CODICE = MOD.STATO AND STA.DOMINIO ='STA'
+;
+
+
+
+
+-- view [V_QHSE_APPROVER]
+DROP VIEW IF exists V_QHSE_APPROVER;
+
+CREATE VIEW V_QHSE_APPROVER
+AS
+select 
+	ri.id_modulo
+	,ri.nr_modulo
+	,ri.ID_UTENTE_CON
+	,ri.nome_tabella as codice_tipo_richiesta
+	,ut.username as username_con
+	,az.id_azienda
+	,az.ragsoc
+	,stato
+	,app.id_utente as id_utente_app 
+	,app.username as username_app 
+from (
+	select 
+		id_modulo
+		,nr_modulo
+		,id_azienda
+		,stato
+		,ID_UTENTE_CON
+		,'ALIMOD20'::varchar as nome_tabella
+	from ALIMOD20 where stato = 'DRA'
+	union 
+	select 
+		id_modulo
+		,nr_modulo
+		,id_azienda
+		,stato
+		,ID_UTENTE_CON
+		,'ALIMOD20'::varchar as nome_tabella		
+	from ALIMOD50 where stato = 'DRA'
+	) as ri
+inner join aziende as az on ri.id_azienda=az.id_azienda
+inner join utenti as ut on ri.ID_UTENTE_CON =ut.id_utente
+inner join utenti_aziende as ua on ri.id_azienda=ua.id_azienda
+inner join utenti as app on ua.id_utente=app.id_utente
+inner join utenti_profili as up on ua.id_utente = up.id_utente
+inner join profili as pr on up.id_profilo=pr.id_profilo and pr.codice='APP'
+;
+
+
+
+-- view [V_SITIQUSE_BL]
+DROP VIEW IF exists V_SITIQUSE_BL;
+
+CREATE VIEW V_SITIQUSE_BL
+AS
+select distinct 
+	azi.id_azienda
+	,azi.codice
+	,azi.ragsoc
+	,split.codice_bl::char(3) as codice_bl
+	,bsn.descrizione as descr_bl
+from aziende as azi,
+unnest(string_to_array(azi.tipo_azienda, ';')) split(codice_bl)
+inner join parametri as bsn 
+on bsn.codice=split.codice_bl and dominio ='BSN'
+where azi.tipo_azienda like '%HSE%'
+;
+
+
+-- view [V_UTENTI_AZIENDE_PROFILI]
+DROP VIEW IF exists V_UTENTI_AZIENDE_PROFILI;
+
+CREATE VIEW V_UTENTI_AZIENDE_PROFILI
+AS
+select 
+	ute.id_utente
+	,initcap(ute.nome::varchar) as nome
+	,initcap(ute.cognome::varchar) as cognome
+	,initcap(ute.nome::varchar)||' '||initcap(ute.cognome::varchar) as nome_cognome
+	,uta.id_azienda
+	,pro.codice as CODICE_PROFILO
+from utenti as ute
+inner join utenti_aziende as uta
+on ute.id_utente=uta.id_utente
+inner join utenti_profili as utp
+on ute.id_utente=utp.id_utente
+inner join profili as pro
+on utp.id_profilo=pro.id_profilo
+;
+
+
+
+-- view [V_AGENZIE]
+DROP VIEW IF exists V_AGENZIE;
+
+CREATE VIEW V_AGENZIE
+AS
+select utenti.id_utente,agenti.username,ragsoc,coda_agente,piva,indirizzo||' - '||cap||' - '||citta as indirizzo
+	,coda_agente||' - '||citta as sap_citta
+from agenti
+inner join utenti on agenti.username=utenti.username
+;
+
+drop view if exists V_MAIL_CONFIG;
+create view V_MAIL_CONFIG as 
+SELECT 
+	mc.*
+	,s1.descrizione AS descr_stato_iniziale
+	,s2.descrizione AS descr_stato_finale
+FROM mail_config AS mc
+LEFT OUTER JOIN parametri AS s1 on s1.dominio ='STA' AND s1.codice=mc.stato_iniziale
+LEFT OUTER JOIN parametri AS s2 on s2.dominio ='STA' AND s2.codice=mc.stato_finale
+;
+
+drop view if exists V_DISTRIBUTION_LIST_RICERCA;
+create view V_DISTRIBUTION_LIST_RICERCA as 
+SELECT 
+	dl.*
+	,si.ragsoc
+FROM distribution_list AS dl
+LEFT OUTER JOIN aziende AS si ON si.id_azienda=dl.id_azienda
+;
+
+
+
+drop view if exists V_DISTRIBUTION_LIST;
+create view V_DISTRIBUTION_LIST as 
+select 
+	dl.modulo
+	,dl.workflow_action
+	,dl.stato_iniziale
+	,dl.stato_finale
+	,dl.oggetto
+	,dl.mittente
+	,dl.testo_mail
+	,t1.id_azienda
+	,t1.codice_profilo
+	,t1.destinatari_to
+	,'' as destinatari_cc
+	,'fabiano.moda@gmail.com' as destinatari_bcc
+from MAIL_CONFIG as dl, (select 
+	ua.id_azienda
+	,pr.codice as codice_profilo
+	,string_agg(ut.email,';') as destinatari_to
+from utenti_aziende as ua
+inner join utenti as ut
+on ut.id_utente = ua.id_utente 
+inner join utenti_profili as up
+on ua.id_utente = up.id_utente 
+inner join profili as pr
+on up.id_profilo = pr.id_profilo and pr.codice in ('APP')
+inner join aziende as az 
+on ua.id_azienda=az.id_azienda and tipo_azienda like '%HSE%'
+group by 
+	ua.id_azienda
+	,pr.codice 
+) as t1
+where dl.workflow_action='APPROVE'
+	and dl.stato_iniziale='DRA'
+	AND dl.stato_finale='WAI'
+	
+UNION
+
+select 
+	dl.modulo
+	,dl.workflow_action
+	,dl.stato_iniziale
+	,dl.stato_finale
+	,dl.oggetto
+	,dl.mittente
+	,dl.testo_mail	
+	,null as id_azienda
+	,'' as codice_profilo
+	,'' as destinatari_to
+	,'' as destinatari_cc
+	,'fabiano.moda@gmail.com' as destinatari_bcc
+from MAIL_CONFIG as dl
+where dl.workflow_action='APPROVE'
+	and dl.stato_iniziale='WAI'
+	AND dl.stato_finale='APP'
+	
+UNION
+
+select 
+	dl.modulo
+	,dl.workflow_action
+	,dl.stato_iniziale
+	,dl.stato_finale
+	,dl.oggetto
+	,dl.mittente
+	,dl.testo_mail	
+	,null as id_azienda
+	,'' as codice_profilo
+	,'' as destinatari_to
+	,'' as destinatari_cc
+	,'fabiano.moda@gmail.com' as destinatari_bcc
+from MAIL_CONFIG as dl
+where dl.workflow_action='ROLLBACK'
+	and dl.stato_iniziale='WAI'
+	AND dl.stato_finale='DRA'
+	
+UNION
+
+select 
+	dl.modulo
+	,mc.workflow_action
+	,mc.stato_iniziale
+	,mc.stato_finale
+	,mc.oggetto
+	,mc.mittente
+	,mc.testo_mail	
+	,dl.id_azienda
+	,'' as codice_profilo
+	,dl.lista_mail as destinatari_to
+	,'' as destinatari_cc
+	,'fabiano.moda@gmail.com' as destinatari_bcc
+from MAIL_CONFIG as mc
+inner join DISTRIBUTION_LIST as dl
+on mc.modulo=dl.modulo
+where mc.workflow_action='NOTIFY'
+	and mc.stato_iniziale='WAI'
+	AND mc.stato_finale='APP'
+;
+

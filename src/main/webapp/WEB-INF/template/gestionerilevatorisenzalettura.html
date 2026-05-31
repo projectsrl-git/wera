@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if> 
+	
+    <script type="text/javascript">
+	    var profilo="<#if PROFILO?exists>${PROFILO}</#if>";
+	    
+		var flagRicerca=false;
+		var dtAjax1="astro?FUNCTIONID=AJAXArray&dataset=DataSetStat35SenzaLettura&columns=ID_MODULO,ID_MODULO,N_FABBRICA_DISPOSITIVO,CONDOMINO,LOCATARIO,STANZA,N_TELEFONO,CONDOMINIO,INDIRIZZO,LOCALITA,PROVINCIA,CAP,SIM,AMMINISTRATORE,TELEFONO,ID_AZIENDA,ID_CONDOMINIO,NOME_FILE,ANOMALIA,DESCRI_ANOMALIA,COLORE_HTML&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if WHERECONDITION?exists>${WHERECONDITION}</#if>";
+	
+		
+		$(function(){
+			
+			
+		    
+		    $('#dt1 thead tr').clone(true).appendTo( '#dt1 thead' );
+		    $('#dt1 thead tr:eq(1) th').each( function (i) {
+		        var title = $(this).text();
+		        if (title!=''){
+		        	$(this).html( '<input type="text" placeholder="Filtra '+title+'" />' );
+		        }
+		        
+		 
+		        $( 'input', this ).on( 'keyup change', function () {
+		            if ( table1.column(i).search() !== this.value ) {
+		                table1
+		                    .column(i)
+		                    .search( this.value )
+		                    .draw();
+		            }
+		        } );
+		    } );			
+			
+			
+			
+			var table1 = $('#dt1').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax1+dtWhereCondition,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:1,
+						visible: <#if PROFILO?contains('ADM') && VALIDITA_CREDITI?contains('true')>true<#else>false</#if>,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="deleteRow" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:15,
+						visible: false
+					},
+					{
+						width:"1%",
+						targets:16,
+						visible: false
+					},
+					{
+						width:"1%",
+						targets:20,
+						visible: false
+					}
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt1').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+                'rowCallback': function(row, data, index){
+                    if(data[20].toUpperCase() != ''){
+                    	//$(row).css('background-color', data[17]);
+                    	$(row).find('td:eq(2)').css('background-color', data[20]);
+                    	$(row).find('td:eq(18)').css('background-color', data[20]);
+                    	$(row).find('td:eq(19)').css('background-color', data[20]);
+                    }
+
+                },
+				aaSorting: []
+
+            });
+			
+			
+			
+	        
+			
+            $("#formDelete").submit(function(event) {
+			    event.preventDefault(); // Evita l'invio immediato del form
+			
+			    Swal.fire({
+			        title: 'Cancella selezionato',
+			        text: 'Confermi la cancellazione dell\'elemento selezionato?',
+			        icon: 'warning',
+			        showCancelButton: true,
+			        confirmButtonText: 'Conferma',
+			        confirmButtonColor: '#e08e0b', 
+			        cancelButtonText: 'Annulla',
+			        reverseButtons: true,
+			        allowOutsideClick: false,
+			        allowEscapeKey: false,
+			        customClass: {
+			            popup: 'swal-wide'
+			        }
+			    }).then((result) => {
+			        if (result.isConfirmed) {
+			            // Mostra un loader durante la cancellazione
+			            Swal.fire({
+			                title: 'Cancellazione in corso...',
+			                icon: 'info',
+			                allowOutsideClick: false,
+			                allowEscapeKey: false,
+			                showConfirmButton: false,
+			                didOpen: () => {
+			                    Swal.showLoading();
+			                },
+			                customClass: {
+			                    popup: 'swal-wide'
+			                }
+			            });
+			
+			            // Invio effettivo del form via POST
+			            $.post($(this).attr('action'), $(this).serialize(), function(response) {
+			                Swal.close();
+			
+			                if (response == null || response == '') {
+			                    Swal.fire({
+			                        title: 'Cancellazione non riuscita!',
+			                        text: 'Si è verificato un errore, cancellazione non riuscita.',
+			                        icon: 'error',
+			                        showConfirmButton: false,
+			                        timer: 2000,
+			                        allowOutsideClick: false,
+			                        allowEscapeKey: false,
+			                        customClass: {
+			                            popup: 'swal-wide'
+			                        }
+			                    });
+			                } else {
+			                    var result = eval('(' + response + ')');
+			                    if (result.result) {
+			                        $("#dt1").DataTable().ajax.reload();
+			
+			                        Swal.fire({
+			                            title: 'Cancellazione completata!',
+			                            text: 'Cancellazione effettuata con successo.',
+			                            icon: 'success',
+			                            showConfirmButton: false,
+			                            timer: 2000,
+			                            allowOutsideClick: false,
+			                            allowEscapeKey: false,
+			                            customClass: {
+			                                popup: 'swal-wide'
+			                            }
+			                        });
+			                    }
+			                }
+			            });
+			        }
+			    });
+			});	
+			
+			
+	       
+	        
+	        
+	        $('#dt1 tbody').on( 'click', '.editRow', function () {
+	        	var table = $('#dt1').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#ID_AZIENDA_1').val(data[15]);
+				$('#ID_AZIENDA').val(data[15]);
+				$('#ID_CONDOMINIO').val(data[16]);
+				$('#RILEVATORE').val(data[2]);
+				$('#RILEVATORE_1').val(data[2]);
+				$('#FUNCTIONID_EDIT').val("GestioneDatiSingoloRilevatore");
+				$('#READONLY').val("N");
+				$("#formEdit").submit();
+	        } );
+	        
+	        
+	        $('#dt1 tbody').on( 'click', '.deleteRow', function () {
+	        	var table = $('#dt1').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_MODULO");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoGestioneRilevatoriErrore");
+				$('#formDelete').submit();
+	        } );	
+	        
+		});	        
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<form action="astro" method="post" id="formStampa" name="formStampa">
+		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="GestioneDatiRilevatori">	
+		<input type="hidden" id="ID_MODULO_STAMPA" name="ID_MODULO">
+	</form>
+	
+	
+
+	
+	<form action="astro" method="get" id="formEdit" name="formEdit">
+		<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+		<input type="hidden" id="READONLY" name="READONLY" value="N">
+		<input type="hidden" id="ID_DETTAGLIO" name="ID_DETTAGLIO">
+		<input type="hidden" id="RILEVATORE" name="RILEVATORE">
+		<input type="hidden" id="RILEVATORE_1" name="RILEVATORE_1">
+		<input type="hidden" id="TIPOLOGIA" name="TIPOLOGIA">
+		<input type="hidden" id="ID_AZIENDA" name="ID_AZIENDA">
+		<input type="hidden" id="ID_AZIENDA_1" name="ID_AZIENDA_1">
+		<input type="hidden" id="ID_CONDOMINIO" name="ID_CONDOMINIO">
+	</form>		
+	
+	<form action="astro" method="post" id="formDelete" name="formDelete">
+		<input type="hidden" id="FUNCTIONID_DELETE" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="DELETE">
+		<input type="hidden" id="keyField" name="keyField">
+		<input type="hidden" id="keyValue" name="keyValue">
+	</form>
+	
+	
+	
+	
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+           
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							<div class="row">
+								<div class="col-sm-12">							
+							
+									
+										<div class="form-group">
+										
+											<!-- <div class="col-sm-3">
+												<button class="btn btn-primary btn-sm" id="ricerca" type="submit" name="ricerca">${label_search}</button>
+											</div>  -->
+											
+											<div class="col-sm-9">
+												<fieldset>
+													${label_legenda}:
+													<i class="fa fa-pencil" aria-hidden="true"></i>${label_edit}
+													<i class="fa fa-trash-o" aria-hidden="true"></i>${label_delete}
+												</fieldset>
+											</div>
+										</div>			
+										<br/>	                        
+			                        
+			                        
+			                        
+			                        
+			                        <div class="hr-line-dashed"></div>
+									
+									<h4>Rilevatori senza lettura</h4>
+									
+			                        <div class="table-responsive">
+										<table id="dt1" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+													<th></th>
+							                        <th>Rilevatore</th>
+													<th>Condomino</th>
+													<th>Locatario</th>
+													<th>Stanza</th>
+													<th>Telefono</th>
+													<th>Condominio</th>
+													<th>Indirizzo</th>
+													<th>Localit&#224;</th>
+													<th>Prov.</th>
+													<th>CAP</th>
+													<th>SIM</th>
+													<th>Amministratore</th>
+													<th>Telefono</th>
+													<th></th>
+													<th></th>
+													<th>Nome file</th>
+													<th>Cod. anomalia</th>
+									                <th>Anomalia</th>
+													<th></th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+			                        
+			                        
+	 
+
+                    			</div>
+					
+                			</div>
+						</div>
+            		</div>
+				</div>
+			</div>
+						
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+
+</body>
+
+</html>

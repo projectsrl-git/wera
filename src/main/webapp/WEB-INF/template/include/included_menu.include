@@ -1,0 +1,57 @@
+		<nav class="navbar-default navbar-static-side" role="navigation">
+		
+			<div class="sidebar-collapse">
+			
+				<ul class="nav metismenu" id="side-menu">
+				
+					<li class="nav-header">
+						<div class="profile-element"> 
+							<span>
+								<img alt="image" src="img/${ALIAS_AZIENDA_UTENTE}-logo.png" />
+								<!--<img alt="image" src="img/sirbi-logo.png" />-->
+							 </span>
+						</div>
+						<div class="logo-element">
+							WERA
+						</div>
+					</li>
+					
+
+					<#list menu_list as menuItem>
+					<#if menuItem.getItemLevel()=1>
+					<li<#if SELECTED_PATH?starts_with(menuItem.getPath())> class="active"</#if>>
+						<#if menuItem.hasChildren()>
+						<a href="#"><i class="${menuItem.getIcon()}"></i> <span class="nav-label">${menuItem.getLabel()}</span>&nbsp;<span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<#list menu_list as menuItemLevel2>
+							<#if menuItemLevel2.getMenuIdSup()=menuItem.getMenuId()>
+							<#if menuItemLevel2.hasChildren()>							
+							<li<#if SELECTED_PATH?starts_with(menuItemLevel2.getPath())> class="active"</#if>>
+                                <a href="#">${menuItemLevel2.getLabel()}<span class="fa arrow"></span></a>
+                                <ul class="nav nav-third-level">
+									<#list menu_list as menuItemLevel3>
+									<#if menuItemLevel3.getMenuIdSup()=menuItemLevel2.getMenuId()>
+                                    <li<#if menuItemLevel3.getPath()=SELECTED_PATH> class='active'</#if>>
+                                        <a href="${menuItemLevel3.getLink()}">${menuItemLevel3.getLabel()}</a>
+                                    </li>
+									</#if>
+									</#list>								
+                                </ul>							
+							</li>
+							<#else>
+							<li<#if menuItemLevel2.getPath()=SELECTED_PATH> class='active'</#if>><a href="${menuItemLevel2.getLink()}">${menuItemLevel2.getLabel()}</a></li>
+							</#if>
+							</#if>
+							</#list>								
+						</ul>
+						<#else>
+						<a href="${menuItem.getLink()}"><i class="${menuItem.getIcon()}"></i> <span class="nav-label">${menuItem.getLabel()}</span></a>
+						</#if>
+					</li>
+					</#if>
+					</#list>
+					
+					
+					
+			</div>
+		</nav>

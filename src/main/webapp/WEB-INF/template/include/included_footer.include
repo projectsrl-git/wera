@@ -1,0 +1,15 @@
+			<div class="footer">
+        	    <div class="pull-right">
+        	        <strong>Powered by Project srl
+        	    </div>
+        	    <div>
+        	        <strong>Copyright</strong> Wera &copy; 2017-<span id="currentYear">
+        	    </div>
+        	</div>
+
+        	
+        	<script>
+  const currentYear = new Date().getFullYear();
+  document.getElementById('currentYear').textContent = currentYear;
+</script>
+

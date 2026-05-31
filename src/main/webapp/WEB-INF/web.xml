@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app>
+  <display-name>astro</display-name>
+  <description>ALI Back Office WEB</description>
+  <servlet>
+    <servlet-name>astro</servlet-name>
+    <servlet-class>net.projectsrl.alibow.core.AliBOWServletApplication</servlet-class>
+    <init-param>
+      <param-name>configFile</param-name>
+      <param-value>WEB-INF/config/config.cfg</param-value>
+    </init-param>
+    <init-param>
+      <param-name>configName</param-name>
+      <param-value>astro</param-value>
+    </init-param>
+    <init-param>
+      <param-name>configDefault</param-name>
+      <param-value>WEB-INF/config/config.cfg</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>astro</servlet-name>
+    <url-pattern>/astro</url-pattern>
+  </servlet-mapping>
+  <session-config>
+    <session-timeout>0</session-timeout>
+  </session-config>
+</web-app>

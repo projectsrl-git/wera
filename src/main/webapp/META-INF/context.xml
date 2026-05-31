@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context>
+  <Resource 
+	auth="Container" 
+	driverClassName="org.postgresql.Driver" 
+	logAbandoned="true" 
+	maxActive="100" 
+	maxIdle="200" 
+	maxWait="3000" 
+	minIdle="10" 
+	password="Project1"
+	username="postgres"
+	removeAbandoned="true" 
+	removeAbandonedTimeout="60" 
+	type="javax.sql.DataSource" 
+	url="jdbc:postgresql://db-wera-etc-host:5432/wera"
+	global="jdbc/wera"
+	name="jdbc/wera"
+	/>
+	 
+</Context>

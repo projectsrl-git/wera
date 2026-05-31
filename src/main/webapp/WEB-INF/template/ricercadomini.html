@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	
+    <script type="text/javascript">
+		var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSDominiParametri&columns=ID_PARAMETRO,ID_PARAMETRO,CODICE,DESCRIZIONE&WHERECONDITION=";
+		var dtWhereCondition="";
+		
+		$(function(){
+			
+	        $('#dt').DataTable({
+				ajax: dtAjax+dtWhereCondition,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						width:"1%",
+						targets:1,
+						orderable: false,
+						visible: <#if PROFILO?contains('ADM') && VALIDITA_CREDITI?contains('true')>true<#else>false</#if>,
+						data:null,
+			            defaultContent: '<a href="#" class="deleteRow" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>'
+					}
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv'},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'},
+                    {extend: 'print',
+                     customize: function (win){
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                    }
+                    }
+                ],
+				aaSorting: []
+
+            });
+	        
+			
+            $("#formDelete").submit(function(event) {
+			    event.preventDefault(); // Evita l'invio immediato del form
+			
+			    Swal.fire({
+			        title: 'Cancella selezionato',
+			        text: 'Confermi la cancellazione dell\'elemento selezionato?',
+			        icon: 'warning',
+			        showCancelButton: true,
+			        confirmButtonText: 'Conferma',
+			        confirmButtonColor: '#e08e0b', 
+			        cancelButtonText: 'Annulla',
+			        reverseButtons: true,
+			        allowOutsideClick: false,
+			        allowEscapeKey: false,
+			        customClass: {
+			            popup: 'swal-wide'
+			        }
+			    }).then((result) => {
+			        if (result.isConfirmed) {
+			            // Mostra un loader durante la cancellazione
+			            Swal.fire({
+			                title: 'Cancellazione in corso...',
+			                icon: 'info',
+			                allowOutsideClick: false,
+			                allowEscapeKey: false,
+			                showConfirmButton: false,
+			                didOpen: () => {
+			                    Swal.showLoading();
+			                },
+			                customClass: {
+			                    popup: 'swal-wide'
+			                }
+			            });
+			
+			            // Invio effettivo del form via POST
+			            $.post($(this).attr('action'), $(this).serialize(), function(response) {
+			                Swal.close();
+			
+			                if (response == null || response == '') {
+			                    Swal.fire({
+			                        title: 'Cancellazione non riuscita!',
+			                        text: 'Si è verificato un errore, cancellazione non riuscita.',
+			                        icon: 'error',
+			                        showConfirmButton: false,
+			                        timer: 2000,
+			                        allowOutsideClick: false,
+			                        allowEscapeKey: false,
+			                        customClass: {
+			                            popup: 'swal-wide'
+			                        }
+			                    });
+			                } else {
+			                    var result = eval('(' + response + ')');
+			                    if (result.result) {
+			                        $("#dt").DataTable().ajax.reload();
+			
+			                        Swal.fire({
+			                            title: 'Cancellazione completata!',
+			                            text: 'Cancellazione effettuata con successo.',
+			                            icon: 'success',
+			                            showConfirmButton: false,
+			                            timer: 2000,
+			                            allowOutsideClick: false,
+			                            allowEscapeKey: false,
+			                            customClass: {
+			                                popup: 'swal-wide'
+			                            }
+			                        });
+			                    }
+			                }
+			            });
+			        }
+			    });
+			});	
+			
+	        $('#dt tbody').on( 'click', '.editRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_PARAMETRO').val(data[0]);
+				$('#FUNCTIONID_EDIT').val("InserimentoDomini");
+				$("#forEdit").submit();
+	        } );
+	        			
+	        $('#dt tbody').on( 'click', '.deleteRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_PARAMETRO");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoDomini");
+				$('#formDelete').submit();
+	        } );				
+			
+		});		
+		
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<form action="astro" method="post" id="formDelete" name="formDelete">
+		<input type="hidden" id="FUNCTIONID_DELETE" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="DELETE">
+		<input type="hidden" id="keyField" name="keyField">
+		<input type="hidden" id="keyValue" name="keyValue">
+	</form>
+	
+	<form action="astro" method="get" id="forEdit" name="forEdit">
+		<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+		<input type="hidden" id="ID_PARAMETRO" name="ID_PARAMETRO">
+	</form>		
+			
+	
+
+	
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->
+	                    				
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							
+		                                               
+							<div class="row">
+								<div class="col-sm-12">							
+									
+									<fieldset>
+										${label_legenda}:
+										<i class="fa fa-pencil" aria-hidden="true"></i>${label_edit}
+										<i class="fa fa-trash-o" aria-hidden="true"></i>${label_delete}
+									</fieldset>
+					
+			                        <div class="table-responsive">
+										<table id="dt" class="table table-striped table-bordered table-hover">
+											<thead>
+												<tr>
+													<th></th>
+													<th></th>
+													<th>${label_codice}</th>
+													<th>${label_descrizione}</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+		
+                    			</div>
+							
+                			</div>
+		                			
+		                			
+		                			
+						</div>
+                    </div>
+                </div>
+            </div>		
+			
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+	</div>
+
+</body>
+
+</html>
+

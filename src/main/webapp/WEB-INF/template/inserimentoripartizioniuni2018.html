@@ -1,0 +1,2982 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+			<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+			
+			<style>
+				.hide{
+  				display:none;  
+				}
+				
+				#chartdiv {
+				  width: 100%;
+				  height: 700px;
+				  min-height: 145px;
+				  font-size: 11px;
+				}
+				
+			   
+			</style>
+			
+			<!-- Resources -->
+			<script src="js/amcharts/lib/3/amcharts.js"></script>
+			<script src="js/amcharts/lib/3/serial.js"></script>
+			<script src="js/amcharts/lib/3/plugins/export/export.min.js"></script>
+			<link rel="stylesheet" href="js/amcharts/lib/3/plugins/export/export.css" type="text/css" media="all" />
+			<script src="js/amcharts/lib/3/themes/none.js"></script>
+			
+			
+			<script type="text/javascript">
+			
+			var dtAjaxConsumiSingoleUnitaImmobiliari="astro?FUNCTIONID=AJAXArray&dataset=DSRipartizioniUNI2018Condominio&columns=ID_DETTAGLIO,DENOMINAZIONE,MILLESIMI,MILLESIMI_CLIMA,MILLESIMI_ACS,NUMERO_RIPARTITORI,LETTURA,LETTURA_ACS,CONSUMO_RISCALDAMENTO_Q_VOL,CONSUMO_RISCALDAMENTO_Q_INV,CONSUMO_RISCALDAMENTO_Q_OBB,CONSUMO_RISCALDAMENTO_Q_TOT,CONSUMO_ACS_Q_VOL,CONSUMO_ACS_Q_INV,CONSUMO_ACS_Q_OBB,CONSUMO_ACS_Q_TOT&WHERECONDITION=";
+			var dtAjaxConsumiCondominio="astro?FUNCTIONID=AJAXArray&dataset=DSRipartizioniUNI2018&columns=CONSUMI_RISC_Q_VOL,CONSUMI_RISC_Q_INV,CONSUMI_RISC_Q_OBB,CONSUMI_RISC_Q_TOT,CONSUMI_ACS_Q_VOL,CONSUMI_ACS_Q_INV,CONSUMI_ACS_Q_OBB,CONSUMI_ACS_Q_TOT,CONSUMI_RISC_F_INV&WHERECONDITION=";
+			
+			var dtAjaxAnomalie="astro?FUNCTIONID=AJAXArray&dataset=DSRilevatoriRipartizioniAnomalia&columns=LOCATARIO,LOCATARIO,STANZA,RILEVATORE,ANOMALIA,DESCR_ANOMALIA,DATA_ANOMALIA,ORA_ANOMALIA,DATA_DI_LETTURA,LETTURA_ATTUALE,VOLUME_ATTUALE,UNITA_DI_MISURA,ID_AZIENDA,ID_CONDOMINIO&JOLLY_CHAR=*&WHERECONDITION=";
+			var dtWhereConditionAnomalie="<#if ID_CONDOMINIO?exists && ID_CONDOMINIO!=''>WHERE VDR.ID_CONDOMINIO = ${ID_CONDOMINIO}<#else> WHERE 1=0 </#if>";
+
+			
+			
+			var dtAjaxSpeseSingoleUnitaImmobiliari="astro?FUNCTIONID=AJAXArray&dataset=DSRipartizioniUNI2018Condominio&columns=ID_DETTAGLIO,DENOMINAZIONE,SPESE_RISCALDAMENTO_S_VOL,SPESE_RISCALDAMENTO_S_INV,SPESE_RISCALDAMENTO_S_OBB,SPESE_RISCALDAMENTO_S_E,SPESE_RISCALDAMENTO_S_G,SPESE_RISCALDAMENTO_S_C,SPESE_RISCALDAMENTO_S_P,SPESE_RISCALDAMENTO_S_UC,SPESE_RISCALDAMENTO_S_TOT,SPESE_ACS_S_VOL,SPESE_ACS_S_INV,SPESE_ACS_S_OBB,SPESE_ACS_S_E,SPESE_ACS_S_G,SPESE_ACS_S_C,SPESE_ACS_S_P,SPESE_ACS_S_UC,SPESE_ACS_S_TOT,SPESE_TOTALI_S_GL_TOT&WHERECONDITION=";
+			var dtAjaxSpeseCondominio="astro?FUNCTIONID=AJAXArray&dataset=DSRipartizioniUNI2018&columns=SPESE_RISC_S_VOL,SPESE_RISC_S_INV,SPESE_RISC_S_OBB,SPESE_RISC_S_E,SPESE_RISC_S_G,SPESE_RISC_S_C,SPESE_RISC_S_P,SPESE_RISC_S_UC,SPESE_RISC_S_TOT,SPESE_ACS_S_VOL,SPESE_ACS_S_INV,SPESE_ACS_S_OBB,SPESE_ACS_S_E,SPESE_ACS_S_G,SPESE_ACS_S_C,SPESE_ACS_S_P,SPESE_ACS_S_UC,SPESE_ACS_S_TOT,SPESE_TOTALI_S_GL_TOT&WHERECONDITION=";
+
+			var dtAjaxCostiUnitariEnergiaTermicaUtile="astro?FUNCTIONID=AJAXArray&dataset=DSRipartizioniUNI2018&columns=COSTI_ETU_CLIMA_INVERN_CH,COSTI_ETU_ACS_CW&WHERECONDITION=";
+			
+			var dtWhereCondition="<#if ID_MODULO?exists && ID_MODULO!=''>WHERE ru.ID_MODULO = ${ID_MODULO}<#else> WHERE 1=0 </#if>";
+			var dtWhereConditionLocaliUsoComune="<#if ID_MODULO?exists && ID_MODULO!=''>WHERE ru.ID_MODULO = ${ID_MODULO} and tipo_utenza='001'<#else> WHERE 1=0 </#if>";
+			var dtWhereConditionLocatari="<#if ID_MODULO?exists && ID_MODULO!=''>WHERE ru.ID_MODULO = ${ID_MODULO} and tipo_utenza='000'<#else> WHERE 1=0 </#if>";
+		
+			var stato="<#if STATO?exists>${STATO}</#if>";
+	    	var readOnly="<#if READONLY?exists>${READONLY}<#else>N</#if>";
+	    	var profilo="<#if PROFILO?exists>${PROFILO}</#if>";
+	    	
+	    	
+	    	
+			function inviaApprovazione(){
+				$("#WORKFLOW_ACTION").val("APPROVE");
+		        $("#formInserimento").submit();
+				$("#STATO").val("WAI").change();
+	    	}
+			
+			function pubblicaRipartizione(){
+				$("#WORKFLOW_ACTION").val("COMPLETED");
+		        $("#formInserimento").submit();
+		        //document.getElementById("salva").style.display="none";
+		        //document.getElementById("confermaRipartizione").style.display="none";
+		        $("#STATO").val("APP");
+		        $("#STATO").change();
+	    	}
+			
+			
+		$(function(){
+			
+			var dtWhereConditionAnomalie="<#if ID_CONDOMINIO?exists && ID_CONDOMINIO!=''>WHERE VDR.ID_CONDOMINIO = ${ID_CONDOMINIO}<#else> WHERE 1=0 </#if>";
+			
+			$('#dtAnomalie').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjaxAnomalie+dtWhereConditionAnomalie,				
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						visible: <#if PROFILO?contains('ADM') || PROFILO?contains('INS')>true<#else>false</#if>,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="editRowAnomalie" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						targets:12,
+						visible: false,
+					},
+					{
+						targets:13,
+						visible: false,
+					}
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+				aaSorting: [],
+	        });
+			
+			
+			$('#dtAnomalie tbody').on( 'click', '.editRowAnomalie', function () {
+	        	var table = $('#dtAnomalie').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#ID_AZIENDA_2').val(data[12]);
+				$('#ID_AZIENDA_1').val(data[12]);
+				$('#ID_CONDOMINIO_2').val(data[13]);
+				$('#RILEVATORE').val(data[3]);
+				$('#RILEVATORE_1').val(data[3]);
+				$('#FUNCTIONID_EDIT').val("GestioneDatiSingoloRilevatore");
+				$('#READONLY').val("N");
+				$("#formEdit").submit();
+	        } );
+			
+			
+			
+			$("#info").hide();
+			$("#msg_warning").hide();
+			$("#msg_anomalia").hide();
+			$("#msg_differenza").hide();
+			
+			$("#WORKFLOW_ACTION").val("");
+			$("#STATO").attr("disabled", true);
+			$("#inviaApprovatore").hide();
+			
+			if (profilo.indexOf("AMM")!=-1 && stato!='APP') {
+	    		$("#li-tab-2").hide();
+	    		$("#li-tab-3").hide();
+	    	}
+			
+			
+			//$("#ID_AZIENDA").trigger("loadDataSet",["DataSetAziende","ID_AZIENDA","RAGSOC","<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>"," WHERE 1=1 "]);
+			
+			$("#ID_CONDOMINIO").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 AND TIPO='C'",false]);
+			$("#STATO").trigger("loadDataSet",["DSParametri","CODICE","DESCRIZIONE","<#if STATO?exists>${STATO}</#if>"," WHERE DOMINIO='STA' "]);
+			
+			$("#TIPO_CONTABILIZZAZIONE").trigger("loadDataSet",["DSTipoContabilizzazione2018","CODICE","DESCRIZIONE","<#if TIPO_CONTABILIZZAZIONE?exists>${TIPO_CONTABILIZZAZIONE}</#if>"," WHERE 1=1 "]);
+			$("#TIPO_CONTABILIZZAZIONE").attr("disabled", true);
+			
+			$("#VET_COMB_UM").trigger("loadDataSet",["DataSetCombustibileUM","CODICE","DESCRIZIONE","<#if VET_COMB_UM?exists>${VET_COMB_UM}</#if>"," WHERE 1=1 "]);
+			$("#VET_ELETTR_UM").trigger("loadDataSet",["DataSetElettricitaUM","CODICE","DESCRIZIONE","<#if VET_ELETTR_UM?exists>${VET_ELETTR_UM}</#if>"," WHERE 1=1 "]);
+			$("#GEN_TIPO").trigger("loadDataSet",["DataSetTipologiaContabilizzazione","CODICE","DESCRIZIONE","<#if GEN_TIPO?exists>${GEN_TIPO}</#if>"," WHERE 1=1 "]);
+			
+			
+			
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			
+			$("#ID_MODULO").val("<#if ID_MODULO?exists>${ID_MODULO}</#if>");
+			$("#ID_AZIENDA").val("<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>");
+			$("#DT_MODULO").val("<#if DT_MODULO?exists>${DT_MODULO}</#if>").change();
+			$("#NR_MODULO").val("<#if NR_MODULO?exists>${NR_MODULO}</#if>");
+			$("#NR_MODULO").attr("disabled", true);
+			
+			
+			$("#DATA_DAL").val("<#if DATA_DAL?exists>${DATA_DAL}</#if>");
+			$("#DATA_AL").val("<#if DATA_AL?exists>${DATA_AL}</#if>");
+
+			$("#CONFERMATA").val("<#if CONFERMATA?exists>${CONFERMATA}</#if>");
+			$("#INVIATA").val("<#if INVIATA?exists>${INVIATA}</#if>");
+
+
+			
+		 	$("#FABBISOGNO_ANNUO_CLIMA").val("<#if FABBISOGNO_ANNUO_CLIMA?exists>${FABBISOGNO_ANNUO_CLIMA}</#if>");
+		    $("#FABBISOGNO_ANNUO_ACS").val("<#if FABBISOGNO_ANNUO_ACS?exists>${FABBISOGNO_ANNUO_ACS}</#if>");
+		    $("#PERDITE_IMPIANTO").val("<#if PERDITE_IMPIANTO?exists>${PERDITE_IMPIANTO}</#if>");
+		    
+		    $("#TIPO_RIPARTIZIONE_PC").trigger("loadDataSet",["DSTipoRipartizionePC","CODICE","DESCRIZIONE","<#if TIPO_RIPARTIZIONE_PC?exists>${TIPO_RIPARTIZIONE_PC}</#if>"," WHERE 1=1 "]);
+			$("#TIPO_RIPARTIZIONE_PC").val("<#if TIPO_RIPARTIZIONE_PC?exists>${TIPO_RIPARTIZIONE_PC}</#if>");
+
+			$("#SG_SCM_TOTALE_PREV").val("<#if SG_SCM_TOTALE_PREV?exists>${SG_SCM_TOTALE_PREV}</#if>");
+			$("#SG_SCR_QTA_PREV").val("<#if SG_SCR_QTA_PREV?exists>${SG_SCR_QTA_PREV}</#if>");
+			$("#SG_SCR_IMPORTO_PREV").val("<#if SG_SCR_IMPORTO_PREV?exists>${SG_SCR_IMPORTO_PREV}</#if>");
+			$("#SG_SCR_TOTALE_PREV").val("<#if SG_SCR_TOTALE_PREV?exists>${SG_SCR_TOTALE_PREV}</#if>");
+			$("#SG_SG_TOTALE_PREV").val("<#if SG_SG_TOTALE_PREV?exists>${SG_SG_TOTALE_PREV}</#if>");
+			$("#SG_SCM_TOTALE_CONS").val("<#if SG_SCM_TOTALE_CONS?exists>${SG_SCM_TOTALE_CONS}</#if>");
+			$("#SG_SCR_QTA_CONS").val("<#if SG_SCR_QTA_CONS?exists>${SG_SCR_QTA_CONS}</#if>");
+			$("#SG_SCR_IMPORTO_CONS").val("<#if SG_SCR_IMPORTO_CONS?exists>${SG_SCR_IMPORTO_CONS}</#if>");
+			$("#SG_SCR_TOTALE_CONS").val("<#if SG_SCR_TOTALE_CONS?exists>${SG_SCR_TOTALE_CONS}</#if>");
+			$("#SG_SG_TOTALE_CONS").val("<#if SG_SG_TOTALE_CONS?exists>${SG_SG_TOTALE_CONS}</#if>");
+			
+			//$("#VET_COMB_UM").val("<#if VET_COMB_UM?exists>${VET_COMB_UM}</#if>");
+			$("#VET_COMB_Q_VE_H_PREV").val("<#if VET_COMB_Q_VE_H_PREV?exists>${VET_COMB_Q_VE_H_PREV}</#if>");
+			$("#VET_COMB_Q_VE_W_PREV").val("<#if VET_COMB_Q_VE_W_PREV?exists>${VET_COMB_Q_VE_W_PREV}</#if>");
+			$("#VET_COMB_C_VE_PREV").val("<#if VET_COMB_C_VE_PREV?exists>${VET_COMB_C_VE_PREV}</#if>");
+			$("#VET_COMB_Q_VE_H_CONS").val("<#if VET_COMB_Q_VE_H_CONS?exists>${VET_COMB_Q_VE_H_CONS}</#if>");
+			$("#VET_COMB_Q_VE_W_CONS").val("<#if VET_COMB_Q_VE_W_CONS?exists>${VET_COMB_Q_VE_W_CONS}</#if>");
+			$("#VET_COMB_C_VE_CONS").val("<#if VET_COMB_C_VE_CONS?exists>${VET_COMB_C_VE_CONS}</#if>");
+			//$("#VET_ELETTR_UM").val("<#if VET_ELETTR_UM?exists>${VET_ELETTR_UM}</#if>");
+			$("#VET_ELETTR_Q_VE_H_PREV").val("<#if VET_ELETTR_Q_VE_H_PREV?exists>${VET_ELETTR_Q_VE_H_PREV}</#if>");
+			$("#VET_ELETTR_Q_VE_W_PREV").val("<#if VET_ELETTR_Q_VE_W_PREV?exists>${VET_ELETTR_Q_VE_W_PREV}</#if>");
+			$("#VET_ELETTR_C_VE_PREV").val("<#if VET_ELETTR_C_VE_PREV?exists>${VET_ELETTR_C_VE_PREV}</#if>");
+			$("#VET_ELETTR_Q_VE_H_CONS").val("<#if VET_ELETTR_Q_VE_H_CONS?exists>${VET_ELETTR_Q_VE_H_CONS}</#if>");
+			$("#VET_ELETTR_Q_VE_W_CONS").val("<#if VET_ELETTR_Q_VE_W_CONS?exists>${VET_ELETTR_Q_VE_W_CONS}</#if>");
+			$("#VET_ELETTR_C_VE_CONS").val("<#if VET_ELETTR_C_VE_CONS?exists>${VET_ELETTR_C_VE_CONS}</#if>");
+			
+			$("#ST_RISC_SE_PREV").val("<#if ST_RISC_SE_PREV?exists>${ST_RISC_SE_PREV}</#if>");
+			$("#ST_RISC_SG_PREV").val("<#if ST_RISC_SG_PREV?exists>${ST_RISC_SG_PREV}</#if>");
+			$("#ST_RISC_ST_PREV").val("<#if ST_RISC_ST_PREV?exists>${ST_RISC_ST_PREV}</#if>");
+			$("#ST_RISC_SE_CONS").val("<#if ST_RISC_SE_CONS?exists>${ST_RISC_SE_CONS}</#if>");
+			$("#ST_RISC_SG_CONS").val("<#if ST_RISC_SG_CONS?exists>${ST_RISC_SG_CONS}</#if>");
+			$("#ST_RISC_ST_CONS").val("<#if ST_RISC_ST_CONS?exists>${ST_RISC_ST_CONS}</#if>");
+			$("#ST_ACS_SE_PREV").val("<#if ST_ACS_SE_PREV?exists>${ST_ACS_SE_PREV}</#if>");
+			$("#ST_ACS_SG_PREV").val("<#if ST_ACS_SG_PREV?exists>${ST_ACS_SG_PREV}</#if>");
+			$("#ST_ACS_ST_PREV").val("<#if ST_ACS_ST_PREV?exists>${ST_ACS_ST_PREV}</#if>");
+			$("#ST_ACS_SE_CONS").val("<#if ST_ACS_SE_CONS?exists>${ST_ACS_SE_CONS}</#if>");
+			$("#ST_ACS_SG_CONS").val("<#if ST_ACS_SG_CONS?exists>${ST_ACS_SG_CONS}</#if>");
+			$("#ST_ACS_ST_CONS").val("<#if ST_ACS_ST_CONS?exists>${ST_ACS_ST_CONS}</#if>");
+			
+			$("#ST_SE_TOTALE_PREV").val("<#if ST_SE_TOTALE_PREV?exists>${ST_SE_TOTALE_PREV}</#if>");
+			$("#ST_SG_TOTALE_PREV").val("<#if ST_SG_TOTALE_PREV?exists>${ST_SG_TOTALE_PREV}</#if>");
+			$("#ST_ST_TOTALE_PREV").val("<#if ST_ST_TOTALE_PREV?exists>${ST_ST_TOTALE_PREV}</#if>");
+			$("#ST_SE_TOTALE_CONS").val("<#if ST_SE_TOTALE_CONS?exists>${ST_SE_TOTALE_CONS}</#if>");
+			$("#ST_SG_TOTALE_CONS").val("<#if ST_SG_TOTALE_CONS?exists>${ST_SG_TOTALE_CONS}</#if>");
+			$("#ST_ST_TOTALE_CONS").val("<#if ST_ST_TOTALE_CONS?exists>${ST_ST_TOTALE_CONS}</#if>");
+			
+			
+			
+			//$("#GEN_TIPO").val("<#if GEN_TIPO?exists>${GEN_TIPO}</#if>");
+			$("#GEN_QGN_H_PREV").val("<#if GEN_QGN_H_PREV?exists>${GEN_QGN_H_PREV}</#if>");
+			$("#GEN_QGN_W_PREV").val("<#if GEN_QGN_W_PREV?exists>${GEN_QGN_W_PREV}</#if>");
+			$("#GEN_QGN_H_CONS").val("<#if GEN_QGN_H_CONS?exists>${GEN_QGN_H_CONS}</#if>");
+			$("#GEN_QGN_W_CONS").val("<#if GEN_QGN_W_CONS?exists>${GEN_QGN_W_CONS}</#if>");
+
+			$("#COMMITTENTE_COGNOME").val("<#if COMMITTENTE_COGNOME?exists>${COMMITTENTE_COGNOME}</#if>");
+			$("#COMMITTENTE_NOME").val("<#if COMMITTENTE_NOME?exists>${COMMITTENTE_NOME}</#if>");
+			$("#ID_TECNICO").val("<#if ID_TECNICO?exists>${ID_TECNICO}</#if>");
+			$("#ID_STUDIO_PROFESSIONALE").val("<#if ID_STUDIO_PROFESSIONALE?exists>${ID_STUDIO_PROFESSIONALE}</#if>");
+			$("#ID_AMMINISTRATORE").val("<#if ID_AMMINISTRATORE?exists>${ID_AMMINISTRATORE}</#if>");
+			$("#RESP_IMP_COGNOME").val("<#if RESP_IMP_COGNOME?exists>${RESP_IMP_COGNOME}</#if>");
+			$("#RESP_IMP_NOME").val("<#if RESP_IMP_NOME?exists>${RESP_IMP_NOME}</#if>");
+			$("#ID_SOFTWARE_CALCOLO").val("<#if ID_SOFTWARE_CALCOLO?exists>${ID_SOFTWARE_CALCOLO}</#if>");
+			
+			
+			
+			$("#TIPO_RIPARTIZIONE").val("<#if TIPO_RIPARTIZIONE?exists>${TIPO_RIPARTIZIONE}</#if>");
+			if ($("#TIPO_RIPARTIZIONE").val()=='L'){
+				$("#DESCR_TIPO_RIPARTIZIONE").val('Sola lettura');
+				$("#info").hide();
+			}
+			if ($("#TIPO_RIPARTIZIONE").val()=='C'){
+				$("#DESCR_TIPO_RIPARTIZIONE").val('Completa');
+				$("#info").hide();
+			}
+			
+			
+			var condominio="";
+			var dataDal="";
+			var dataAl="";
+			
+			
+			
+			condominio= "<#if ID_CONDOMINIO?exists && ID_CONDOMINIO!=''>${ID_CONDOMINIO}<#else> 0 </#if>";
+			dataDal= $("#DATA_DAL").val();
+			dataAl= $("#DATA_AL").val();
+			
+			if(!condominio){
+				condominio=0;
+			}
+			
+			whereCondData="";
+			if (dataDal!='' && dataAl!=''){
+				whereCondData=" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') ";
+			}
+			
+			$("#ALERT_NON_SCARICATI").empty();
+			$("#ALERT_NON_SCARICATI").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriNonScaricati","ELENCO_NON_SCARICATI","ELENCO_NON_SCARICATI"," where id_condominio="+condominio+" AND to_date(data_start ,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY')) where id_condominio="+condominio+" and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+		
+			$("#ALERT_IN_ANOMALIA").empty();
+			$("#ALERT_IN_ANOMALIA").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriAnomalia","ELENCO_IN_ANOMALIA","ELENCO_IN_ANOMALIA"," where id_condominio="+condominio+" AND to_date(data_start ,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+			
+			var dtWhereConditionAnomalie=dtWhereConditionAnomalie+" and vdr.id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''";
+			$( "#dtAnomalie" ).DataTable().ajax.url( dtAjaxAnomalie+dtWhereConditionAnomalie ).load();
+			
+			$("#GEN_QGN_H_CONS").empty();
+			$("#GEN_QGN_H_CONS").trigger("loadDataSetSimpleNumber",["DataSetConsumoGeneratore","LETTURA","LETTURA"," where vDR.id_condominio="+condominio+whereCondData]);
+			
+			$("#GEN_QGN_W_CONS").empty();
+			$("#GEN_QGN_W_CONS").trigger("loadDataSetSimpleNumber",["DataSetConsumoGeneratore","LETTURA_ACS","LETTURA_ACS"," where vDR.id_condominio="+condominio+whereCondData]);
+			
+			if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+				$("#msg_warning").show();
+			}else{
+				$("#msg_warning").hide();
+			}
+			if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+				$("#msg_anomalia").show();
+			}else{
+				$("#msg_anomalia").hide();
+			}
+			
+			
+			
+			
+			$("#ID_CONDOMINIO").on("select2:selecting", function(e) { 
+				var id= e.params.args.data.id;
+				dataDal= $("#DATA_DAL").val();
+				dataAl= $("#DATA_AL").val();
+				condominio=id;
+				
+				if(!id){
+					id=0;
+				}
+				
+				whereCondData="";
+				if (dataDal!='' && dataAl!=''){
+					whereCondData=" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') ";
+				}
+				
+				
+				$("#ID_AZIENDA").empty();
+				$("#ID_AZIENDA").trigger("loadDataSetSimpleTextHidden",["DSCondominiRipartizioni","ID_AZIENDA","ID_AZIENDA"," WHERE ID_MODULO="+id ]);
+				
+				$("#DESCR_TIPO_RIPARTIZIONE").empty();
+				$("#DESCR_TIPO_RIPARTIZIONE").trigger("loadDataSetSimpleText",["DSCondominiRipartizioni","DESCR_TIPO_RIPARTIZIONE","DESCR_TIPO_RIPARTIZIONE"," WHERE ID_MODULO="+id ]);
+				
+				$("#TIPO_RIPARTIZIONE").empty();
+				$("#TIPO_RIPARTIZIONE").trigger("loadDataSetSimpleTextHidden",["DSCondominiRipartizioni","TIPO_RIPARTIZIONE","TIPO_RIPARTIZIONE"," WHERE ID_MODULO="+id ]);
+				
+				$("#TIPO_CONTABILIZZAZIONE").empty();
+				$("#TIPO_CONTABILIZZAZIONE").trigger("loadDataSet",["DSTipoContabilizzazioneCondominio","CODICE","DESCRIZIONE","<#if TIPO_CONTABILIZZAZIONE?exists>${TIPO_CONTABILIZZAZIONE}</#if>"," WHERE ID_MODULO="+id ]);
+				$("#TIPO_CONTABILIZZAZIONE").attr("disabled", true);
+				
+				
+				$("#SG_SCR_QTA_PREV").empty();
+				$("#SG_SCR_QTA_PREV").trigger("loadDataSetSimpleNumber",["DSRilevatoriCondominio","CONTEGGIO","CONTEGGIO"," WHERE ID_CONDOMINIO="+id ]);
+				
+				$("#SG_SCR_QTA_CONS").empty();
+				$("#SG_SCR_QTA_CONS").trigger("loadDataSetSimpleNumber",["DSRilevatoriCondominio","CONTEGGIO","CONTEGGIO"," WHERE ID_CONDOMINIO="+id ]);
+				
+				
+				$("#GEN_QGN_H_CONS").empty();
+				$("#GEN_QGN_H_CONS").trigger("loadDataSetSimpleNumber",["DataSetConsumoGeneratore","LETTURA","LETTURA"," where VDR.id_condominio="+id+whereCondData]);
+				
+				$("#GEN_QGN_W_CONS").empty();
+				$("#GEN_QGN_W_CONS").trigger("loadDataSetSimpleNumber",["DataSetConsumoGeneratore","LETTURA_ACS","LETTURA_ACS"," where VDR.id_condominio="+id+whereCondData]);
+				
+				$("#RENDIMENTO_CALDAIA").empty();
+				$("#RENDIMENTO_CALDAIA").trigger("loadDataSetSimpleNumber",["DataSetConsumoGeneratore","RENDIMENTO_CALDAIA","RENDIMENTO_CALDAIA"," where CONDOMINI.id_modulo="+id+whereCondData]);
+				
+				$("#FABBISOGNO_CLIMA_FH").empty();
+				$("#FABBISOGNO_CLIMA_FH").val('');
+				$("#FABBISOGNO_CLIMA_FH").trigger("loadDataSetSimpleTextHidden",["DataSetConsumoGeneratore","FH","FH"," where CONDOMINI.id_modulo="+id+whereCondData]);
+				
+				$("#FABBISOGNO_ACS_FW").empty();
+				$("#FABBISOGNO_ACS_FW").val('');
+				$("#FABBISOGNO_ACS_FW").trigger("loadDataSetSimpleTextHidden",["DataSetConsumoGeneratore","FW","FW"," where CONDOMINI.id_modulo="+id+whereCondData]);
+				
+				$("#FABBISOGNO_ANNUO_CLIMA").empty();
+				$("#FABBISOGNO_ANNUO_CLIMA").trigger("loadDataSetSimpleTextHidden",["DataSetConsumoGeneratore","FABBISOGNO_ANNUO_CLIMA","FABBISOGNO_ANNUO_CLIMA"," where CONDOMINI.id_modulo="+id+whereCondData]);
+				
+				$("#FABBISOGNO_ANNUO_ACS").empty();
+				$("#FABBISOGNO_ANNUO_ACS").trigger("loadDataSetSimpleTextHidden",["DataSetConsumoGeneratore","FABBISOGNO_ANNUO_ACS","FABBISOGNO_ANNUO_ACS"," where CONDOMINI.id_modulo="+id+whereCondData]);
+
+				$("#PERDITE_IMPIANTO").empty();
+				$("#PERDITE_IMPIANTO").trigger("loadDataSetSimpleTextHidden",["DataSetConsumoGeneratore","PERDITE_IMPIANTO","PERDITE_IMPIANTO"," where CONDOMINI.id_modulo="+id+whereCondData]);
+				
+				
+				
+				$("#ALERT_NON_SCARICATI").empty();
+				$("#ALERT_NON_SCARICATI").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriNonScaricati","ELENCO_NON_SCARICATI","ELENCO_NON_SCARICATI"," where id_condominio="+condominio+" AND to_date(data_start ,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY')) where id_condominio="+condominio+" and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+			
+				$("#ALERT_IN_ANOMALIA").empty();
+				$("#ALERT_IN_ANOMALIA").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriAnomalia","ELENCO_IN_ANOMALIA","ELENCO_IN_ANOMALIA"," where id_condominio="+condominio+" AND to_date(data_start ,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+				
+				var dtWhereConditionAnomalie=" vdr.id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''";
+				$( "#dtAnomalie" ).DataTable().ajax.url( dtAjaxAnomalie+dtWhereConditionAnomalie ).load();
+				
+				$("#info").hide();
+				
+				if (profilo.indexOf("AMM")==-1 && dataDal!='' && dataAl!='' ) {
+					$("#msg_warning").show();
+				}else{
+					$("#msg_warning").hide();
+				}
+				if (profilo.indexOf("AMM")==-1 && dataDal!='' && dataAl!='' ) {
+					$("#msg_anomalia").show();
+				}else{
+					$("#msg_anomalia").hide();
+				}
+				
+			});	
+			
+			$("#DATA_DAL").change(function() {
+				condominio= $("#ID_CONDOMINIO").val();
+				dataDal= $("#DATA_DAL").val();
+				dataAl= $("#DATA_AL").val();
+				
+				if(!condominio){
+					condominio=0;
+				}
+				
+				whereCondData="";
+				if (dataDal!='' && dataAl!=''){
+					whereCondData=" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') ";
+				}
+				
+				$("#ALERT_NON_SCARICATI").empty();
+				$("#ALERT_NON_SCARICATI").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriNonScaricati","ELENCO_NON_SCARICATI","ELENCO_NON_SCARICATI"," where id_condominio="+condominio+" AND to_date(data_start ,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY')) where id_condominio="+condominio+" and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+			
+				$("#ALERT_IN_ANOMALIA").empty();
+				$("#ALERT_IN_ANOMALIA").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriAnomalia","ELENCO_IN_ANOMALIA","ELENCO_IN_ANOMALIA"," where id_condominio="+condominio+" AND to_date(data_start ,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+				
+				var dtWhereConditionAnomalie=" vdr.id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''";
+				$( "#dtAnomalie" ).DataTable().ajax.url( dtAjaxAnomalie+dtWhereConditionAnomalie ).load();
+				
+				$("#GEN_QGN_H_CONS").empty();
+				$("#GEN_QGN_H_CONS").trigger("loadDataSetSimpleNumber",["DataSetConsumoGeneratore","LETTURA","LETTURA"," where vDR.id_condominio="+condominio+whereCondData]);
+				
+				$("#GEN_QGN_W_CONS").empty();
+				$("#GEN_QGN_W_CONS").trigger("loadDataSetSimpleNumber",["DataSetConsumoGeneratore","LETTURA_ACS","LETTURA_ACS"," where vDR.id_condominio="+condominio+whereCondData]);
+				
+				if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+					$("#msg_warning").show();
+				}else{
+					$("#msg_warning").hide();
+				}
+				if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+					$("#msg_anomalia").show();
+				}else{
+					$("#msg_anomalia").hide();
+				}
+				
+			});
+			
+			$("#DATA_AL").change(function() {
+				condominio= $("#ID_CONDOMINIO").val();
+				dataDal= $("#DATA_DAL").val();
+				dataAl= $("#DATA_AL").val();
+				
+				if(!condominio){
+					condominio=0;
+				}
+				
+				whereCondData="";
+				if (dataDal!='' && dataAl!=''){
+					whereCondData=" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') ";
+				}
+				
+				$("#ALERT_NON_SCARICATI").empty();
+				$("#ALERT_NON_SCARICATI").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriNonScaricati","ELENCO_NON_SCARICATI","ELENCO_NON_SCARICATI"," where id_condominio="+condominio+" AND to_date(data_start ,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY')) where id_condominio="+condominio+" and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+			
+				$("#ALERT_IN_ANOMALIA").empty();
+				$("#ALERT_IN_ANOMALIA").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriAnomalia","ELENCO_IN_ANOMALIA","ELENCO_IN_ANOMALIA"," where id_condominio="+condominio+" AND to_date(data_start ,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+				
+				var dtWhereConditionAnomalie=" vdr.id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''";
+				$( "#dtAnomalie" ).DataTable().ajax.url( dtAjaxAnomalie+dtWhereConditionAnomalie ).load();
+				
+				$("#GEN_QGN_H_CONS").empty();
+				$("#GEN_QGN_H_CONS").trigger("loadDataSetSimpleNumber",["DataSetConsumoGeneratore","LETTURA","LETTURA"," where vDR.id_condominio="+condominio+whereCondData]);
+				
+				$("#GEN_QGN_W_CONS").empty();
+				$("#GEN_QGN_W_CONS").trigger("loadDataSetSimpleNumber",["DataSetConsumoGeneratore","LETTURA_ACS","LETTURA_ACS"," where vDR.id_condominio="+condominio+whereCondData]);
+				
+				if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+					$("#msg_warning").show();
+				}else{
+					$("#msg_warning").hide();
+				}
+				if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+					$("#msg_anomalia").show();
+				}else{
+					$("#msg_anomalia").hide();
+				}
+				
+					
+				
+			});
+			
+			
+			$("#TIPO_RIPARTIZIONE_PC").on("select2:selecting", function(e) { 
+				var id= e.params.args.data.id;
+				
+				if(!id || id!='000' || id!='001'){
+					$('#SG_SCM_TOTALE_CONS').prop('readonly', false);
+					$('#SG_SCR_QTA_CONS').prop('readonly', false);
+					$('#SG_SCR_IMPORTO_CONS').prop('readonly', false);
+					$('#VET_COMB_Q_VE_H_CONS').prop('readonly', false);
+					$('#VET_COMB_Q_VE_W_CONS').prop('readonly', false);
+					$('#VET_COMB_C_VE_CONS').prop('readonly', false);
+					$('#VET_ELETTR_Q_VE_H_CONS').prop('readonly', false);
+					$('#VET_ELETTR_Q_VE_W_CONS').prop('readonly', false);
+					$('#VET_ELETTR_C_VE_CONS').prop('readonly', false);
+					$('#GEN_QGN_H_CONS').prop('readonly', false);
+					$('#GEN_QGN_W_CONS').prop('readonly', false);
+					
+					$('#SG_SCM_TOTALE_PREV').prop('readonly', false);
+					$('#SG_SCR_QTA_PREV').prop('readonly', false);
+					$('#SG_SCR_IMPORTO_PREV').prop('readonly', false);
+					$('#VET_COMB_Q_VE_H_PREV').prop('readonly', false);
+					$('#VET_COMB_Q_VE_W_PREV').prop('readonly', false);
+					$('#VET_COMB_C_VE_PREV').prop('readonly', false);
+					$('#VET_ELETTR_Q_VE_H_PREV').prop('readonly', false);
+					$('#VET_ELETTR_Q_VE_W_PREV').prop('readonly', false);
+					$('#VET_ELETTR_C_VE_PREV').prop('readonly', false);
+					$('#GEN_QGN_H_PREV').prop('readonly', false);
+					$('#GEN_QGN_W_PREV').prop('readonly', false);
+				}
+				
+				if (id=='000'){		//previsionale
+					$('#SG_SCM_TOTALE_PREV').prop('readonly', false);
+					$('#SG_SCR_QTA_PREV').prop('readonly', false);
+					$('#SG_SCR_IMPORTO_PREV').prop('readonly', false);
+					$('#VET_COMB_Q_VE_H_PREV').prop('readonly', false);
+					$('#VET_COMB_Q_VE_W_PREV').prop('readonly', false);
+					$('#VET_COMB_C_VE_PREV').prop('readonly', false);
+					$('#VET_ELETTR_Q_VE_H_PREV').prop('readonly', false);
+					$('#VET_ELETTR_Q_VE_W_PREV').prop('readonly', false);
+					$('#VET_ELETTR_C_VE_PREV').prop('readonly', false);
+					$('#GEN_QGN_H_PREV').prop('readonly', false);
+					$('#GEN_QGN_W_PREV').prop('readonly', false);
+					
+					$('#SG_SCM_TOTALE_CONS').prop('readonly', true);
+					$('#SG_SCR_QTA_CONS').prop('readonly', true);
+					$('#SG_SCR_IMPORTO_CONS').prop('readonly', true);
+					$('#VET_COMB_Q_VE_H_CONS').prop('readonly', true);
+					$('#VET_COMB_Q_VE_W_CONS').prop('readonly', true);
+					$('#VET_COMB_C_VE_CONS').prop('readonly', true);
+					$('#VET_ELETTR_Q_VE_H_CONS').prop('readonly', true);
+					$('#VET_ELETTR_Q_VE_W_CONS').prop('readonly', true);
+					$('#VET_ELETTR_C_VE_CONS').prop('readonly', true);
+					$('#GEN_QGN_H_CONS').prop('readonly', true);
+					$('#GEN_QGN_W_CONS').prop('readonly', true);
+					
+					$('#SG_SCM_TOTALE_CONS').val('0');
+					$('#SG_SCR_QTA_CONS').val('0');
+					$('#SG_SCR_IMPORTO_CONS').val('0');
+					$('#VET_COMB_Q_VE_H_CONS').val('0');
+					$('#VET_COMB_Q_VE_W_CONS').val('0');
+					$('#VET_COMB_C_VE_CONS').val('0');
+					$('#VET_ELETTR_Q_VE_H_CONS').val('0');
+					$('#VET_ELETTR_Q_VE_W_CONS').val('0');
+					$('#VET_ELETTR_C_VE_CONS').val('0');
+					$('#GEN_QGN_H_CONS').val('0');
+					$('#GEN_QGN_W_CONS').val('0');
+				}
+				
+				if (id=='001'){		// consuntiva
+					$('#SG_SCM_TOTALE_CONS').prop('readonly', false);
+					$('#SG_SCR_QTA_CONS').prop('readonly', false);
+					$('#SG_SCR_IMPORTO_CONS').prop('readonly', false);
+					$('#VET_COMB_Q_VE_H_CONS').prop('readonly', false);
+					$('#VET_COMB_Q_VE_W_CONS').prop('readonly', false);
+					$('#VET_COMB_C_VE_CONS').prop('readonly', false);
+					$('#VET_ELETTR_Q_VE_H_CONS').prop('readonly', false);
+					$('#VET_ELETTR_Q_VE_W_CONS').prop('readonly', false);
+					$('#VET_ELETTR_C_VE_CONS').prop('readonly', false);
+					$('#GEN_QGN_H_CONS').prop('readonly', false);
+					$('#GEN_QGN_W_CONS').prop('readonly', false);
+					
+					$('#SG_SCM_TOTALE_PREV').prop('readonly', true);
+					$('#SG_SCR_QTA_PREV').prop('readonly', true);
+					$('#SG_SCR_IMPORTO_PREV').prop('readonly', true);
+					$('#VET_COMB_Q_VE_H_PREV').prop('readonly', true);
+					$('#VET_COMB_Q_VE_W_PREV').prop('readonly', true);
+					$('#VET_COMB_C_VE_PREV').prop('readonly', true);
+					$('#VET_ELETTR_Q_VE_H_PREV').prop('readonly', true);
+					$('#VET_ELETTR_Q_VE_W_PREV').prop('readonly', true);
+					$('#VET_ELETTR_C_VE_PREV').prop('readonly', true);
+					$('#GEN_QGN_H_PREV').prop('readonly', true);
+					$('#GEN_QGN_W_PREV').prop('readonly', true);
+					
+					$('#SG_SCM_TOTALE_PREV').val('0');
+					$('#SG_SCR_QTA_PREV').val('0');
+					$('#SG_SCR_IMPORTO_PREV').val('0');
+					$('#VET_COMB_Q_VE_H_PREV').val('0');
+					$('#VET_COMB_Q_VE_W_PREV').val('0');
+					$('#VET_COMB_C_VE_PREV').val('0');
+					$('#VET_ELETTR_Q_VE_H_PREV').val('0');
+					$('#VET_ELETTR_Q_VE_W_PREV').val('0');
+					$('#VET_ELETTR_C_VE_PREV').val('0');
+					$('#GEN_QGN_H_PREV').val('0');
+					$('#GEN_QGN_W_PREV').val('0');
+				}
+			});	
+			
+			
+			
+			$('.form-control').on('input',function(e){
+				calcoloDati();
+			});
+			
+			$("#VET_COMB_Q_VE_H_PREV").change(function() {
+				calcoloDati();
+			});
+			
+			$("#VET_COMB_Q_VE_W_PREV").change(function() {
+				calcoloDati();
+			});
+			
+			$("#VET_COMB_C_VE_PREV").change(function() {
+				calcoloDati();
+			});
+			
+			
+			$("#VET_ELETTR_Q_VE_H_PREV").change(function() {
+				calcoloDati();
+			});
+			
+			$("#VET_ELETTR_Q_VE_W_PREV").change(function() {
+				calcoloDati();
+			});
+			
+			$("#VET_ELETTR_C_VE_PREV").change(function() {
+				calcoloDati();
+			});
+			
+			
+			$("#VET_COMB_Q_VE_H_CONS").change(function() {
+				calcoloDati();
+			});
+			
+			$("#VET_COMB_Q_VE_W_CONS").change(function() {
+				calcoloDati();
+			});
+			
+			$("#VET_COMB_C_VE_CONS").change(function() {
+				calcoloDati();
+			});
+			
+			
+			$("#VET_ELETTR_Q_VE_H_CONS").change(function() {
+				calcoloDati();
+			});
+			
+			$("#VET_ELETTR_Q_VE_W_CONS").change(function() {
+				calcoloDati();
+			});
+			
+			$("#VET_ELETTR_C_VE_CONS").change(function() {
+				calcoloDati();
+			});
+			
+			
+			
+			
+			
+
+			$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+			
+			
+			
+			if (readOnly=="Y") {
+				disableFieldsReadOnly();
+			} else {
+				if (profilo.indexOf("ADM")==-1 ) {
+					if (stato=="WAI") {
+						disableFieldsReadOnly();
+					} else if (stato=="WAI") {
+						disableFieldsReadOnly();
+					} else if (stato=="APP") {
+						disableFieldsStatusAPP();
+					} else if (stato=="DRA") {
+						disableFieldsStatusDRA();
+					}
+				}
+			}
+			
+            
+			$("#formInserimento").validate();
+			
+			$("#formInserimento").submit(function(event) {
+				document.getElementById("salva").style.display="none";
+				/* stop form from submitting normally */
+				event.preventDefault();		
+				
+				if (!$("#formInserimento").valid()) {
+					$("#WORKFLOW_ACTION").val("");
+					return false;
+				}
+			
+				if (!$("#formInserimento").valid()) {
+					$("#salva").hide();
+					return false;
+				}
+				
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+				
+				
+				
+				
+				var id=$("#ID_MODULO").val();
+				
+				if (id!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+				} else {
+					$("#OPERATION_TYPE").val("INSERT");
+				}
+				$("#TIPO_CONTABILIZZAZIONE").attr("disabled", false);
+				
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) {
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 3000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							$("#TIPO_CONTABILIZZAZIONE").attr("disabled", true);
+							$("#inviaApprovatore").show();
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+					
+					
+					
+				
+					
+					dtWhereCondition="WHERE ru.ID_MODULO="+$("#ID_MODULO").val();
+					dtWhereConditionLocaliUsoComune="<#if ID_MODULO?exists && ID_MODULO!=''>WHERE ru.ID_MODULO = ${ID_MODULO} and tipo_utenza='001'<#else> WHERE 1=0 </#if>";
+					dtWhereConditionLocatari="<#if ID_MODULO?exists && ID_MODULO!=''>WHERE ru.ID_MODULO = ${ID_MODULO} and tipo_utenza='000'<#else> WHERE 1=0 </#if>";
+					
+					$( "#dtConsumiSingoleUnitaImmobiliari" ).DataTable().ajax.url( dtAjaxConsumiSingoleUnitaImmobiliari+dtWhereCondition ).load();
+					$( "#dtSpeseSingoleUnitaImmobiliari" ).DataTable().ajax.url( dtAjaxSpeseSingoleUnitaImmobiliari+dtWhereConditionLocatari ).load();
+					$( "#dtSpeseLocaliUsoComune" ).DataTable().ajax.url( dtAjaxSpeseSingoleUnitaImmobiliari+dtWhereConditionLocaliUsoComune ).load();
+					
+					$( "#dtConsumiCondominio" ).DataTable().ajax.url( dtAjaxConsumiCondominio+dtWhereCondition ).load();
+					$( "#dtSpeseCondominio" ).DataTable().ajax.url( dtAjaxSpeseCondominio+dtWhereCondition ).load();
+					
+					$( "#dtAjaxCostiUnitariEnergiaTermicaUtile" ).DataTable().ajax.url( dtAjaxCostiUnitariEnergiaTermicaUtile+dtWhereCondition ).load();
+					
+					$("#msg_differenza").show();
+					$("#ALERT_DIFFERENZA").empty();
+					if (condominio==''){
+						condominio=$("#ID_CONDOMINIO").val()
+					}
+					$("#ALERT_DIFFERENZA").trigger("loadDataSetSimpleText",["DSRipartizioniDifferenzaPercentualeSolaLettura","TESTO_DIFFERENZA","TESTO_DIFFERENZA"," where id_condominio="+condominio ]);
+
+				});
+
+			});		
+			
+			
+			
+			
+			
+			$('#dtConsumiSingoleUnitaImmobiliari').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjaxConsumiSingoleUnitaImmobiliari+dtWhereCondition,				
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						visible: false,
+			            defaultContent: '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						targets:2,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:3,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:4,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:5,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 0, '' )
+					},
+					{
+						targets:6,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:7,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:8,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:9,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:10,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:11,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:12,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:13,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:14,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:15,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+	            'rowCallback': function(row, data, index){
+               	 	if(data[10]!=''){
+               	 		$(row).find('td:eq(10)').css('background-color', '#ffbc40');
+                 	}
+                 	if(data[14]!=''){
+               	 		$(row).find('td:eq(14)').css('background-color', '#87CEEB');
+                 	}
+                },
+				aaSorting: [],
+				
+				
+				"footerCallback": function ( row, data, start, end, display ) {
+		            var api = this.api(), data;
+		            // converting to interger to find total
+		            
+		            var intVal = function ( i ) {
+		                return typeof i === 'string' ?
+		                    i.replace(/[\$,]/g, '')*1 :
+		                    typeof i === 'number' ?
+		                        i : 0;
+		            };
+		            
+		         // computing column Total of the complete result 
+		         
+		         	var col2 = api
+		                .column( 2 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col3 = api
+		                .column( 3 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col4 = api
+		                .column( 4 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col5 = api
+		                .column( 5 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+			    	var col6 = api
+		                .column( 6 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+					
+			    	var col7 = api
+		                .column( 7 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col8 = api
+		                .column( 8 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col9 = api
+		                .column( 9 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	var col10 = api
+		                .column( 10 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+					
+			    	var col11 = api
+		                .column( 11 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col12 = api
+		                .column( 12 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col13 = api
+		                .column( 13 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );	
+			    	
+			    	var col14 = api
+	                .column( 14 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col15 = api
+	                .column( 15 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+		           
+						
+			    	// Update footer by showing the total with the reference of the column index
+		            var numFormat = $.fn.dataTable.render.number( '.', ',', 2, '' ).display;
+		            var numFormatNoDecimal = $.fn.dataTable.render.number( '.', ',', 0, '' ).display;
+			    	
+		            // Update footer by showing the total with the reference of the column index
+		            $( api.column( 0 ).footer() ).html('');
+				    $( api.column( 1 ).footer() ).html('Totali');
+			    	$( api.column( 2 ).footer() ).html(numFormat(col2.toFixed(2)));
+			    	$( api.column( 3 ).footer() ).html(numFormat(col3.toFixed(2)));
+		            $( api.column( 4 ).footer() ).html(numFormat(col4.toFixed(2)));
+		            $( api.column( 5 ).footer() ).html(numFormatNoDecimal(col5.toFixed(0)));
+		            $( api.column( 6 ).footer() ).html(numFormat(col6.toFixed(2)));
+		            $( api.column( 7 ).footer() ).html(numFormat(col7.toFixed(2)));
+		            $( api.column( 8 ).footer() ).html(numFormat(col8.toFixed(2)));
+		            $( api.column( 9 ).footer() ).html(numFormat(col9.toFixed(2)));
+		            $( api.column( 10 ).footer() ).html(numFormat(col10.toFixed(2)));
+		            $( api.column( 11 ).footer() ).html(numFormat(col11.toFixed(2)));
+		            $( api.column( 12 ).footer() ).html(numFormat(col12.toFixed(2)));
+		            $( api.column( 13 ).footer() ).html(numFormat(col13.toFixed(2)));
+		            $( api.column( 14 ).footer() ).html(numFormat(col14.toFixed(2)));
+		            $( api.column( 15 ).footer() ).html(numFormat(col15.toFixed(2)));
+		        }
+	
+	        });
+			
+			
+			
+			
+			
+			
+			
+			$('#dtSpeseSingoleUnitaImmobiliari').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjaxSpeseSingoleUnitaImmobiliari+dtWhereConditionLocatari,				
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						visible: false,
+			            defaultContent: '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						targets:2,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:3,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:4,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:5,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:6,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:7,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:8,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:9,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:10,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:11,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:12,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:13,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:14,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:15,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:16,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:17,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:18,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:19,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:20,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					}
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+	            'rowCallback': function(row, data, index){
+               	 	if(data[9]!=''){
+               	 		$(row).find('td:eq(9)').css('background-color', '#ffbc40');
+                 	}
+                 	if(data[18]!=''){
+               	 		$(row).find('td:eq(18)').css('background-color', '#87CEEB');
+                 	}
+                },
+				aaSorting: [],
+				
+				
+				"footerCallback": function ( row, data, start, end, display ) {
+		            var api = this.api(), data;
+		            // converting to interger to find total
+		            
+		            var intVal = function ( i ) {
+		                return typeof i === 'string' ?
+		                    i.replace(/[\$,]/g, '')*1 :
+		                    typeof i === 'number' ?
+		                        i : 0;
+		            };
+		            
+		         // computing column Total of the complete result 
+		         
+		         	var col2 = api
+		                .column( 2 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col3 = api
+		                .column( 3 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col4 = api
+		                .column( 4 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col5 = api
+		                .column( 5 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+			    	var col6 = api
+		                .column( 6 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+					
+			    	var col7 = api
+		                .column( 7 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col8 = api
+		                .column( 8 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col9 = api
+		                .column( 9 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	var col10 = api
+		                .column( 10 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+					
+			    	var col11 = api
+		                .column( 11 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col12 = api
+		                .column( 12 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col13 = api
+		                .column( 13 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );	
+			    	
+			    	var col14 = api
+	                .column( 14 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col15 = api
+	                .column( 15 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col16 = api
+	                .column( 16 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col17 = api
+	                .column( 17 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col18 = api
+	                .column( 18 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col19 = api
+	                .column( 19 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col20 = api
+	                .column( 20 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+		           
+						
+			    	// Update footer by showing the total with the reference of the column index
+		            var numFormat = $.fn.dataTable.render.number( '.', ',', 2, '' ).display;
+			    	
+		            // Update footer by showing the total with the reference of the column index
+		            $( api.column( 0 ).footer() ).html('');
+				    $( api.column( 1 ).footer() ).html('Totali');
+			    	$( api.column( 2 ).footer() ).html(numFormat(col2.toFixed(2)));
+			    	$( api.column( 3 ).footer() ).html(numFormat(col3.toFixed(2)));
+		            $( api.column( 4 ).footer() ).html(numFormat(col4.toFixed(2)));
+		            $( api.column( 5 ).footer() ).html(numFormat(col5.toFixed(2)));
+		            $( api.column( 6 ).footer() ).html(numFormat(col6.toFixed(2)));
+		            $( api.column( 7 ).footer() ).html(numFormat(col7.toFixed(2)));
+		            $( api.column( 8 ).footer() ).html(numFormat(col8.toFixed(2)));
+		            $( api.column( 9 ).footer() ).html(numFormat(col9.toFixed(2)));
+		            $( api.column( 10 ).footer() ).html(numFormat(col10.toFixed(2)));
+		            $( api.column( 11 ).footer() ).html(numFormat(col11.toFixed(2)));
+		            $( api.column( 12 ).footer() ).html(numFormat(col12.toFixed(2)));
+		            $( api.column( 13 ).footer() ).html(numFormat(col13.toFixed(2)));
+		            $( api.column( 14 ).footer() ).html(numFormat(col14.toFixed(2)));
+		            $( api.column( 15 ).footer() ).html(numFormat(col15.toFixed(2)));
+		            $( api.column( 16 ).footer() ).html(numFormat(col16.toFixed(2)));
+		            $( api.column( 17 ).footer() ).html(numFormat(col17.toFixed(2)));
+		            $( api.column( 18 ).footer() ).html(numFormat(col18.toFixed(2)));
+		            $( api.column( 19 ).footer() ).html(numFormat(col19.toFixed(2)));
+		            $( api.column( 20 ).footer() ).html(numFormat(col20.toFixed(2)));
+		        }
+	
+	        });
+			
+			
+			$('#dtSpeseLocaliUsoComune').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjaxSpeseSingoleUnitaImmobiliari+dtWhereConditionLocaliUsoComune,				
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						visible: false,
+			            defaultContent: '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						targets:2,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:3,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:4,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:5,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:6,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:7,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:8,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:9,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:10,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:11,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:12,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:13,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:14,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:15,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:16,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:17,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:18,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:19,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:20,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					}
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+	            'rowCallback': function(row, data, index){
+               	 	if(data[9]!=''){
+               	 		$(row).find('td:eq(9)').css('background-color', '#ffbc40');
+                 	}
+                 	if(data[18]!=''){
+               	 		$(row).find('td:eq(18)').css('background-color', '#87CEEB');
+                 	}
+                },
+				aaSorting: [],
+				
+				
+				"footerCallback": function ( row, data, start, end, display ) {
+		            var api = this.api(), data;
+		            // converting to interger to find total
+		            
+		            var intVal = function ( i ) {
+		                return typeof i === 'string' ?
+		                    i.replace(/[\$,]/g, '')*1 :
+		                    typeof i === 'number' ?
+		                        i : 0;
+		            };
+		            
+		         // computing column Total of the complete result 
+		         
+		         	var col2 = api
+		                .column( 2 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col3 = api
+		                .column( 3 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col4 = api
+		                .column( 4 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col5 = api
+		                .column( 5 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+			    	var col6 = api
+		                .column( 6 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+					
+			    	var col7 = api
+		                .column( 7 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col8 = api
+		                .column( 8 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col9 = api
+		                .column( 9 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	var col10 = api
+		                .column( 10 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+					
+			    	var col11 = api
+		                .column( 11 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col12 = api
+		                .column( 12 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col13 = api
+		                .column( 13 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );	
+			    	
+			    	var col14 = api
+	                .column( 14 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col15 = api
+	                .column( 15 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col16 = api
+	                .column( 16 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col17 = api
+	                .column( 17 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col18 = api
+	                .column( 18 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col19 = api
+	                .column( 19 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+			    	var col20 = api
+	                .column( 20 )
+	                .data()
+	                .reduce( function (a, b) {
+	                    return intVal(a) + intVal(b);
+	                }, 0 );	
+			    	
+		           
+						
+			    	// Update footer by showing the total with the reference of the column index
+		            var numFormat = $.fn.dataTable.render.number( '.', ',', 2, '' ).display;
+			    	
+		            // Update footer by showing the total with the reference of the column index
+		            $( api.column( 0 ).footer() ).html('');
+				    $( api.column( 1 ).footer() ).html('Totali');
+			    	$( api.column( 2 ).footer() ).html(numFormat(col2.toFixed(2)));
+			    	$( api.column( 3 ).footer() ).html(numFormat(col3.toFixed(2)));
+		            $( api.column( 4 ).footer() ).html(numFormat(col4.toFixed(2)));
+		            $( api.column( 5 ).footer() ).html(numFormat(col5.toFixed(2)));
+		            $( api.column( 6 ).footer() ).html(numFormat(col6.toFixed(2)));
+		            $( api.column( 7 ).footer() ).html(numFormat(col7.toFixed(2)));
+		            $( api.column( 8 ).footer() ).html(numFormat(col8.toFixed(2)));
+		            $( api.column( 9 ).footer() ).html(numFormat(col9.toFixed(2)));
+		            $( api.column( 10 ).footer() ).html(numFormat(col10.toFixed(2)));
+		            $( api.column( 11 ).footer() ).html(numFormat(col11.toFixed(2)));
+		            $( api.column( 12 ).footer() ).html(numFormat(col12.toFixed(2)));
+		            $( api.column( 13 ).footer() ).html(numFormat(col13.toFixed(2)));
+		            $( api.column( 14 ).footer() ).html(numFormat(col14.toFixed(2)));
+		            $( api.column( 15 ).footer() ).html(numFormat(col15.toFixed(2)));
+		            $( api.column( 16 ).footer() ).html(numFormat(col16.toFixed(2)));
+		            $( api.column( 17 ).footer() ).html(numFormat(col17.toFixed(2)));
+		            $( api.column( 18 ).footer() ).html(numFormat(col18.toFixed(2)));
+		            $( api.column( 19 ).footer() ).html(numFormat(col19.toFixed(2)));
+		            $( api.column( 20 ).footer() ).html(numFormat(col20.toFixed(2)));
+		        }
+	
+	        });
+			
+			
+			
+			$('#dtConsumiCondominio').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjaxConsumiCondominio+dtWhereCondition,				
+				columnDefs: [
+					{
+						targets:0,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:1,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:2,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:3,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:4,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:5,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:6,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:7,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:8,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					}
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+	            'rowCallback': function(row, data, index){
+               	 	if(data[3]!=''){
+               	 		$(row).find('td:eq(3)').css('background-color', '#ffbc40');
+                 	}
+                 	if(data[7]!=''){
+               	 		$(row).find('td:eq(7)').css('background-color', '#87CEEB');
+                 	}
+                },
+				aaSorting: [],
+				
+	        });
+			
+			
+			
+			$('#dtCostiUnitariEnergiaTermicaUtile').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjaxCostiUnitariEnergiaTermicaUtile+dtWhereCondition,				
+				columnDefs: [
+					{
+						targets:0,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 4, '' )
+					},
+					{
+						targets:1,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 4, '' )
+					}
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+				aaSorting: [],
+				
+	        });
+			
+			
+			
+			$('#dtSpeseCondominio').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjaxSpeseCondominio+dtWhereCondition,				
+				columnDefs: [
+					{
+						targets:0,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:1,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:2,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:3,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:4,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:5,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:6,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:7,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:8,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:9,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:10,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:11,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:12,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:13,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:14,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:15,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:16,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:17,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:18,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					}
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+	            'rowCallback': function(row, data, index){
+               	 	if(data[8]!=''){
+               	 		$(row).find('td:eq(8)').css('background-color', '#ffbc40');
+                 	}
+                 	if(data[17]!=''){
+               	 		$(row).find('td:eq(17)').css('background-color', '#87CEEB');
+                 	}
+                },
+				aaSorting: [],
+				
+	        });
+			
+			
+			
+			
+			
+			
+				
+			$( "#inviaApprovatore" ).click(function() {
+				$('.modal-title').html('Invia modulo');
+				$('.modal-text').html('Confermi invio modulo per approvazione?');
+				$("#modalQuestionDialogPublish").modal({backdrop: true});
+				$('#modalQuestionDialogPublish').collapse("show");
+        	});
+			
+			
+			$( "#confermaRipartizione" ).click(function() {
+				$('.modal-title').html('Invia modulo');
+				$('.modal-text').html('Confermi la pubblicazione della ripartizione?');
+				$("#modalQuestionDialogPublishRipartizione").modal({backdrop: true});
+				$('#modalQuestionDialogPublishRipartizione').collapse("show");
+        	});
+			
+			
+			
+			
+			
+			
+		});		
+		
+	
+		
+		function disableFieldsStatusDRA() {
+			var idModulo=$("#ID_MODULO").val();
+			if (idModulo!=null && idModulo!="") {
+				$("#inviaApprovatore").show();
+			} else {
+				$("#inviaApprovatore").hide();
+			}
+		}
+
+		function disableFieldsStatusAPP() {
+			$("#formInserimento :input").attr("disabled", true);
+			$("#salva").hide();
+			$("#inviaApprovatore").hide();
+		}
+
+		function disableFieldsReadOnly() {
+			$("#formInserimento :input").attr("disabled", true);
+			$("#salva").hide();
+			$("#inviaApprovatore").hide();
+		}
+		
+		
+		function calcoloDati() {
+			var fh = $('#FABBISOGNO_CLIMA_FH').val();
+			var fw = $('#FABBISOGNO_ACS_FW').val();
+			
+			
+			var SG_SCR_QTA_PREV=$("#SG_SCR_QTA_PREV").val();
+			var SG_SCR_IMPORTO_PREV=$("#SG_SCR_IMPORTO_PREV").val();
+			var SG_SCR_TOTALE_PREV=parseFloat(SG_SCR_QTA_PREV) * parseFloat(SG_SCR_IMPORTO_PREV) || 0;
+			$("#SG_SCR_TOTALE_PREV").val(SG_SCR_TOTALE_PREV.toFixed(2));
+			
+			var SG_SCR_QTA_CONS=$("#SG_SCR_QTA_CONS").val();
+			var SG_SCR_IMPORTO_CONS=$("#SG_SCR_IMPORTO_CONS").val();
+			var SG_SCR_TOTALE_CONS=parseFloat(SG_SCR_QTA_CONS) * parseFloat(SG_SCR_IMPORTO_CONS) || 0;
+			$("#SG_SCR_TOTALE_CONS").val(SG_SCR_TOTALE_CONS.toFixed(2));
+			
+			var SG_SCM_TOTALE_PREV=$("#SG_SCM_TOTALE_PREV").val();
+			var SG_SCR_TOTALE_PREV=$("#SG_SCR_TOTALE_PREV").val();
+			var SG_SG_TOTALE_PREV=parseFloat(SG_SCM_TOTALE_PREV) + parseFloat(SG_SCR_TOTALE_PREV) || 0;
+			$("#SG_SG_TOTALE_PREV").val(SG_SG_TOTALE_PREV.toFixed(2));
+			
+			var SG_SCM_TOTALE_CONS=$("#SG_SCM_TOTALE_CONS").val();
+			var SG_SCR_TOTALE_CONS=$("#SG_SCR_TOTALE_CONS").val();
+			var SG_SG_TOTALE_CONS=parseFloat(SG_SCM_TOTALE_CONS) + parseFloat(SG_SCR_TOTALE_CONS) || 0;
+			$("#SG_SG_TOTALE_CONS").val(SG_SG_TOTALE_CONS.toFixed(2));
+			
+			
+			var VET_COMB_C_VE_PREV=$("#VET_COMB_C_VE_PREV").val();
+			var VET_ELETTR_C_VE_PREV=$("#VET_ELETTR_C_VE_PREV").val();
+			
+			var VET_COMB_Q_VE_H_PREV=$("#VET_COMB_Q_VE_H_PREV").val();
+			var VET_ELETTR_Q_VE_H_PREV=$("#VET_ELETTR_Q_VE_H_PREV").val();
+			var TOT_COMB_H_PREV=parseFloat(VET_COMB_Q_VE_H_PREV) * parseFloat(VET_COMB_C_VE_PREV) || 0;
+			var TOT_ELETTR_H_PREV=parseFloat(VET_ELETTR_Q_VE_H_PREV) * parseFloat(VET_ELETTR_C_VE_PREV) || 0;
+			var ST_RISC_SE_PREV=parseFloat(TOT_COMB_H_PREV) + parseFloat(TOT_ELETTR_H_PREV) || 0;
+			$("#ST_RISC_SE_PREV").val(ST_RISC_SE_PREV.toFixed(2));
+			
+			var VET_COMB_Q_VE_W_PREV=$("#VET_COMB_Q_VE_W_PREV").val();
+			var VET_ELETTR_Q_VE_W_PREV=$("#VET_ELETTR_Q_VE_W_PREV").val();
+			var TOT_COMB_W_PREV=parseFloat(VET_COMB_Q_VE_W_PREV) * parseFloat(VET_COMB_C_VE_PREV) || 0;
+			var TOT_ELETTR_W_PREV=parseFloat(VET_ELETTR_Q_VE_W_PREV) * parseFloat(VET_ELETTR_C_VE_PREV) || 0;
+			var ST_ACS_SE_PREV=parseFloat(TOT_COMB_W_PREV) + parseFloat(TOT_ELETTR_W_PREV) || 0;
+			$("#ST_ACS_SE_PREV").val(ST_ACS_SE_PREV.toFixed(2));
+			
+			
+			
+			var VET_COMB_C_VE_CONS=$("#VET_COMB_C_VE_CONS").val();
+			var VET_ELETTR_C_VE_CONS=$("#VET_ELETTR_C_VE_CONS").val();
+			
+			var VET_COMB_Q_VE_H_CONS=$("#VET_COMB_Q_VE_H_CONS").val();
+			var VET_ELETTR_Q_VE_H_CONS=$("#VET_ELETTR_Q_VE_H_CONS").val();
+			var TOT_COMB_H_CONS=parseFloat(VET_COMB_Q_VE_H_CONS) * parseFloat(VET_COMB_C_VE_CONS) || 0;
+			var TOT_ELETTR_H_CONS=parseFloat(VET_ELETTR_Q_VE_H_CONS) * parseFloat(VET_ELETTR_C_VE_CONS) || 0;
+			var ST_RISC_SE_CONS=parseFloat(TOT_COMB_H_CONS) + parseFloat(TOT_ELETTR_H_CONS) || 0;
+			$("#ST_RISC_SE_CONS").val(ST_RISC_SE_CONS.toFixed(2));
+			
+			var VET_COMB_Q_VE_W_CONS=$("#VET_COMB_Q_VE_W_CONS").val();
+			var VET_ELETTR_Q_VE_W_CONS=$("#VET_ELETTR_Q_VE_W_CONS").val();
+			var TOT_COMB_W_CONS=parseFloat(VET_COMB_Q_VE_W_CONS) * parseFloat(VET_COMB_C_VE_CONS) || 0;
+			var TOT_ELETTR_W_CONS=parseFloat(VET_ELETTR_Q_VE_W_CONS) * parseFloat(VET_ELETTR_C_VE_CONS) || 0;
+			var ST_ACS_SE_CONS=parseFloat(TOT_COMB_W_CONS) + parseFloat(TOT_ELETTR_W_CONS) || 0;
+			$("#ST_ACS_SE_CONS").val(ST_ACS_SE_CONS.toFixed(2));
+			
+			
+			
+			var ST_RISC_SG_PREV=parseFloat(SG_SG_TOTALE_PREV) * parseFloat(fh) || 0;
+			$("#ST_RISC_SG_PREV").val(ST_RISC_SG_PREV.toFixed(2));
+			
+			var ST_ACS_SG_PREV=parseFloat(SG_SG_TOTALE_PREV) * parseFloat(fw) || 0;
+			$("#ST_ACS_SG_PREV").val(ST_ACS_SG_PREV.toFixed(2));
+							
+			var ST_RISC_SG_CONS=parseFloat(SG_SG_TOTALE_CONS) * parseFloat(fh) || 0;
+			$("#ST_RISC_SG_CONS").val(ST_RISC_SG_CONS.toFixed(2));
+			
+			var ST_ACS_SG_CONS=parseFloat(SG_SG_TOTALE_CONS) * parseFloat(fw) || 0;
+			$("#ST_ACS_SG_CONS").val(ST_ACS_SG_CONS.toFixed(2));
+			
+			
+			
+			
+			var ST_RISC_SE_PREV=$("#ST_RISC_SE_PREV").val();
+			var ST_RISC_SG_PREV=$("#ST_RISC_SG_PREV").val();
+			var ST_RISC_ST_PREV=parseFloat(ST_RISC_SE_PREV) + parseFloat(ST_RISC_SG_PREV) || 0;
+			$("#ST_RISC_ST_PREV").val(ST_RISC_ST_PREV.toFixed(2));
+							
+			var ST_RISC_SE_CONS=$("#ST_RISC_SE_CONS").val();
+			var ST_RISC_SG_CONS=$("#ST_RISC_SG_CONS").val();
+			var ST_RISC_ST_CONS=parseFloat(ST_RISC_SE_CONS) + parseFloat(ST_RISC_SG_CONS) || 0;
+			$("#ST_RISC_ST_CONS").val(ST_RISC_ST_CONS.toFixed(2));
+			
+			var ST_ACS_SE_PREV=$("#ST_ACS_SE_PREV").val();
+			var ST_ACS_SG_PREV=$("#ST_ACS_SG_PREV").val();
+			var ST_ACS_ST_PREV=parseFloat(ST_ACS_SE_PREV) + parseFloat(ST_ACS_SG_PREV) || 0;
+			$("#ST_ACS_ST_PREV").val(ST_ACS_ST_PREV.toFixed(2));
+							
+			var ST_ACS_SE_CONS=$("#ST_ACS_SE_CONS").val();
+			var ST_ACS_SG_CONS=$("#ST_ACS_SG_CONS").val();
+			var ST_ACS_ST_CONS=parseFloat(ST_ACS_SE_CONS) + parseFloat(ST_ACS_SG_CONS) || 0;
+			$("#ST_ACS_ST_CONS").val(ST_ACS_ST_CONS.toFixed(2));
+			
+			
+			var ST_SE_TOTALE_PREV=parseFloat(ST_RISC_SE_PREV) + parseFloat(ST_ACS_SE_PREV) || 0;
+			$("#ST_SE_TOTALE_PREV").val(ST_SE_TOTALE_PREV.toFixed(2));
+
+			var ST_SG_TOTALE_PREV=parseFloat(ST_RISC_SG_PREV) + parseFloat(ST_ACS_SG_PREV) || 0;
+			$("#ST_SG_TOTALE_PREV").val(ST_SG_TOTALE_PREV.toFixed(2));
+
+			var ST_ST_TOTALE_PREV=parseFloat(ST_RISC_ST_PREV) + parseFloat(ST_ACS_ST_PREV) || 0;
+			$("#ST_ST_TOTALE_PREV").val(ST_ST_TOTALE_PREV.toFixed(2));
+			
+			var ST_SE_TOTALE_CONS=parseFloat(ST_RISC_SE_CONS) + parseFloat(ST_ACS_SE_CONS) || 0;
+			$("#ST_SE_TOTALE_CONS").val(ST_SE_TOTALE_CONS.toFixed(2));
+
+			var ST_SG_TOTALE_CONS=parseFloat(ST_RISC_SG_CONS) + parseFloat(ST_ACS_SG_CONS) || 0;
+			$("#ST_SG_TOTALE_CONS").val(ST_SG_TOTALE_CONS.toFixed(2));
+
+			var ST_ST_TOTALE_CONS=parseFloat(ST_RISC_ST_CONS) + parseFloat(ST_ACS_ST_CONS) || 0;
+			$("#ST_ST_TOTALE_CONS").val(ST_ST_TOTALE_CONS.toFixed(2));
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		function doGrafico(){
+			var dataset="DSRipartizioniUNI2018Condominio";
+		  	var locatario="DENOMINAZIONE";
+		  	var spesaTotaleAppartamento="SPESE_TOTALI_S_GL_TOT";
+		  	var height=0;
+		  	
+		  	var dtWhereCondition2="<#if ID_MODULO?exists && ID_MODULO!=''>WHERE ID_MODULO = ${ID_MODULO}<#else> WHERE 1=0 </#if>";
+			arrayValori = new Array();
+			
+			
+			$.ajax({
+				url: "astro?FUNCTIONID=JSONDataSet&dataset="+dataset+"&columns="+locatario+","+spesaTotaleAppartamento+"&WHERECONDITION= "+dtWhereCondition2,
+				dataType: 'json',
+				type: 'GET',
+				success: function (data) {
+					$.each(data.rows,function(i,data) {
+						arrayValori[i]=data;
+						height=i*40;
+					}); 
+					
+					var obj= arrayValori;
+					
+					document.getElementById("chartdiv").style.height=height+"px";
+					
+					
+					$("#chartdiv").empty();
+					
+					
+					if (typeof arrayValori == 'undefined' || arrayValori.length <= 0) {
+						$( "#chartdiv-empty" ).html( "<p>Non sono disponibili dati da visualizzare per i consumi</p>" );
+						document.getElementById("chartdiv-empty").style.display="block";
+						document.getElementById("chartdiv").style.display="none";
+					}else{
+						document.getElementById("chartdiv-empty").style.display="none";
+						document.getElementById("chartdiv").style.display="block";
+					}
+					
+					
+
+					<!-- Chart code -->
+					
+					var chart = AmCharts.makeChart("chartdiv", {
+						"type": "serial",
+					    "theme": "light",
+						"categoryField": "DENOMINAZIONE",
+						"rotate": true,
+						"lineWidth": 1,
+						"startDuration": 1,
+						"categoryAxis": {
+							"gridPosition": "start",
+							"position": "left"
+						},
+						"trendLines": [],
+						"graphs": [
+							{
+								"balloonText": "Spesa totale per unità (€):[[value]]",
+								"fillAlphas": 0.8,
+								"fillColors": "green",
+								"id": "AmGraph-2",
+								"lineAlpha": 0.2,
+								"title": "ACS",
+								"type": "column",
+								"valueField": "SPESE_TOTALI_S_GL_TOT"
+							}
+						],
+						"guides": [],
+						"valueAxes": [
+							{
+								"id": "ValueAxis-1",
+								"position": "top",
+								"axisAlpha": 0
+							}
+						],
+						"allLabels": [],
+						"balloon": {},
+						"titles": [],
+						"dataProvider": obj,
+						"numberFormatter": {
+				            "decimalSeparator": ",",
+				            "thousandsSeparator": "."
+				        },
+					    "export": {
+					    	"enabled": true
+					     }
+					
+					});
+
+				}
+	      	
+			});
+		}
+		
+		
+		
+			
+		
+		
+		 </script> 
+		    
+		 </head>
+
+		 <body onLoad="doGrafico();">
+		 
+		 	<form action="astro" method="get" id="formEdit" name="formEdit">
+				<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+				<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+				<input type="hidden" id="READONLY" name="READONLY" value="N">
+				<input type="hidden" id="ID_DETTAGLIO" name="ID_DETTAGLIO">
+				<input type="hidden" id="RILEVATORE" name="RILEVATORE">
+				<input type="hidden" id="RILEVATORE_1" name="RILEVATORE_1">
+				<input type="hidden" id="TIPOLOGIA" name="TIPOLOGIA">
+				<input type="hidden" id="ID_AZIENDA_2" name="ID_AZIENDA_2">
+				<input type="hidden" id="ID_AZIENDA_1" name="ID_AZIENDA_1">
+				<input type="hidden" id="ID_CONDOMINIO_2" name="ID_CONDOMINIO_2">
+			</form>		 
+		 
+		 	<div class="modal inmodal fade" id="modalQuestionDialogPublish"	tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modal-title"></span>
+						</div>
+						<div class="modal-body">
+							<span class="modal-text"></span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal" class="btn btn-white btn-sm"	onclick="$('#modalQuestionDialogPublish').collapse('hide');">${label_no}</button>
+							<button class="btn btn-primary btn-sm" onclick="$('#modalQuestionDialogPublish').collapse('toggle');inviaApprovazione();disableFieldsReadOnly();" data-dismiss="modal" type="submit">${label_si}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="modal inmodal fade" id="modalQuestionDialogPublishRipartizione"	tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modal-title"></span>
+						</div>
+						<div class="modal-body">
+							<span class="modal-text"></span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal" class="btn btn-white btn-sm"	onclick="$('#modalQuestionDialogPublish').collapse('hide');">${label_no}</button>
+							<button class="btn btn-primary btn-sm" onclick="$('#modalQuestionDialogPublishRipartizione').collapse('toggle');pubblicaRipartizione();disableFieldsStatusAPP();" data-dismiss="modal" type="submit">${label_si}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+
+		      <div id="wrapper">
+
+		     	<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		         <div id="page-wrapper" class="gray-bg">
+		 		
+		         	<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+		         	
+		 			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+		             	
+		             	<div class="col-lg-12">
+
+	 	                	<div class="ibox float-e-margins">
+		 	                    
+								<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+			 		            	
+		 			            <div class="ibox-content">
+		 			            	<form action="astro" method="post" id="formInserimento"  class="form-horizontal">
+		 			            	<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoRipartizioniUNI2018" />
+		 			            	<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE">
+		 			            	<input type="hidden" id="ID_MODULO" name="ID_MODULO">
+		 			            	<input type="hidden" id="ID_AZIENDA" name="ID_AZIENDA">
+		 			            	<input type="hidden" id="TIPO_RIPARTIZIONE" name="TIPO_RIPARTIZIONE">
+		 			            	<input type="hidden" id="WORKFLOW_ACTION" name="WORKFLOW_ACTION">
+		 			            	
+		 			            	<input type="hidden" id="FABBISOGNO_CLIMA_FH" name="FABBISOGNO_CLIMA_FH" value="<#if FABBISOGNO_CLIMA_FH?exists>${FABBISOGNO_CLIMA_FH}</#if>">
+		 			            	<input type="hidden" id="FABBISOGNO_ACS_FW" name="FABBISOGNO_ACS_FW" value="<#if FABBISOGNO_ACS_FW?exists>${FABBISOGNO_ACS_FW}</#if>">
+		 			            	<input type="hidden" id="FABBISOGNO_ANNUO_CLIMA" name="FABBISOGNO_ANNUO_CLIMA" value="<#if FABBISOGNO_ANNUO_CLIMA?exists>${FABBISOGNO_ANNUO_CLIMA}</#if>">
+		 			            	<input type="hidden" id="FABBISOGNO_ANNUO_ACS" name="FABBISOGNO_ANNUO_ACS" value="<#if FABBISOGNO_ANNUO_ACS?exists>${FABBISOGNO_ANNUO_ACS}</#if>">
+		 			            	<input type="hidden" id="PERDITE_IMPIANTO" name="PERDITE_IMPIANTO" value="<#if PERDITE_IMPIANTO?exists>${PERDITE_IMPIANTO}</#if>">
+		 			            	
+		 			            	
+		 			            	
+		 			            	
+		 			            	
+		 			            	<div class="row">
+			 			            	<div class="form-group">
+		                                	<label class="col-sm-2 control-label">Nr.</label>
+		                                    <div class="col-sm-2"><input type="text" class="form-control" id="NR_MODULO" name="NR_MODULO"></div>
+		
+		                                	<label class="col-sm-1 control-label">Data</label>
+		                                    <div class="col-sm-2">
+							                <div class="input-group date">
+			                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="DT_MODULO" id="DT_MODULO" required>
+			                                </div>
+		                                    </div>
+		                                    
+		                                	<label class="col-sm-1 control-label">Stato:</label>
+		                                    <div class="col-sm-3">
+			                                    <select id="STATO" name="STATO"  class="form-control" required>
+			                                    </select>
+											</div>                                	
+		                                </div>   
+                                	</div>
+                                
+									<div class="row">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Condominio</label>
+											<div class="col-sm-4">
+												<select id="ID_CONDOMINIO" name="ID_CONDOMINIO" class="form-control" required></select>
+											</div>
+											<div class="col-sm-2 alert alert-info" id="info">
+				                               <b><input type="text" style="border:none;background-color:transparent;text-align:center" name="DESCR_TIPO_RIPARTIZIONE" id="DESCR_TIPO_RIPARTIZIONE"></b>
+				                            </div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Data dal</label>
+											<div class="col-sm-2">
+												<div class="input-group date">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="text" class="form-control" name="DATA_DAL" id="DATA_DAL" value="<#if DATA_DAL?exists>${DATA_DAL}</#if>" required>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-1 control-label">Data al</label>
+												<div class="col-sm-2">
+													<div class="input-group date">
+														<span class="input-group-addon">
+															<i class="fa fa-calendar"></i>
+														</span>
+														<input type="text" class="form-control" name="DATA_AL" id="DATA_AL" value="<#if DATA_AL?exists>${DATA_AL}</#if>" required>
+													</div>
+												</div>
+											</div>
+										</div>		
+										<div class="row">	
+											<div class="form-group"><label class="col-sm-2 control-label">Tipologia di contabilizzazione climatizzazione invernale/ACS</label>
+			                                    <div class="col-sm-4">
+													<select id="TIPO_CONTABILIZZAZIONE" name="TIPO_CONTABILIZZAZIONE" class="form-control">
+													</select>
+			                                    </div>
+			                                </div>
+                                		</div>
+                                		
+                                		<div class="row">	
+											<div class="form-group"><label class="col-sm-2 control-label">Tipo ripartizione</label>
+			                                    <div class="col-sm-4">
+													<select id="TIPO_RIPARTIZIONE_PC" name="TIPO_RIPARTIZIONE_PC" class="form-control">
+													</select>
+			                                    </div>
+			                                </div>
+                                		</div>
+                                
+                                			<div class="col-sm-12 alert alert-warning" id="msg_warning">
+				                               <b><input type="text" style="border:none;background-color:transparent;text-align:center;width:100%;" name="ALERT_NON_SCARICATI" id="ALERT_NON_SCARICATI" disabled></b>
+				                            </div>
+				                            
+				                            
+				                           
+				                            <div class="col-sm-12 alert alert-warning" id="msg_anomalia">
+				                               <b><input type="text" style="border:none;background-color:transparent;text-align:center;width:100%;" name="ALERT_IN_ANOMALIA" id="ALERT_IN_ANOMALIA" disabled></b>
+				                               <br>
+				                                <table id="dtAnomalie" class="table table-bordered">
+					                                <thead>
+														<tr>
+															<th></th>
+															<th>Locatario</th>
+															<th>Stanza</th>
+															<th>Num. Fabbrica dispositivo</th>
+															<th>Cod. anomalia</th>
+															<th>Anomalia</th>
+															<th>Data anomalia</th>
+															<th>Ora anomalia</th>
+															<th>Data di lettura</th>
+															<th>Lettura attuale</th>
+															<th>Volume attuale</th>
+															<th>Unit&#224; di misura</th>
+														</tr>
+													</thead>
+					                            </table>
+				                            </div>
+				                            
+				                            <div class="col-sm-12 alert alert-warning" id="msg_differenza">
+				                               <b><input type="text" style="border:none;background-color:transparent;text-align:center;width:100%;" name="ALERT_DIFFERENZA" id="ALERT_DIFFERENZA" disabled></b>
+				                            </div>
+											
+				                            
+											<div class="hr-line-dashed"></div>
+											
+											
+											<div class="col-lg-12">
+												<div class="tabs-container">
+													<ul class="nav nav-tabs">
+														<li class="active">
+															<a data-toggle="tab" href="#tab-1">DATI IMPIANTO</a>
+														</li>
+														<li class="">
+															<a data-toggle="tab" href="#tab-2">CONSUMI</a>
+														</li>
+														<li class="">
+															<a data-toggle="tab" href="#tab-3">COSTI E SPESE</a>
+														</li>
+														<li class="">
+															<a data-toggle="tab" href="#tab-4">COSTI PER UNITA' - GRAFICO</a>
+														</li>
+													</ul>
+													<div class="tab-content">
+														<!---------------------- TOTALE COSTI IMPIANTO ---------------------->
+											
+											
+														<div id="tab-1" class="tab-pane active">
+															<div class="panel-body">
+																<div class="row">
+																	<div class="col-lg-12">
+																		<div class="ibox">
+																			<table>
+																				<!-- <thead>
+																					<tr>
+																						<th>SPESE GESTIONALI</th>
+																					</tr>
+																				</thead>  -->
+																				<table class="table table-bordered" style="border-top-color:white">
+																					<thead>
+																						<tr><th colspan="2" style="background-color:white;border-left-color:white;border-top-color:white;border-bottom-color:white"></th>
+																						<th colspan="3" style="text-align:center;border:1px solid #e7eaec">DATI PER PROSPETTO PREVISIONALE</th>
+																						<th colspan="3" style="text-align:center;border:1px solid #e7eaec">DATI PER PROSPETTO CONSUNTIVO</th>
+																						</tr>
+																						<tr><th colspan="7" style="background-color:white;border-left-color:white;border-right-color:white"></th></tr>
+																						<tr><th colspan="8">SPESE GESTIONALI</th></tr>
+																						<tr>
+																							<th colspan="2">Descrizione</th>
+																							<th>Quantità</th>
+																							<th>Importo [&euro;]</th>
+																							<th>Totale [&euro;]</th>
+																							<th>Quantità</th>
+																							<th>Importo [&euro;]</th>
+																							<th>Totale [&euro;]</th>
+																						</tr>
+																					</thead>
+																					<tr>
+																						<td colspan="2" class="middle">SPESA PER CONDUZIONE E MANUTENZIONE ORDINARIA DELL'IMPIANTO TERMICO CENTRALIZZATO (S<sub>cm</sub>)</td>
+																						<td class="right"></td>
+																						<td class="right"></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="SG_SCM_TOTALE_PREV" name="SG_SCM_TOTALE_PREV" required></td>
+																						<td class="right"></td>
+																						<td class="right"></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="SG_SCM_TOTALE_CONS" name="SG_SCM_TOTALE_CONS" required></td>
+																					</tr>
+																					<tr>
+																						<td colspan="2" class="middle">SPESA PER LA GESTIONE DEL SERVIZIO DI CONTABILIZZAZIONE DELL'ENERGIA TERMICA UTILE (S<sub>cr</sub>)</td>
+																						<td class="right"><input type="number" min="0" step="1" class="form-control" id="SG_SCR_QTA_PREV" name="SG_SCR_QTA_PREV" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="SG_SCR_IMPORTO_PREV" name="SG_SCR_IMPORTO_PREV" required></td>
+																						<td class="right"><input type="number" class="form-control" id="SG_SCR_TOTALE_PREV" name="SG_SCR_TOTALE_PREV" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="1" class="form-control" id="SG_SCR_QTA_CONS" name="SG_SCR_QTA_CONS" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="SG_SCR_IMPORTO_CONS" name="SG_SCR_IMPORTO_CONS" required></td>
+																						<td class="right"><input type="number" class="form-control" id="SG_SCR_TOTALE_CONS" name="SG_SCR_TOTALE_CONS" required readonly></td>
+																					</tr>
+																					<tr style="font-weight:bold">
+																						<td colspan="2">TOTALE SPESE GESTIONALI (S<sub>g</sub>)</td>
+																						<td class="right"></td>
+																						<td class="right"></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="SG_SG_TOTALE_PREV" name="SG_SG_TOTALE_PREV" required readonly></td>
+																						<td class="right"></td>
+																						<td class="right"></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="SG_SG_TOTALE_CONS" name="SG_SG_TOTALE_CONS" required readonly></td>
+																					</tr>
+																					
+																					
+																					
+																					
+																					<thead>
+																						<tr><th colspan="7" style="background-color:white;border-left-color:white;border-right-color:white;"></th></tr>
+																						<tr><th colspan="8">VETTORI ENERGETICI</th></tr>
+																						<tr>
+																							<th>Vettore</th>
+																							<th>U.M.</th>
+																							<th>Fabbisogno per servizio di riscaldamento (Q<sub>ve,H</sub>)</th>
+																							<th>Fabbisogno per servizio di acqua calda sanitaria (Q<sub>ve,W</sub>)</th>
+																							<th>Costo unitario vettore (C<sub>ve</sub>) [&euro;]</th>
+																							<th>Consumo per servizio di riscaldamento (Q<sub>ve,H</sub>)</th>
+																							<th>Consumo per servizio di acqua calda sanitaria (Q<sub>ve,W</sub>)</th>
+																							<th>Costo unitario vettore (C<sub>ve</sub>) [&euro;]</th>
+																						</tr>
+																					</thead>
+																					<tr>
+																						<td class="middle">COMBUSTIBILE</td>
+																						<td class="center">
+																							<!-- <input type="text" class="form-control" id="VET_COMB_UM" name="VET_COMB_UM" required>-->
+																							<select id="VET_COMB_UM" name="VET_COMB_UM" class="form-control" required></select>
+																						</td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_COMB_Q_VE_H_PREV" name="VET_COMB_Q_VE_H_PREV" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_COMB_Q_VE_W_PREV" name="VET_COMB_Q_VE_W_PREV" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_COMB_C_VE_PREV" name="VET_COMB_C_VE_PREV" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_COMB_Q_VE_H_CONS" name="VET_COMB_Q_VE_H_CONS" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_COMB_Q_VE_W_CONS" name="VET_COMB_Q_VE_W_CONS" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_COMB_C_VE_CONS" name="VET_COMB_C_VE_CONS" required></td>
+																					</tr>
+																					<tr>
+																						<td class="middle">ELETTRICITA'</td>
+																						<td class="center">
+																							<!-- <input type="text" class="form-control" id="VET_ELETTR_UM" name="VET_ELETTR_UM" required> -->
+																							<select id="VET_ELETTR_UM" name="VET_ELETTR_UM" class="form-control" required></select>
+																						</td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_ELETTR_Q_VE_H_PREV" name="VET_ELETTR_Q_VE_H_PREV" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_ELETTR_Q_VE_W_PREV" name="VET_ELETTR_Q_VE_W_PREV" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_ELETTR_C_VE_PREV" name="VET_ELETTR_C_VE_PREV" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_ELETTR_Q_VE_H_CONS" name="VET_ELETTR_Q_VE_H_CONS" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_ELETTR_Q_VE_W_CONS" name="VET_ELETTR_Q_VE_W_CONS" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="VET_ELETTR_C_VE_CONS" name="VET_ELETTR_C_VE_CONS" required></td>
+																					</tr>
+																					
+																					
+																					
+																					
+																					
+																					<thead>
+																						<tr><th colspan="7" style="background-color:white;border-left-color:white;border-right-color:white;"></th></tr>
+																						<tr><th colspan="8">SPESE TOTALI</th></tr>
+																						<tr>
+																							<th colspan="2">Servizio</th>
+																							<th>Spesa energetica (S<sub>e</sub>) [&euro;]</th>
+																							<th>Spesa gestionale (S<sub>g</sub>) [&euro;]</th>
+																							<th>Spesa totale (S<sub>t</sub>) [&euro;]</th>
+																							<th>Spesa energetica (S<sub>e</sub>) [&euro;]</th>
+																							<th>Spesa gestionale (S<sub>g</sub>) [&euro;]</th>
+																							<th>Spesa totale (S<sub>t</sub>) [&euro;]</th>
+																						</tr>
+																					</thead>
+																					<tr>
+																						<td colspan="2" class="middle">RISCALDAMENTO</td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_RISC_SE_PREV" name="ST_RISC_SE_PREV" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_RISC_SG_PREV" name="ST_RISC_SG_PREV" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_RISC_ST_PREV" name="ST_RISC_ST_PREV" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_RISC_SE_CONS" name="ST_RISC_SE_CONS" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_RISC_SG_CONS" name="ST_RISC_SG_CONS" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_RISC_ST_CONS" name="ST_RISC_ST_CONS" required readonly></td>
+																					</tr>
+																					<tr>
+																						<td colspan="2" class="middle">ACQUA CALDA SANITARIA</td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_ACS_SE_PREV" name="ST_ACS_SE_PREV" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_ACS_SG_PREV" name="ST_ACS_SG_PREV" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_ACS_ST_PREV" name="ST_ACS_ST_PREV" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_ACS_SE_CONS" name="ST_ACS_SE_CONS" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_ACS_SG_CONS" name="ST_ACS_SG_CONS" required readonly></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="ST_ACS_ST_CONS" name="ST_ACS_ST_CONS" required readonly></td>
+																					</tr>
+																					<tr style="font-weight:bold">
+																						<td colspan="2" class="middle">TOTALE</td>
+																						<td class="right"><input type="number" class="form-control" id="ST_SE_TOTALE_PREV" name="ST_SE_TOTALE_PREV" required readonly></td>
+																						<td class="right"><input type="number" class="form-control" id="ST_SG_TOTALE_PREV" name="ST_SG_TOTALE_PREV" required readonly></td>
+																						<td class="right"><input type="number" class="form-control" id="ST_ST_TOTALE_PREV" name="ST_ST_TOTALE_PREV" required readonly></td>
+																						<td class="right"><input type="number" class="form-control" id="ST_SE_TOTALE_CONS" name="ST_SE_TOTALE_CONS" required readonly></td>
+																						<td class="right"><input type="number" class="form-control" id="ST_SG_TOTALE_CONS" name="ST_SG_TOTALE_CONS" required readonly></td>
+																						<td class="right"><input type="number" class="form-control" id="ST_ST_TOTALE_CONS" name="ST_ST_TOTALE_CONS" required readonly></td>
+																					</tr>
+																					
+																					
+																					<thead>
+																						<tr><th colspan="7" style="background-color:white;border-left-color:white;border-right-color:white"></th></tr>
+																						<tr><th colspan="8">GENERATORI</th></tr>
+																						<tr>
+																							<th>Vettore</th>
+																							<th>Tipologia contabilizzazione</th>
+																							<th></th>
+																							<th>Energia termica utile prodotta per servizio di riscaldamento (Q<sub>gn,H</sub>) [kWh]</th>
+																							<th>Energia termica utile prodotta per servizio di acqua calda sanitaria (Q<sub>gn,W</sub>) [kWh]</th>
+																							<th></th>
+																							<th>Energia termica utile prodotta per servizio di riscaldamento (Q<sub>gn,H</sub>) [kWh]</th>
+																							<th>Energia termica utile prodotta per servizio di acqua calda sanitaria (Q<sub>gn,W</sub>) [kWh]</th>
+																						</tr>
+																					</thead>
+																					<tr>
+																						<td class="middle">CALDAIA CENTRALIZZATA</td>
+																						<td class="center">
+																							<!-- <input type="text" class="form-control" id="GEN_TIPO" name="GEN_TIPO" required> -->
+																							<select id="GEN_TIPO" name="GEN_TIPO" class="form-control" required></select>
+																						</td>
+																						<th></th>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="GEN_QGN_H_PREV" name="GEN_QGN_H_PREV" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="GEN_QGN_W_PREV" name="GEN_QGN_W_PREV" required></td>
+																						<th></th>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="GEN_QGN_H_CONS" name="GEN_QGN_H_CONS" required></td>
+																						<td class="right"><input type="number" min="0" step="0.01" class="form-control" id="GEN_QGN_W_CONS" name="GEN_QGN_W_CONS" required></td>
+																					</tr>
+																					
+																					
+																				</table>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+																
+																	
+																</div>
+															</div>
+															
+													
+														
+														<!---------------------- CONSUMI PER UNITA' ---------------------->
+								
+												<div id="tab-2" class="tab-pane">
+													<div class="panel-body">
+														<!-- iniziano i grafici -->
+														<div class="row">
+															<div class="col-lg-12">
+																<div class="ibox">
+																	<table>
+																	
+																		<table id="dtConsumiCondominio" class="table table-bordered" style="border-top-color:white">
+																		
+																		    <thead>
+																		    	<tr><th colspan="10" style="text-align:center;border:1px solid #e7eaec">CONSUMI DEL CONDOMINIO</th></tr>
+																				<tr>
+																					<th colspan="4" style="text-align:center;border:1px solid #e7eaec;background-color: #ffbc40">Riscaldamento</th>
+																					<th colspan="4" style="text-align:center;border:1px solid #e7eaec;background-color: #87CEEB">Acqua calda sanitaria</th>
+																					<th rowspan="2" style="vertical-align:middle;">Frazione del consumo involontario (F<sub>inv</sub>)</th>
+												                                </tr>
+												                                <tr>
+																					<th>Consumo volontario di energia termica utile (Q<sub>vol</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo involontario di energia termica utile (Q<sub>inv</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo obbligato (Q<sub>obb</sub>) [kWh<sub>t</sub>]</th>
+																					<th style="background-color: #ffbc40">Consumo totale di energia termica utile (Q<sub>tot</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo volontario di energia termica utile (Q<sub>vol</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo involontario di energia termica utile (Q<sub>inv</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo obbligato (Q<sub>obb</sub>) [kWh<sub>t</sub>]</th>
+																					<th style="border:1px solid #e7eaec;background-color: #87CEEB"">Consumo totale di energia termica utile (Q<sub>tot</sub>) [kWh<sub>t</sub>]</th>
+												                                </tr>
+											                                </thead>
+											                            </table>	
+											                            
+											                            <div style="height:45px"></div>
+											                            
+																		
+																		<table id="dtConsumiSingoleUnitaImmobiliari" class="table table-bordered">
+											                                <thead>
+											                                	<tr><th colspan="22" style="text-align:center;border:1px solid #e7eaec">CONSUMI DELLE SINGOLE UNITA' IMMOBILIARI</th></tr>
+											                                	<tr>
+											                                		<th colspan="2" rowspan="2" style="vertical-align:middle;">Denominazione</th>
+											                                		<th rowspan="2" style="vertical-align:middle;">Millesimi (m<sub>P</sub>)</th>
+																					<th rowspan="2" style="vertical-align:middle;">Millesimi clima (m<sub>H</sub>)</th>
+																					<th rowspan="2" style="vertical-align:middle;">Millesimi ACS (m<sub>W</sub>)</th>
+																					<th rowspan="2" style="vertical-align:middle;">Rilevatori</th>
+																					<th rowspan="2" style="vertical-align:middle;">Lettura HCA</th>
+																					<th rowspan="2" style="vertical-align:middle;">Lettura ACS</th>
+																					<th colspan="4" style="text-align:center;border:1px solid #e7eaec;background-color: #ffbc40">Riscaldamento</th>
+																					<th colspan="4" style="text-align:center;border:1px solid #e7eaec;background-color: #87CEEB">Acqua calda sanitaria</th>
+												                                </tr>
+												                                <tr>
+																					<th>Consumo volontario di energia termica utile (Q<sub>vol</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo involontario di energia termica utile (Q<sub>inv</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo obbligato (Q<sub>obb</sub>) [kWh<sub>t</sub>]</th>
+																					<th style="background-color: #ffbc40">Consumo totale di energia termica utile (Q<sub>tot</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo volontario di energia termica utile (Q<sub>vol</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo involontario di energia termica utile (Q<sub>inv</sub>) [kWh<sub>t</sub>]</th>
+																					<th>Consumo obbligato (Q<sub>obb</sub>) [kWh<sub>t</sub>]</th>
+																					<th style="background-color: #87CEEB">Consumo totale di energia termica utile (Q<sub>tot</sub>) [kWh<sub>t</sub>]</th>
+												                                </tr>
+											                                </thead>
+											                                <tfoot>
+																				<tr>
+																					<th></th>
+																					<th></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right" style="background-color: #ffbc40"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right" style="background-color: #87CEEB"></th>
+																				</tr>
+																			</tfoot>
+											                            </table>				
+				                            
+				                            
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												
+												
+												
+														<!---------------------- COSTI PER UNITA' ---------------------->
+								
+												<div id="tab-3" class="tab-pane">
+													<div class="panel-body">
+														<!-- iniziano i grafici -->
+														<div class="row">
+															<div class="col-lg-12">
+																<div class="ibox">
+																	<table>
+																	
+																		<table id="dtCostiUnitariEnergiaTermicaUtile" class="table table-bordered">
+											                                <thead>
+											                                	<tr><th colspan="2" style="text-align:center;border:1px solid #e7eaec">COSTI UNITARI DELL'ENERGIA TERMICA UTILE</th></tr>
+																				<tr>
+																					<th>Costo unitario dell'energia termica utile per climatizzazione invernale (C<sub>H</sub>) [€/kWh]</th>
+																					<th>Costo unitario dell'energia termica utile per acqua calda sanitaria (C<sub>W</sub>) [€/kWh]</th>
+												                                </tr>
+											                                </thead>
+											                            </table>	
+											                            
+											                            <div style="height:45px"></div>
+																	
+																		<table id="dtSpeseCondominio" class="table table-bordered">
+											                                <thead>
+											                                	<tr><th colspan="19" style="text-align:center;border:1px solid #e7eaec">SPESE DEL CONDOMINIO</th></tr>
+											                                	<tr>
+																					<th colspan="9" style="text-align:center;border:1px solid #e7eaec;background-color: #ffbc40">Riscaldamento</th>
+																					<th colspan="9" style="text-align:center;border:1px solid #e7eaec;background-color: #87CEEB">Acqua calda sanitaria</th>
+																					<th style="text-align:center;border:1px solid #e7eaec">Totale</th>
+												                                </tr>
+												                                <tr>
+																					<th>Spesa per consumo volontario (S<sub>vol</sub>) [€]</th>
+																					<th>Spesa per consumo involontario (S<sub>inv</sub>) [€]</th>
+																					<th>Spesa per consumo obbligato (S<sub>obb</sub>) [€]</th>
+																					<th>Spesa energetica (S<sub>e</sub>) [€]</th>
+																					<th>Spesa gestionale (S<sub>g</sub>) [€]</th>
+																					<th>Quota a consumo (S<sub>c</sub>) [€]</th>
+																					<th>Quota fissa (S<sub>p</sub>) [€]</th>
+																					<th>Spesa per locali ad uso comune (S<sub>uc</sub>) [€]</th>
+																					<th style="background-color: #ffbc40">Spesa totale (S<sub>tot</sub>) [€]</th>
+																					<th>Spesa per consumo volontario (S<sub>vol</sub>) [€]</th>
+																					<th>Spesa per consumo involontario (S<sub>inv</sub>) [€]</th>
+																					<th>Spesa per consumo obbligato (S<sub>obb</sub>) [€]</th>
+																					<th>Spesa energetica (S<sub>e</sub>) [€]</th>
+																					<th>Spesa gestionale (S<sub>g</sub>) [€]</th>
+																					<th>Quota a consumo (S<sub>c</sub>) [€]</th>
+																					<th>Quota fissa (S<sub>p</sub>) [€]</th>
+																					<th>Spesa per locali ad uso comune (S<sub>uc</sub>) [€]</th>
+																					<th style="background-color: #87CEEB">Spesa totale (S<sub>tot</sub>) [€]</th>
+																					<th>Spesa totale (S<sub>gl,tot</sub>) [€]</th>
+												                                </tr>
+											                                </thead>
+											                            </table>	
+																		
+																		<div style="height:45px"></div>
+																		
+																		
+																		
+																		<table id="dtSpeseLocaliUsoComune" class="table table-bordered" >
+											                                <thead>
+											                                	<tr><th colspan="21" style="text-align:center;border:1px solid #e7eaec">SPESE DELLA SINGOLA UNITA' IMMOBILIARE - LOCALI USO COMUNE</th></tr>
+											                                	<tr>
+																					<th colspan="2" rowspan="2" style="vertical-align:middle;">Denominazione</th>
+																					<th colspan="9" style="text-align:center;border:1px solid #e7eaec;background-color: #ffbc40">Riscaldamento</th>
+																					<th colspan="9" style="text-align:center;border:1px solid #e7eaec;background-color: #87CEEB">Acqua calda sanitaria</th>
+																					<th style="text-align:center;border:1px solid #e7eaec">Totale</th>
+												                                </tr>
+												                                <tr>
+																				
+																					<th>Spesa per consumo volontario (S<sub>vol</sub>) [€]</th>
+																					<th>Spesa per consumo involontario (S<sub>inv</sub>) [€]</th>
+																					<th>Spesa per consumo obbligato (S<sub>obb</sub>) [€]</th>
+																					<th>Spesa energetica (S<sub>e</sub>) [€]</th>
+																					<th>Spesa gestionale (S<sub>g</sub>) [€]</th>
+																					<th>Quota a consumo (S<sub>c</sub>) [€]</th>
+																					<th>Quota fissa (S<sub>p</sub>) [€]</th>
+																					<th>Spesa per locali ad uso comune (S<sub>uc</sub>) [€]</th>
+																					<th style="background-color: #ffbc40">Spesa totale (S<sub>tot</sub>) [€]</th>
+																					<th>Spesa per consumo volontario (S<sub>vol</sub>) [€]</th>
+																					<th>Spesa per consumo involontario (S<sub>inv</sub>) [€]</th>
+																					<th>Spesa per consumo obbligato (S<sub>obb</sub>) [€]</th>
+																					<th>Spesa energetica (S<sub>e</sub>) [€]</th>
+																					<th>Spesa gestionale (S<sub>g</sub>) [€]</th>
+																					<th>Quota a consumo (S<sub>c</sub>) [€]</th>
+																					<th>Quota fissa (S<sub>p</sub>) [€]</th>
+																					<th>Spesa per locali ad uso comune (S<sub>uc</sub>) [€]</th>
+																					<th style="background-color: #87CEEB">Spesa totale (S<sub>tot</sub>) [€]</th>
+																					<th>Spesa totale (S<sub>gl,tot</sub>) [€]</th>
+												                                </tr>
+											                                </thead>
+											                                <tfoot>
+																				<tr>
+																					<th></th>
+																					<th></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right" style="background-color: #ffbc40"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right" style="background-color: #87CEEB"></th>
+																					<th class="right"></th>
+																				</tr>
+																			</tfoot>
+											                            </table>	
+											                            
+											                            <div style="height:25px"></div>
+																		
+																		<table id="dtSpeseSingoleUnitaImmobiliari" class="table table-bordered" >
+											                                <thead>
+											                                	<tr><th colspan="21" style="text-align:center;border:1px solid #e7eaec">SPESE DELLA SINGOLA UNITA' IMMOBILIARE - LOCATARI</th></tr>
+											                                	<tr>
+																					<th colspan="2" rowspan="2" style="vertical-align:middle;">Denominazione</th>
+																					<th colspan="9" style="text-align:center;border:1px solid #e7eaec;background-color: #ffbc40">Riscaldamento</th>
+																					<th colspan="9" style="text-align:center;border:1px solid #e7eaec;background-color: #87CEEB">Acqua calda sanitaria</th>
+																					<th style="text-align:center;border:1px solid #e7eaec">Totale</th>
+												                                </tr>
+												                                <tr>
+																				
+																					<th>Spesa per consumo volontario (S<sub>vol</sub>) [€]</th>
+																					<th>Spesa per consumo involontario (S<sub>inv</sub>) [€]</th>
+																					<th>Spesa per consumo obbligato (S<sub>obb</sub>) [€]</th>
+																					<th>Spesa energetica (S<sub>e</sub>) [€]</th>
+																					<th>Spesa gestionale (S<sub>g</sub>) [€]</th>
+																					<th>Quota a consumo (S<sub>c</sub>) [€]</th>
+																					<th>Quota fissa (S<sub>p</sub>) [€]</th>
+																					<th>Spesa per locali ad uso comune (S<sub>uc</sub>) [€]</th>
+																					<th style="background-color: #ffbc40">Spesa totale (S<sub>tot</sub>) [€]</th>
+																					<th>Spesa per consumo volontario (S<sub>vol</sub>) [€]</th>
+																					<th>Spesa per consumo involontario (S<sub>inv</sub>) [€]</th>
+																					<th>Spesa per consumo obbligato (S<sub>obb</sub>) [€]</th>
+																					<th>Spesa energetica (S<sub>e</sub>) [€]</th>
+																					<th>Spesa gestionale (S<sub>g</sub>) [€]</th>
+																					<th>Quota a consumo (S<sub>c</sub>) [€]</th>
+																					<th>Quota fissa (S<sub>p</sub>) [€]</th>
+																					<th>Spesa per locali ad uso comune (S<sub>uc</sub>) [€]</th>
+																					<th style="background-color: #87CEEB">Spesa totale (S<sub>tot</sub>) [€]</th>
+																					<th>Spesa totale (S<sub>gl,tot</sub>) [€]</th>
+												                                </tr>
+											                                </thead>
+											                                <tfoot>
+																				<tr>
+																					<th></th>
+																					<th></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right" style="background-color: #ffbc40"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right"></th>
+																					<th class="right" style="background-color: #87CEEB"></th>
+																					<th class="right"></th>
+																				</tr>
+																			</tfoot>
+											                            </table>	
+				                            
+				                            
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											
+											
+											
+											
+												<!-- GRAFICO -->
+												<div id="tab-4" class="tab-pane">
+					                                <div class="panel-body">
+					
+					                                    <!-- iniziano i grafici -->
+	                        	                        
+								                        <div class="row">
+															<div class="col-lg-12">                  
+												            	<div class="ibox">
+												            		<div class="ibox-content float-e-margins">
+													                	 <div id="chartdiv-empty"></div>
+																		 <div id="chartdiv" style="max-height: 100%; position: relative;"></div>	          
+												                    </div>
+												            	</div> 
+											            	</div>                   
+											            </div>
+											            
+											            
+					                                </div>
+					                            </div>
+											
+											
+														
+													
+												
+												
+											</div>	<!-- chiude tab content -->
+											
+											<br/>
+											<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+												<button class="btn btn-primary btn-sm" id="salva" type="submit">Salva</button>
+											</#if>
+											<#if PROFILO?exists && PROFILO=='ADM'>
+												<#if ID_MODULO?exists && ID_MODULO!=''>
+													<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+														<button class="btn btn-primary btn-sm" type="button" id="confermaRipartizione" name="confermaRipartizione">Conferma</button>
+													</#if>
+												</#if>
+											<#else>
+												<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+													<button class="btn btn-primary btn-sm" type="button" id="inviaApprovatore" name="inviaApprovatore">Invia a Gestore Impianto</button>
+												</#if>
+											</#if>
+																	
+																	
+										</div> <!--  chiude container -->
+									</div>	<!--  chiude lg-12 -->
+									
+									
+									
+									
+									
+									
+									
+											
+											
+											
+									</div>		
+								<//form> 							
+			                
+				               </div>   <!-- chiude box content -->
+            		</div>       <!-- chiude ibox float-e-margins -->     
+	            </div>	<!-- col-lg-12 -->
+            </div>	<!-- chiude row -->
+                 
+	                       			
+		             
+            
+        
+        
+        
+        	<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+        	
+        </div>
+	</div>
+	
+	
+	
+	  <script>
+    
+	   
+    
+    
+        $(document).ready(function(){
+
+        	<#if SALVATAGGIO_IN_CORSO?exists && SALVATAGGIO_IN_CORSO!=''>
+        	Swal.fire({
+			    title: 'Salvataggio in corso...',
+			    text: 'Attendere il completamento dell’elaborazione.',
+			    icon: 'info',
+			    allowOutsideClick: false,
+			    allowEscapeKey: false,
+			    showConfirmButton: false,
+			    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+			    allowEscapeKey: false,  	// disabilita tasto ESC
+			    didOpen: () => {
+			        Swal.showLoading();
+			    },
+			    customClass: {
+			        popup: 'swal-wide'
+			    }
+			});
+        	</#if>
+
+       });
+    </script>
+	
+	
+	
+	 
+</body>
+
+</html>

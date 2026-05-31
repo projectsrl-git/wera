@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+ <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WERA - Login</title>
+
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    <script type="text/javascript">
+		$(function(){
+			$("#Login").validate({
+				submitHandler: function(form) {
+					// do other things for a valid form
+					form.submit();
+				}
+			});
+		});
+    </script> 
+    
+
+</head>
+
+<body class="gray-bg">
+
+  <div class="auth-box" style="min-height: 100vh; display: table; width: 100%; background: #f8f9fa;">
+ 	 <div class="container" style="height:100vh; display: table; width: 100%;">
+  		<div class="row" style="display: table-cell; vertical-align: middle;">
+  		
+  		<div class="text-center" style="margin-bottom: 15px; max-width: 400px; margin-left: auto; margin-right: auto;">
+  		<img src="img/wera-login.png" alt="Wera logo" style="max-width: 380px; height: auto;">
+  		</div>
+  		
+    	<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" style="max-width: 400px; margin: 0 auto; float: none;">
+
+      
+        <!-- Brand / Logo -->
+		<div class="text-center" style="margin-bottom: 30px; max-width: 400px; margin-left: auto; margin-right: auto;">
+		  
+		
+		  <h4 style="font-weight: 700; margin-top: 15px;">
+		    Lo strumento che permette di monitorare, gestire e ridurre il consumo delle risorse energetiche della propria struttura
+		  </h4>
+		
+		  <!-- <p class="text-muted" style="max-width: 350px; margin: 10px auto 0;">
+		    Al servizio di installatori, condomini e amministratori, offrendo loro tutte le informazioni necessarie per verificare il corretto funzionamento degli impianti, l'andamento dei consumi e la loro ripartizione.
+		  </p> -->
+		</div>
+
+
+        <!-- Card-like box -->
+        <div class="panel panel-default" style="border-radius: 5px; padding: 30px;">
+          <form class="m-t" action="astro" method="post" id="Login">
+           	<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="Home" />
+			<#if SESSION_TOKEN?exists><input type="hidden" id="SESSION_TOKEN" name="SESSION_TOKEN" value="${SESSION_TOKEN}"></#if>
+			<p><center><#if ERROR_MESSAGE?exists>${ERROR_MESSAGE}</#if></center></p>
+
+            <div class="form-group">
+              <label for="userEmail">Username <span style="color: #d9534f;">*</span></label>
+              <input type="email" class="form-control" name="USERNAME" id="USERNAME" required>
+            </div>
+
+            <div class="form-group">
+              <label for="userPassword">Password <span style="color: #d9534f;">*</span></label>
+              <input type="password" class="form-control" name="PASSWORD" id="PASSWORD" required>
+            </div>
+
+            <div class="row" style="margin-bottom: 15px;">
+              <div class="col-xs-5">
+                <div class="checkbox" style="margin-top: 0;">
+                  <label>
+                   
+                  </label>
+                </div>
+              </div>
+              <div class="col-xs-7 text-right" style="padding-top: 6px;">
+                <a href="astro?FUNCTIONID=ResetPassword" style="text-decoration: underline; color: #6c757d; font-size: 13px;">
+                  Password dimenticata?
+                </a>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block" style="font-weight: 600; padding: 10px 0;">
+              Login
+            </button>
+          </form>
+
+          <p class="text-muted text-center" style="margin-top: 20px; font-size: 14px;">
+            Non hai un account? <a href="astro?FUNCTIONID=Registrazione" style="text-decoration: underline; font-weight: 600;">Registrati</a>
+          </p>
+        </div>
+
+        <p class="text-center text-muted" style="margin-top: 30px; font-size: 13px;">
+          © 2017-<script>document.write(new Date().getFullYear())</script> Webcredit WERA — vers 3.0 <br/> Powered by Project srl
+        </p>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+
+</body>
+
+</html>

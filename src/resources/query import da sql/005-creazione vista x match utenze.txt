@@ -1,0 +1,37 @@
+/****** Oggetto:  View [dbo].[EXPORT_2]    Data script: 09/02/2013 12:35:00 ******/
+IF  EXISTS (SELECT * FROM sys.views WHERE object_id = OBJECT_ID(N'[dbo].[SCARICO_SOLO_RILEVATORI]'))
+DROP VIEW [dbo].[EXPORT_2]
+GO
+
+CREATE VIEW [dbo].[EXPORT_2]
+AS
+	
+
+  SELECT 
+  ROW_NUMBER() over (order by stabile,denominazione) as id_modulo, 
+  taggancio,
+  1 as id_azienda, 
+  coalesce((select id_modulo from export1 where export1.id_condominio=stabile),0) as id_condominio,  
+  denominazione, 
+  locatario, 
+       scala, 
+	   piano, 
+	   interno, 
+	   n_telefono, 
+	   millesimi, 
+	   millesimi_clima, 
+       millesimi_acs, 
+	   ROW_NUMBER() over (order by stabile,denominazione)  as nr_modulo, 
+	   '2018/09/06' as dt_modulo, 
+	   'DRA' as stato, 
+	   '' as lista_allegati, 
+	   '' as id_modulo_parent, 
+       '' as tabella_parent, 
+	   '2018-09-26 16:00:51.671' as	ts_ins, 
+	   1 as id_utente_ins, 
+	   '' as ts_mod, 
+	   '' as id_utente_mod
+  FROM utenze;
+
+
+GO

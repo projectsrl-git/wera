@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	
+    <script type="text/javascript">
+
+    	var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSPDL&columns=ID_PDL,ID_PDL,ID_PDL,ID_PDL,DESCR_STATO,NR_PDL,DT_PDL,DT_SOSPENSIONE,MOTIVO_SOSPENSIONE,DT_CHIUSURA,ODL,DESCR_IMPIANTO,DESCR_AREA,DESCR_EQUIPMENT,DESCRIZIONE_LAVORO,IMPRESA_TESTO,NOME_COGNOME_PREPOSTO_IMPRESA,FLG_PERS_INTERNO,NOME_COGNOME_DELEGATO_LAVORI_AL&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if ANNO?exists> AND SUBSTRING(DT_PDL,1,4) = '${ANNO}' AND STATO IN ('OPE') <#else> AND STATO IN ('OPE') </#if>";
+		
+		$(function(){
+			
+			$("#ID_AZIENDA").trigger("loadDataSet",["DSSitiPDL","ID_AZIENDA","RAGSOC","<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>"," WHERE 1=1 "]);
+			$("#ID_IMPIANTO").trigger("loadDataSet",["DSImpianti","ID_IMPIANTO","DESCR_IMPIANTO","<#if ID_IMPIANTO?exists>${ID_IMPIANTO}</#if>"," <#if ID_AZIENDA?exists>WHERE ID_AZIENDA=${ID_AZIENDA}</#if> "]);
+			$("#ID_AREA").trigger("loadDataSet",["DSAreaLavoro","ID_AREA","DESCR_AREA","<#if ID_AREA?exists>${ID_AREA}</#if>"," WHERE 1=1 "]);
+			$("#ID_EQUIPMENT").trigger("loadDataSet",["DSEquipment","ID_EQUIPMENT","DESCR_EQUIPMENT","<#if ID_EQUIPMENT?exists>${ID_EQUIPMENT}</#if>","<#if ID_AREA?exists> WHERE ID_AREA=${ID_AREA} <#else> WHERE 1=0 </#if> "]);
+			$("#IMPRESA_TESTO").trigger("loadDataSet",["DSImprese","NOME_IMPRESA","NOME_IMPRESA",""," WHERE 1=1 "]);
+			$("#STATO").trigger("loadDataSet",["DSParametri","CODICE","DESCRIZIONE","OPE"," WHERE DOMINIO='SPL' "]);
+			$("#ANNO").val("<#if ANNO?exists>${ANNO}</#if>").change();
+			
+			
+			$("#ID_IMPIANTO").on("select2:selecting", function(e) { 
+				var id= e.params.args.data.id;
+				$("#ID_AREA").empty();
+				$("#ID_AREA").select2("destroy");
+				$("#ID_AREA").trigger("loadDataSet",["DSAreaLavoro","ID_AREA","DESCR_AREA","<#if ID_AREA?exists>${ID_AREA}</#if>"," WHERE ID_IMPIANTO="+id+" "]);
+				
+				$("#ID_EQUIPMENT").val("").change();
+			});	
+			
+			
+			$("#ID_AREA").on("select2:selecting", function(e) { 
+				var id= e.params.args.data.id;
+				$("#ID_EQUIPMENT").empty();
+				$("#ID_EQUIPMENT").select2("destroy");
+				$("#ID_EQUIPMENT").trigger("loadDataSet",["DSEquipment","ID_EQUIPMENT","DESCR_EQUIPMENT","<#if ID_EQUIPMENT?exists>${ID_EQUIPMENT}</#if>"," WHERE ID_AREA="+id+" "]);
+			});	
+			
+			
+	        $('#dt').DataTable({
+				ajax: dtAjax+dtWhereCondition,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="editRow" title="Visualizza"><i class="fa fa-search fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						width:"1%",
+						targets:1,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="activateRow" title="Attiva PdL"><i class="fa fa-play fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						width:"1%",
+						targets:2,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="suspendRow" title="Sospendi PdL"><i class="fa fa-pause fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						width:"1%",
+						targets:3,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="closeRow" title="Chiudi PdL"><i class="fa fa-stop fa-color-auto" aria-hidden="true"></i></a>'
+					}
+
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv'},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', name: 'pdf', title:"REPORT ", orientation: 'landscape'},
+                    {extend: 'print',
+                     customize: function (win){
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                    }
+                    }
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();    
+                },                
+				aaSorting: []
+
+            });
+
+
+        	$('#free-text-search').keyup(function(){
+	        	$('#dt').DataTable().search($(this).val()).draw() ;
+	        })	        
+		
+			$("#formDelete").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					var result = eval('('+response+')');
+					$( "#dt" ).DataTable().ajax.reload();
+					$( ".alert-success" ).text( result.message ).fadeIn("slow").delay(1500).fadeOut("slow");
+				});
+			});					
+			
+			$("#formSearch").validate();
+			
+			$("#formSearch").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();			
+	
+				if (!$("#formSearch").valid()) {
+					return false;
+				}		
+				
+				dtWhereCondition="";
+
+				
+	    		var titolo=$("#DESCRIZIONE_LAVORO").val();
+	    		if (titolo != "") {
+	    			dtWhereCondition+=" AND UPPER(DESCRIZIONE_LAVORO) LIKE UPPER('"+titolo+"') ";
+	    		}
+	    		
+	    		var impresaTesto=$("#IMPRESA_TESTO").val();
+	    		if (impresaTesto != "") {
+	    			dtWhereCondition+=" AND UPPER(IMPRESA_TESTO) = UPPER('"+impresaTesto+"') ";
+	    		}
+	    		
+	    		var anno=$("#ANNO").val();
+	    		if (anno != "") {
+	    			dtWhereCondition+=" AND SUBSTRING(DT_PDL,1,4) = '"+anno+"' ";
+	    		}
+	    		
+	    		var stato=tokenizeInConditionFromOptionSelected("STATO","'");
+	    		if (stato != "") {
+	    			dtWhereCondition+=" AND STATO IN ("+stato+") ";
+	    		}
+	    		
+	    		var nrPdl=$("#NR_PDL").val();
+	    		if (nrPdl != "") {
+	    			dtWhereCondition+=" AND NR_PDL LIKE '"+nrPdl+"*' ";
+	    		}
+	    		
+	    		
+	    		$( "#dt" ).DataTable().ajax.url( dtAjax+dtWhereCondition ).load();
+				
+			});			
+			
+	        $('#dt tbody').on( 'click', '.editRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_PDL').val(data[0]);
+				$('#FUNCTIONID_EDIT').val("InserimentoPDL");
+				$("#forEdit").submit();
+	        } );
+	        
+	        
+	        $('#dt tbody').on( 'click', '.deleteRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_PDL");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoPDL");
+				$('.modal-title').html('${label_delete_title_message}');
+				$('.modal-text').html('${label_delete_text_message}');
+				$("#modalQuestionDialog").modal({backdrop: true});
+				$('#modalQuestionDialog').collapse("show");
+	        } );	
+	        
+	    	$( "#stampaA4" ).click(function() {
+				$('#ID_PDL_STAMPA').val('5592');
+				$('#FORMATO_STAMPA').val('A4');
+				$('.modal-title').html('Stampa PdL');
+				$('.modal-text').html('Confermi la creazione PDF dei PdL selezionati?');
+				$("#modalQuestionDialogPrint").modal({backdrop: true});
+				$('#modalQuestionDialogPrint').collapse("show");
+	    	});
+			
+	    	$( "#stampaA3" ).click(function() {
+				$('#ID_PDL_STAMPA').val('5592');
+				$('#FORMATO_STAMPA').val('A3');
+				$('.modal-title').html('Stampa PdL');
+				$('.modal-text').html('Confermi la creazione PDF dei PdL selezionati?');
+				$("#modalQuestionDialogPrint").modal({backdrop: true});
+				$('#modalQuestionDialogPrint').collapse("show");
+	    	});
+	    	
+	    	$( "#report" ).click(function() {
+	    		var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+	    		if(dataCount>200) {
+					$('.modal-title').html('Attenzione!');
+					$('.modal-text').html('Il report che si desidera stampare supera le 200 righe. Si consiglia di restringere la ricerca');
+					$("#modalAlert").modal({backdrop: true});
+					$('#modalAlert').collapse("show");	    			
+	    		} else {
+		    		$('#dt').DataTable().button( 2 ).trigger();
+	    		}
+	    		
+	    	});
+	    	
+	    	
+	        $('#dt tbody').on( 'click', '.activateRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_PDL_AVANZAMENTO').val(data[0]);
+				$('#STATO_AVANZAMENTO').val("ACT");
+				$('.modal-title').html('Attivazione PdL');
+				$('.modal-text').html('Confermi l\'attivazione del permesso selezionato?');
+				$("#modal-form").modal({backdrop: true});
+				$('#modal-form').collapse("show");
+	        } );
+	        
+	        
+	        $('#dt tbody').on( 'click', '.suspendRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_PDL_AVANZAMENTO').val(data[0]);
+				$('#STATO_AVANZAMENTO').val("SUS");
+				$('.modal-title').html('Attivazione PdL');
+				$('.modal-text').html('Confermi la sospensione del permesso selezionato?');
+				$("#modalQuestionDialogAvanzamento").modal({backdrop: true});
+				$('#modalQuestionDialogAvanzamento').collapse("show");
+	        } );
+	        
+	        
+	        
+	        $('#dt tbody').on( 'click', '.closeRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_PDL_AVANZAMENTO').val(data[0]);
+				$('#STATO_AVANZAMENTO').val("CLO");
+				$('.modal-title').html('Attivazione PdL');
+				$('.modal-text').html('Confermi la chiusura del permesso selezionato?');
+				$("#modalQuestionDialogAvanzamento").modal({backdrop: true});
+				$('#modalQuestionDialogAvanzamento').collapse("show");
+	        } );	        
+	        
+			$("#formAvanza").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();
+				
+		        var idPDL=$("#ID_PDL_AVANZAMENTO").val();
+		        var stato=$("#STATO_AVANZAMENTO").val();
+		        var dataAvanzamento=$('#DATA_AVANZAMENTO').val();
+		        
+		        if (stato=="ACT") {
+					$("#SQL_STATEMENT").val("update PDL set STATO='"+stato+"',DT_ATTIVAZIONE='"+dataAvanzamento+"' where ID_PDL="+idPDL+" ");
+				} else if (stato=="SUS") {
+					$("#SQL_STATEMENT").val("update PDL set STATO='"+stato+"',DT_SOSPENSIONE='"+dataAvanzamento+"' where ID_PDL="+idPDL+" ");
+				} else if (stato=="CLO") {
+					$("#SQL_STATEMENT").val("update PDL set STATO='"+stato+"',DT_CHIUSURA='"+dataAvanzamento+"' where ID_PDL="+idPDL+" ");
+				}
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					var result = eval('('+response+')');
+					$( "#dt" ).DataTable().ajax.reload();					
+					$( ".alert-success" ).text( result.message ).fadeIn("slow").delay(1500).fadeOut("slow");
+				});
+			});					
+	    	
+			
+		});	        
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<form action="astro" method="post" id="formStampa" name="formStampa">
+		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="StampaPDL">	
+		<input type="hidden" id="ID_PDL_STAMPA" name="ID_PDL">
+		<input type="hidden" id="FORMATO_STAMPA" name="FORMATO_STAMPA">
+	</form>
+
+	<form action="astro" method="post" id="formDelete" name="formDelete">
+		<input type="hidden" id="FUNCTIONID_DELETE" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="DELETE">
+		<input type="hidden" id="keyField" name="keyField">
+		<input type="hidden" id="keyValue" name="keyValue">
+	</form>
+	
+	
+	<form action="astro" method="get" id="forEdit" name="forEdit">
+		<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+		<input type="hidden" id="ID_PDL" name="ID_PDL">
+	</form>		
+	
+
+
+	<div class="modal inmodal fade" id="modalQuestionDialogAvanzamento"	tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span class="modal-title"></span>
+				</div>
+				<div class="modal-body">
+					<span class="modal-text"></span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-white btn-sm"	onclick="$('#modalQuestionDialogAvanzamento').collapse('hide');">${label_no}</button>
+					<button class="btn btn-primary btn-sm" onclick="$('#modalQuestionDialogAvanzamento').collapse('toggle');$('#formAvanza').submit();" data-dismiss="modal" type="submit">${label_si}</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div class="modal inmodal fade" id="modalAlert" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header"><span class="modal-title"></span></div>
+				<div class="modal-body"><span class="modal-text"></span></div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-white btn-sm" onclick="$('#modalAlert').collapse('hide');">${label_ok}</button>
+				</div>
+			</div>
+		</div>
+	</div>		
+	
+	<div class="modal inmodal fade" id="modalQuestionDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header"><span class="modal-title"></span></div>
+				<div class="modal-body"><span class="modal-text"></span></div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-white btn-sm" onclick="$('#modalQuestionDialog').collapse('hide');">${label_no}</button>
+					<button class="btn btn-primary btn-sm" onclick="$('#modalQuestionDialog').collapse('toggle');$('#formDelete').submit();" data-dismiss="modal" type="button">${label_si}</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div class="modal inmodal fade" id="modalQuestionDialogPrint" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header"><span class="modal-title"></span></div>
+				<div class="modal-body"><span class="modal-text"></span></div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-white btn-sm" onclick="$('#modalQuestionDialog').collapse('hide');">${label_no}</button>
+					<button class="btn btn-primary btn-sm" onclick="$('#modalQuestionDialogPrint').collapse('toggle');$('#formStampa').submit();" data-dismiss="modal" type="button">${label_si}</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+           
+			<div class="row">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->
+	                    <div class="ibox-title">
+							<#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	                    </div>						
+
+                        <div id="modal-form" class="modal fade" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-sm-6 b-r"><h3 class="m-t-none m-b">Sign in</h3>
+
+                                                <p>Sign in today for more expirience.</p>
+
+												<form role="form" action="astro" id="formAvanza" name="formAvanza" method="post">
+													<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="ExecuteSQL">
+													<input type="hidden" id="SQL_STATEMENT" name="SQL_STATEMENT">
+													<input type="hidden" id="ID_PDL_AVANZAMENTO" name="ID_PDL_AVANZAMENTO">
+													<input type="hidden" id="STATO_AVANZAMENTO" name="STATO_AVANZAMENTO">
+
+                                                    <div class="form-group">
+	                                                    <label>Data attivazione</label>
+														<div class="input-group date">
+															<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" id="DATA_AVANZAMENTO" name="DATA_AVANZAMENTO" class="form-control" value="<#if DATA_AVANZAMENTO?exists>${DATA_AVANZAMENTO}</#if>">
+														</div>
+                                                    </div>
+                                                    <div>
+                                                        <button class="btn btn-sm btn-primary pull-right m-t-n-xs" type="submit">Conferma attivazione</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+						</div>                                
+                                
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							<div class="row">
+								<div class="col-sm-12">							
+							
+									<form action="astro" method="get" id="formSearch" name="formSearch" class="form-horizontal">
+										<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="RicercaPDL">
+										
+		                                <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Sito:</label>
+		                                    <div class="col-sm-4">
+			                                    <select id="ID_AZIENDA" name="ID_AZIENDA"  class="form-control" required>
+			                                    </select>
+											</div>
+											
+		                                	<label class="col-sm-2 control-label-left">Impianto:</label>
+		                                    <div class="col-sm-4">
+			                                    <select id="ID_IMPIANTO" name="ID_IMPIANTO"  class="form-control">
+			                                    </select>
+											</div>
+		                                </div>
+		                                    
+		                                <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Area di lavoro:</label>
+		                                    <div class="col-sm-4">
+			                                    <select id="ID_AREA" name="ID_AREA"  class="form-control">
+			                                    </select>
+											</div>
+											
+		                                	<label class="col-sm-2 control-label-left">Equipment:</label>
+		                                    <div class="col-sm-4">
+			                                    <select id="ID_EQUIPMENT" name="ID_EQUIPMENT"  class="form-control">
+			                                    </select>
+											</div>
+		                                </div>
+		                                    
+		                                <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Descrizione lavoro</label>
+		                                    <div class="col-sm-4"><input type="text" class="form-control" id="DESCRIZIONE_LAVORO" name="DESCRIZIONE_LAVORO"></div>
+		                                    
+		                                	<label class="col-sm-2 control-label-left">OdL/Investimento:</label>
+		                                    <div class="col-sm-4"><input type="text" class="form-control" id="" name=""></div>
+		                                </div>
+		                                
+		                                <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Impresa:</label>
+		                                    <div class="col-sm-4">
+			                                    <select id="IMPRESA_TESTO" name="IMPRESA_TESTO"  class="form-control">
+			                                    	<option value="">${placeholder_select}</option>
+			                                    </select>
+											</div>
+											
+		                                	<label class="col-sm-2 control-label-left">Stato Permesso:</label>
+		                                    <div class="col-sm-4">
+			                                    <select id="STATO" name="STATO"  class="form-control" multiple>
+			                                    </select>
+											</div>
+		                                </div>
+		                                
+		                                <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Anno:</label>
+		                                    <div class="col-sm-4">
+			                                    <select id="ANNO" name="ANNO" class="form-control">
+			                                    	<option value="">${placeholder_select}</option>
+			                                    	<option value="2017">2017</option>
+			                                    	<option value="2016">2016</option>
+			                                    	<option value="2015">2015</option>
+			                                    	<option value="2014">2014</option>
+			                                    	<option value="2013">2013</option>
+			                                    	<option value="2012">2012</option>
+			                                    </select>
+											</div>
+
+		                                	<label class="col-sm-2 control-label-left">Nr.PdL:</label>
+		                                    <div class="col-sm-4"><input type="text" class="form-control" id="NR_PDL" name="NR_PDL"></div>
+		                                </div>
+		                                
+		                                <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Ricerca in linea:</label>
+		                                    <div class="col-sm-10">
+				                                <input type="text" id="free-text-search" name="free-text-search"  class="form-control" placeholder="digita il testo che vuoi cercare per aggiornare subito i risultati">
+											</div>
+		                                </div>
+		                                
+		                                
+										<div class="form-group">
+											<div class="col-sm-6">
+												<button class="btn btn-primary btn-sm" id="ricerca" type="submit" name="ricerca">${label_search}</button>
+												<button class="btn btn-primary btn-sm" type="button" id="report" name="report">Stampa Registro PDF</button>
+											</div>
+											
+											<div class="col-sm-6">
+												<fieldset>
+													${label_legenda}:
+													<i class="fa fa-search" aria-hidden="true"></i>Visualizza
+													<i class="fa fa-play" aria-hidden="true"></i>Attiva PdL
+													<i class="fa fa-pause" aria-hidden="true"></i>Sospendi PdL
+													<i class="fa fa-stop" aria-hidden="true"></i>Chiudi PdL
+												</fieldset>											
+											</div>
+											
+										</div>				
+									
+									</form>
+									
+									<div class="hr-line-dashed"></div>
+						
+
+			
+			                        <div class="table-responsive">
+										<table id="dt" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th>Stato</th>
+													<th>Nr.PdL</th>
+													<th>Data</th>
+													<th>Data Sosp.</th>
+													<th>Motivo sospensione</th>
+													<th>Data Chiusura</th>
+													<th>OdL / Invest.</th>
+													<th>Impianto</th>
+													<th>Area</th>
+													<th>Equipment</th>
+													<th>Descrizione Lavoro&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+													<th>Impresa</th>
+													<th>Preposto Impresa</th>
+													<th>Pers.Interno</th>
+													<th>Delegato Lavori ALI</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+
+                    			</div>
+					
+                			</div>
+						</div>
+            		</div>
+				</div>
+			</div>
+						
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+
+</body>
+
+</html>

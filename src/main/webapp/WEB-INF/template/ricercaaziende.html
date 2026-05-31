@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+<head>
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	
+    <script type="text/javascript">
+    
+		var flagRicerca=false;
+		
+		var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSAziende&columns=ID_AZIENDA,ID_AZIENDA,CODICE,RAGSOC,ALIAS_AZIENDA,RAGSOC_SUP,CREDITI,DATA_SCADENZA_CREDITI&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if WHERECONDITION?exists>${WHERECONDITION}<#else> 1=1 </#if>";
+		
+		$(function(){
+	
+	        $('#dt').DataTable({
+				ajax: dtAjax+dtWhereCondition,
+				columnDefs: [
+					{
+						visible: <#if PROFILO?contains('ADM')>true<#else>false</#if>,						
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						visible: <#if PROFILO?contains('ADM') && VALIDITA_CREDITI?contains('true')>true<#else>false</#if>,						
+						width:"1%",
+						targets:1,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="deleteRow" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					
+					{
+						
+						targets:6,
+						className: 'dt-body-right'
+						
+					}
+					
+					
+					],
+	                language: {
+				        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+				    },
+			        dom: '<"html5buttons"B>lTfgitp',
+			        buttons: [
+			            {extend: 'csv'},
+			            {extend: 'excel', title: $(document).find("title").text()},
+			            {extend: 'pdf', name: 'pdf', title:"REPORT ", orientation: 'landscape'},
+			        ],
+					aaSorting: [],
+			        "drawCallback": function( settings ) {
+			        	$(".dataTables_filter").hide();    
+			        	$(".html5buttons").hide();   
+			    		
+			        	var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+			    		if(dataCount==0 && flagRicerca) {
+							$('.modal-title').html('Attenzione!');
+							$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+							$("#modalAlert").modal({backdrop: true});
+							$('#modalAlert').collapse("show");	    			
+			    		}
+			        }        
+            });
+		
+        	$('#free-text-search').keyup(function(){
+	        	$('#dt').DataTable().search($(this).val()).draw() ;
+	        })	        
+		
+			$("#formDelete").submit(function(event) {
+			    event.preventDefault(); // Evita l'invio immediato del form
+			
+			    Swal.fire({
+			        title: 'Cancella selezionato',
+			        text: 'Confermi la cancellazione dell\'elemento selezionato?',
+			        icon: 'warning',
+			        showCancelButton: true,
+			        confirmButtonText: 'Conferma',
+			        confirmButtonColor: '#e08e0b', 
+			        cancelButtonText: 'Annulla',
+			        reverseButtons: true,
+			        allowOutsideClick: false,
+			        allowEscapeKey: false,
+			        customClass: {
+			            popup: 'swal-wide'
+			        }
+			    }).then((result) => {
+			        if (result.isConfirmed) {
+			            // Mostra un loader durante la cancellazione
+			            Swal.fire({
+			                title: 'Cancellazione in corso...',
+			                icon: 'info',
+			                allowOutsideClick: false,
+			                allowEscapeKey: false,
+			                showConfirmButton: false,
+			                didOpen: () => {
+			                    Swal.showLoading();
+			                },
+			                customClass: {
+			                    popup: 'swal-wide'
+			                }
+			            });
+			
+			            // Invio effettivo del form via POST
+			            $.post($(this).attr('action'), $(this).serialize(), function(response) {
+			                Swal.close();
+			
+			                if (response == null || response == '') {
+			                    Swal.fire({
+			                        title: 'Cancellazione non riuscita!',
+			                        text: 'Si è verificato un errore, cancellazione non riuscita.',
+			                        icon: 'error',
+			                        showConfirmButton: false,
+			                        timer: 2000,
+			                        allowOutsideClick: false,
+			                        allowEscapeKey: false,
+			                        customClass: {
+			                            popup: 'swal-wide'
+			                        }
+			                    });
+			                } else {
+			                    var result = eval('(' + response + ')');
+			                    if (result.result) {
+			                        $("#dt").DataTable().ajax.reload();
+			
+			                        Swal.fire({
+			                            title: 'Cancellazione completata!',
+			                            text: 'Cancellazione effettuata con successo.',
+			                            icon: 'success',
+			                            showConfirmButton: false,
+			                            timer: 2000,
+			                            allowOutsideClick: false,
+			                            allowEscapeKey: false,
+			                            customClass: {
+			                                popup: 'swal-wide'
+			                            }
+			                        });
+			                    }
+			                }
+			            });
+			        }
+			    });
+			});		
+			
+			$("#formSearch").validate();
+			
+			$("#formSearch").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();			
+	
+				if (!$("#formSearch").valid()) {
+					return false;
+				}		
+				
+				flagRicerca=true;				
+				
+				dtWhereCondition=" AND 1=1 ";
+				
+	    		var codice=$("#CODICE").val();
+	    		if (codice != "") {
+	    			dtWhereCondition+=" AND UPPER(CODICE) = UPPER('"+codice+"') ";
+	    		}
+	
+	    		var ragsoc=$("#RAGSOC").val();
+	    		if (ragsoc != "") {
+	    			dtWhereCondition+=" AND UPPER(RAGSOC) LIKE UPPER('*"+ragsoc+"*') ";
+	    		}
+	    		
+	    		var tipoAzienda=$("#TIPO_AZIENDA").val();
+	    		if (tipoAzienda != "") {
+	    			dtWhereCondition+=" AND UPPER(TIPO_AZIENDA) LIKE '*"+tipoAzienda+"*' ";
+	    		}
+	    		
+
+	    		$( "#dt" ).DataTable().ajax.url( dtAjax+dtWhereCondition ).load();
+				
+			});			
+			
+	        $('#dt tbody').on( 'click', '.editRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_AZIENDA').val(data[0]);
+				$('#FUNCTIONID_EDIT').val("InserimentoAziende");
+				$("#forEdit").submit();
+	        } );
+	        
+	        
+	        $('#dt tbody').on( 'click', '.deleteRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_AZIENDA");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoAziende");
+				$('#formDelete').submit();
+	        } );			
+		
+		});	        
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<#if INCLUDED_DIVS_AND_FORMS?exists><#include INCLUDED_DIVS_AND_FORMS></#if>
+
+	<form action="astro" method="post" id="formDelete" name="formDelete">
+		<input type="hidden" id="FUNCTIONID_DELETE" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="DELETE">
+		<input type="hidden" id="keyField" name="keyField">
+		<input type="hidden" id="keyValue" name="keyValue">
+	</form>
+	
+	
+	<form action="astro" method="get" id="forEdit" name="forEdit">
+		<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+		<input type="hidden" id="ID_AZIENDA" name="ID_AZIENDA">
+	</form>		
+
+	
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+           
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+											
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							<div class="row">
+								<div class="col-sm-12">							
+							
+									<form action="astro" method="get" id="formSearch" name="formSearch" class="form-horizontal">
+										
+		                                <div class="form-group">
+		                                	<label class="col-sm-2">${label_code}</label>
+		                                    <div class="col-sm-10"><input type="text" class="form-control" id="CODICE" name="CODICE"></div>
+		                                </div>
+		                                
+		                                <div class="form-group">
+		                                	<label class="col-sm-2">${label_ragsoc}</label>
+		                                    <div class="col-sm-10"><input type="text" class="form-control" id="RAGSOC" name="RAGSOC"></div>
+		                                </div>
+		                                
+		                                <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Ricerca in linea:</label>
+		                                    <div class="col-sm-10">
+				                                <input type="text" id="free-text-search" name="free-text-search"  class="form-control" placeholder="digita il testo che vuoi cercare per aggiornare subito i risultati">
+											</div>
+		                                </div>		                                
+		                                
+										<div class="form-group">
+											<div class="col-sm-6">
+												<button class="btn btn-primary btn-sm" id="ricerca" type="submit" name="ricerca">${label_search}</button>
+											</div>
+
+											<div class="col-sm-6">
+									 			<#if PROFILO?contains('ADM')>
+												<fieldset>
+													${label_legenda}:
+													<i class="fa fa-pencil" aria-hidden="true"></i>${label_edit}
+													<i class="fa fa-trash-o" aria-hidden="true"></i>${label_delete}
+												</fieldset>
+												<#else>
+												</#if>
+											</div>
+										</div>				
+									
+									</form>
+									
+			
+			                        <div class="table-responsive">
+										<table id="dt" class="data-table table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+			                    					<th></th>
+									                <th></th>
+													<th>${label_code}</th>
+													<th>${label_description}</th>
+													<th>${label_alias}</th>
+													<th>${label_top_company}</th>
+													<th>Crediti</th>
+													<th>Data scadenza crediti</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+
+                    			</div>
+					
+                			</div>
+						</div>
+            		</div>
+				</div>
+			</div>
+						
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+
+</body>
+
+</html>

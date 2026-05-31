@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+	
+	
+	<!-- amcharts -->
+	<style>
+		
+		#chartdiv-condomino {
+		  width: 100%;
+		  height: 500px;
+		  font-size: 11px;
+		}
+		
+		#chartdiv-condomino-volume-acs {
+		  width: 100%;
+		  height: 300px;
+		  font-size: 11px;
+		}
+		
+		
+		
+		.amcharts-pie-slice {
+		  transform: scale(1);
+		  transform-origin: 50% 50%;
+		  transition-duration: 0.3s;
+		  transition: all .3s ease-out;
+		  -webkit-transition: all .3s ease-out;
+		  -moz-transition: all .3s ease-out;
+		  -o-transition: all .3s ease-out;
+		  cursor: pointer;
+		  box-shadow: 0 0 30px 0 #000;
+		}
+		
+		.amcharts-pie-slice:hover {
+		  transform: scale(1.1);
+		  filter: url(#shadow);
+		}			
+		
+	</style>
+		
+		
+	<script src="js/amcharts/lib/3/amcharts.js"></script>
+	<script src="js/amcharts/lib/3/pie.js"></script>
+	<script src="js/amcharts/lib/3/serial.js"></script>
+	<script src="js/amcharts/lib/3/plugins/export/export.min.js"></script>
+	<link rel="stylesheet" href="js/amcharts/lib/3/plugins/export/export.css" type="text/css" media="all" />
+	<script src="js/amcharts/lib/3/themes/none.js"></script>
+	
+		
+    <script type="text/javascript">
+    
+	    var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSRipartizioniHome&columns=ID_MODULO,PAGINA,NR_MODULO,DT_MODULO,DENOMINAZIONE,INDIRIZZO,LOCALITA,PROVINCIA,PERIODO,NOMINATIVO,RIPARTIZIONE,TIPO_RIPARTIZIONE,DESCR_TIPO_CONTABILIZZAZIONE,DESCR_STATO,STATO&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if WHERECONDITION?exists>${WHERECONDITION}</#if>";
+    
+    $(document).ready(function(){
+    	
+    	
+		
+		
+    	<#if PROFILO?contains('CON')>
+    	<#else>
+    	
+    	
+    	// Setup - add a text input to each footer cell
+	    $('#dt thead tr').clone(true).appendTo( '#dt thead' );
+	    $('#dt thead tr:eq(1) th').each( function (i) {
+	        var title = $(this).text();
+	        if (title!=''){
+	        	$(this).html( '<input type="text" placeholder="Filtra '+title+'" />' );
+	        }
+	        
+	 
+	        $( 'input', this ).on( 'keyup change', function () {
+	            if ( table.column(i).search() !== this.value ) {
+	                table
+	                    .column(i)
+	                    .search( this.value )
+	                    .draw();
+	            }
+	        } );
+	    } );
+
+		var table = $('#dt').DataTable({
+        	orderCellsTop: true,
+        	fixedHeader: true,
+			ajax: dtAjax+dtWhereCondition,
+			columnDefs: [
+				{
+					width:"1%",
+					targets:0,
+					orderable: false,
+					data:null,
+					render: function ( data, type, row, meta ) {
+						if(type === 'display' ) {
+							data = '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+						}
+
+						return data;
+					}
+				},{
+					width:"1%",
+					targets:1,
+					visible: false
+				},{
+					width:"1%",
+					targets:14,
+					visible: false
+				}
+				
+			],
+			
+            dom: '<"html5buttons"B>lTfgitp',
+            language: {
+		        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+		    },
+
+            buttons: [
+                {extend: 'csv', title: $(document).find("title").text()},
+                {extend: 'excel', title: $(document).find("title").text()},
+                {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+            ],
+            "drawCallback": function( settings ) {
+            	$(".dataTables_filter").hide();    
+            	$(".html5buttons").hide();   
+	    		
+            	var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+	    		if(dataCount==0) {
+					$('.modal-title').html('Attenzione!');
+					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+					$("#modalAlert").modal({backdrop: true});
+					$('#modalAlert').collapse("show");	    			
+	    		}
+	    		
+            },
+			aaSorting: []
+
+        });
+		
+		
+		$('#dt tbody').on( 'click', '.editRow', function () {
+        	var table = $('#dt').DataTable();
+            var data = table.row( $(this).parents('tr') ).data();
+			$('#ID_MODULO').val(data[0]);
+			$('#FUNCTIONID_EDIT').val(data[1]);
+			$('#READONLY').val("N");
+			$("#formEdit").submit();
+        } );
+        
+        
+        
+		var validitaCrediti="<#if VALIDITA_CREDITI?exists>${VALIDITA_CREDITI}</#if>";
+		var dataScadenzaCrediti="<#if DATA_SCADENZA_CREDITI?exists>${DATA_SCADENZA_CREDITI}</#if>";
+		var crediti="<#if CREDITI?exists>${CREDITI}</#if>";
+        
+			// grafico basso - inizio
+			var profilo="<#if PROFILO?exists>${PROFILO}</#if>";
+			var utente="<#if ID_UTENTE?exists>${ID_UTENTE}</#if>";
+			
+	      	var datasetGrafico="DataSetStat10";
+	      	var dataGrafico="VALORE";
+	      	
+	      	var whereCondition="";
+	      	
+	      	function fetchData(dataset, targetDiv, suffix = "") {
+		        return $.ajax({
+		            url: "astro?FUNCTIONID=JSONDataSet&dataset=" + dataset + "&columns=" + dataGrafico + "&PROFILO=" + profilo + "&WHERECONDITION=" + whereCondition,
+		            dataType: 'json',
+		            type: 'GET'
+		        }).done(function(data) {
+		            var value = data.rows.length > 0 ? data.rows[0][dataGrafico] : 0;
+		            document.querySelector(targetDiv).innerHTML = value + suffix;
+		        });
+		    }
+
+		    // Lancia tutte le chiamate AJAX in parallelo
+		    $.when(
+		        fetchData("DataSetStat10", "#div_utenze"),
+		        fetchData("DataSetStat11", "#div_senza_ripartitori_associati", " senza ripartitori associati"),
+		        fetchData("DataSetStat12", "#div_anagrafica_incompleta", " con anagrafica incompleta"),
+		        fetchData("DataSetStat13", "#div_no_accesso", " mai effettuato accesso"),
+		        fetchData("DataSetStat20", "#div_condomini"),
+		        fetchData("DataSetStat21", "#div_provincia", " province"),
+		        fetchData("DataSetStat22", "#div_localita", " localit&agrave;"),
+		        fetchData("DataSetStat23", "#div_no_amministratori", " amministratori"),
+		        fetchData("DataSetStat24", "#div_sim", " con sim abbinata"),
+		        fetchData("DataSetStat25", "#div_scarico_automatico", " con scarico automatico"),
+		        fetchData("DataSetStat30", "#div_ripartitori"),
+		        fetchData("DataSetStat31", "#div_funzionanti", " funzionanti"),
+		        fetchData("DataSetStat32", "#div_in_errore", " in errore"),
+		        fetchData("DataSetStat33", "#div_non_censiti", " non censiti"),
+		        fetchData("DataSetStat34", "#div_non_scaricati", " non scaricati"),
+		        fetchData("DataSetStat35", "#div_senza_lettura", " scaricati senza lettura"),
+		        fetchData("DataSetStat36", "#div_censiti", " censiti"),
+		        fetchData("DataSetStat40", "#div_antenne"),
+		        fetchData("DataSetStat41", "#div_antenne_funzionanti", " antenne funzionanti"),
+		        fetchData("DataSetStat42", "#div_antenne_in_errore", " antenne in errore"),
+		        fetchData("DataSetStat43", "#div_antenne_non_censite", " non censiti"),
+		        fetchData("DataSetStat44", "#div_batteria", " antenne con carica <30%"),
+		        fetchData("DataSetStat45", "#div_antenne_censite", " censiti")
+		    ).done(function() {
+		        console.log("Tutte le chiamate AJAX completate.");
+		    });
+		     	
+	      	
+		      	</#if>
+	      	
+		});
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <!-- Chart code -->
+	AmCharts.addInitHandler(function(chart) {
+		  // check if there are graphs with autoColor: true set
+		  for(var i = 0; i < chart.graphs.length; i++) {
+		    var graph = chart.graphs[i];
+		    if (graph.autoColor !== true)
+		      continue;
+		    var colorKey = "autoColor-"+i;
+		    graph.lineColorField = colorKey;
+		    graph.fillColorsField = colorKey;
+		    for(var x = 0; x < chart.dataProvider.length; x++) {
+		      var color = chart.colors[x]
+		      chart.dataProvider[x][colorKey] = color;
+		    }
+		  }
+		  
+		}, ["serial"]);
+	function doGraficoCondomino(){
+		//var dtWhereCondition=" ut.ID_MODULO = '"+data[0]+"' ";
+		var idUtente="<#if ID_UTENTE?exists>${ID_UTENTE}</#if>";
+		var dtWhereCondition=" ut.ID_MODULO = (select id_utenza from utenti_utenze where id_utente="+idUtente+")";
+		var dataset="DSLettureConsumiCondominoGraficoHCA";
+      	var locatario="STANZA";
+      	var lettura="LETTURA_ATTUALE";
+      	
+		arrayValoriCondomino = new Array();
+      	$.ajax({
+			url: "astro?FUNCTIONID=JSONDataSet&dataset="+dataset+"&columns="+locatario+","+lettura+"&WHERECONDITION=WHERE "+dtWhereCondition,
+			dataType: 'json',
+			type: 'GET',
+			success: function (data) {
+				$.each(data.rows,function(i,data) {
+					arrayValoriCondomino[i]=data;
+				}); 
+				
+				var obj= arrayValoriCondomino;
+				
+				$("#chartdiv-condomino").empty();
+
+				if (typeof arrayValoriCondomino == 'undefined' || arrayValoriCondomino.length <= 0) {
+					$( "#chartdiv-condomino-empty" ).html( "<p>Non sono disponibili dati da visualizzare per i consumi HCA</p>" );
+					document.getElementById("chartdiv-condomino-empty").style.display="block";
+					document.getElementById("chartdiv-condomino").style.display="none";
+				}else{
+					document.getElementById("chartdiv-condomino-empty").style.display="none";
+					document.getElementById("chartdiv-condomino").style.display="block";
+				}
+				
+				
+
+				<!-- Chart code -->
+				
+				var chartCondomino = AmCharts.makeChart("chartdiv-condomino", {
+				  "type": "pie",
+				  "startDuration": 0,
+				   "theme": "none",
+				   "titles": [{
+					    "text": "Consumi condomino"
+					  }, {
+					    "text": "Valori di lettura HCA",
+					    "bold": false
+					  }],
+				  "addClassNames": true,
+				  "legend":{
+				   	"position":"bottom",
+				    "marginRight":100,
+				    "autoMargins":false
+				  },
+				  "innerRadius": "30%",
+				  "defs": {
+				    "filter": [{
+				      "id": "shadow",
+				      "width": "200%",
+				      "height": "200%",
+				      "feOffset": {
+				        "result": "offOut",
+				        "in": "SourceAlpha",
+				        "dx": 0,
+				        "dy": 0
+				      },
+				      "feGaussianBlur": {
+				        "result": "blurOut",
+				        "in": "offOut",
+				        "stdDeviation": 5
+				      },
+				      "feBlend": {
+				        "in": "SourceGraphic",
+				        "in2": "blurOut",
+				        "mode": "normal"
+				      }
+				    }]
+				  },
+				  
+				  "dataProvider": 
+					  obj
+					,
+				  "valueField": "LETTURA_ATTUALE",
+				  "titleField": "STANZA",
+				  "export": {
+				    "enabled": false
+				  }
+				});
+
+				chartCondomino.addListener("init", handleInit);
+
+				chartCondomino.addListener("rollOverSlice", function(e) {
+				  handleRollOver(e);
+				});
+
+				function handleInit(){
+					chartCondomino.legend.addListener("rollOverItem", handleRollOver);
+				}
+
+				function handleRollOver(e){
+				  var wedge = e.dataItem.wedge.node;
+				  wedge.parentNode.appendChild(wedge);
+				}
+
+			}
+      	
+		});
+	}
+	
+	
+	
+	
+	function doGraficoCondominoVolumeACS(){
+		var idUtente="<#if ID_UTENTE?exists>${ID_UTENTE}</#if>";
+		var dtWhereCondition=" ut.ID_MODULO = (select id_utenza from utenti_utenze where id_utente="+idUtente+")";
+		var dataset="DSLettureConsumiCondominoGraficoACS";
+      	var locatario="STANZA";
+      	var lettura="VOLUME_ATTUALE";
+      	var letturaPrecedente="VOLUME_PRECEDENTE";
+      	var tipologia="TIPOLOGIA";
+      	
+		arrayValoriCondominoACS = new Array();
+      	
+      	$.ajax({
+			url: "astro?FUNCTIONID=JSONDataSet&dataset="+dataset+"&columns="+locatario+","+tipologia+","+lettura+","+letturaPrecedente+"&WHERECONDITION= WHERE "+dtWhereCondition,
+			dataType: 'json',
+			type: 'GET',
+			success: function (data) {
+				$.each(data.rows,function(i,data) {
+					arrayValoriCondominoACS[i]=data;
+				}); 
+				
+				var obj= arrayValoriCondominoACS;
+				
+				$("#chartdiv-condomino-volume-acs").empty();
+				
+				if (typeof arrayValoriCondominoACS == 'undefined' || arrayValoriCondominoACS.length <= 0) {
+					$( "#chartdiv-condomino-volume-acs-empty" ).html( "<p>Non sono disponibili dati da visualizzare per i consumi ACS</p>" );
+					document.getElementById("chartdiv-condomino-volume-acs-empty").style.display="block";
+					document.getElementById("chartdiv-condomino-volume-acs").style.display="none";
+				}else{
+					document.getElementById("chartdiv-condomino-volume-acs-empty").style.display="none";
+					document.getElementById("chartdiv-condomino-volume-acs").style.display="block";
+				}
+				
+				
+
+				<!-- Chart code -->
+				
+				function pivotData(data) {
+					  const result = {};
+					  data.forEach(item => {
+					    console.log("item:", item); // vedi ogni riga
+					    if (!result[item.STANZA]) {
+					      result[item.STANZA] = { STANZA: item.STANZA };
+					    }
+					    if (item.TIPOLOGIA === "ACS") {
+					      result[item.STANZA].ACS_ATTUALE = parseFloat(item.VOLUME_ATTUALE) || 0;
+					      result[item.STANZA].ACS_PRECEDENTE = parseFloat(item.VOLUME_PRECEDENTE) || 0;
+					      result[item.STANZA].color_ACS_ATTUALE = "#007bff";   // blu
+					      result[item.STANZA].color_ACS_PRECEDENTE = "#85c1e9"; // blu chiaro
+					    } else if (item.TIPOLOGIA === "AFS") {
+					      result[item.STANZA].AFS_ATTUALE = parseFloat(item.VOLUME_ATTUALE) || 0;
+					      result[item.STANZA].AFS_PRECEDENTE = parseFloat(item.VOLUME_PRECEDENTE) || 0;
+					      result[item.STANZA].color_AFS_ATTUALE = "#d35400";   // arancio scuro
+					      result[item.STANZA].color_AFS_PRECEDENTE = "#f39c12"; // arancio chiaro
+					    }
+					  });
+					  return Object.values(result);
+					}
+				
+				
+				
+
+
+					var pivotedData = pivotData(obj);
+			
+					obj.forEach(item => {
+						  if (item.STANZA === "ACS") {
+							  item.fillColorAttuale = "#f39c12";    // arancio
+							  item.fillColorPrecedente = "#f8c471"; // arancio chiaro
+						  } else if (item.STANZA === "AFS") {
+							  item.fillColorAttuale = "#007bff";    // blu
+							  item.fillColorPrecedente = "#85c1e9"; // blu chiaro
+						  }
+						});
+					
+					var chartCondominoVolumeACS = AmCharts.makeChart("chartdiv-condomino-volume-acs", {
+						  "type": "serial",
+						  "theme": "none",
+						  "titles": [
+						    { "text": "Lettura condomino" },
+						    { "text": "Confronto ACS e AFS: Volume Attuale vs Volume Anno Precedente", "bold": false }
+						  ],
+						  "marginRight": 70,
+						  "dataProvider": obj,
+						  "numberFormatter": {
+						    "precision": 2,
+						    "decimalSeparator": ",",
+						    "thousandsSeparator": "."
+						  },
+						  "valueAxes": [{
+						    "gridColor": "#FFFFFF",
+						    "gridAlpha": 0.2,
+						    "dashLength": 0
+						  }],
+						  "gridAboveGraphs": true,
+						  "startDuration": 1,
+						  "graphs": [
+						    {
+						      "title": "Volume Attuale",
+						      "balloonText": "",
+						      "fillAlphas": 0.8,
+						      "lineAlpha": 0.2,
+						      "type": "column",
+						      "valueField": "VOLUME_ATTUALE",
+						      "fillColorsField": "fillColorAttuale",   
+						      "lineColorField": "fillColorAttuale",
+						      "labelText": "[[category]] Attuale: [[value]]"
+						    },
+						    {
+						      "title": "Volume Precedente",
+						      "balloonText": "",
+						      "fillAlphas": 0.8,
+						      "lineAlpha": 0.2,
+						      "type": "column",
+						      "valueField": "VOLUME_PRECEDENTE",
+						      "fillColorsField": "fillColorPrecedente", 
+						      "lineColorField": "fillColorPrecedente",
+						      "labelText": "[[category]] Anno Precedente: [[value]]"
+						    }
+						  ],
+						  "categoryField": "STANZA",
+						  "categoryAxis": {
+						    "gridPosition": "start",
+						    "gridAlpha": 0,
+						    "tickPosition": "start",
+						    "tickLength": 20
+						  },
+						  "chartCursor": {
+						    "categoryBalloonEnabled": false,
+						    "cursorAlpha": 0,
+						    "zoomable": false
+						  },
+						  "export": {
+						    "enabled": false
+						  }
+						});
+
+
+				
+				
+			}
+      	
+		});
+	}
+    
+    
+    
+    
+
+
+		
+    </script> 
+
+</head>
+
+<body onLoad="<#if PROFILO?contains('CON')>doGraficoCondomino();doGraficoCondominoVolumeACS();</#if>">
+
+	<form action="astro" method="get" id="formEdit" name="formEdit">
+		<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+		<input type="hidden" id="READONLY" name="READONLY" value="N">
+		<input type="hidden" id="ID_MODULO" name="ID_MODULO">
+		
+		
+	</form>		
+	
+	
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+			
+			
+<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+			
+			
+                <div class="col-sm-12">
+				
+                    <div class="ibox">
+					
+						<!-- bread crumb-->
+	                   
+	                    
+	                    <#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>	
+	                    			
+	                    
+	                    <#if PROFILO?contains('INS')>
+		                    <br/>
+		                    <div class="col-sm-12 alert alert-info">
+						       <b><input type="text" style="border:none;background-color:transparent;text-align:center;width:100%;" value='Effettuare sempre un controllo della batteria delle antenne'></b>
+						    </div>
+    					</#if>
+
+						<#if PROFILO?contains('CON')>
+								<div class="row">
+								<div class="col-lg-12">                  
+					            	<div class="ibox">
+					            		<div class="ibox-content float-e-margins">
+						                	 <div id="chartdiv-condomino-empty"></div>
+											 <div id="chartdiv-condomino" style="max-height: 100%; position: relative;"></div>	          
+					                    </div>
+					            	</div> 
+				            	</div>                   
+				           
+				            <div class="hr-line-dashed"></div>
+								<div class="col-lg-12">                  
+					            	<div class="ibox">
+						                <div class="ibox-content float-e-margins">
+						                	 <div id="chartdiv-condomino-volume-acs-empty"></div>
+											 <div id="chartdiv-condomino-volume-acs" style="display: flex; gap: 20px; width: 100%; height: 400px;"></div>
+											 <div id="custom-legend-condomino-volume-acs" style="margin-top: 10px;"></div>
+					                    </div>
+					            	</div> 
+				            	</div>                   
+				            </div>
+						<#else>
+						
+						
+						
+						
+						
+						
+						
+						<div class="wrapper wrapper-content">
+        			<div class="row">
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <!--<span class="label label-success pull-right">Ottimo</span>-->
+                                <h5>Utenze</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins" id="div_utenze"></h1>
+                                <!--<div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>-->
+                                <!--<small>Totale</small>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <!--<span class="label label-info pull-right">Ottimo</span>-->
+                                <h5>Condomini</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins" id="div_condomini"></h1>
+                                <!--<div class="stat-percent font-bold text-info">20% <i class="fa fa-level-up"></i></div>-->
+                                <!--<small>Totale</small>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <!--<span class="label label-primary pull-right">Buono</span>-->
+                                <h5>Ripartitori</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins" id="div_ripartitori"></h1>
+                                <!--<div class="stat-percent font-bold text-navy">44% <i class="fa fa-level-up"></i></div>-->
+                                <!--<small>Totale</small>-->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <!--<span class="label label-danger pull-right">Attenzione</span>-->
+                                <h5>Antenne e gateway</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins" id="div_antenne"></h1>
+                                <!--<div class="stat-percent font-bold text-danger">38% <i class="fa fa-level-down"></i></div>-->
+                                <!--<small>Totale</small>-->
+                            </div>
+                        </div>
+            </div>
+        </div>
+        
+        
+        
+         <div class="row">
+                    <div class="col-lg-3">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h5>Dettaglio</h5>
+                                <table class="table table-stripped small m-t-md">
+                                    <tbody>
+                                    <tr>
+                                        <td class="no-borders"><i class="fa fa-circle text-danger"></i></td>
+                                        <td  class="no-borders"><h5 class="no-margins" id="div_anagrafica_incompleta"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-danger"></i></td>
+                                        <td><h5 class="no-margins" id="div_senza_ripartitori_associati"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-danger"></i></td>
+                                        <td><h5 class="no-margins" id="div_no_accesso"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-white"></i></td>
+                                        <td><h5 class="no-margins"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-white"></i></td>
+                                        <td><h5 class="no-margins"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-white"></i></td>
+                                        <td><h5 class="no-margins"></h5></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h5>Dettaglio</h5>
+                                <table class="table table-stripped small m-t-md">
+                                    <tbody>
+                                    <tr>
+                                        <td class="no-borders"><i class="fa fa-circle text-navy"></i></td>
+                                        <td  class="no-borders"><h5 class="no-margins" id="div_provincia"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-navy"></i></td>
+                                        <td><h5 class="no-margins" id="div_localita"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-navy"></i></td>
+                                        <td><h5 class="no-margins" id="div_no_amministratori"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-navy"></i></td>
+                                        <td><h5 class="no-margins" id="div_sim"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-navy"></i></td>
+                                        <td><h5 class="no-margins" id="div_scarico_automatico"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-white"></i></td>
+                                        <td><h5 class="no-margins"></h5></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h5>Dettaglio</h5>
+                                <table class="table table-stripped small m-t-md">
+                                    <tbody>
+                                    <tr>
+                                        <td class="no-borders"><i class="fa fa-circle text-navy"></i></td>
+                                        <td  class="no-borders"><h5 class="no-margins" id="div_funzionanti"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-danger"></i></td>
+                                        <td><h5 class="no-margins" id="div_in_errore"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-navy"></i></td>
+                                        <td><h5 class="no-margins" id="div_censiti"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-danger"></i></td>
+                                        <td><h5 class="no-margins" id="div_non_censiti"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-danger"></i></td>
+                                        <td><h5 class="no-margins" id="div_non_scaricati"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-danger"></i></td>
+                                        <td><h5 class="no-margins" id="div_senza_lettura"></h5></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="ibox">
+                            <div class="ibox-content">
+                                <h5>Dettaglio</h5>
+                                <table class="table table-stripped small m-t-md">
+                                    <tbody>
+                                    <tr>
+                                        <td class="no-borders"><i class="fa fa-circle text-navy"></i></td>
+                                        <td  class="no-borders"><h5 class="no-margins" id="div_antenne_funzionanti"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-danger"></i></td>
+                                        <td><h5 class="no-margins" id="div_antenne_in_errore"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-navy"></i></td>
+                                        <td><h5 class="no-margins" id="div_antenne_censite"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-danger"></i></td>
+                                        <td><h5 class="no-margins" id="div_antenne_non_censite"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-danger"></i></td>
+                                        <td><h5 class="no-margins" id="div_batteria"></h5></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fa-circle text-white"></i></td>
+                                        <td><h5 class="no-margins"></h5></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                
+                
+
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>Richieste di ripartizione in attesa di conferma / da completare</h5>
+                            </div>
+                            
+                            <div class="ibox-content">
+                                <div class="feed-activity-list">
+
+                                     <div class="table-responsive">
+										<table id="dt" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+	            	    	    					<th></th>
+	            	    	    					<th>Nr.</th>
+	            	    	    					<th>Data</th>
+							                        <th>Denominazione</th>
+									                <th>Indirizzo</th>
+									                <th>Località</th>
+									                <th>Provincia</th>
+									                <th>Periodo</th>
+									                <th>Richiedente</th>
+									                <th>Ripartizione</th>
+									                <th>Tipo ripartizione</th>
+									                <th>Tipo contabilizzazione</th>
+									                <th>Stato</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+                                    
+								
+								</div>
+                            </div>
+                        </div>
+                    </div>
+						
+
+   
+                    </div>
+                </div> <!-- chiude wrapper content -->
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+                </#if>
+            </div>		
+</div>
+			
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+		
+
+</body>
+
+</html>

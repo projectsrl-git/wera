@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="css/plugins/steps/jquery.steps.css" rel="stylesheet">
+
+    <#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+    
+	<script type="text/javascript">
+		$(function(){
+			
+			$("#next").hide();
+			
+			$("#ID_AZIENDA").trigger("loadDataSet",["DataSetAziende","ID_AZIENDA","RAGSOC","<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>"," WHERE 1=1 "]);
+			$("#ID_AMMINISTRATORE").trigger("loadDataSet",["DSAmministratore","ID_AMMINISTRATORE","AMMINISTRATORE","<#if ID_AMMINISTRATORE?exists>${ID_AMMINISTRATORE}</#if>","<#if ID_AZIENDA?exists> AND ID_AZIENDA=${ID_AZIENDA} </#if> "]);
+
+			$("#TIPO").trigger("loadDataSet",["DSTipoRipartizione","CODICE","DESCRIZIONE","<#if TIPO?exists>${TIPO}</#if>"," WHERE 1=1 "]);
+			
+			$("#SCARICO").trigger("loadDataSet",["DSGiorniIntervallo","CODICE","DESCRIZIONE","<#if SCARICO?exists>${SCARICO}</#if>"," WHERE 1=1 "]);
+			$("#GG_SEGNALAZIONE").trigger("loadDataSet",["DSGiorniIntervallo","CODICE","DESCRIZIONE","<#if GG_SEGNALAZIONE?exists>${GG_SEGNALAZIONE}</#if>"," WHERE 1=1 "]);
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			$("#ID_MODULO").val("<#if ID_MODULO?exists>${ID_MODULO}</#if>");
+			$("#DENOMINAZIONE").val("<#if DENOMINAZIONE?exists>${DENOMINAZIONE}</#if>");
+			$("#INDIRIZZO").val("<#if INDIRIZZO?exists>${INDIRIZZO}</#if>");
+			$("#LOCALITA").val("<#if LOCALITA?exists>${LOCALITA}</#if>");
+			$("#PROVINCIA").val("<#if PROVINCIA?exists>${PROVINCIA}</#if>");
+			$("#CAP").val("<#if CAP?exists>${CAP}</#if>");
+			$("#CODFISC").val("<#if CODFISC?exists>${CODFISC}</#if>");
+			$("#PERDITE_IMPIANTO").val("<#if PERDITE_IMPIANTO?exists>${PERDITE_IMPIANTO}</#if>");
+			$("#RENDIMENTO_CALDAIA").val("<#if RENDIMENTO_CALDAIA?exists>${RENDIMENTO_CALDAIA}</#if>");
+			$("#FABBISOGNO_ANNUO_CLIMA").val("<#if FABBISOGNO_ANNUO_CLIMA?exists>${FABBISOGNO_ANNUO_CLIMA}</#if>");
+			$("#FABBISOGNO_ANNUO_ACS").val("<#if FABBISOGNO_ANNUO_ACS?exists>${FABBISOGNO_ANNUO_ACS}</#if>");
+			$("#SIM").val("<#if SIM?exists>${SIM}</#if>");
+			$("#SCARICO").val("<#if SCARICO?exists>${SCARICO}</#if>");
+			$("#DATA_PRIMO_SCARICO").val("<#if DATA_PRIMO_SCARICO?exists>${DATA_PRIMO_SCARICO}</#if>");
+			$("#DATA_PRIMA_SEGNALAZIONE").val("<#if DATA_PRIMA_SEGNALAZIONE?exists>${DATA_PRIMA_SEGNALAZIONE}</#if>");
+			$("#GG_SEGNALAZIONE").val("<#if GG_SEGNALAZIONE?exists>${GG_SEGNALAZIONE}</#if>");
+			
+			$('#GEN').prop('checked','<#if GEN?exists && GEN!=''>${GEN}<#else>false</#if>'==='true')
+			$('#FEB').prop('checked','<#if FEB?exists && FEB!=''>${FEB}<#else>false</#if>'==='true')
+			$('#MAR').prop('checked','<#if MAR?exists && MAR!=''>${MAR}<#else>false</#if>'==='true')
+			$('#APR').prop('checked','<#if APR?exists && APR!=''>${APR}<#else>false</#if>'==='true')
+			$('#MAG').prop('checked','<#if MAG?exists && MAG!=''>${MAG}<#else>false</#if>'==='true')
+			$('#GIU').prop('checked','<#if GIU?exists && GIU!=''>${GIU}<#else>false</#if>'==='true')
+			$('#LUG').prop('checked','<#if LUG?exists && LUG!=''>${LUG}<#else>false</#if>'==='true')
+			$('#AGO').prop('checked','<#if AGO?exists && AGO!=''>${AGO}<#else>false</#if>'==='true')
+			$('#SETT').prop('checked','<#if SETT?exists && SETT!=''>${SETT}<#else>false</#if>'==='true')
+			$('#OTT').prop('checked','<#if OTT?exists && OTT!=''>${OTT}<#else>false</#if>'==='true')
+			$('#NOV').prop('checked','<#if NOV?exists && NOV!=''>${NOV}<#else>false</#if>'==='true')
+			$('#DIC').prop('checked','<#if DIC?exists && DIC!=''>${DIC}<#else>false</#if>'==='true')
+			
+			$("#TIPO").val("<#if TIPO?exists>${TIPO}</#if>");
+			$("#TIPO_CONTABILIZZAZIONE").trigger("loadDataSet",["DSTipoContabilizzazione","CODICE","DESCRIZIONE","<#if TIPO_CONTABILIZZAZIONE?exists>${TIPO_CONTABILIZZAZIONE}</#if>"," WHERE 1=1 "]);
+			$("#TIPO_CONTABILIZZAZIONE").val("<#if TIPO_CONTABILIZZAZIONE?exists>${TIPO_CONTABILIZZAZIONE}</#if>");
+			
+
+			$('#ID_AZIENDA').on("select2:selecting", function(e) { 
+				var idAzienda= e.params.args.data.id;
+				
+				$("#ID_AMMINISTRATORE").empty();
+				$("#ID_AMMINISTRATORE").select2("destroy");
+				$("#ID_AMMINISTRATORE").trigger("loadDataSet",["DSAmministratore","ID_AMMINISTRATORE","AMMINISTRATORE","<#if ID_AMMINISTRATORE?exists>${ID_AMMINISTRATORE}</#if>"," "]);
+				
+			});
+		
+            
+            
+		  
+			$("#Inserimento").validate();
+			
+			$("#Inserimento").submit(function(event) {
+				document.getElementById("salva").style.display="none";
+				document.getElementById("next").style.display="block";
+				/* stop form from submitting normally */
+				event.preventDefault();			
+				
+				
+				if (!$("#Inserimento").valid()) {
+					document.getElementById("salva").style.display="block";
+					document.getElementById("next").style.display="hide";
+					return false;
+				}
+				
+
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+			
+				
+				
+				
+				var id=$("#ID_MODULO").val();
+				if (id!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+				} else {
+					$("#OPERATION_TYPE").val("INSERT");
+				}
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 3000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							$("#ID_AZIENDA").val(result.azienda);
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+					
+					
+					
+				});
+
+			});		
+			
+			$( "#next" ).click(function() {
+				//window.location.href = "astro?FUNCTIONID=InserimentoAnagraficaUtenze&OPERATION_TYPE=UPDATE&READONLY=N&ID_MODULO="+id+"&RILEVATORE="+rilevatore;
+				
+				if (!$("#Inserimento").valid()) {
+					document.getElementById("salva").style.display="block";
+					return false;
+				}
+				idCondominio=$("#ID_MODULO").val();
+				idAzienda=$("#ID_AZIENDA").val();
+
+				window.location.href = "astro?FUNCTIONID=ConfigurazioneGuidata2&ID_CONDOMINIO="+idCondominio+"&ID_AZIENDA="+idAzienda;
+        	});
+			
+		});		
+		
+		
+    </script> 
+    
+</head>
+
+<body>
+
+     <div id="wrapper">
+
+    	<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+        <div id="page-wrapper" class="gray-bg">
+		
+        	<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+        	
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+            	
+            		<div class="col-lg-12">
+
+	                	<div class="ibox float-e-margins">
+	                    
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+			            <div class="ibox-content">
+			            
+			            	
+			            	
+			            	<!-- schede -->
+			            	
+			            	<div id="wizard">
+	                            <h1>Condomini</h1>
+	                            <div class="step-content">
+	                            </div>
+	
+	                            <h1>Antenne</h1>
+	                            <div class="step-content">
+	                            </div>
+	                            
+	                            <h1>Contatori</h1>
+	                            <div class="step-content">
+	                            </div>
+	
+	                            <h1>Utenze</h1>
+	                            <div class="step-content">
+	                            </div>
+	                            
+	                            <h1>Scarico rilevatori</h1>
+	                            <div class="step-content">
+	                            </div>
+	                            
+	                            <h1>Ripartizione</h1>
+	                            <div class="step-content">
+	                            </div>
+	                        </div>
+			            	
+			            	<!-- fine schede -->
+			            	
+			            	<form action="astro" method="post" id="Inserimento"  class="form-horizontal">
+			            	
+					            		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoAnagraficaCondomini" />
+										<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE">
+										<input type="hidden" id="ID_MODULO" name="ID_MODULO">								
+										
+					                	<div class="row">
+											<div class="form-group"><label class="col-sm-2 control-label">Azienda</label>
+			                                    <div class="col-sm-4">
+													<select id="ID_AZIENDA" name="ID_AZIENDA" class="form-control" required>
+													</select>
+			                                    </div>
+			                                </div>
+		                                </div>
+		
+												
+					                	
+		
+										
+						                
+					                	<div class="row">
+											<div class="form-group"><label class="col-sm-2 control-label">Denominazione</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" id="DENOMINAZIONE" name="DENOMINAZIONE" required>
+												</div>
+											</div>
+		                            	</div>
+		                            	
+										  
+										<div class="row">
+											<div class="form-group"><label class="col-sm-2 control-label">Indirizzo</label>
+												<div class="col-sm-4"
+													<input type="text" class="form-control" id="INDIRIZZO" name="INDIRIZZO" required>
+												</div>
+											</div>
+		                            	</div>
+		                            	
+		                            	
+		                            	<div class="row">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Localit&#224;</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" id="LOCALITA" name="LOCALITA" required>
+												</div>
+											
+												<label class="col-sm-1 control-label">Provincia</label>
+												<div class="col-sm-1">
+													<input type="text" class="form-control" id="PROVINCIA" name="PROVINCIA" required>
+												</div>
+											
+												<label class="col-sm-1 control-label">CAP</label>
+												<div class="col-sm-1">
+													<input type="number" class="form-control" id="CAP" name="CAP" required>
+												</div>
+											</div>
+		                            	</div>
+		                            	
+		                            	
+		                            	<div class="row">
+											<div class="form-group"><label class="col-sm-2 control-label">Codice fiscale</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" id="CODFISC" name="CODFISC" required>
+												</div>
+											</div>
+		                            	</div>
+		                            	
+		                            	<div class="row">
+										<div class="form-group"><label class="col-sm-2 control-label">Amministratore</label>
+		                                    <div class="col-sm-4">
+												<select id="ID_AMMINISTRATORE" name="ID_AMMINISTRATORE" class="form-control">
+												</select>
+		                                    </div>
+		                                </div>
+		                                </div>
+		                            	
+		                            	
+		                            	<div class="row">
+											<div class="form-group"><label class="col-sm-2 control-label">Perdite impianto climat. invernale</label>
+												<div class="col-sm-2">
+													<input type="number" min="0" step="0.01" class="form-control" id="PERDITE_IMPIANTO" name="PERDITE_IMPIANTO" required>
+												</div>
+												
+												<label class="col-sm-2 control-label">Rendimento caldaia</label>
+												<div class="col-sm-2">
+													<input type="number" min="0" step="0.01" class="form-control" id="RENDIMENTO_CALDAIA" name="RENDIMENTO_CALDAIA" required>
+												</div>
+											</div>
+		                            	</div>
+		                            	
+		                            	
+		                            	<div class="row">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Fabbisogno annuo climat. invernale</label>
+												<div class="col-sm-2">
+													<input type="number" min="0" step="0.01" class="form-control" id="FABBISOGNO_ANNUO_CLIMA" name="FABBISOGNO_ANNUO_CLIMA" required>
+												</div>
+											
+												<label class="col-sm-2 control-label">Fabbisogno annuo ACS</label>
+												<div class="col-sm-2">
+													<input type="number" min="0" step="0.01" class="form-control" id="FABBISOGNO_ANNUO_ACS" name="FABBISOGNO_ANNUO_ACS" required>
+												</div>
+											</div>
+		                            	</div>
+		                            	
+		                            	
+		                            	<div class="row">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">SIM</label>
+												<div class="col-sm-2">
+													<input type="number" min="0" step="1" class="form-control" id="SIM" name="SIM" required>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Data prima segnalazione errori</label>
+												<div class="col-sm-2">
+													<div class="input-group date">
+														<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="DATA_PRIMA_SEGNALAZIONE" id="DATA_PRIMA_SEGNALAZIONE" value="<#if DATA_PRIMA_SEGNALAZIONE?exists>${DATA_PRIMA_SEGNALAZIONE}</#if>">
+													</div>
+												</div>
+												
+												<label class="col-sm-2 control-label">Intervallo segnalazione errori (gg)</label>
+												<div class="col-sm-2">
+													<select id="GG_SEGNALAZIONE" name="GG_SEGNALAZIONE" class="form-control" required>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Data primo scarico dati</label>
+												<div class="col-sm-2">
+													<div class="input-group date">
+														<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="DATA_PRIMO_SCARICO" id="DATA_PRIMO_SCARICO" value="<#if DATA_PRIMO_SCARICO?exists>${DATA_PRIMO_SCARICO}</#if>" required>
+													</div>
+												</div>
+												
+												<label class="col-sm-2 control-label">Intervallo scarico dati (gg)</label>
+												<div class="col-sm-2">
+													<select id="SCARICO" name="SCARICO" class="form-control" required>
+													</select>
+												</div>
+											</div>
+										</div>
+										<br>
+													
+						                <div class="row">
+							                <div class="form-group"><label class="col-sm-2 control-label">Scarico dati disattivato nei mesi di</label>
+			
+			                                    <div class="col-sm-10">
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="GEN" id="GEN"> GEN </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="FEB" id="FEB"> FEB </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="MAR" id="MAR"> MAR </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="APR" id="APR"> APR </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="MAG" id="MAG"> MAG </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="GIU" id="GIU"> GIU </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="LUG" id="LUG"> LUG </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="AGO" id="AGO"> AGO </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="SETT" id="SETT"> SET </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="OTT" id="OTT"> OTT </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="NOV" id="NOV"> NOV </label>
+			                                        <label class="checkbox-inline i-checks"> <input type="checkbox" name="DIC" id="DIC"> DIC </label>
+			                                   </div>
+			                                </div>
+			                            </div>
+			                            <br>
+		                                
+		                                <div class="row">
+		                                	<div class="form-group"><label class="col-sm-2 control-label">Tipo ripartizione</label>
+			                                    <div class="col-sm-4">
+													<select id="TIPO" name="TIPO" class="form-control" required>
+													</select>
+			                                    </div>
+			                                </div>
+		                                </div>
+		                                
+		                                <div class="row">
+		                                	<div class="form-group"><label class="col-sm-2 control-label">Tipologia di contabilizzazione climatizzazione invernale/ACS</label>
+			                                    <div class="col-sm-4">
+													<select id="TIPO_CONTABILIZZAZIONE" name="TIPO_CONTABILIZZAZIONE" class="form-control" required>
+													</select>
+			                                    </div>
+			                                </div>
+		                                </div>
+		                                
+		                                
+		                              			  
+		                                <div class="hr-line-dashed"></div>
+										
+		                                <div class="form-group">
+		                                    <div class="col-sm-2">
+		                                        <button class="btn btn-primary btn-sm" id="salva" type="submit">${label_save}</button>
+		                                    
+		                                        <button class="btn btn-primary btn-sm" id="next" type="button">Successivo</button>
+		                                    </div>
+		                                </div>
+										
+									
+				                          
+						            </form>
+			            	
+			            	
+			            							
+			                
+				                   
+	                       			
+		                </div>   <!-- chiude box content -->
+            		</div>       <!-- chiude ibox float-e-margins -->     
+	            </div>	<!-- col-lg-12 -->
+            </div>	<!-- chiude row -->
+            
+            
+        
+        
+        
+        	<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+        	
+        </div>
+	</div>
+	
+    <!-- Steps -->
+    <script src="js/plugins/staps/jquery.steps.min.js"></script>
+
+
+	
+	<script>
+        $(document).ready(function(){
+        	
+            $("#wizard").steps();
+                
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+            
+            
+            $('.input-group.date').datepicker({
+        		format: "dd/mm/yyyy",
+        		todayBtn: "linked",
+        		keyboardNavigation: false,
+        		forceParse: false,
+        		calendarWeeks: true,
+        		autoclose: true
+        	});
+            
+           
+            
+            
+            
+            
+       });
+    </script>
+    
+    <style>
+    	.wizard > .content {
+  			display: none;
+		}
+    	.wizard > .actions {
+  			display: none;
+		}
+		.wizard > .steps {
+  			margin-bottom: 10px;
+		}
+    </style>
+    
+
+
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <title><#if PAGE_TITLE?exists>${PAGE_TITLE}</#if></title>
+
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+    <link href="css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">
+    <link href="css/plugins/select2/select2.min.css" rel="stylesheet">
+    <link href="css/plugins/select2/select2-bootstrap.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="css/plugins/dataTables/fixedHeader.dataTables.min.css" rel="stylesheet">
+   
+    <link href="css/plugins/dataTables/dataTables.jqueryui.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/plugins/jsTree/style.css" />	    
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    
+    <!-- TOASTR -->
+    <link href="css/plugins/toastr/toastr.min.css" rel="stylesheet"/>
+    
+    
+    <link href="css/bow.css?202506072" rel="stylesheet">
+    <!--<link href="css/${ALIAS_AZIENDA_UTENTE}.css?2018035" rel="stylesheet">-->
+
+	<!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/plugins/jeditable/jquery.jeditable.js"></script>
+    <script src="js/plugins/dataTables/datatables.min.js"></script>
+    <script src="js/plugins/dataTables/datatables.sorting.date-euro.js"></script>
+    <script src="js/plugins/dataTables/dataTables.fixedHeader.min.js"></script>
+    
+    <!--<script src="js/plugins/dataTables/dataTables.jqueryui.js"></script>-->
+    
+    
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+    
+    <script>
+		  let paceTextTimer;
+		  let paceDone = false;
+		
+		  Pace.on('start', function() {
+		    const paceEl = document.querySelector('.pace');
+		    if (!paceEl) return;
+		
+		    // All'inizio la barra è bassa e senza testo
+		    paceEl.style.height = '2px';
+		    paceEl.style.position = 'relative';
+		
+		    // Se il testo non esiste, crealo ma NON mostrarlo subito
+		    if (!document.getElementById('pace-text')) {
+		      const textEl = document.createElement('div');
+		      textEl.id = 'pace-text';
+		      Object.assign(textEl.style, {
+		        position: 'absolute',
+		        top: '50%',
+		        left: '50%',
+		        transform: 'translate(-50%, -50%)',
+		        color: '#fff',
+		        fontWeight: 'bold',
+		        fontSize: '14px',
+		        zIndex: '9999',
+		        pointerEvents: 'none',
+		        display: 'none' // nascosto inizialmente
+		      });
+		      textEl.textContent = 'Caricamento della pagina in corso, attendere qualche secondo.';
+		      paceEl.appendChild(textEl);
+		    }
+		
+		    // Dopo 2 secondi, se ancora non finito, mostro testo e aumento altezza barra
+		    paceTextTimer = setTimeout(() => {
+		      if (!paceDone) {
+		        paceEl.style.height = '22px';
+		        paceEl.style.backgroundColor = '#1ab394';  // verde come richiesto
+		        const textEl = document.getElementById('pace-text');
+		        if (textEl) textEl.style.display = 'block';
+		      }
+		    }, 2000);
+		  });
+		
+		  Pace.on('done', function() {
+		    paceDone = true;
+		    clearTimeout(paceTextTimer);
+		
+		    const paceEl = document.querySelector('.pace');
+		    if (paceEl) {
+		      paceEl.style.height = '2px';
+		    }
+		
+		    const textEl = document.getElementById('pace-text');
+		    if (textEl) {
+		      textEl.style.display = 'none';
+		    }
+		  });
+	</script>
+
+    
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- Input Mask-->
+    <script src="js/plugins/jasny/jasny-bootstrap.min.js"></script>
+
+	<!-- Data picker -->
+	<script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+	<script src="js/plugins/datapicker/locales/bootstrap-datepicker.it.js"></script>
+
+	<!-- Select2 -->
+    <script src="js/plugins/select2/select2.full.min.js"></script>
+
+    <!-- JQuery Validator -->
+	<script src="js/plugins/validate/jquery.validate.min.js"></script>
+
+	<script src="js/pjwebapp.jquery.js?2"></script>
+	
+	<!-- JS Tree -->
+    <script src="js/plugins/jsTree/jstree.min.js"></script>
+    
+    
+   <!-- Flot -->
+    <script src="js/plugins/flot/jquery.flot.js"></script>
+    <script src="js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="js/plugins/flot/jquery.flot.spline.js"></script>
+    <script src="js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="js/plugins/flot/jquery.flot.pie.js"></script>
+    <script src="js/plugins/flot/jquery.flot.symbol.js"></script>
+    <script src="js/plugins/flot/jquery.flot.time.js"></script>  
+    
+    <!-- TOASTR -->
+    <script src="js/plugins/toastr/toastr.min.js"></script>  
+
+	<!-- firma digitale -->
+	<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>-->
+	
+		<!-- SweetAlert2 CDN -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="css/plugins/steps/jquery.steps.css" rel="stylesheet">
+
+    <#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+	<link href="css/plugins/dropzone/basic.css" rel="stylesheet">
+    <link href="css/plugins/dropzone/dropzone.css" rel="stylesheet">
+    
+    <style>
+	    #progressBar {
+		  width: 90%;
+		  margin: 10px auto;
+		  height: 22px;
+		  background-color: #0A5F44;
+		}
+		
+		#progressBar div {
+		  height: 100%;
+		  text-align: right;
+		  padding: 0 10px;
+		  line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+		  width: 0;
+		  color: white;
+		  font-weight: bold;
+		  background-color: #18a689;
+		  box-sizing: border-box;
+		}
+
+    </style>
+    
+	<script type="text/javascript">
+		$(function(){
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			
+			$("#Inserimento").validate();
+			
+			$("#Inserimento").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();		
+				
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+		
+				
+				
+				if (id!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+				} else {
+					$("#OPERATION_TYPE").val("INSERT");
+				}
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					var result = eval('('+response+')');
+					
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 3000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							$("#ID_AZIENDA").val(result.azienda);
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+					
+					
+					
+				});
+
+			});		
+			
+			$( "#next" ).click(function() {
+				//window.location.href = "astro?FUNCTIONID=InserimentoAnagraficaUtenze&OPERATION_TYPE=UPDATE&READONLY=N&ID_MODULO="+id+"&RILEVATORE="+rilevatore;
+				
+				if (!$("#Inserimento").valid()) {
+					document.getElementById("salva").style.display="block";
+					return false;
+				}
+				idCondominio=$("#ID_MODULO").val();
+				idAzienda=$("#ID_AZIENDA").val();
+
+				window.location.href = "astro?FUNCTIONID=ConfigurazioneGuidata5&ID_CONDOMINIO="+idCondominio+"&ID_AZIENDA="+idAzienda;
+        	});
+			
+		});		
+		
+		
+    </script> 
+    
+</head>
+
+<body>
+
+     <div id="wrapper">
+
+    	<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+        <div id="page-wrapper" class="gray-bg">
+		
+        	<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+        	
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+            	
+            		<div class="col-lg-12">
+
+	                	<div class="ibox float-e-margins">
+	                   
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+			            <div class="ibox-content">
+			            							
+			            	<!-- schede -->
+			            	
+			            	<div id="wizard">
+	                            <h1>Condomini</h1>
+	                            <div class="step-content">
+	                            </div>
+	
+	                            <h1>Antenne</h1>
+	                            <div class="step-content">
+	                            </div>
+	                            
+	                            <h1>Contatori</h1>
+	                            <div class="step-content">
+	                            </div>
+	
+	                            <h1>Utenze</h1>
+	                            <div class="step-content">
+	                            </div>
+	                            
+	                            <h1>Scarico rilevatori</h1>
+	                            <div class="step-content">
+	                            </div>
+	                            
+	                            <h1>Ripartizione</h1>
+	                            <div class="step-content">
+	                            </div>
+	                        </div>
+			            	
+			            	<!-- fine schede -->
+								
+			                	<div class="row">
+				                	<div class="col-lg-12">
+					                	<div class="ibox float-e-margins">
+							                <div class="ibox-content">
+							                    <form id="my-awesome-dropzone" class="dropzone" name="filesForm" method="post" action="astro?FUNCTIONID=FileUploadDatiAnagraficaUtenze" enctype="multipart/form-data">
+							                        <div class="dropzone-previews"></div>
+							                        <button type="submit" class="btn btn-primary pull-right">Carica</button>
+							                    </form>
+							                    <div>
+							                        <div class="m text-right">Selezionare il file XLS o XLSX contenente l'anagrafica da caricare</div>
+							                    </div>
+							                    <div id="progressBar" style="display: none;">
+												  	<div class="bar"></div>
+												</div>
+							                </div>
+				           				</div>
+						            </div>
+					            </div>
+                                
+                                
+                              			  
+                                <div class="hr-line-dashed"></div>
+								
+                             
+				                   
+	                       			
+		                </div>   <!-- chiude box content -->
+            		</div>       <!-- chiude ibox float-e-margins -->     
+	            </div>	<!-- col-lg-12 -->
+            </div>	<!-- chiude row -->
+            
+            
+        
+        
+        
+        	<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+        	
+        </div>
+	</div>
+	
+	    <!-- DROPZONE -->
+    <script src="js/plugins/dropzone/dropzone.js"></script>
+
+	<!-- Steps -->
+    <script src="js/plugins/staps/jquery.steps.min.js"></script>
+	
+    <script>
+    
+	    function progress(timeleft, timetotal, $element) {
+	        var progressBarWidth = timeleft * $element.width() / timetotal;
+	        $element.find('div').animate({ width: progressBarWidth }, 500).html("Caricamento in corso - tempo rimanente: "+Math.floor(timeleft/60) + "min "+ timeleft%60+ "sec");
+	        if(timeleft > 0) {
+	            setTimeout(function() {
+	                progress(timeleft - 1, timetotal, $element);
+	            }, 1000);
+	        }
+	    };
+    
+        $(document).ready(function(){
+			$("#wizard").steps();
+			
+			
+            Dropzone.options.myAwesomeDropzone = {
+
+                autoProcessQueue: false,
+                uploadMultiple: true,
+                parallelUploads: 100,
+                maxFiles:1,
+                
+
+                // Dropzone settings
+                init: function() {
+                    var myDropzone = this;
+					this.hiddenFileInput.removeAttribute('multiple');
+                    this.element.querySelector("button[type=submit]").addEventListener("click", function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        myDropzone.processQueue();
+                        $("#progressBar").show();
+                        progress(240, 240, $('#progressBar'));
+                        setTimeout(function(){location.href="astro?FUNCTIONID=ConfigurazioneGuidata0Riepilogo"} , 240000);
+                    });
+                    this.on("sendingmultiple", function() {
+                    });
+                    this.on("successmultiple", function(files, response) {
+	                    window.location.href = "astro?FUNCTIONID=ConfigurazioneGuidata0Riepilogo";
+                    });
+                    this.on("errormultiple", function(files, response) {
+                    });
+                }
+
+            }
+
+       });
+    </script>
+ <style>
+    	.wizard > .content {
+  			display: none;
+		}
+    	.wizard > .actions {
+  			display: none;
+		}
+		.wizard > .steps {
+  			margin-bottom: 10px;
+		}
+    </style>
+
+</body>
+
+</html>

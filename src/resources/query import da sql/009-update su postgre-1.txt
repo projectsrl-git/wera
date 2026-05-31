@@ -1,0 +1,2 @@
+update dati_rilevatori set volume_attuale = 0 where volume_attuale is null;
+update condomini set GG_SEGNALAZIONE=30;

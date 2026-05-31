@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+		
+    <script type="text/javascript">
+	
+		$(function(){
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			
+			$("#ID_AZIENDA").val("<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>");
+			$("#CODICE").val("<#if CODICE?exists>${CODICE}</#if>");
+			$("#RAGSOC").val("<#if RAGSOC?exists>${RAGSOC}</#if>");
+			$("#ALIAS_AZIENDA").val("<#if ALIAS_AZIENDA?exists>${ALIAS_AZIENDA}</#if>");
+			$("#ID_AZIENDA_PARENT").trigger("loadDataSet",["DataSetAziende","ID_AZIENDA","RAGSOC","<#if ID_AZIENDA_PARENT?exists>${ID_AZIENDA_PARENT}</#if>"," WHERE 1=1 ",false]);
+			
+			$("#SESSO").trigger("loadDataSet",["OpzioneSesso","CODICE","DESCR","<#if SESSO?exists>${SESSO}</#if>"]);
+			$("#CODFISCALE_AZ").val("<#if CODFISCALE_AZ?exists>${CODFISCALE_AZ}</#if>");
+            $("#PARTITAIVA").val("<#if PARTITAIVA?exists>${PARTITAIVA}</#if>");
+            $("#TELEFONO").val("<#if TELEFONO?exists>${TELEFONO}</#if>");
+            $("#MAIL").val("<#if MAIL?exists>${MAIL}</#if>");
+            $("#CREDITI").val("<#if CREDITI?exists>${CREDITI}</#if>");
+            $("#DATA_SCADENZA_CREDITI").val("<#if DATA_SCADENZA_CREDITI?exists>${DATA_SCADENZA_CREDITI}</#if>");
+
+            $("#NOME").val("<#if NOME?exists>${NOME}</#if>");
+            $("#COGNOME").val("<#if COGNOME?exists>${COGNOME}</#if>");
+            $("#D_NASCITA").val("<#if D_NASCITA?exists>${D_NASCITA}</#if>");
+            $("#LOCNASCITA").val("<#if LOCNASCITA?exists>${LOCNASCITA}</#if>");
+            $("#PROVNASCITA").val("<#if PROVNASCITA?exists>${PROVNASCITA}</#if>");
+            $("#CODFISCALE").val("<#if CODFISCALE?exists>${CODFISCALE}</#if>");
+            
+
+			$("#formInserimento").validate();
+
+			$("#formInserimento").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();			
+
+				if (!$("#formInserimento").valid()) {
+					return false;
+				}
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+				
+				
+
+				tokenizeOptionSelected("LISTA_MENU_ABILITATI","MENU_ABILITATI");
+				tokenizeOptionSelected("LISTA_TIPO_AZIENDA","TIPO_AZIENDA");
+
+				$("#salva").hide();
+				
+				/* Send the data using Ajax post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) {
+					
+					document.getElementById("salva").style.display="block";
+					
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+				});
+				
+				
+			});
+
+		});
+		
+    </script> 
+
+</head>
+
+<body>
+
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists>
+		<#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->		
+
+
+                        <div class="ibox-content">
+                        
+                        
+							<div class="row">
+								<div class="col-lg-12">
+								
+								
+								  <form action="astro" method="post" id="formInserimento" name="formInserimento" class="form-horizontal">
+					            		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoAziende" />
+										<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE">
+										<input type="hidden" id="ID_AZIENDA" name="ID_AZIENDA">
+										<input type="hidden" id="TIPO_AZIENDA" name="TIPO_AZIENDA">
+										
+								
+								<div class="tabs-container">
+									<ul class="nav nav-tabs">
+										<li class="active">
+											<a data-toggle="tab" href="#tab-1">DATI AZIENDA</a>
+										</li>
+										<li class="">
+											<a data-toggle="tab" href="#tab-2">DATI LEGALE RAPPRESENTANTE</a>
+										</li>
+									</ul>
+									<div class="tab-content">
+									<!---------------------- TOTALE COSTI IMPIANTO ---------------------->
+							
+							
+										<div id="tab-1" class="tab-pane active">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="ibox">
+															<div class="form-group">
+							                                	<label class="col-sm-2 control-label">Codice</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" required id="CODICE" name="CODICE"></div>
+							                                </div>
+							                                
+							                                <div class="form-group">
+							                                	<label class="col-sm-2 control-label">${label_ragsoc}</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" required id="RAGSOC" name="RAGSOC"></div>
+							                                </div>
+						
+							                                <div class="form-group">
+							                                	<label class="col-sm-2 control-label">${label_alias}</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" required id="ALIAS_AZIENDA" name="ALIAS_AZIENDA"></div>
+							                                </div>
+					
+															<div class="form-group">
+																<label class="col-sm-2 control-label">${label_top_company}</label>
+																<div class="col-sm-10">
+																	<select class="form-control hidden-dropdown" id="ID_AZIENDA_PARENT" name="ID_AZIENDA_PARENT">
+																	</select>
+																</div>
+															</div>	
+															
+															<div class="form-group"><label class="col-sm-2 control-label">Cod. Fiscale</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" name="CODFISCALE_AZ" id="CODFISCALE_AZ"></div>
+							                                </div>
+							                                <div class="form-group"><label class="col-sm-2 control-label">Partita IVA</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" name="PARTITAIVA" id="PARTITAIVA"></div>
+							                                </div>	
+							                                <div class="form-group"><label class="col-sm-2 control-label">Telefono</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" name="TELEFONO" id="TELEFONO"></div>
+							                                </div>
+							                                <div class="form-group"><label class="col-sm-2 control-label">Mail</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" name="MAIL" id="MAIL"></div>
+							                                </div>
+							                                <div class="form-group"><label class="col-sm-2 control-label">Crediti</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" name="CREDITI" id="CREDITI"></div>
+							                                </div>		
+							                                
+							                                <div class="form-group"><label class="col-sm-2 control-label"> Data scadenza crediti</label>
+							                                    <div class="col-sm-2">
+																	<div class="input-group date">
+																		<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="DATA_SCADENZA_CREDITI" id="DATA_SCADENZA_CREDITI" required>
+																	</div>
+																</div>
+							                                </div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										<div id="tab-2" class="tab-pane">
+											<div class="panel-body">
+												<div class="row">
+													<div class="col-lg-12">
+														<div class="ibox">
+															<div class="form-group"><label class="col-sm-2 control-label">Nome</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" name="NOME" id="NOME"></div>
+							                                </div><br/>
+							                                
+							                                <div class="form-group"><label class="col-sm-2 control-label">Cognome</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" name="COGNOME" id="COGNOME" id"></div>
+							                                </div>
+							                                
+							                                <div class="form-group"><label class="col-sm-2 control-label">Sesso</label>
+							                                	<div class='col-sm-10'><select class="form-control" id="SESSO" name="SESSO"></select></div>
+							                                </div>
+							                                
+							                                <div class="form-group"><label class="col-sm-2 control-label"> Data di nascita</label>
+							                                    <div class="col-sm-2">
+																	<div class="input-group date">
+																		<span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="D_NASCITA" id="D_NASCITA" required>
+																	</div>
+																</div>
+							                                </div>
+							                                
+							                                <div class="form-group"><label class="col-sm-2 control-label">Località di nascita</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" name="LOCNASCITA" id="LOCNASCITA"></div>
+							                                </div>
+							                                
+							                                <div class="form-group"><label class="col-sm-2 control-label">Provincia</label>
+							                                    <div class="col-sm-2"><input type="text" class="form-control" name="PROVNASCITA" id="PROVNASCITA"></div>
+							                                </div>
+							                                
+							                                <div class="form-group"><label class="col-sm-2 control-label">Cod. Fiscale</label>
+							                                    <div class="col-sm-10"><input type="text" class="form-control" name="CODFISCALE" id="CODFISCALE"></div>
+							                                </div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										
+										<br/>
+										<div class="form-group">
+		                                    <div class="col-sm-4">
+												<button class="btn btn-primary btn-sm" id="salva" type="submit" name="salva">${label_save}</button>
+		                                    </div>
+		                                </div>     
+		                                
+		                                
+									</div>
+								</div>
+								</form>
+								
+								
+								
+								
+		                                
+		                            
+	                            
+	                        	</div> <!-- col-sm-12 -->
+		                    </div> <!-- row -->
+                		</div> <!-- ibox-content -->
+            		</div>	<!-- ibox -->	
+	            </div> <!-- col-sm-12 -->	
+			</div> <!-- row -->            
+			
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div> <!-- page-wrapper -->
+
+	</div> <!-- wrapper -->
+
+</body>
+
+</html>

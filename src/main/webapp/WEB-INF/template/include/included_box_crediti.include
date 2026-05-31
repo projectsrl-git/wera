@@ -1,0 +1,13 @@
+ <#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')>
+    <br/>
+    <div class="col-sm-12 alert alert-danger">
+       <b><input type="text" style="border:none;background-color:transparent;text-align:center;width:100%;" value='I <#if CREDITI?exists>${CREDITI}</#if> crediti acquistati sono scaduti in data <#if DATA_SCADENZA_CREDITI?exists>${DATA_SCADENZA_CREDITI}</#if>'></b>
+    </div>
+</#if>
+
+<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('true') && CREDITI_IN_SCADENZA?contains('true')>
+    <br/>
+    <div class="col-sm-12 alert alert-warning">
+       <b><input type="text" style="border:none;background-color:transparent;text-align:center;width:100%;" value='I <#if CREDITI?exists>${CREDITI}</#if> crediti acquistati sono prossimi alla scadenza in data <#if DATA_SCADENZA_CREDITI?exists>${DATA_SCADENZA_CREDITI}</#if>'></b>
+    </div>
+</#if>

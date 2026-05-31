@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+		
+    <script type="text/javascript">
+	
+		$(function(){
+
+			$("#ID_PARAMETRO").val("<#if ID_PARAMETRO?exists>${ID_PARAMETRO}</#if>");
+			$("#DOMINIO").trigger("loadDataSet",["DSDominiParametriAzienda","CODICE","DESCRIZIONE","<#if DOMINIO?exists>${DOMINIO}</#if>"," WHERE 1=1 "]);
+			$("#CODICE").val("<#if CODICE?exists>${CODICE}</#if>");
+			$("#DESCRIZIONE").val("<#if DESCRIZIONE?exists>${DESCRIZIONE}</#if>");
+			$("#ORDINE").val(<#if ORDINE?exists>${ORDINE}<#else>0</#if>);
+
+			var flagDisattivato="<#if FL_DISATTIVO?exists>${FL_DISATTIVO}</#if>";
+			$('#CHECK_DISATTIVATO').prop('checked',flagDisattivato==="true");
+			
+			$("#formInserimento").validate();
+
+			$("#formInserimento").submit(function(event) {
+				/* stop form from submitting normally */
+				event.preventDefault();			
+				
+				if (!$("#formInserimento").valid()) {
+					return false;
+				}
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+
+				
+				
+				document.getElementById("salva").style.display="none";
+				
+				$("#FL_DISATTIVO").val($("#CHECK_DISATTIVATO").is(':checked'));
+				
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					document.getElementById("salva").style.display="block";
+					
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+				});
+
+			});
+
+		});
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-lg-12">
+				
+                    <div class="ibox float-e-margins">
+	                   
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+
+							<form action="astro" class="form-horizontal" method="post" id="formInserimento" name="formInserimento">
+								
+								<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoParametri">
+								<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE" value="<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>">
+								<input type="hidden" id="ID_PARAMETRO" name="ID_PARAMETRO">
+								<input type="hidden" id="FL_DISATTIVO" name="FL_DISATTIVO">
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">${label_tabella}</label>
+                                    <div class="col-sm-10">
+										<select id="DOMINIO" name="DOMINIO" class="form-control" required>
+										</select>
+                                    </div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">${label_codice}</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="CODICE" id="CODICE" required></div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">${label_descrizione}</label>
+                                    <div class="col-sm-10"><input type="text" class="form-control" name="DESCRIZIONE" id="DESCRIZIONE" required></div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">${label_ordine}</label>
+                                    <div class="col-sm-1"><input type="text" class="form-control" name="ORDINE" id="ORDINE" required></div>
+                                </div>
+								
+                                <div class="form-group"><label class="col-sm-2 control-label-left">${label_utente_disattivato}</label>
+                                    <div class="col-sm-10">
+                                        <div class="i-checks"><label> <input name="CHECK_DISATTIVATO" id="CHECK_DISATTIVATO" type="checkbox" value=""><i></i></label></div>
+                                    </div>
+                                </div>
+								
+                                <div class="hr-line-dashed"></div>
+								
+                                <div class="form-group">
+                                    <div class="col-sm-4 col-sm-offset-2">
+                                        <button class="btn btn-primary btn-sm" id="salva" type="submit">${label_save}</button>
+                                    </div>
+                                </div>
+								
+                            </form>
+
+                        </div>
+						
+                    </div>
+                </div>
+            </div>
+			
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+		
+
+</body>
+
+</html>

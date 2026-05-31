@@ -1,0 +1,1 @@
+﻿alter table aziende add column data_scadenza_crediti character (10);

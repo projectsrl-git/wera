@@ -1,0 +1,179 @@
+﻿# nome funzione					nome classe																			function id
+
+Login							net.projectsrl.dafne.authentication.FunctionLogin         							00
+Home                            net.projectsrl.bow.core.FunctionHome      											00
+Logout							net.projectsrl.webapp.authentication.FunctionLogout            						00
+RicercaUtenti					net.projectsrl.dafne.authentication.FunctionRicercaUtenti           				00
+InserimentoUtenti				net.projectsrl.dafne.authentication.FunctionInserimentoUtenti						00
+JSONDataSet						net.projectsrl.json.FunctionJSONDataSet												00
+JSONGraph						net.projectsrl.json.FunctionJSONGraph												00
+AJAXArray						net.projectsrl.json.FunctionDataSourceAjaxArray										00
+AjaxCheckUnique					net.projectsrl.webapp.core.FunctionAjaxCheckUnique									00
+ResetPassword                   net.projectsrl.dafne.authentication.FunctionResetPassword							00
+NewPassword                     net.projectsrl.bow.authentication.FunctionNewPassword            	 				00
+Registrazione                   net.projectsrl.dafne.authentication.FunctionRegistrazione							00
+
+# MENU Configurazione
+InserimentoDomini               net.projectsrl.bow.parameters.FunctionInserimentoDomini 							00
+RicercaDomini                   net.projectsrl.bow.parameters.FunctionRicercaDomini 								00
+InserimentoParametri            net.projectsrl.bow.parameters.FunctionInserimentoParametri							00
+RicercaParametri                net.projectsrl.bow.parameters.FunctionRicercaParametri								00
+InserimentoProfili            	net.projectsrl.bow.configuration.core.FunctionInserimentoProfili					00
+RicercaProfili                	net.projectsrl.bow.configuration.core.FunctionRicercaProfili						00
+InserimentoLingueIso            net.projectsrl.bow.parameters.FunctionInserimentoLingueIso							00
+RicercaLingueIso                net.projectsrl.bow.parameters.FunctionRicercaLingueIso	                            00
+InserimentoMailConfig   		net.projectsrl.bow.configuration.core.FunctionInserimentoMailConfig					00
+RicercaMailConfig		        net.projectsrl.bow.configuration.core.FunctionRicercaMailConfig       	            00
+InserimentoDistributionList     net.projectsrl.bow.configuration.core.FunctionInserimentoDistributionList			00
+RicercaDistributionList         net.projectsrl.bow.configuration.core.FunctionRicercaDistributionList	            00
+
+
+RicercaTipiRichiesta			net.projectsrl.dafne.richieste.core.FunctionRicercaTipiRichiesta					00
+
+InserimentoTipiRichiesta		net.projectsrl.dafne.richieste.core.FunctionInserimentoTipiRichiesta		   		00
+
+InserimentoAziende 				net.projectsrl.bow.company.core.FunctionInserimentoAziende			    		00
+
+RicercaAziende					net.projectsrl.dafne.aziende.FunctionRicercaAziende							00
+
+InserimentoNews 				net.projectsrl.wera.comunicazioni.core.FunctionInserimentoNews		    		00
+RicercaNews						net.projectsrl.wera.comunicazioni.core.FunctionRicercaNews						00
+
+
+
+InserimentoApprovatoriRichiesta		net.projectsrl.dafne.richieste.core.FunctionInserimentoApprovatoriRichiesta		   	00
+RicercaApprovatoriRichiesta			net.projectsrl.dafne.richieste.core.FunctionRicercaApprovatoriRichiesta		   		00
+
+CreaFirmaPDF					net.projectsrl.dafne.pdf.FunctionCreaFirmaPDF		   		00
+
+
+
+ExecuteSQL                      	net.projectsrl.bow.core.FunctionExecuteSQL                        							00
+Download							net.projectsrl.webapp.core.FunctionDownload                                 00
+
+
+
+
+### QHSE
+
+ApprovalWorkFlow					net.projectsrl.qhse.moduli.core.FunctionApprovalWorkFlow                 			00
+PlainHtml							net.projectsrl.qhse.moduli.core.FunctionPlainHtml                 					00
+Html2Pdf							net.projectsrl.qhse.moduli.core.FunctionHtml2Pdf		                 			00
+UploadFile							net.projectsrl.qhse.moduli.core.FunctionUploadFile		                 			00
+CreaFirma							net.projectsrl.alibow.core.FunctionCreaFirma		   								00
+
+
+
+
+###### WERA ########################
+
+
+
+
+InserimentoAnagraficaCondomini       	net.projectsrl.wera.anagrafiche.core.FunctionInserimentoAnagraficaCondomini					00
+RicercaAnagraficaCondomini				net.projectsrl.wera.anagrafiche.core.FunctionRicercaAnagraficaCondomini						00
+StampaAnagraficaCondomini				net.projectsrl.wera.anagrafiche.stampe.core.FunctionStampaAnagraficaCondomini				00
+
+
+InserimentoAnagraficaAntenne       		net.projectsrl.wera.anagrafiche.core.FunctionInserimentoAnagraficaAntenne					00
+RicercaAnagraficaAntenne				net.projectsrl.wera.anagrafiche.core.FunctionRicercaAnagraficaAntenne						00
+
+InserimentoAnagraficaContatori       	net.projectsrl.wera.anagrafiche.core.FunctionInserimentoAnagraficaContatori					00
+RicercaAnagraficaContatori				net.projectsrl.wera.anagrafiche.core.FunctionRicercaAnagraficaContatori						00
+
+InserimentoAnagraficaTecnici       		net.projectsrl.wera.anagrafiche.core.FunctionInserimentoAnagraficaTecnici					00
+RicercaAnagraficaTecnici				net.projectsrl.wera.anagrafiche.core.FunctionRicercaAnagraficaTecnici						00
+
+InserimentoAnagraficaSoftware       	net.projectsrl.wera.anagrafiche.core.FunctionInserimentoAnagraficaSoftware					00
+RicercaAnagraficaSoftware				net.projectsrl.wera.anagrafiche.core.FunctionRicercaAnagraficaSoftware						00
+
+
+InserimentoAnagraficaUtenze       		net.projectsrl.wera.anagrafiche.core.FunctionInserimentoAnagraficaUtenze					00
+InserimentoDettaglioAnagraficaUtenze    net.projectsrl.wera.anagrafiche.core.FunctionInserimentoDettaglioAnagraficaUtenze			00
+RicercaAnagraficaUtenze					net.projectsrl.wera.anagrafiche.core.FunctionRicercaAnagraficaUtenze						00
+StampaAnagraficaUtenze					net.projectsrl.wera.anagrafiche.stampe.core.FunctionStampaAnagraficaUtenze					00
+
+
+
+ImportDatiAnagraficaUtenze				net.projectsrl.wera.importazioni.core.FunctionImportDatiAnagraficaUtenze					00
+FileUploadDatiAnagraficaUtenze          net.projectsrl.wera.importazioni.core.FunctionFileUploadDatiAnagraficaUtenze         		00
+RiepilogoDatiAnagraficaUtenze			net.projectsrl.wera.importazioni.core.FunctionRiepilogoDatiAnagraficaUtenze	 				00
+
+ImportDatiRilevatori					net.projectsrl.wera.importazioni.core.FunctionImportDatiRilevatori							00
+FileUploadDatiRilevatori              	net.projectsrl.wera.importazioni.core.FunctionFileUploadDatiRilevatori           			00
+RiepilogoDatiRilevatori					net.projectsrl.wera.importazioni.core.FunctionRiepilogoDatiRilevatori	 					00
+
+ArchivioFileImportati					net.projectsrl.wera.importazioni.core.FunctionArchivioFileImportati	 						00
+InserimentoArchivioFileImportati		net.projectsrl.wera.importazioni.core.FunctionInserimentoArchivioFileImportati				00
+DownloadFileImportati					net.projectsrl.wera.importazioni.core.FunctionDownloadFileImportati                         00
+
+GestioneDatiRilevatori					net.projectsrl.wera.gestionerilevatori.core.FunctionGestioneDatiRilevatori	 				00
+GestioneDatiSingoloRilevatore			net.projectsrl.wera.gestionerilevatori.core.FunctionGestioneDatiSingoloRilevatore			00
+
+GestioneRilevatoriSenzaLettura			net.projectsrl.wera.gestionerilevatori.core.FunctionGestioneRilevatoriSenzaLettura	 		00
+GestioneRilevatoriNonCensiti			net.projectsrl.wera.gestionerilevatori.core.FunctionGestioneRilevatoriNonCensiti	 		00
+GestioneRilevatoriNonScaricati			net.projectsrl.wera.gestionerilevatori.core.FunctionGestioneRilevatoriNonScaricati	 		00
+GestioneRilevatoriErrore				net.projectsrl.wera.gestionerilevatori.core.FunctionGestioneRilevatoriErrore				00
+InserimentoGestioneRilevatoriErrore		net.projectsrl.wera.gestionerilevatori.core.FunctionInserimentoGestioneRilevatoriErrore		00
+
+
+RicercaLettureConsumi					net.projectsrl.wera.letture.core.FunctionRicercaLettureConsumi								00
+StampaLettureConsumi 					net.projectsrl.wera.letture.core.FunctionStampaLettureConsumi                   			00
+
+
+
+RicercaRipartizioniUNI					net.projectsrl.wera.ripartizioniuni.core.FunctionRicercaRipartizioniUNI						00
+RicercaRipartizioni						net.projectsrl.wera.ripartizioni.core.FunctionRicercaRipartizioni							00
+RicercaRipartizioniLetture				net.projectsrl.wera.ripartizioniletture.core.FunctionRicercaRipartizioniLetture				00
+EliminaRipartizioniLetture				net.projectsrl.wera.ripartizioniletture.core.FunctionEliminaRipartizioniLetture 			00
+
+ImportFileManager						net.projectsrl.wera.filemanager.core.FunctionImportFileManager								00
+FileUploadFileManager          			net.projectsrl.wera.filemanager.core.FunctionFileUploadFileManager         					00
+RicercaFileManager						net.projectsrl.wera.filemanager.core.FunctionRicercaFileManager								00
+FileManager								net.projectsrl.wera.filemanager.core.FunctionFileManager									00
+InserimentoFileManager					net.projectsrl.wera.filemanager.core.FunctionInserimentoFileManager							00
+CalendarioFileManager					net.projectsrl.wera.filemanager.core.FunctionCalendarioFileManager							00
+
+ConfigurazioneErrori					net.projectsrl.wera.utility.core.FunctionConfigurazioneErrori								00
+InserimentoConfigurazioneErrori			net.projectsrl.wera.utility.core.FunctionInserimentoConfigurazioneErrori					00
+
+InserimentoRipartizioni					net.projectsrl.wera.ripartizioni.core.FunctionInserimentoRipartizioni 						00
+InserimentoRipartizioniUNI				net.projectsrl.wera.ripartizioniuni.core.FunctionInserimentoRipartizioniUNI 				00
+InserimentoRipartizioniLetture			net.projectsrl.wera.ripartizioniletture.core.FunctionInserimentoRipartizioniLetture 		00
+EliminaRipartizioni						net.projectsrl.wera.ripartizioni.core.FunctionEliminaRipartizioni 							00
+EliminaRipartizioniUNI					net.projectsrl.wera.ripartizioniuni.core.FunctionEliminaRipartizioniUNI 					00
+
+RicercaLettureConsumiStorico			net.projectsrl.wera.storico.core.FunctionRicercaLettureConsumiStorico						00
+RicercaRipartizioniStorico				net.projectsrl.wera.storico.core.FunctionRicercaRipartizioniStorico							00
+RicercaRipartizioniUNIStorico			net.projectsrl.wera.storico.core.FunctionRicercaRipartizioniUNIStorico						00
+StampaLettureConsumiStorico 			net.projectsrl.wera.storico.core.FunctionStampaLettureConsumiStorico                     	00
+
+StampaRipartizioni 						net.projectsrl.wera.ripartizioni.core.FunctionStampaRipartizioni                     		00
+StampaRipartizioniUNI 					net.projectsrl.wera.ripartizioniuni.core.FunctionStampaRipartizioniUNI                     	00
+StampaRipartizioniLetture 				net.projectsrl.wera.ripartizioniletture.core.FunctionStampaRipartizioniLetture              00
+StampaRipartizioniLettureConDettagli 	net.projectsrl.wera.ripartizioniletture.core.FunctionStampaRipartizioniLettureConDettagli   00
+
+ScaricoDatiManuale						net.projectsrl.wera.scarico.core.FunctionScaricoDatiManuale									00
+
+Profilo									net.projectsrl.wera.utility.core.FunctionProfilo											00
+
+
+ConfigurazioneGuidata					net.projectsrl.wera.configurazioneguidata.core.FunctionConfigurazioneGuidata				00
+ConfigurazioneGuidata0					net.projectsrl.wera.configurazioneguidata.core.FunctionConfigurazioneGuidata0				00
+ConfigurazioneGuidata0Riepilogo			net.projectsrl.wera.configurazioneguidata.core.FunctionConfigurazioneGuidata0Riepilogo		00
+ConfigurazioneGuidata1					net.projectsrl.wera.configurazioneguidata.core.FunctionConfigurazioneGuidata1				00
+ConfigurazioneGuidata2					net.projectsrl.wera.configurazioneguidata.core.FunctionConfigurazioneGuidata2				00
+ConfigurazioneGuidata3					net.projectsrl.wera.configurazioneguidata.core.FunctionConfigurazioneGuidata3				00
+ConfigurazioneGuidata4					net.projectsrl.wera.configurazioneguidata.core.FunctionConfigurazioneGuidata4				00
+ConfigurazioneGuidata5					net.projectsrl.wera.configurazioneguidata.core.FunctionConfigurazioneGuidata5				00
+ConfigurazioneGuidata6					net.projectsrl.wera.configurazioneguidata.core.FunctionConfigurazioneGuidata6				00
+
+RicercaRipartizioniUNI2018				net.projectsrl.wera.ripartizioniuni2018.core.FunctionRicercaRipartizioniUNI2018				00
+InserimentoRipartizioniUNI2018			net.projectsrl.wera.ripartizioniuni2018.core.FunctionInserimentoRipartizioniUNI2018 		00
+EliminaRipartizioniUNI2018				net.projectsrl.wera.ripartizioniuni2018.core.FunctionEliminaRipartizioniUNI2018 			00
+RicercaRipartizioniUNI2018Storico		net.projectsrl.wera.storico.core.FunctionRicercaRipartizioniUNI2018Storico					00
+StampaRipartizioniUNI2018 				net.projectsrl.wera.ripartizioniuni2018.core.FunctionStampaRipartizioniUNI2018              00
+
+
+InserimentoConfigurazioneCsv       		net.projectsrl.wera.configurazione.core.FunctionInserimentoConfigurazioneCsv				00
+RicercaConfigurazioneCsv				net.projectsrl.wera.configurazione.core.FunctionRicercaConfigurazioneCsv					00

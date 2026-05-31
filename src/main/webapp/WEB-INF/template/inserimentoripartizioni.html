@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+			<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+			
+			<style>
+				.hide{
+  				display:none;  
+				}
+				
+				#chartdiv {
+				  width: 100%;
+				  height: 700px;
+				  min-height: 150px;
+				  font-size: 11px;
+				}
+		
+			</style>
+			
+			<!-- Resources -->
+			<script src="js/amcharts/lib/3/amcharts.js"></script>
+			<script src="js/amcharts/lib/3/serial.js"></script>
+			<script src="js/amcharts/lib/3/plugins/export/export.min.js"></script>
+			<link rel="stylesheet" href="js/amcharts/lib/3/plugins/export/export.css" type="text/css" media="all"></link>
+			<script src="js/amcharts/lib/3/themes/none.js"></script>
+			
+			
+			<script type="text/javascript">
+			
+			var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSRipartizioniCondominio&columns=ID_DETTAGLIO,DENOMINAZIONE,MILLESIMI,NUMERO_RIPARTITORI,LETTURA,METANO_FISSO,METANO_MILLESIMI,FORZA_MOTRICE,CONDUZIONE,MANUTENZIONE_ORDINARIA,MANUTENZIONE_STRAORDINARIA,COSTI_LETTURE,TOTALE_SENZA_LETTURE,TOTALE_CON_LETTURE&WHERECONDITION=";
+			var dtWhereCondition="<#if ID_MODULO?exists && ID_MODULO!=''>WHERE ID_MODULO = ${ID_MODULO}<#else> WHERE 1=0 </#if>";
+			
+			var dtAjaxAnomalie="astro?FUNCTIONID=AJAXArray&dataset=DSRilevatoriRipartizioniAnomalia&columns=LOCATARIO,LOCATARIO,STANZA,RILEVATORE,ANOMALIA,DESCR_ANOMALIA,DATA_ANOMALIA,ORA_ANOMALIA,DATA_DI_LETTURA,LETTURA_ATTUALE,VOLUME_ATTUALE,UNITA_DI_MISURA,ID_AZIENDA,ID_CONDOMINIO&JOLLY_CHAR=*&WHERECONDITION=";
+			var dtWhereConditionAnomalie="<#if ID_CONDOMINIO?exists && ID_CONDOMINIO!=''>WHERE VDR.ID_CONDOMINIO = ${ID_CONDOMINIO}<#else> WHERE 1=0 </#if>";
+
+			var stato="<#if STATO?exists>${STATO}</#if>";
+	    	var readOnly="<#if READONLY?exists>${READONLY}<#else>N</#if>";
+	    	var profilo="<#if PROFILO?exists>${PROFILO}</#if>";
+	    	
+			function inviaApprovazione(){
+				$("#WORKFLOW_ACTION").val("APPROVE");
+		        $("#formInserimento").submit();
+				$("#STATO").val("WAI").change();
+	    	}
+			
+			function pubblicaRipartizione(){
+				$("#WORKFLOW_ACTION").val("COMPLETED");
+		        $("#formInserimento").submit();
+		        $("#STATO").val("APP");
+		        $("#STATO").change();
+	    	}
+			
+			function doCalcola(){
+				var CC_AC_QTA=$("#CC_AC_QTA").val();
+				var CC_AC_LORDO=$("#CC_AC_LORDO").val();
+				var CC_AC_TOTALE=parseFloat(CC_AC_QTA) * parseFloat(CC_AC_LORDO) || 0;
+				$("#CC_AC_TOTALE").val(CC_AC_TOTALE.toFixed(2));
+				
+				var CC_FM_QTA=$("#CC_FM_QTA").val();
+				var CC_FM_LORDO=$("#CC_FM_LORDO").val();
+				var CC_FM_TOTALE=parseFloat(CC_FM_QTA) * parseFloat(CC_FM_LORDO) || 0;
+				$("#CC_FM_TOTALE").val(CC_FM_TOTALE.toFixed(2));
+				
+				var CC_SI_QTA=$("#CC_SI_QTA").val();
+				var CC_SI_LORDO=$("#CC_SI_LORDO").val();
+				var CC_SI_TOTALE=parseFloat(CC_SI_QTA) * parseFloat(CC_SI_LORDO) || 0;
+				$("#CC_SI_TOTALE").val(CC_SI_TOTALE.toFixed(2));
+				
+				var CC_TC_TOTALE=parseFloat(CC_AC_TOTALE) + parseFloat(CC_FM_TOTALE) + parseFloat(CC_SI_TOTALE) || 0;
+				$("#CC_TC_TOTALE").val(CC_TC_TOTALE.toFixed(2));
+				
+				
+				
+				
+				var CMI_CIS_QTA=$("#CMI_CIS_QTA").val();
+				var CMI_CIS_LORDO=$("#CMI_CIS_LORDO").val();
+				var CMI_CIS_TOTALE=parseFloat(CMI_CIS_QTA) * parseFloat(CMI_CIS_LORDO) || 0;
+				$("#CMI_CIS_TOTALE").val(CMI_CIS_TOTALE.toFixed(2));
+				
+				var CMI_CCT_QTA=$("#CMI_CCT_QTA").val();
+				var CMI_CCT_LORDO=$("#CMI_CCT_LORDO").val();
+				var CMI_CCT_TOTALE=parseFloat(CMI_CCT_QTA) * parseFloat(CMI_CCT_LORDO) || 0;
+				$("#CMI_CCT_TOTALE").val(CMI_CCT_TOTALE.toFixed(2));
+				
+				var CMI_CL_QTA=$("#CMI_CL_QTA").val();
+				var CMI_CL_LORDO=$("#CMI_CL_LORDO").val();
+				var CMI_CL_TOTALE=parseFloat(CMI_CL_QTA) * parseFloat(CMI_CL_LORDO) || 0;
+				$("#CMI_CL_TOTALE").val(CMI_CL_TOTALE.toFixed(2));
+				
+				var CMI_CT_TOTALE=parseFloat(CMI_CIS_TOTALE) + parseFloat(CMI_CCT_TOTALE) + parseFloat(CMI_CL_TOTALE) || 0;
+				$("#CMI_CT_TOTALE").val(CMI_CT_TOTALE.toFixed(2));
+				
+				
+				
+				
+				var TC_CC_RIP=$("#TC_CC_RIP").val()/100;
+				var TC_CC_TOTALE=parseFloat(TC_CC_RIP) * parseFloat(CC_AC_TOTALE) || 0;
+				$("#TC_CC_TOTALE").val(TC_CC_TOTALE.toFixed(2));
+				
+				var TC_AC_RIP=$("#TC_AC_RIP").val()/100;
+				var TC_AC_TOTALE=parseFloat(TC_AC_RIP) * parseFloat(CC_SI_TOTALE) || 0;
+				$("#TC_AC_TOTALE").val(TC_AC_TOTALE.toFixed(2));
+				
+				var TC_CCT_RIP=$("#TC_CCT_RIP").val()/100;
+				var TC_CCT_TOTALE=parseFloat(TC_CCT_RIP) * parseFloat(CMI_CCT_TOTALE) || 0;
+				$("#TC_CCT_TOTALE").val(TC_CCT_TOTALE.toFixed(2));
+
+				var TC_CFM_RIP=$("#TC_CFM_RIP").val()/100;
+				var TC_CFM_TOTALE=parseFloat(TC_CFM_RIP) * parseFloat(CC_FM_TOTALE) || 0;
+				$("#TC_CFM_TOTALE").val(TC_CFM_TOTALE.toFixed(2));
+
+				var TC_CL_RIP=$("#TC_CL_RIP").val()/100;
+				var TC_CL_TOTALE=parseFloat(TC_CL_RIP) * parseFloat(CMI_CL_TOTALE) || 0;
+				$("#TC_CL_TOTALE").val(TC_CL_TOTALE.toFixed(2));
+				
+				var TC_TC_TOTALE=parseFloat(TC_CC_TOTALE) + parseFloat(TC_AC_TOTALE) + parseFloat(TC_CCT_TOTALE) + parseFloat(TC_CFM_TOTALE) + parseFloat(TC_CL_TOTALE) || 0;
+				$("#TC_TC_TOTALE").val(TC_TC_TOTALE.toFixed(2));
+				
+				
+				
+				var CR_PF_RIP=$("#CR_PF_RIP").val()/100;
+				var CR_PF_TOTALE=parseFloat(CR_PF_RIP) * parseFloat(TC_TC_TOTALE) || 0;
+				$("#CR_PF_TOTALE").val(CR_PF_TOTALE.toFixed(2));
+				
+				var CR_PR_RIP=100-$("#CR_PF_RIP").val();
+				$("#CR_PR_RIP").val(CR_PR_RIP);
+				var CR_PR_RIP=$("#CR_PR_RIP").val()/100;
+				var CR_PR_TOTALE=parseFloat(CR_PR_RIP) * parseFloat(TC_TC_TOTALE) || 0;
+				$("#CR_PR_TOTALE").val(CR_PR_TOTALE.toFixed(2));
+				
+				var CR_TC_TOTALE=parseFloat(CR_PF_TOTALE) + parseFloat(CR_PR_TOTALE) || 0;
+				$("#CR_TC_TOTALE").val(CR_TC_TOTALE.toFixed(2));
+				
+				var CR_TC_RIP=parseFloat($("#CR_PF_RIP").val()) + parseFloat($("#CR_PR_RIP").val());
+				$("#CR_TC_RIP").val(CR_TC_RIP.toFixed(0));
+				
+				
+				$("#CR_PF_TOTALE_1").val(CR_PF_TOTALE.toFixed(2));
+				$("#CR_PR_TOTALE_1").val(CR_PR_TOTALE.toFixed(2));
+				
+				var PU_CPF=$("#PU_CPF").val();
+				var PU_CPF_TOTALE=parseFloat(CR_PF_TOTALE) / parseFloat(PU_CPF) || 0;
+				$("#PU_CPF_TOTALE").val(PU_CPF_TOTALE.toFixed(2));
+				
+				var PU_CR=$("#PU_CR").val();
+				var PU_CR_TOTALE=parseFloat(CR_PR_TOTALE) / parseFloat(PU_CR) || 0;
+				if (PU_CR_TOTALE=='Infinity'){
+					PU_CR_TOTALE=0;
+				}
+				$("#PU_CR_TOTALE").val(PU_CR_TOTALE.toFixed(2));
+				
+				
+				
+				var CC_AC_MILL=parseFloat(CC_AC_TOTALE) / parseFloat(CR_PF_RIP) || 0;
+				if (CC_AC_MILL=='Infinity'){
+					CC_AC_MILL=0;
+				}
+				$("#CC_AC_MILL").val(CC_AC_MILL.toFixed(2));
+				
+				var CC_AC_CONS=parseFloat(CC_AC_TOTALE) / parseFloat(CR_PR_RIP) || 0;
+				if (CC_AC_CONS=='Infinity'){
+					CC_AC_CONS=0;
+				}
+				$("#CC_AC_CONS").val(CC_AC_CONS.toFixed(2));
+				
+				var CMI_CCT_ACCONTO=parseFloat(CMI_CCT_TOTALE) / 2 || 0;
+				if (CMI_CCT_ACCONTO=='Infinity'){
+					CMI_CCT_ACCONTO=0;
+				}
+				$("#CMI_CCT_ACCONTO").val(CMI_CCT_ACCONTO.toFixed(2));
+				
+				
+				var CMI_CCT_SALDO=parseFloat(CMI_CCT_TOTALE) - parseFloat(CMI_CCT_ACCONTO) || 0;
+				if (CMI_CCT_SALDO=='Infinity'){
+					CMI_CCT_SALDO=0;
+				}
+				$("#CMI_CCT_SALDO").val(CMI_CCT_SALDO.toFixed(2));
+				
+			}
+			
+			
+		$(function(){
+			
+			var dtWhereConditionAnomalie="<#if ID_CONDOMINIO?exists && ID_CONDOMINIO!=''>WHERE VDR.ID_CONDOMINIO = ${ID_CONDOMINIO}<#else> WHERE 1=0 </#if>";
+			
+			$('#dtAnomalie').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjaxAnomalie+dtWhereConditionAnomalie,				
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						visible: <#if PROFILO?contains('ADM') || PROFILO?contains('INS')>true<#else>false</#if>,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="editRowAnomalie" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						targets:12,
+						visible: false,
+					},
+					{
+						targets:13,
+						visible: false,
+					}
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+				aaSorting: [],
+	        });
+			
+			
+			$('#dtAnomalie tbody').on( 'click', '.editRowAnomalie', function () {
+	        	var table = $('#dtAnomalie').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#ID_AZIENDA_2').val(data[12]);
+				$('#ID_AZIENDA_1').val(data[12]);
+				$('#ID_CONDOMINIO_2').val(data[13]);
+				$('#RILEVATORE').val(data[3]);
+				$('#RILEVATORE_1').val(data[3]);
+				$('#FUNCTIONID_EDIT').val("GestioneDatiSingoloRilevatore");
+				$('#READONLY').val("N");
+				$("#formEdit").submit();
+	        } );
+			
+			
+			
+			
+			$("#info").hide();
+			$("#msg_warning").hide();
+			$("#msg_anomalia").hide();
+			$("#msg_differenza").hide();
+			
+			$("#WORKFLOW_ACTION").val("");
+			$("#STATO").attr("disabled", true);
+			$("#inviaApprovatore").hide();
+			
+			if (profilo.indexOf("AMM")!=-1 && stato!='APP') {
+	    		$("#li-tab-4").hide();
+	    		$("#li-tab-5").hide();
+	    	}
+			
+			
+			
+			//$("#ID_AZIENDA").trigger("loadDataSet",["DataSetAziende","ID_AZIENDA","RAGSOC","<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>"," WHERE 1=1 "]);
+			
+			$("#ID_CONDOMINIO").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 ",false]);
+			$("#STATO").trigger("loadDataSet",["DSParametri","CODICE","DESCRIZIONE","<#if STATO?exists>${STATO}</#if>"," WHERE DOMINIO='STA' "]);
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+
+			$("#ID_MODULO").val("<#if ID_MODULO?exists>${ID_MODULO}</#if>");
+			$("#ID_AZIENDA").val("<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>");
+			$("#DT_MODULO").val("<#if DT_MODULO?exists>${DT_MODULO}</#if>").change();
+			$("#NR_MODULO").val("<#if NR_MODULO?exists>${NR_MODULO}</#if>");
+			$("#NR_MODULO").attr("disabled", true);
+			
+			$("#DATA_DAL").val("<#if DATA_DAL?exists>${DATA_DAL}</#if>");
+			$("#DATA_AL").val("<#if DATA_AL?exists>${DATA_AL}</#if>");
+
+			$("#CONFERMATA").val("<#if CONFERMATA?exists>${CONFERMATA}</#if>");
+			$("#INVIATA").val("<#if INVIATA?exists>${INVIATA}</#if>");
+			$("#CC_AC_QTA").val("<#if CC_AC_QTA?exists>${CC_AC_QTA}</#if>");
+			$("#CC_FM_QTA").val("<#if CC_FM_QTA?exists>${CC_FM_QTA}</#if>");
+			$("#CC_SI_QTA").val("<#if CC_SI_QTA?exists>${CC_SI_QTA}</#if>");
+			$("#CC_AC_LORDO").val("<#if CC_AC_LORDO?exists>${CC_AC_LORDO}</#if>");
+			$("#CC_FM_LORDO").val("<#if CC_FM_LORDO?exists>${CC_FM_LORDO}</#if>");
+			$("#CC_SI_LORDO").val("<#if CC_SI_LORDO?exists>${CC_SI_LORDO}</#if>");
+			$("#CC_AC_TOTALE").val("<#if CC_AC_TOTALE?exists>${CC_AC_TOTALE}</#if>");
+			$("#CC_FM_TOTALE").val("<#if CC_FM_TOTALE?exists>${CC_FM_TOTALE}</#if>");
+			$("#CC_SI_TOTALE").val("<#if CC_SI_TOTALE?exists>${CC_SI_TOTALE}</#if>");
+			$("#CC_TC_TOTALE").val("<#if CC_TC_TOTALE?exists>${CC_TC_TOTALE}</#if>");
+			$("#CMI_CIS_QTA").val("<#if CMI_CIS_QTA?exists>${CMI_CIS_QTA}</#if>");
+			$("#CMI_CCT_QTA").val("<#if CMI_CCT_QTA?exists>${CMI_CCT_QTA}</#if>");
+			$("#CMI_CL_QTA").val("<#if CMI_CL_QTA?exists>${CMI_CL_QTA}</#if>");
+			$("#CMI_CIS_UM").val("<#if CMI_CIS_UM?exists>${CMI_CIS_UM}</#if>");
+			$("#CMI_CCT_UM").val("<#if CMI_CCT_UM?exists>${CMI_CCT_UM}</#if>");
+			$("#CMI_CL_UM").val("<#if CMI_CL_UM?exists>${CMI_CL_UM}</#if>");
+			$("#CMI_CIS_LORDO").val("<#if CMI_CIS_LORDO?exists>${CMI_CIS_LORDO}</#if>");
+			$("#CMI_CCT_LORDO").val("<#if CMI_CCT_LORDO?exists>${CMI_CCT_LORDO}</#if>");
+			$("#CMI_CL_LORDO").val("<#if CMI_CL_LORDO?exists>${CMI_CL_LORDO}</#if>");
+			$("#CMI_CIS_TOTALE").val("<#if CMI_CIS_TOTALE?exists>${CMI_CIS_TOTALE}</#if>");
+			$("#CMI_CCT_TOTALE ").val("<#if CMI_CCT_TOTALE?exists>${CMI_CCT_TOTALE}</#if>");
+			$("#CMI_CL_TOTALE").val("<#if CMI_CL_TOTALE?exists>${CMI_CL_TOTALE}</#if>");
+			$("#CMI_CT_TOTALE").val("<#if CMI_CT_TOTALE?exists>${CMI_CT_TOTALE}</#if>");
+			$("#TC_CC_RIP").val("<#if TC_CC_RIP?exists>${TC_CC_RIP}</#if>");
+			$("#TC_CCT_RIP").val("<#if TC_CCT_RIP?exists>${TC_CCT_RIP}</#if>");
+			$("#TC_CFM_RIP").val("<#if TC_CFM_RIP?exists>${TC_CFM_RIP}</#if>");
+			$("#TC_CL_RIP").val("<#if TC_CL_RIP?exists>${TC_CL_RIP}</#if>");
+			$("#TC_CC_NOTE").val("<#if TC_CC_NOTE?exists>${TC_CC_NOTE}</#if>");
+			$("#TC_CCT_NOTE").val("<#if TC_CCT_NOTE?exists>${TC_CCT_NOTE}</#if>");
+			$("#TC_CFM_NOTE").val("<#if TC_CFM_NOTE?exists>${TC_CFM_NOTE}</#if>");
+			$("#TC_CL_NOTE").val("<#if TC_CL_NOTE?exists>${TC_CL_NOTE}</#if>");
+			$("#TC_TC_NOTE").val("<#if TC_TC_NOTE?exists>${TC_TC_NOTE}</#if>");
+			$("#TC_CC_TOTALE").val("<#if TC_CC_TOTALE?exists>${TC_CC_TOTALE}</#if>");
+			$("#TC_CCT_TOTALE").val("<#if TC_CCT_TOTALE?exists>${TC_CCT_TOTALE}</#if>");
+			$("#TC_CFM_TOTALE").val("<#if TC_CFM_TOTALE?exists>${TC_CFM_TOTALE}</#if>");
+			$("#TC_CL_TOTALE").val("<#if TC_CL_TOTALE?exists>${TC_CL_TOTALE}</#if>");
+			$("#TC_TC_TOTALE").val("<#if TC_TC_TOTALE?exists>${TC_TC_TOTALE}</#if>");
+			$("#CR_PF_RIP").val("<#if CR_PF_RIP?exists>${CR_PF_RIP}</#if>");
+			$("#CR_PR_RIP").val("<#if CR_PR_RIP?exists>${CR_PR_RIP}</#if>");
+			$("#CR_TC_RIP").val("<#if CR_TC_RIP?exists>${CR_TC_RIP}</#if>");
+			$("#CR_PF_NOTE").val("<#if CR_PF_NOTE?exists>${CR_PF_NOTE}</#if>");
+			$("#CR_PR_NOTE").val("<#if CR_PR_NOTE?exists>${CR_PR_NOTE}</#if>");
+			$("#CR_TC_NOTE").val("<#if CR_TC_NOTE?exists>${CR_TC_NOTE}</#if>");
+			$("#CR_PF_TOTALE").val("<#if CR_PF_TOTALE?exists>${CR_PF_TOTALE}</#if>");
+			$("#CR_PR_TOTALE").val("<#if CR_PR_TOTALE?exists>${CR_PR_TOTALE}</#if>");
+			
+			$("#CR_PF_TOTALE_1").val("<#if CR_PF_TOTALE?exists>${CR_PF_TOTALE}</#if>");
+			$("#CR_PR_TOTALE_1").val("<#if CR_PR_TOTALE?exists>${CR_PR_TOTALE}</#if>");
+			
+			$("#CR_TC_TOTALE").val("<#if CR_TC_TOTALE?exists>${CR_TC_TOTALE}</#if>");
+			$("#PU_CPF").val("<#if PU_CPF?exists>${PU_CPF}</#if>");
+			$("#PU_CR").val("<#if PU_CR?exists>${PU_CR}</#if>");
+			$("#PU_CPF_TOTALE").val("<#if PU_CPF_TOTALE?exists>${PU_CPF_TOTALE}</#if>");
+			$("#PU_CR_TOTALE").val("<#if PU_CR_TOTALE?exists>${PU_CR_TOTALE}</#if>");
+			$("#TC_AC_RIP").val("<#if TC_AC_RIP?exists>${TC_AC_RIP}</#if>");
+			$("#TC_AC_NOTE").val("<#if TC_AC_NOTE?exists>${TC_AC_NOTE}</#if>");
+			$("#TC_AC_TOTALE").val("<#if TC_AC_TOTALE?exists>${TC_AC_TOTALE}</#if>");
+			
+			$("#CC_AC_MILL").val("<#if CC_AC_MILL?exists>${CC_AC_MILL}</#if>");
+			$("#CC_AC_CONS").val("<#if CC_AC_CONS?exists>${CC_AC_CONS}</#if>");
+			$("#CMI_CCT_ACCONTO").val("<#if CMI_CCT_ACCONTO?exists>${CMI_CCT_ACCONTO}</#if>");
+			$("#CMI_CCT_SALDO").val("<#if CMI_CCT_SALDO?exists>${CMI_CCT_SALDO}</#if>");
+			
+						
+			
+			$("#TIPO_RIPARTIZIONE").val("<#if TIPO_RIPARTIZIONE?exists>${TIPO_RIPARTIZIONE}</#if>");
+			if ($("#TIPO_RIPARTIZIONE").val()=='L'){
+				$("#DESCR_TIPO_RIPARTIZIONE").val('Sola lettura');
+				$("#info").show();
+			}
+			if ($("#TIPO_RIPARTIZIONE").val()=='C'){
+				$("#DESCR_TIPO_RIPARTIZIONE").val('Completa');
+				$("#info").show();
+			}
+			
+			
+			var condominio="";
+			var dataDal="";
+			var dataAl="";
+			
+			
+			
+			condominio= "<#if ID_CONDOMINIO?exists && ID_CONDOMINIO!=''>${ID_CONDOMINIO}<#else> 0 </#if>";
+			dataDal= $("#DATA_DAL").val();
+			dataAl= $("#DATA_AL").val();
+			
+			if(!condominio){
+				condominio=0;
+			}
+			
+			$("#PU_CPF").empty();
+			$("#PU_CPF").trigger("loadDataSetSimpleNumber",["DSMillesimiCondominio","MILLESIMI","MILLESIMI"," WHERE ID_CONDOMINIO="+condominio+" " ]);
+			
+			$("#PU_CR").empty();
+			$("#PU_CR").trigger("loadDataSetSimpleNumber",["DSConsumiCondominio","CONSUMI","CONSUMI","where id_condominio="+condominio+") AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') "]);
+		
+			$("#ALERT_NON_SCARICATI").empty();
+			$("#ALERT_NON_SCARICATI").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriNonScaricati","ELENCO_NON_SCARICATI","ELENCO_NON_SCARICATI"," where id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY')) where id_condominio="+condominio+" and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+		
+			$("#ALERT_IN_ANOMALIA").empty();
+			$("#ALERT_IN_ANOMALIA").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriAnomalia","ELENCO_IN_ANOMALIA","ELENCO_IN_ANOMALIA"," where id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+			
+			var dtWhereConditionAnomalie=dtWhereConditionAnomalie+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''";
+			$( "#dtAnomalie" ).DataTable().ajax.url( dtAjaxAnomalie+dtWhereConditionAnomalie ).load();
+			
+			if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+				$("#msg_warning").show();
+			}else{
+				$("#msg_warning").hide();
+			}
+			if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+				$("#msg_anomalia").show();
+			}else{
+				$("#msg_anomalia").hide();
+			}
+			
+			
+			
+			
+			$("#ID_CONDOMINIO").on("select2:selecting", function(e) { 
+				var id= e.params.args.data.id;
+				dataDal= $("#DATA_DAL").val();
+				dataAl= $("#DATA_AL").val();
+				condominio=id;
+				
+				if(!id){
+					id=0;
+				}
+				
+				//$("#ID_AZIENDA").empty();
+				//$("#ID_AZIENDA").trigger("loadDataSetSimpleTextHidden",["DSCondominiRipartizioni","ID_AZIENDA","ID_AZIENDA"," WHERE ID_MODULO="+id ]);
+				
+				$("#DESCR_TIPO_RIPARTIZIONE").empty();
+				$("#DESCR_TIPO_RIPARTIZIONE").trigger("loadDataSetSimpleText",["DSCondominiRipartizioni","DESCR_TIPO_RIPARTIZIONE","DESCR_TIPO_RIPARTIZIONE"," WHERE ID_MODULO="+id+" " ]);
+				
+				$("#TIPO_RIPARTIZIONE").empty();
+				$("#TIPO_RIPARTIZIONE").trigger("loadDataSetSimpleTextHidden",["DSCondominiRipartizioni","TIPO_RIPARTIZIONE","TIPO_RIPARTIZIONE"," WHERE ID_MODULO="+id+" " ]);
+				
+				
+				
+				$("#CMI_CL_QTA").empty();
+				$("#CMI_CL_QTA").trigger("loadDataSetSimpleNumber",["DSRilevatoriCondominio","CONTEGGIO","CONTEGGIO"," WHERE ID_CONDOMINIO="+id+" " ]);
+				
+				$("#PU_CPF").empty();
+				$("#PU_CPF").trigger("loadDataSetSimpleNumber",["DSMillesimiCondominio","MILLESIMI","MILLESIMI"," WHERE ID_CONDOMINIO="+id+" " ]);
+				
+				 
+				$("#PU_CR").empty();
+				$("#PU_CR").trigger("loadDataSetSimpleText",["DSConsumiCondominio","CONSUMI","CONSUMI","where id_condominio="+id+") AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') "]);
+			
+				$("#ALERT_NON_SCARICATI").empty();
+				$("#ALERT_NON_SCARICATI").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriNonScaricati","ELENCO_NON_SCARICATI","ELENCO_NON_SCARICATI"," where id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY')) where id_condominio="+condominio+" and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+			
+				$("#ALERT_IN_ANOMALIA").empty();
+				$("#ALERT_IN_ANOMALIA").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriAnomalia","ELENCO_IN_ANOMALIA","ELENCO_IN_ANOMALIA"," where id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+				
+				var dtWhereConditionAnomalie=" vdr.id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''";
+				$( "#dtAnomalie" ).DataTable().ajax.url( dtAjaxAnomalie+dtWhereConditionAnomalie ).load();
+				
+				$("#info").show();
+				
+				if (profilo.indexOf("AMM")==-1 && dataDal!='' && dataAl!='' ) {
+					$("#msg_warning").show();
+				}else{
+					$("#msg_warning").hide();
+				}
+				if (profilo.indexOf("AMM")==-1 && dataDal!='' && dataAl!='' ) {
+					$("#msg_anomalia").show();
+				}else{
+					$("#msg_anomalia").hide();
+				}
+	
+			});	
+			
+			$("#DATA_DAL").change(function() {
+				condominio= $("#ID_CONDOMINIO").val();
+				dataDal= $("#DATA_DAL").val();
+				dataAl= $("#DATA_AL").val();
+				
+				if(!condominio){
+					condominio=0;
+				}
+				
+				$("#PU_CPF").empty();
+				$("#PU_CPF").trigger("loadDataSetSimpleNumber",["DSMillesimiCondominio","MILLESIMI","MILLESIMI"," WHERE ID_CONDOMINIO="+condominio+" " ]);
+				
+				$("#PU_CR").empty();
+				$("#PU_CR").trigger("loadDataSetSimpleNumber",["DSConsumiCondominio","CONSUMI","CONSUMI","where id_condominio="+condominio+") AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') "]);
+			
+				$("#ALERT_NON_SCARICATI").empty();
+				$("#ALERT_NON_SCARICATI").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriNonScaricati","ELENCO_NON_SCARICATI","ELENCO_NON_SCARICATI"," where id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY')) where id_condominio="+condominio+" and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+			
+				$("#ALERT_IN_ANOMALIA").empty();
+				$("#ALERT_IN_ANOMALIA").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriAnomalia","ELENCO_IN_ANOMALIA","ELENCO_IN_ANOMALIA"," where id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+				
+				var dtWhereConditionAnomalie=" vdr.id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''";
+				$( "#dtAnomalie" ).DataTable().ajax.url( dtAjaxAnomalie+dtWhereConditionAnomalie ).load();
+				
+				if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+					$("#msg_warning").show();
+				}else{
+					$("#msg_warning").hide();
+				}
+				if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+					$("#msg_anomalia").show();
+				}else{
+					$("#msg_anomalia").hide();
+				}
+				
+			});
+			
+			$("#DATA_AL").change(function() {
+				condominio= $("#ID_CONDOMINIO").val();
+				dataDal= $("#DATA_DAL").val();
+				dataAl= $("#DATA_AL").val();
+				
+				if(!condominio){
+					condominio=0;
+				}
+				
+				
+				$("#PU_CPF").empty();
+				$("#PU_CPF").trigger("loadDataSetSimpleNumber",["DSMillesimiCondominio","MILLESIMI","MILLESIMI"," WHERE ID_CONDOMINIO="+condominio+" " ]);
+				
+				$("#PU_CR").empty();
+				$("#PU_CR").trigger("loadDataSetSimpleNumber",["DSConsumiCondominio","CONSUMI","CONSUMI","where id_condominio="+condominio+") AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') "]);
+			
+				$("#ALERT_NON_SCARICATI").empty();
+				$("#ALERT_NON_SCARICATI").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriNonScaricati","ELENCO_NON_SCARICATI","ELENCO_NON_SCARICATI"," where id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY')) where id_condominio="+condominio+" and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+			
+				$("#ALERT_IN_ANOMALIA").empty();
+				$("#ALERT_IN_ANOMALIA").trigger("loadDataSetSimpleText",["DataSetControlloRipartitoriAnomalia","ELENCO_IN_ANOMALIA","ELENCO_IN_ANOMALIA"," where id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''" ]);
+				
+				var dtWhereConditionAnomalie=" vdr.id_condominio="+condominio+" AND to_date(data_start,'DD/MM/YYYY') <= to_date('"+dataAl+"','DD/MM/YYYY') AND to_date(data_start,'DD/MM/YYYY') >= to_date('"+dataDal+"','DD/MM/YYYY') and '"+dataDal+"'<>'' and '"+dataAl+"'<>''";
+				$( "#dtAnomalie" ).DataTable().ajax.url( dtAjaxAnomalie+dtWhereConditionAnomalie ).load();
+			
+				
+				
+				
+				
+				if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+					$("#msg_warning").show();
+				}else{
+					$("#msg_warning").hide();
+				}
+				if (profilo.indexOf("AMM")==-1  && dataDal!='' && dataAl!='') {
+					$("#msg_anomalia").show();
+				}else{
+					$("#msg_anomalia").hide();
+				}
+			});
+			
+			
+
+			
+			
+			
+			$('.form-control').on('input',function(e){
+				doCalcola();
+			});
+			
+			
+			
+			
+			
+
+			$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+			if (readOnly=="Y") {
+				disableFieldsReadOnly();
+			} else {
+				if (profilo.indexOf("ADM")==-1 ) {
+					if (stato=="WAI") {
+						disableFieldsReadOnly();
+					} else if (stato=="WAI") {
+						disableFieldsReadOnly();
+					} else if (stato=="APP") {
+						disableFieldsStatusAPP();
+					} else if (stato=="DRA") {
+						disableFieldsStatusDRA();
+					}
+				}
+			}
+            
+			$("#formInserimento").validate();
+			
+			$("#formInserimento").submit(function(event) {
+				document.getElementById("salva").style.display="none";
+				doCalcola();
+				/* stop form from submitting normally */
+				event.preventDefault();			
+				
+				if (!$("#formInserimento").valid()) {
+					$("#WORKFLOW_ACTION").val("");
+					return false;
+				}
+			
+				if (!$("#formInserimento").valid()) {
+					$("#salva").hide();
+					return false;
+				}
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+				
+				
+				
+				
+				var id=$("#ID_MODULO").val();
+				if (id!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+				} else {
+					$("#OPERATION_TYPE").val("INSERT");
+				}
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) {
+					
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 3000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							$("#inviaApprovatore").show();
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+					
+					
+					
+					dtWhereCondition="WHERE ID_MODULO="+$("#ID_MODULO").val();
+					$( "#dt" ).DataTable().ajax.url( dtAjax+dtWhereCondition ).load();
+					
+					$("#msg_differenza").show();
+					$("#ALERT_DIFFERENZA").empty();
+					if (condominio==''){
+						condominio=$("#ID_CONDOMINIO").val()
+					}
+					$("#ALERT_DIFFERENZA").trigger("loadDataSetSimpleText",["DSRipartizioniDifferenzaPercentuale","TESTO_DIFFERENZA","TESTO_DIFFERENZA"," where id_condominio="+condominio ]);
+
+				});
+
+			});		
+			
+			
+			
+			
+			
+			
+			
+			
+			$('#dt').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjax+dtWhereCondition,				
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						visible: false,
+			            defaultContent: '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>'
+					}
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+				aaSorting: [],
+				
+				
+				"footerCallback": function ( row, data, start, end, display ) {
+		            var api = this.api(), data;
+		            // converting to interger to find total
+		            
+		            var intVal = function ( i ) {
+		                return typeof i === 'string' ?
+		                    i.replace(/[\$,]/g, '')*1 :
+		                    typeof i === 'number' ?
+		                        i : 0;
+		            };
+		            
+		         // computing column Total of the complete result 
+		         
+		         	var col2 = api
+		                .column( 2 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col3 = api
+		                .column( 3 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col4 = api
+		                .column( 4 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col5 = api
+		                .column( 5 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+			    	var col6 = api
+		                .column( 6 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+					
+			    	var col7 = api
+		                .column( 7 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col8 = api
+		                .column( 8 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col9 = api
+		                .column( 9 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	var col10 = api
+		                .column( 10 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+					
+			    	var col11 = api
+		                .column( 11 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+			    	
+		            var col12 = api
+		                .column( 12 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );
+						
+			    	var col13 = api
+		                .column( 13 )
+		                .data()
+		                .reduce( function (a, b) {
+		                    return intVal(a) + intVal(b);
+		                }, 0 );	
+			    	
+	
+						
+		            // Update footer by showing the total with the reference of the column index
+		            $( api.column( 0 ).footer() ).html('');
+				    $( api.column( 1 ).footer() ).html('Totali');
+			    	$( api.column( 2 ).footer() ).html(col2.toFixed(2));
+			    	$( api.column( 3 ).footer() ).html(col3.toFixed(0));
+		            $( api.column( 4 ).footer() ).html(col4.toFixed(0));
+		            $( api.column( 5 ).footer() ).html(col5.toFixed(2));
+		            $( api.column( 6 ).footer() ).html(col6.toFixed(2));
+		            $( api.column( 7 ).footer() ).html(col7.toFixed(2));
+		            $( api.column( 8 ).footer() ).html(col8.toFixed(2));
+		            $( api.column( 9 ).footer() ).html(col9.toFixed(2));
+		            $( api.column( 10 ).footer() ).html(col10.toFixed(2));
+		            $( api.column( 11 ).footer() ).html(col11.toFixed(2));
+		            $( api.column( 12 ).footer() ).html(col12.toFixed(2));
+		            $( api.column( 13 ).footer() ).html(col13.toFixed(2));
+		        }
+	
+	        });
+			
+				
+			$( "#inviaApprovatore" ).click(function() {
+				$('.modal-title').html('Invia modulo');
+				$('.modal-text').html('Confermi invio modulo per approvazione?');
+				$("#modalQuestionDialogPublish").modal({backdrop: true});
+				$('#modalQuestionDialogPublish').collapse("show");
+        	});
+			
+			
+			$( "#confermaRipartizione" ).click(function() {
+				$('.modal-title').html('Invia modulo');
+				$('.modal-text').html('Confermi la pubblicazione della ripartizione?');
+				$("#modalQuestionDialogPublishRipartizione").modal({backdrop: true});
+				$('#modalQuestionDialogPublishRipartizione').collapse("show");
+        	});
+			
+			
+			
+			
+			
+			
+		});		
+		
+	
+		
+		function disableFieldsStatusDRA() {
+			var idModulo=$("#ID_MODULO").val();
+			if (idModulo!=null && idModulo!="") {
+				$("#inviaApprovatore").show();
+			} else {
+				$("#inviaApprovatore").hide();
+			}
+		}
+
+		function disableFieldsStatusAPP() {
+			$("#formInserimento :input").attr("disabled", true);
+			$("#salva").hide();
+			$("#inviaApprovatore").hide();
+		}
+
+		function disableFieldsReadOnly() {
+			$("#formInserimento :input").attr("disabled", true);
+			$("#salva").hide();
+			$("#inviaApprovatore").hide();
+		}
+			
+		
+		
+		
+		
+		
+		
+		function doGrafico(){
+			var dataset="DSRipartizioniCondominio";
+		  	var locatario="DENOMINAZIONE";
+		  	var lettura="LETTURA";
+		  	var totaleConLetture="TOTALE_CON_LETTURE";
+		  	var height=0;
+		  	
+		  	var dtWhereCondition2="<#if ID_MODULO?exists && ID_MODULO!=''>WHERE ID_MODULO = ${ID_MODULO}<#else> WHERE 1=0 </#if>";
+			arrayValori = new Array();
+			
+			
+			$.ajax({
+				url: "astro?FUNCTIONID=JSONDataSet&dataset="+dataset+"&columns="+locatario+","+lettura+","+totaleConLetture+"&WHERECONDITION= "+dtWhereCondition2,
+				dataType: 'json',
+				type: 'GET',
+				success: function (data) {
+					$.each(data.rows,function(i,data) {
+						arrayValori[i]=data;
+						height=i*40;
+					}); 
+					
+					var obj= arrayValori;
+					
+					document.getElementById("chartdiv").style.height=height+"px";
+					
+					
+					$("#chartdiv").empty();
+					
+					
+					if (typeof arrayValori == 'undefined' || arrayValori.length <= 0) {
+						$( "#chartdiv-empty" ).html( "<p>Non sono disponibili dati da visualizzare per i consumi</p>" );
+						document.getElementById("chartdiv-empty").style.display="block";
+						document.getElementById("chartdiv").style.display="none";
+					}else{
+						document.getElementById("chartdiv-empty").style.display="none";
+						document.getElementById("chartdiv").style.display="block";
+					}
+					
+					
+
+					<!-- Chart code -->
+					
+					var chart = AmCharts.makeChart("chartdiv", {
+						"type": "serial",
+					    "theme": "light",
+						"categoryField": "DENOMINAZIONE",
+						"rotate": true,
+						"lineWidth": 1,
+						"startDuration": 1,
+						"categoryAxis": {
+							"gridPosition": "start",
+							"position": "left"
+						},
+						"trendLines": [],
+						"graphs": [
+							{
+								"balloonText": "Consumo riscaldamento HCA:[[value]]",
+								"fillAlphas": 0.8,
+								"id": "AmGraph-1",
+								"lineAlpha": 0.2,
+								"title": "HCA",
+								"type": "column",
+								"valueField": "LETTURA"
+							},
+							{
+								"balloonText": "Totale con letture (€):[[value]]",
+								"fillAlphas": 0.8,
+								"fillColors": "green",
+								"id": "AmGraph-2",
+								"lineAlpha": 0.2,
+								"title": "ACS",
+								"type": "column",
+								"valueField": "TOTALE_CON_LETTURE"
+							}
+						],
+						"guides": [],
+						"valueAxes": [
+							{
+								"id": "ValueAxis-1",
+								"position": "top",
+								"axisAlpha": 0
+							}
+						],
+						"allLabels": [],
+						"balloon": {},
+						"titles": [],
+						"dataProvider": obj,
+						"numberFormatter": {
+				            "decimalSeparator": ",",
+				            "thousandsSeparator": "."
+				        },
+					    "export": {
+					    	"enabled": true
+					     }
+					
+					});
+
+				}
+	      	
+			});
+		}
+				
+		
+		
+		
+		
+		
+		
+		 </script> 
+		    
+		 </head>
+
+		 <body  onLoad="doGrafico();">
+		 
+		 
+		 	 <form action="astro" method="get" id="formEdit" name="formEdit">
+				<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+				<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+				<input type="hidden" id="READONLY" name="READONLY" value="N">
+				<input type="hidden" id="ID_DETTAGLIO" name="ID_DETTAGLIO">
+				<input type="hidden" id="RILEVATORE" name="RILEVATORE">
+				<input type="hidden" id="RILEVATORE_1" name="RILEVATORE_1">
+				<input type="hidden" id="TIPOLOGIA" name="TIPOLOGIA">
+				<input type="hidden" id="ID_AZIENDA_2" name="ID_AZIENDA_2">
+				<input type="hidden" id="ID_AZIENDA_1" name="ID_AZIENDA_1">
+				<input type="hidden" id="ID_CONDOMINIO_2" name="ID_CONDOMINIO_2">
+			</form>		 
+	
+		 
+		 	<div class="modal inmodal fade" id="modalQuestionDialogPublish"	tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modal-title"></span>
+						</div>
+						<div class="modal-body">
+							<span class="modal-text"></span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal" class="btn btn-white btn-sm"	onclick="$('#modalQuestionDialogPublish').collapse('hide');">${label_no}</button>
+							<button class="btn btn-primary btn-sm" onclick="$('#modalQuestionDialogPublish').collapse('toggle');inviaApprovazione();disableFieldsReadOnly();" data-dismiss="modal" type="submit">${label_si}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			
+			<div class="modal inmodal fade" id="modalQuestionDialogPublishRipartizione"	tabindex="-1" role="dialog" aria-hidden="true">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modal-title"></span>
+						</div>
+						<div class="modal-body">
+							<span class="modal-text"></span>
+						</div>
+						<div class="modal-footer">
+							<button type="button" data-dismiss="modal" class="btn btn-white btn-sm"	onclick="$('#modalQuestionDialogPublish').collapse('hide');">${label_no}</button>
+							<button class="btn btn-primary btn-sm" onclick="$('#modalQuestionDialogPublishRipartizione').collapse('toggle');pubblicaRipartizione();disableFieldsStatusAPP();" data-dismiss="modal" type="submit">${label_si}</button>
+						</div>
+					</div>
+				</div>
+			</div>
+	
+
+		      <div id="wrapper">
+
+		     	<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		         <div id="page-wrapper" class="gray-bg">
+		 		
+		         	<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+		         	
+		 			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+		             	
+		             	<div class="col-lg-12">
+
+	 	                	<div class="ibox float-e-margins">
+		 	                    
+								<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+			 		            	
+		 			            <div class="ibox-content">
+		 			            	<form action="astro" method="post" id="formInserimento"  class="form-horizontal">
+		 			            	<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoRipartizioni" />
+		 			            	<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE">
+		 			            	<input type="hidden" id="ID_MODULO" name="ID_MODULO">
+		 			            	<input type="hidden" id="ID_AZIENDA" name="ID_AZIENDA">
+		 			            	<input type="hidden" id="TIPO_RIPARTIZIONE" name="TIPO_RIPARTIZIONE">
+		 			            	<input type="hidden" id="WORKFLOW_ACTION" name="WORKFLOW_ACTION">
+		 			            	
+		 			            	<input type="hidden" id="CC_AC_MILL" name="CC_AC_MILL">
+		 			            	<input type="hidden" id="CC_AC_CONS" name="CC_AC_CONS">
+		 			            	<input type="hidden" id="CMI_CCT_ACCONTO" name="CMI_CCT_ACCONTO">
+		 			            	<input type="hidden" id="CMI_CCT_SALDO" name="CMI_CCT_SALDO">
+		 			            	
+		 			            	
+		 			            	<div class="row">
+			 			            	<div class="form-group">
+		                                	<label class="col-sm-2 control-label">Nr.</label>
+		                                    <div class="col-sm-2"><input type="text" class="form-control" id="NR_MODULO" name="NR_MODULO"></div>
+		
+		                                	<label class="col-sm-1 control-label">Data</label>
+		                                    <div class="col-sm-3">
+							                <div class="input-group date">
+			                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" class="form-control" name="DT_MODULO" id="DT_MODULO" required>
+			                                </div>
+		                                    </div>
+		                                    
+		                                	<label class="col-sm-1 control-label">Stato:</label>
+		                                    <div class="col-sm-3">
+			                                    <select id="STATO" name="STATO"  class="form-control" required>
+			                                    </select>
+											</div>                                	
+		                                </div>   
+                                	</div>
+		 			            	
+		 			            	
+									<div class="row">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Condominio</label>
+											<div class="col-sm-4">
+												<select id="ID_CONDOMINIO" name="ID_CONDOMINIO" class="form-control" required></select>
+											</div>
+											<div class="col-sm-2 alert alert-info" id="info">
+				                               <b><input type="text" style="border:none;background-color:transparent;text-align:center" name="DESCR_TIPO_RIPARTIZIONE" id="DESCR_TIPO_RIPARTIZIONE"></b>
+				                            </div>
+				                            
+				                           
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group">
+											<label class="col-sm-2 control-label">Data dal</label>
+											<div class="col-sm-2">
+												<div class="input-group date">
+													<span class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+													</span>
+													<input type="text" class="form-control" name="DATA_DAL" id="DATA_DAL" value="<#if DATA_DAL?exists>${DATA_DAL}</#if>" required>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">Data al</label>
+												<div class="col-sm-2">
+													<div class="input-group date">
+														<span class="input-group-addon">
+															<i class="fa fa-calendar"></i>
+														</span>
+														<input type="text" class="form-control" name="DATA_AL" id="DATA_AL" value="<#if DATA_AL?exists>${DATA_AL}</#if>" required>
+													</div>
+												</div>
+											</div>
+										</div>
+									        
+                                			<div class="col-sm-12 alert alert-warning" id="msg_warning">
+				                               <b><input type="text" style="border:none;background-color:transparent;text-align:center;width:100%;" name="ALERT_NON_SCARICATI" id="ALERT_NON_SCARICATI" disabled></b>
+				                            </div>
+				                           
+				                            <div class="col-sm-12 alert alert-warning" id="msg_anomalia">
+				                               <b><input type="text" style="border:none;background-color:transparent;text-align:center;width:100%;" name="ALERT_IN_ANOMALIA" id="ALERT_IN_ANOMALIA" disabled></b>
+				                               <br>
+				                                <table id="dtAnomalie" class="table table-bordered">
+					                                <thead>
+														<tr>
+															<th></th>
+															<th>Locatario</th>
+															<th>Stanza</th>
+															<th>Num. Fabbrica dispositivo</th>
+															<th>Cod. anomalia</th>
+															<th>Anomalia</th>
+															<th>Data anomalia</th>
+															<th>Ora anomalia</th>
+															<th>Data di lettura</th>
+															<th>Lettura attuale</th>
+															<th>Volume attuale</th>
+															<th>Unit&#224; di misura</th>
+														</tr>
+													</thead>
+					                            </table>
+				                            </div>
+				                            
+				                            <div class="col-sm-12 alert alert-warning" id="msg_differenza">
+				                               <b><input type="text" style="border:none;background-color:transparent;text-align:center;width:100%;" name="ALERT_DIFFERENZA" id="ALERT_DIFFERENZA" disabled></b>
+				                            </div>
+				                            
+				                          
+				                            
+											<div class="hr-line-dashed"></div>
+											
+											
+											<div class="col-lg-12">
+												<div class="tabs-container">
+													<ul class="nav nav-tabs">
+														<li class="active">
+															<a data-toggle="tab" href="#tab-1">TOTALE COSTI IMPIANTO</a>
+														</li>
+														<li class="">
+															<a data-toggle="tab" href="#tab-2">PRE-RIPARTIZIONI IMPIANTO</a>
+														</li>
+														<li class="">
+															<a data-toggle="tab" href="#tab-3">PREZZO PER UNITA'</a>
+														</li>
+														<li id="li-tab-4">
+															<a data-toggle="tab" class="tab-4" href="#tab-4">COSTI PER UNITA'</a>
+														</li>
+														<li id="li-tab-5">
+															<a data-toggle="tab" class="tab-5" href="#tab-5">COSTI PER UNITA' - GRAFICO</a>
+														</li>
+													</ul>
+													<div class="tab-content">
+														<!---------------------- TOTALE COSTI IMPIANTO ---------------------->
+											
+											
+														<div id="tab-1" class="tab-pane active">
+															<div class="panel-body">
+																<div class="row">
+																	<div class="col-lg-12">
+																		<div class="ibox">
+																			<table>
+																				<thead>
+																					<tr>
+																						<th>COSTI COMBURENTE</th>
+																					</tr>
+																				</thead>
+																				<table class="table table-bordered">
+																					<thead>
+																						<tr>
+																							<th>Descrizione</th>
+																							<th>Quantità</th>
+																							<th>Importo lordo</th>
+																							<th>Totale</th>
+																						</tr>
+																					</thead>
+																					<tr>
+																						<td>ACQUISTO COMBURENTE (METANO)</td>
+																						<td class="right">
+																							<input type="number" min="0" class="form-control" id="CC_AC_QTA" name="CC_AC_QTA">
+																						</td>
+																						<td class="right">
+																							<input type="number" min="0" class="form-control" id="CC_AC_LORDO" name="CC_AC_LORDO">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="CC_AC_TOTALE" name="CC_AC_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>FORZA MOTRICE</td>
+																						
+																						<td class="right">
+																							<input type="number" min="0" class="form-control" id="CC_FM_QTA" name="CC_FM_QTA">
+																						</td>
+																						<td class="right">
+																							<input type="number" min="0" class="form-control" id="CC_FM_LORDO" name="CC_FM_LORDO">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="CC_FM_TOTALE" name="CC_FM_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>ACQUA CALDA</td>
+																						<td class="right">
+																							<input type="number" min="0" class="form-control" id="CC_SI_QTA" name="CC_SI_QTA">
+																						</td>
+																						<td class="right">
+																							<input type="number" min="0" class="form-control" id="CC_SI_LORDO" name="CC_SI_LORDO">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="CC_SI_TOTALE" name="CC_SI_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>TOTALE COSTI</td>
+																						<td colspan="2"></td>
+																						<td><input type="text" class="form-control" id="CC_TC_TOTALE" name="CC_TC_TOTALE" readonly></td>
+																					</tr>
+																				</table>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+																
+																
+																<div class="hr-line-dashed"></div>
+																<div class="row">
+																		<div class="col-lg-12">
+																			<div class="ibox">
+																				<table>
+																					<thead>
+																						<tr>
+																							<th>COSTI MANTENIMENTO IMPIANTO</th>
+																						</tr>
+																					</thead>
+																					<table class="table table-bordered">
+																						<thead>
+																							<tr>
+																								<th>Descrizione</th>
+																								<th>Quantità</th>
+																								<th>Importo lordo</th>
+																								<th>Totale</th>
+																							</tr>
+																						</thead>
+																						<tr>
+																							<td>COSTI INTERVENTI STRAORDINARI</td>
+																							<td class="right">
+																								<input type="number" min="0" class="form-control" id="CMI_CIS_QTA" name="CMI_CIS_QTA">
+																							</td>
+																							<td class="right">
+																								<input type="number" min="0" class="form-control" id="CMI_CIS_LORDO" name="CMI_CIS_LORDO">
+																							</td>
+																							<td>
+																								<input type="text" class="form-control" id="CMI_CIS_TOTALE" name="CMI_CIS_TOTALE" readonly>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td>CONDUZIONE C.T.</td>
+																							<td class="right">
+																								<input type="number" min="0" class="form-control" id="CMI_CCT_QTA" name="CMI_CCT_QTA">
+																							</td>
+																							<td class="right">
+																								<input type="number" min="0" class="form-control" id="CMI_CCT_LORDO" name="CMI_CCT_LORDO">
+																							</td>
+																							<td>
+																								<input type="text" class="form-control" id="CMI_CCT_TOTALE" name="CMI_CCT_TOTALE" readonly>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td>COSTI LETTURE</td>
+																							
+																							<td class="right">
+																								<input type="number" min="0" class="form-control" id="CMI_CL_QTA" name="CMI_CL_QTA">
+																							</td>
+																							<td class="right">
+																								<input type="number" min="0" class="form-control" id="CMI_CL_LORDO" name="CMI_CL_LORDO">
+																							</td>
+																							<td>
+																								<input type="text" class="form-control" id="CMI_CL_TOTALE" name="CMI_CL_TOTALE" readonly>
+																							</td>
+																						</tr>
+																						<tr>
+																							<td>TOTALE COSTI</td>
+																							<td colspan="2"></td>
+																							<td>
+																								<input type="text" class="form-control" id="CMI_CT_TOTALE" name="CMI_CT_TOTALE" readonly>
+																							</td>
+																						</tr>
+																					</table>
+																				</table>
+																			</div>
+																		</div>
+																	</div>
+																
+																	
+																</div>
+															</div>
+															<!---------------------- PRE-RIPARTIZIONE IMPIANTO ---------------------->
+															<div id="tab-2" class="tab-pane">
+																<div class="panel-body">
+																	<div class="row">
+																		<div class="col-lg-12">
+																			<div class="ibox">
+																				<table>
+																					<thead>
+																						<tr>
+																							<th>COMPOSIZIONE COSTI</th>
+																						</tr>
+																					</thead>
+																				</tr>
+																				<table class="table table-bordered">
+																					<thead>
+																						<tr>
+																							<th>Descrizione</th>
+																							<th>Composizione %</th>
+																							<th>Note</th>
+																							<th>Importo lordo</th>
+																						</tr>
+																					</thead>
+																					<tr>
+																						<td>COSTI COMBURENTE</td>
+																						<td>
+																							<input type="number" min="0" max="100" class="form-control" id="TC_CC_RIP" name="TC_CC_RIP">
+																						</td>
+																						<td class="left">
+																							<input type="text" class="form-control" id="TC_CC_NOTE" name="TC_CC_NOTE">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="TC_CC_TOTALE" name="TC_CC_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>COSTI ACQUA CALDA</td>
+																						<td class="right">
+																							<input type="number" min="0" max="100" class="form-control" id="TC_AC_RIP" name="TC_AC_RIP">
+																						</td>
+																						<td class="left">
+																							<input type="text" class="form-control" id="TC_AC_NOTE" name="TC_AC_NOTE">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="TC_AC_TOTALE" name="TC_AC_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>CONDUZIONE C.T.</td>
+																						<td class="right">
+																							<input type="number" min="0"  max="100" class="form-control" id="TC_CCT_RIP" name="TC_CCT_RIP">
+																						</td>
+																						<td class="left">
+																							<input type="text" class="form-control" id="TC_CCT_NOTE" name="TC_CCT_NOTE">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="TC_CCT_TOTALE" name="TC_CCT_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>COSTI F.M.</td>
+																						<td class="right">
+																							<input type="number" min="0" max="100" class="form-control" id="TC_CFM_RIP" name="TC_CFM_RIP">
+																						</td>
+																						<td class="left">
+																							<input type="text" class="form-control" id="TC_CFM_NOTE" name="TC_CFM_NOTE">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="TC_CFM_TOTALE" name="TC_CFM_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>COSTI LETTURE</td>
+																						<td class="right">
+																							<input type="number" min="0" max="100" class="form-control" id="TC_CL_RIP" name="TC_CL_RIP">
+																						</td>
+																						<td class="left">
+																							<input type="text" class="form-control" id="TC_CL_NOTE" name="TC_CL_NOTE">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="TC_CL_TOTALE" name="TC_CL_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>TOTALE COSTI</td>
+																						<td class="right" style="font-weight:bold"></td>
+																						<td class="left" style="font-weight:bold">
+																							<input type="text" class="form-control" id="TC_TC_NOTE" name="TC_TC_NOTE">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="TC_TC_TOTALE" name="TC_TC_TOTALE" readonly>
+																						</td>
+																					</tr>
+																				</table>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+																<div class="hr-line-dashed"></div>
+																<div class="row">
+																	<div class="col-lg-12">
+																		<div class="ibox">
+																			<table>
+																				<thead>
+																					<tr>
+																						<th>COSTI RISCALDAMENTO</th>
+																					</tr>
+																				</thead>
+																				<table class="table table-bordered">
+																					<thead>
+																						<tr>
+																							<th>Descrizione</th>
+																							<th>Composizione %</th>
+																							<th>Note</th>
+																							<th>Importo lordo</th>
+																						</tr>
+																					</thead>
+																					<tr>
+																						<td>PERCENTUALE FISSA</td>
+																						<td class="right">
+																							<input type="number" min="0" max="100" step="0.1" class="form-control" id="CR_PF_RIP" name="CR_PF_RIP">
+																						</td>
+																						<td class="left">
+																							<input type="text" class="form-control" id="CR_PF_NOTE" name="CR_PF_NOTE">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="CR_PF_TOTALE" name="CR_PF_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>PERCENTUALE A RIPARTIZIONE</td>
+																						<td class="right">
+																							<input type="number" min="0" max="100" step="0.1" class="form-control" id="CR_PR_RIP" name="CR_PR_RIP" readonly>
+																						</td>
+																						<td class="left">
+																							<input type="text" class="form-control" id="CR_PR_NOTE" name="CR_PR_NOTE">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="CR_PR_TOTALE" name="CR_PR_TOTALE" readonly>
+																						</td>
+																					</tr>
+																					<tr>
+																						<td>TOTALE COSTI</td>
+																						<td class="right" style="font-weight:bold">
+																							<input type="text" class="form-control" id="CR_TC_RIP" name="CR_TC_RIP" readonly>
+																						</td>
+																						<td class="left">
+																							<input type="text" class="form-control" id="CR_TC_NOTE" name="CR_TC_NOTE">
+																						</td>
+																						<td>
+																							<input type="text" class="form-control" id="CR_TC_TOTALE" name="CR_TC_TOTALE" readonly>
+																						</td>
+																					</tr>
+																				</table>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+																
+																
+															
+															<!---------------------- GENERATORE ---------------------->
+														</div>
+													</div>
+													<div id="tab-3" class="tab-pane">
+														<div class="panel-body">
+															<!-- iniziano i grafici -->
+															<div class="row">
+																<div class="col-lg-12">
+																	<div class="ibox">
+																		<table>
+																			<thead>
+																				<tr>
+																					<th>COSTI RISCALDAMENTO</th>
+																				</tr>
+																			</thead>
+																		</thead>
+																		<table class="table table-bordered">
+																			<thead>
+																				<tr>
+																					<th>Descrizione</th>
+																					<th>Importo lordo</th>
+																					<th>Misura</th>
+																					<th>Totale</th>
+																				</tr>
+																			</thead>
+																			<tr>
+																				<td>COSTI PERCENTUALE FISSA</td>
+																				<td>
+																					<input type="number" min="0" class="form-control" id="CR_PF_TOTALE_1" name="CR_PF_TOTALE_1" >
+																				</td>
+																				<td>
+																					<input type="number" min="0" step="0.01" class="form-control" id="PU_CPF" name="PU_CPF" >
+																				</td>
+																				<td>
+																					<input type="text" class="form-control" id="PU_CPF_TOTALE" name="PU_CPF_TOTALE" readonly>
+																				</td>
+																			</tr>
+																			<tr>
+																				<td>COSTI A RIPARTIZIONE</td>
+																				<td>
+																					<input type="number" min="0" class="form-control" id="CR_PR_TOTALE_1" name="CR_PR_TOTALE_1" >
+																				</td>
+																				<td>
+																					<input type="number" min="0" class="form-control" id="PU_CR" name="PU_CR" >
+																				</td>
+																				<td>
+																					<input type="text" class="form-control" id="PU_CR_TOTALE" name="PU_CR_TOTALE" readonly>
+																				</td>
+																			</tr>
+																		</table>
+																	</table>
+																</div>
+															</div>
+														</div>
+														
+														<!---------------------- COSTI PER UNITA' ---------------------->
+													</div>
+												</div>
+												<div id="tab-4" class="tab-pane">
+													<div class="panel-body">
+														<!-- iniziano i grafici -->
+														<div class="row">
+															<div class="col-lg-12">
+																<div class="ibox">
+																	<table>
+																		<thead>
+																			<tr>
+																				<th>COSTI PER UNITA' espressi in € - VALORI</th>
+																			</tr>
+																		</thead>
+																		
+																		<table id="dt" class="table table-bordered">
+											                                <thead>
+												                                <tr>
+																					<th></th>
+																					<th>Denominazione</th>
+																					<th>Millesimi</th>
+																					<th>Rilevatori</th>
+																					<th>Letture</th>
+																					<th>Metano fisso</th>
+																					<th>Metano millesimi</th>
+																					<th>Forza motrice</th>
+																					<th>Conduzione</th>
+																					<th>Man. ordinaria</th>
+																					<th>Man. straordinaria</th>
+																					<th>Costi letture</th>
+																					<th>Tot. senza letture</th>
+																					<th>Tot. con letture</th>
+												                                </tr>
+											                                </thead>
+											                                <tfoot align="right">
+																				<tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th></tr>
+																			</tfoot>
+											                            </table>				
+				                            
+				                            
+																	</table>
+																</div>
+															</div>
+														</div>
+														<!-- <div class="hr-line-dashed"></div>
+														<button class="btn btn-primary btn-sm" id="salva" type="submit">Salva</button> -->
+													</div>
+												</div>
+												
+												
+												
+												
+												<!-- GRAFICO -->
+												<div id="tab-5" class="tab-pane">
+					                                <div class="panel-body">
+					
+					                                    <!-- iniziano i grafici -->
+	                        	                        
+								                        <div class="row">
+															<div class="col-lg-12">                  
+												            	<div class="ibox">
+												            		<div class="ibox-content float-e-margins">
+													                	 <div id="chartdiv-empty"></div>
+																		 <div id="chartdiv" style="max-height: 100%; position: relative;"></div>	          
+												                    </div>
+												            	</div> 
+											            	</div>                   
+											            </div>
+											            
+											            
+					                                </div>
+					                            </div>
+											
+											
+											
+														
+													
+												
+												
+											</div>	<!-- chiude tab content -->
+											
+											<br/>
+											<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+												<button class="btn btn-primary btn-sm" id="salva" type="submit">Salva</button>
+											</#if>
+											<#if PROFILO?exists && PROFILO=='ADM'>
+												<#if ID_MODULO?exists && ID_MODULO!=''>
+													<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+														<button class="btn btn-primary btn-sm" type="button" id="confermaRipartizione" name="confermaRipartizione">Conferma</button>
+													</#if>
+												</#if>
+											<#else>
+												<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+													<button class="btn btn-primary btn-sm" type="button" id="inviaApprovatore" name="inviaApprovatore">Invia a Gestore Impianto</button>
+												</#if>
+											</#if>
+																	
+																	
+										</div> <!--  chiude container -->
+									</div>	<!--  chiude lg-12 -->
+									
+									
+									
+									
+									
+									
+									
+											
+											
+											
+									</div>		
+								<//form> 							
+			                
+				               </div>   <!-- chiude box content -->
+            		</div>       <!-- chiude ibox float-e-margins -->     
+	            </div>	<!-- col-lg-12 -->
+            </div>	<!-- chiude row -->
+                 
+	                       			
+		             
+            
+        
+        
+        
+        	<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+        	
+        </div>
+	</div>
+	
+	
+	
+	  <script>
+    
+	   
+    
+    
+        $(document).ready(function(){
+
+        	<#if SALVATAGGIO_IN_CORSO?exists && SALVATAGGIO_IN_CORSO!=''>
+        	Swal.fire({
+			    title: 'Salvataggio in corso...',
+			    text: 'Attendere il completamento dell’elaborazione.',
+			    icon: 'info',
+			    allowOutsideClick: false,
+			    allowEscapeKey: false,
+			    showConfirmButton: false,
+			    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+			    allowEscapeKey: false,  	// disabilita tasto ESC
+			    didOpen: () => {
+			        Swal.showLoading();
+			    },
+			    customClass: {
+			        popup: 'swal-wide'
+			    }
+			});
+        	</#if>
+
+       });
+    </script>
+	
+	
+	
+	 
+</body>
+
+</html>

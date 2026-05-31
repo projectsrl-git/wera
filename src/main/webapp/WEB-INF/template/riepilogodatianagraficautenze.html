@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if> 
+	
+    <script type="text/javascript">
+	    var profilo="<#if PROFILO?exists>${PROFILO}</#if>";
+	    
+		var flagRicerca=false;
+		var dtAjax0="astro?FUNCTIONID=AJAXArray&dataset=DSCondominiRiepilogoImport&columns=ID_MODULO,ID_MODULO,DENOMINAZIONE,INDIRIZZO,LOCALITA,PROVINCIA,SIM,SCARICO,TIPO_RIPARTIZIONE,AMMINISTRATORE&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition0="<#if ID_CONDOMINIO?exists>WHERE ID_MODULO = ${ID_CONDOMINIO}<#else> WHERE 1=0 </#if>";
+	
+		var dtAjax1="astro?FUNCTIONID=AJAXArray&dataset=DSAntenneRiepilogoImport&columns=ID_MODULO,ID_MODULO,DENOMINAZIONE,ANTENNA,TIPOLOGIA,GATEWAY,DESCR_GATEWAY&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if ID_CONDOMINIO?exists>WHERE ID_CONDOMINIO = ${ID_CONDOMINIO}<#else> WHERE 1=0 </#if>";
+
+		var dtAjax2="astro?FUNCTIONID=AJAXArray&dataset=DSContatoriRiepilogoImport&columns=ID_MODULO,ID_MODULO,DENOMINAZIONE,CONTATORE,ID_TIPOLOGIA,DESCRIZIONE&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if ID_CONDOMINIO?exists>WHERE ID_CONDOMINIO = ${ID_CONDOMINIO}<#else> WHERE 1=0 </#if>";
+
+		var dtAjax3="astro?FUNCTIONID=AJAXArray&dataset=DSUtenzeRiepilogoImport&columns=ID_MODULO,ID_MODULO,CONDOMINIO,DENOMINAZIONE,LOCATARIO,SCALA,PIANO,INTERNO,NUM_RILEVATORI,ELENCO_RILEVATORI,MILLESIMI,N_TELEFONO&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if ID_CONDOMINIO?exists>WHERE ID_CONDOMINIO = ${ID_CONDOMINIO}<#else> WHERE 1=0 </#if>";
+
+		
+		$(function(){
+
+			// Setup - add a text input to each footer cell
+		    $('#dt3 thead tr').clone(true).appendTo( '#dt3 thead' );
+		    $('#dt3 thead tr:eq(1) th').each( function (i) {
+		        var title = $(this).text();
+		        if (title!=''){
+		        	$(this).html( '<input type="text" placeholder="Filtra '+title+'" />' );
+		        }
+		        
+		 
+		        $( 'input', this ).on( 'keyup change', function () {
+		            if ( table.column(i).search() !== this.value ) {
+		                table
+		                    .column(i)
+		                    .search( this.value )
+		                    .draw();
+		            }
+		        } );
+		    } );
+
+			
+			$("#ID_UTENTE").val(<#if ID_UTENTE?exists>${ID_UTENTE}</#if>);
+			
+			
+			
+			var table0 = $('#dt0').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax0+dtWhereCondition0,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="editRow0" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:1,
+						visible: true,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="deleteRow0" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					}
+					
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt0').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+                'rowCallback': function(row, data, index){
+                    if(data[6].toUpperCase() == ''){
+                        $(row).css('background-color', 'yellow');
+                    }
+                },
+				aaSorting: []
+
+            });
+			
+			
+			
+			
+	        var table = $('#dt1').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax1+dtWhereCondition,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="editRow1" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:1,
+						visible: true,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="deleteRow1" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						targets:5,
+						visible: false,
+					}
+					
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt1').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+	        
+	        
+	        
+	        
+            var table2 = $('#dt2').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax2+dtWhereCondition,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="editRow2" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:1,
+						visible: true,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="deleteRow2" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:4,
+						visible: false					}
+					
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt2').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+            
+            
+            
+            
+            
+            
+            
+            var table = $('#dt3').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax3+dtWhereCondition,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="editRow3" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:1,
+						visible: true,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="deleteRow3" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					{
+						width:"1%",
+						targets:4,
+						visible: false	
+					}
+					
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt3').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+	        
+	        
+	        
+	        
+	        
+	        
+		
+	        $('#free-text-search').keyup(function(){
+	        	$('#dt').DataTable().search($(this).val()).draw() ;
+	        })	        
+	        
+			
+			$("#formDelete").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					var result = eval('('+response+')');
+					$( "#dt" ).DataTable().ajax.reload();
+					$( ".alert-success" ).text( result.message ).fadeIn("slow").delay(1500).fadeOut("slow");
+				});
+			});					
+			
+			
+	        $('#dt0 tbody').on( 'click', '.editRow0', function () {
+	        	var table = $('#dt0').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#FUNCTIONID_EDIT').val("InserimentoAnagraficaCondomini");
+				$('#READONLY').val("N");
+				$("#formEdit").submit();
+	        } );
+	        
+	        
+	        $('#dt0 tbody').on( 'click', '.deleteRow0', function () {
+	        	var table = $('#dt0').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_MODULO");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoAnagraficaCondomini");
+				$('.modal-title').html('${label_delete_title_message}');
+				$('.modal-text').html('${label_delete_text_message}');
+				$("#modalQuestionDialog").modal({backdrop: true});
+				$('#modalQuestionDialog').collapse("show");
+	        } );	
+	        
+	        
+	        $('#dt1 tbody').on( 'click', '.editRow1', function () {
+	        	var table = $('#dt1').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#FUNCTIONID_EDIT').val("InserimentoAnagraficaAntenne");
+				$('#READONLY').val("N");
+				$("#formEdit").submit();
+	        } );
+	        
+	        
+	        $('#dt1 tbody').on( 'click', '.deleteRow1', function () {
+	        	var table = $('#dt1').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_MODULO");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoAnagraficaAntenne");
+				$('.modal-title').html('${label_delete_title_message}');
+				$('.modal-text').html('${label_delete_text_message}');
+				$("#modalQuestionDialog").modal({backdrop: true});
+				$('#modalQuestionDialog').collapse("show");
+	        } );	
+	        
+		
+	        $('#dt2 tbody').on( 'click', '.editRow2', function () {
+	        	var table = $('#dt2').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#FUNCTIONID_EDIT').val("InserimentoAnagraficaContatori");
+				$('#READONLY').val("N");
+				$("#formEdit").submit();
+	        } );
+	        
+	        
+	        $('#dt2 tbody').on( 'click', '.deleteRow2', function () {
+	        	var table = $('#dt2').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_MODULO");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoAnagraficaContatori");
+				$('.modal-title').html('${label_delete_title_message}');
+				$('.modal-text').html('${label_delete_text_message}');
+				$("#modalQuestionDialog").modal({backdrop: true});
+				$('#modalQuestionDialog').collapse("show");
+	        } );	
+	        
+	        
+	        
+	        
+	        $('#dt3 tbody').on( 'click', '.editRow3', function () {
+	        	var table = $('#dt3').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#FUNCTIONID_EDIT').val("InserimentoAnagraficaUtenze");
+				$('#READONLY').val("N");
+				$("#formEdit").submit();
+	        } );
+	        
+	        
+	        $('#dt3 tbody').on( 'click', '.deleteRow3', function () {
+	        	var table = $('#dt3').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_MODULO");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoAnagraficaUtenze");
+				$('.modal-title').html('${label_delete_title_message}');
+				$('.modal-text').html('${label_delete_text_message}');
+				$("#modalQuestionDialog").modal({backdrop: true});
+				$('#modalQuestionDialog').collapse("show");
+	        } );	
+	        
+	        
+		});	        
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<form action="astro" method="post" id="formStampa" name="formStampa">
+		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="StampaAnagraficaAntenne">	
+		<input type="hidden" id="ID_MODULO_STAMPA" name="ID_MODULO">
+	</form>
+
+
+	<form action="astro" method="post" id="formDelete" name="formDelete">
+		<input type="hidden" id="FUNCTIONID_DELETE" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="DELETE">
+		<input type="hidden" id="keyField" name="keyField">
+		<input type="hidden" id="keyValue" name="keyValue">
+	</form>
+	
+	
+	<form action="astro" method="get" id="formEdit" name="formEdit">
+		<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+		<input type="hidden" id="READONLY" name="READONLY" value="N">
+		<input type="hidden" id="ID_MODULO" name="ID_MODULO">
+	</form>		
+	
+	<div class="modal inmodal fade" id="modalQuestionDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header"><span class="modal-title"></span></div>
+				<div class="modal-body"><span class="modal-text"></span></div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-white btn-sm" onclick="$('#modalQuestionDialog').collapse('hide');">${label_no}</button>
+					<button class="btn btn-primary btn-sm" onclick="$('#modalQuestionDialog').collapse('toggle');$('#formDelete').submit();" data-dismiss="modal" type="submit">${label_si}</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+           
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->	
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							<div class="row">
+								<div class="col-sm-12">							
+							
+									
+										
+										
+										<#if MSG?exists && MSG!=''>
+											<div class="alert alert-danger">
+				                               <b>${MSG?replace("\n", "<br>")}</b>
+				                            </div>
+				                        <#else>
+				                        	<div class="alert alert-success">
+				                               <b>Import effettuato con successo</b>
+				                            </div>
+										
+										
+										
+																				
+		                                
+										<div class="form-group">
+										
+											<!-- <div class="col-sm-3">
+												<button class="btn btn-primary btn-sm" id="ricerca" type="submit" name="ricerca">${label_search}</button>
+											</div>  -->
+											
+											<div class="col-sm-9">
+												<fieldset>
+													${label_legenda}:
+													<i class="fa fa-pencil" aria-hidden="true"></i>${label_edit}
+													<i class="fa fa-trash-o" aria-hidden="true"></i>${label_delete}
+												</fieldset>
+											</div>
+										</div>			
+										<br/>
+
+									
+									
+									
+									<div class="hr-line-dashed"></div>
+									
+									
+									<h4>Condominio</h4>
+									
+			
+			                        <div class="table-responsive">
+										<table id="dt0" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+	            	    	    					<th></th>
+							                        <th>Denominazione</th>
+									                <th>Indirizzo</th>
+									                <th>Localit&#224;</th>
+									                <th>Prov.</th>
+													<th>SIM</th>
+													<th>Scarico (gg)</th>
+													<th>Tipo ripartizione</th>
+													<th>Amministratore</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+			                        
+			                        
+									
+									<div class="hr-line-dashed"></div>
+									<h4>Antenne</h4>
+									
+			
+			                        <div class="table-responsive">
+										<table id="dt1" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+	            	    	    					<th></th>
+							                        <th>Stabile</th>
+									                <th>Antenna</th>
+									                <th>Tipologia</th>
+									                <th></th>
+									                <th>Gateway</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+			                        
+			                        
+			                        
+			                        
+			                        <div class="hr-line-dashed"></div>
+									<h4>Contatori</h4>
+									
+			
+			                        <div class="table-responsive">
+										<table id="dt2" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+	            	    	    					<th></th>
+							                        <th>Stabile</th>
+									                <th>Contatore</th>
+									                <th>Tipologia</th>
+									                <th>Tipologia</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+			                        
+			                        
+			                        
+			                        
+			                        <div class="hr-line-dashed"></div>
+									<h4>Utenze</h4>
+									
+			
+			                        <div class="table-responsive">
+										<table id="dt3" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+	            	    	    					<th></th>
+	            	    	    					<th>Condominio</th>
+	            	    	    					<th>Denominazione</th>
+	            	    	    					<th>Locatario</th>
+	            	    	    					<th>Scala</th>
+	            	    	    					<th>Piano</th>
+	            	    	    					<th>Interno</th>
+	            	    	    					<th>Rilevatori</th>
+	            	    	    					<th>Cod. rilevatori</th>
+	            	    	    					<th>Millesimi</th>
+	            	    	    					<th>Telefono</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+			                        </#if>
+			                        
+			                        
+
+                    			</div>
+					
+                			</div>
+						</div>
+            		</div>
+				</div>
+			</div>
+						
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+
+</body>
+
+</html>

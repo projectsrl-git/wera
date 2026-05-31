@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	
+    <script type="text/javascript">
+    	var flagRicerca=false;
+    	var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSParametri&columns=ID_PARAMETRO,ID_PARAMETRO,FL_DISATTIVO,CODICE,DESCRIZIONE,ORDINE&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if WHERECONDITION?exists>${WHERECONDITION}<#else> WHERE 1=0 </#if>";
+		
+		$(function(){
+			
+			$("#DOMINIO").trigger("loadDataSet",["DSDominiParametriAzienda","CODICE","DESCRIZIONE","<#if DOMINIO?exists>${DOMINIO}</#if>"," WHERE 1=1 "]);
+			
+	        $('#dt').DataTable({
+				ajax: dtAjax+dtWhereCondition,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						width:"1%",
+						targets:1,
+						orderable: false,
+						visible: <#if PROFILO?contains('ADM') && VALIDITA_CREDITI?contains('true')>true<#else>false</#if>,
+						data:null,
+			            defaultContent: '<a href="#" class="deleteRow" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						width:"1%",						
+						targets:2,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								if (data==='false') {
+									data = '<i class="fa fa-toggle-on" aria-hidden="true"></i>';
+								} else {
+									data = '<i class="fa fa-toggle-off" aria-hidden="true"></i>';
+								}
+							}
+
+							return data;
+						}
+					}
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: "PARAMETRII"},
+                    {extend: 'excel', title: "PARAMETRI"},
+                    {extend: 'pdf', name: 'pdf', title:"PARAMETRI", orientation: 'landscape'},
+                    {extend: 'print',
+                     customize: function (win){
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                    }
+                    }
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+		
+	        $('#free-text-search').keyup(function(){
+	        	$('#dt').DataTable().search($(this).val()).draw() ;
+	        })	        
+	        
+			
+			$("#formDelete").submit(function(event) {
+			    event.preventDefault(); // Evita l'invio immediato del form
+			
+			    Swal.fire({
+			        title: 'Cancella selezionato',
+			        text: 'Confermi la cancellazione dell\'elemento selezionato?',
+			        icon: 'warning',
+			        showCancelButton: true,
+			        confirmButtonText: 'Conferma',
+			        confirmButtonColor: '#e08e0b', 
+			        cancelButtonText: 'Annulla',
+			        reverseButtons: true,
+			        allowOutsideClick: false,
+			        allowEscapeKey: false,
+			        customClass: {
+			            popup: 'swal-wide'
+			        }
+			    }).then((result) => {
+			        if (result.isConfirmed) {
+			            // Mostra un loader durante la cancellazione
+			            Swal.fire({
+			                title: 'Cancellazione in corso...',
+			                icon: 'info',
+			                allowOutsideClick: false,
+			                allowEscapeKey: false,
+			                showConfirmButton: false,
+			                didOpen: () => {
+			                    Swal.showLoading();
+			                },
+			                customClass: {
+			                    popup: 'swal-wide'
+			                }
+			            });
+			
+			            // Invio effettivo del form via POST
+			            $.post($(this).attr('action'), $(this).serialize(), function(response) {
+			                Swal.close();
+			
+			                if (response == null || response == '') {
+			                    Swal.fire({
+			                        title: 'Cancellazione non riuscita!',
+			                        text: 'Si è verificato un errore, cancellazione non riuscita.',
+			                        icon: 'error',
+			                        showConfirmButton: false,
+			                        timer: 2000,
+			                        allowOutsideClick: false,
+			                        allowEscapeKey: false,
+			                        customClass: {
+			                            popup: 'swal-wide'
+			                        }
+			                    });
+			                } else {
+			                    var result = eval('(' + response + ')');
+			                    if (result.result) {
+			                        $("#dt").DataTable().ajax.reload();
+			
+			                        Swal.fire({
+			                            title: 'Cancellazione completata!',
+			                            text: 'Cancellazione effettuata con successo.',
+			                            icon: 'success',
+			                            showConfirmButton: false,
+			                            timer: 2000,
+			                            allowOutsideClick: false,
+			                            allowEscapeKey: false,
+			                            customClass: {
+			                                popup: 'swal-wide'
+			                            }
+			                        });
+			                    }
+			                }
+			            });
+			        }
+			    });
+			});
+			
+			$("#formSearch").validate();
+			
+			$("#formSearch").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();			
+
+				if (!$("#formSearch").valid()) {
+					return false;
+				}		
+				
+				flagRicerca=true;
+				
+				
+				dtWhereCondition="";
+				
+	    		var dominio=$("#DOMINIO").val();
+	    		if (dominio != "") {
+	    			dtWhereCondition=" AND DOMINIO = '"+dominio+"' ";
+	    		}
+
+				$( "#dt" ).DataTable().ajax.url( dtAjax+dtWhereCondition ).load();
+				
+			});				
+			
+	        $('#dt tbody').on( 'click', '.editRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_PARAMETRO').val(data[0]);
+				$('#FUNCTIONID_EDIT').val("InserimentoParametri");
+				$("#forEdit").submit();
+	        } );
+	        			
+	        $('#dt tbody').on( 'click', '.deleteRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_PARAMETRO");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoParametri");
+				$('#formDelete').submit();
+	        } );	
+	        
+	        
+	        
+	        $( "#report" ).click(function() {
+	    		var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+	    		if(dataCount>200) {
+					$('.modal-title').html('Attenzione!');
+					$('.modal-text').html('Il report che si desidera stampare supera le 200 righe. Si consiglia di restringere la ricerca');
+					$("#modalAlert").modal({backdrop: true});
+					$('#modalAlert').collapse("show");	    			
+	    		} else {
+		    		$('#dt').DataTable().button( 2 ).trigger();
+	    		}
+	    		
+	    	});
+	    	
+	    	$( "#excel" ).click(function() {
+	    		$('#dt').DataTable().button( 1 ).trigger();
+	    	});
+	    	
+	    	$( "#csv" ).click(function() {
+	    		$('#dt').DataTable().button( 0 ).trigger();
+	    	});
+			
+		});		
+		
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<form action="astro" method="post" id="formDelete" name="formDelete">
+		<input type="hidden" id="FUNCTIONID_DELETE" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="DELETE">
+		<input type="hidden" id="keyField" name="keyField">
+		<input type="hidden" id="keyValue" name="keyValue">
+	</form>
+	
+	<form action="astro" method="get" id="forEdit" name="forEdit">
+		<input type="hidden" id="FUNCTIONID_EDIT" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="UPDATE">
+		<input type="hidden" id="ID_PARAMETRO" name="ID_PARAMETRO">
+	</form>		
+			
+
+	
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->
+	                    				
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							<form action="astro" class="form-horizontal"  method="get" id="formSearch" name="formSearch">
+			
+                                <div class="form-group">
+                                	<label class="col-sm-2 control-label-left">${label_tabella}</label>
+                                    <div class="col-sm-10">
+										<select id="DOMINIO" name="DOMINIO" class="form-control" required>
+										</select>
+                                    </div>
+                                </div>
+                                
+                                 <div class="form-group">
+                                	<label class="col-sm-2 control-label-left">Ricerca in linea:</label>
+                                    <div class="col-sm-10">
+		                                <input type="text" id="free-text-search" name="free-text-search"  class="form-control" placeholder="digita il testo che vuoi cercare per aggiornare subito i risultati">
+									</div>
+                                </div>
+								
+									<div class="form-group">
+											<div class="col-sm-6">
+												<button class="btn btn-primary btn-sm" id="ricerca" type="submit" name="ricerca">${label_search}</button>
+												<button class="btn btn-primary btn-sm" type="button" id="report" name="report">PDF</button>
+												<button class="btn btn-primary btn-sm" type="button" id="excel" name="excel">XLS</button>
+												<button class="btn btn-primary btn-sm" type="button" id="csv" name="csv">CSV</button>
+
+											</div>
+											
+											<div class="col-sm-6">
+												<fieldset>
+													${label_legenda}:
+													<i class="fa fa-pencil" aria-hidden="true"></i>${label_edit}
+													<i class="fa fa-trash-o" aria-hidden="true"></i>${label_delete}
+													<i class="fa fa-toggle-on" aria-hidden="true"></i>${label_utente_attivo}
+													<i class="fa fa-toggle-off" aria-hidden="true"></i>${label_utente_disattivato}
+												</fieldset>											
+											</div>
+											
+										</div>				
+												
+                                
+                                <div class="hr-line-dashed"></div>
+								
+							</form>
+		                                               
+							<div class="row">
+								<div class="col-sm-12">							
+									
+									
+					
+			                        <div class="table-responsive">
+										<table id="dt" class="table table-striped table-bordered table-hover">
+											<thead>
+												<tr>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th>${label_codice}</th>
+													<th>${label_descrizione}</th>
+													<th>${label_ordine}</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+		
+                    			</div>
+							
+                			</div>
+		                			
+		                			
+		                			
+						</div>
+                    </div>
+                </div>
+            </div>		
+			
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+	</div>
+
+</body>
+
+</html>
+

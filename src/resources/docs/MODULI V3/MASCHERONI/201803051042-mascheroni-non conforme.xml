@@ -1,0 +1,32 @@
+<?xml version="1.0" standalone="yes"?>
+<siemeca>
+  <communicator>
+    <type>M</type>
+    <version>23</version>
+    <serialnr>10822970</serialnr>
+  </communicator>
+  <network nr="1">
+    <colectordev nr="1">
+      <fabnr />
+      <model>0802.0014.0024</model>
+      <paramset>WTT16</paramset>
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>26.07.2017</date>
+      <time>08:25:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus>Ext. Power</powerstatus>
+      <fixeddataheader>
+        <identnr>10257529</identnr>
+        <manufact>12901</manufact>
+        <version>24</version>
+        <devtype>14</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+  </network>
+</siemeca>

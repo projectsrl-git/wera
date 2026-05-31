@@ -1,0 +1,240 @@
+
+.border-bottom {
+    border-bottom: none !important;
+}
+
+
+body {
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #2f4050;
+    font-size: 11px;
+    /*color: #676a6c;*/
+    color: #343a40;
+    overflow-x: hidden;
+}
+
+.dataTables_wrapper {
+     padding-bottom: 0px; 
+}
+
+
+.center {
+	text-align:center;
+}
+
+
+.right {
+	text-align:right;
+}
+
+.middle {
+	vertical-align:middle;
+}
+
+
+label {
+    margin-bottom: 5px;
+}
+
+.form-horizontal .control-label-left {
+    padding-top: 7px;
+    text-align: left;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-align: center;
+}
+
+
+.fa-red {
+	color:red;
+}
+	
+.fa-color-auto {
+	color:#676a6c;
+}
+
+.hidden-div {
+	display: none;
+}
+
+.alert-message {
+    margin-top: 20px;
+}
+
+/* serve per il breadcrumb cliccabile*/
+	
+.breadcrumb > li a {
+	font-weight: 100;
+}
+
+.ibox-tools {
+    display: block;
+    float: none;
+    margin-top: 0;
+    position: relative;
+    padding: 0;
+    text-align: right;
+}
+
+fieldset{
+	margin: 5px 0px 15px 0px;
+	display:inline-block;
+	font-size:11px;
+}
+
+fieldset svg{
+	padding: 0px 2px 0px 10px;
+	width:12px;
+	height:12px;
+}
+
+fieldset svg rect{
+	width:12px;
+	height:12px;
+}
+
+fieldset i{
+	padding: 0px 5px 0px 15px;
+}
+
+th i{
+	cursor:default;
+}
+
+.inmodal .modal-title {
+    font-size: 16px;
+}
+
+.inmodal .modal-header {
+    padding: 10px 15px;
+    text-align: center;
+}
+
+/* footer */
+.modal-footer {
+    padding: 10px;
+    text-align: right;
+    border-top: 1px solid #e5e5e5;
+}
+
+.colorClass {
+  border: 1px solid grey ;
+  padding: 2px 10px 2px 10px;
+}
+
+
+
+.alert-success-fixed {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: #d6e9c6;
+}
+.alert-success-fixed hr {
+  border-top-color: #c9e2b3;
+}
+.alert-success-fixed .alert-link {
+  color: #2b542c;
+}
+
+
+
+#toast-container.toast-bottom-full-width > div, #toast-container.toast-top-full-width > div {
+    width: 50%;
+    margin: auto
+}
+
+.toast-title {
+    font-weight: 700;
+}
+
+.toast-message {
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    text-align:center;
+}
+
+.alert {
+    padding: 5px !important;
+    margin-bottom: 10px !important;
+}
+
+
+.sk-spinner-three-bounce div{
+	vertical-align:bottom !important;
+}
+
+    
+    
+.pace .pace-progress {
+    position: relative;  /* importante per il posizionamento del :after */
+    background-color: #1ab394 !important; /* verde */
+}
+
+    
+    
+.swal-wide {
+    font-size: 1.4rem !important;
+    padding: 2em !important;
+    width: 600px !important;
+}
+
+
+.breadcrumb {
+  --bs-breadcrumb-divider: '>';
+}
+
+.breadcrumb > li + li:before {
+  content: var(--bs-breadcrumb-divider);
+  padding: 0 5px;
+  color: #6c757d; /* simile al grigio BS5 */
+}
+
+
+
+.ibox-title.titolo{
+	min-height: 40px;
+	background-color: #fbfbfd;
+	margin: 0 -1.25rem 1.25rem;
+	padding: 0 1.25rem;
+	border-bottom: 1px solid #e7e9eb;
+	border-top: 1px solid #e7e9eb;
+}
+
+
+
+.vertical-align-wrapper {
+  display: table;
+  height: 40px; /* o l'altezza del tuo .ibox-title */
+  width: 100%;
+}
+.vertical-align-content {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+
+.breadcrumb {
+	background-color: transparent !important;
+	font-size:13px !important;
+}
+
+.navbar-fixed-top, .navbar-static-top{
+	background-color:white;
+}
+
+
+
+.ibox-content {
+    background-color: #ffffff;
+    color: inherit;
+    padding: 15px 20px 20px 20px;
+    border-color: #e7e9eb;
+    border-image: none;
+    border-style: solid;
+    border-width: 1px;
+}

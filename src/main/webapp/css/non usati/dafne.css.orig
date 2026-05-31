@@ -1,0 +1,190 @@
+.wrapper-content {
+    padding: 0px 10px 40px;
+}
+
+.ibox-title {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #ffffff;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 3px 0 0;
+    color: inherit;
+    margin-bottom: 0;
+    padding: 14px 15px 7px;
+    min-height: 48px;
+    border-top:none;
+}
+
+.hr-separator {
+    border-top: 1px #e7eaec;
+    color: #ffffff;
+    background-color: #ffffff;
+    height: 1px;
+    margin: 10px 0;
+}
+
+.ibox {
+    clear: both;
+    margin-bottom: 15px;
+    margin-top: 0;
+    padding: 0;
+}
+
+.border-bottom {
+    border-bottom: none !important;
+}
+
+
+body {
+    font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #2f4050;
+    font-size: 11px;
+    color: #676a6c;
+    overflow-x: hidden;
+}
+
+.chosen-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 11px;
+    zoom: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice {
+    background: #f1f1f1;
+    border: 1px solid #ededed;
+    border-radius: 2px;
+    box-shadow: none;
+    color: #333333;
+    cursor: default;
+    line-height: 11px;
+    margin: 3px 0 3px 5px;
+    padding: 3px 20px 3px 5px;
+    position: relative;
+}
+
+.ibox-content {
+    background-color: #ffffff;
+    color: inherit;
+    padding: 10px 20px 10px 20px;
+    border-color: #e7eaec;
+    border-image: none;
+    border-style: solid solid none;
+    border-width: 1px 0;
+}
+
+.dataTables_wrapper {
+     padding-bottom: 0px; 
+}
+
+.form-control, .single-line {
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+    font-size: 12px;
+}
+
+.form-control, .single-line {
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+    font-size: 11px;
+}
+
+
+.center {
+	text-align:center;
+}
+
+label {
+    display: inline-block;
+    max-width: 100%;
+    margin-bottom: 5px;
+    font-weight: normal;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    text-align: center;
+}
+
+
+.fa-red {
+	color:red;
+}
+	
+.fa-color-auto {
+	color:#676a6c;
+}
+	
+.breadcrumb > li a {
+	font-weight: 100;
+}
+<<<<<<< .mine
+
+.hidden-div {
+	display: none;
+}
+
+.alert-message {
+    margin-top: 20px;
+}
+
+fieldset{
+	margin: 5px 0px 15px 0px;
+	border: 0px;
+	display:inline-block;
+	font-size:11px;
+}
+
+fieldset svg{
+	padding: 0px 2px 0px 10px;
+	width:12px;
+	height:12px;
+}
+
+fieldset svg rect{
+	width:12px;
+	height:12px;
+}
+
+fieldset i{
+	padding: 0px 5px 0px 15px;
+}
+
+||||||| .r11371
+	=======
+	
+
+.ibox-tools {
+    display: block;
+    float: none;
+    margin-top: 0;
+    position: relative;
+    padding: 0;
+    text-align: right;
+    z-index: -1;
+}>>>>>>> .r11380

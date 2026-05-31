@@ -1,0 +1,16 @@
+
+  SELECT 
+ROW_NUMBER() over (order by contatore) as id_modulo, 
+1 as id_azienda, 
+coalesce((select id_modulo from export1 where export1.id_condominio=stabile),0) as id_condominio, 
+contatore, 
+tipologia as id_tipologia, 
+ROW_NUMBER() over (order by contatore) as nr_modulo, 
+'2018/09/06' as dt_modulo, 
+'DRA' as stato, 
+'' as lista_allegati,
+'2018-09-26 16:00:51.671' as ts_ins, 
+1 as id_utente_ins, 
+'' as ts_mod, 
+'' as id_utente_mod
+  FROM contatori

@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if> 
+	
+    <script type="text/javascript">
+    	var profilo="<#if PROFILO?exists>${PROFILO}</#if>";
+		
+		
+		$(function(){
+			
+			$("#ID_CONDOMINIO").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 "]);
+			
+			var directory="<#if DIRECTORY_IMG?exists>${DIRECTORY_IMG}</#if>";
+			
+	      	var nomeFileTxt="NOME_FILE";
+	      	var dataImportTxt="DATA_IMPORT";
+	      	var oraImportTxt="ORA_IMPORT";
+	      	var iconaTxt="ICONA";
+	      	var idCategoriaTxt="ID_CATEGORIA";
+	      	var descrizioneCategoria="DESCR_CATEGORIA";
+	      	
+	      	var whereCondition="";
+	      	
+	      	if(profilo=='AMM'){
+	      		whereCondition = " and id_condominio IN (SELECT id_modulo FROM CONDOMINI WHERE ID_AMMINISTRATORE='"+utente+"')";	
+	      	}
+	      	
+	      	$("#ID_CONDOMINIO").on("select2:selecting", function(e) { 
+				var id= e.params.args.data.id;
+				whereCondition = "and id_Condominio = "+id;
+				
+				
+
+				
+				$.ajax({
+					url: "astro?FUNCTIONID=JSONDataSet&dataset=DSFileManager&columns="+nomeFileTxt+","+dataImportTxt+","+oraImportTxt+","+iconaTxt+","+idCategoriaTxt+","+descrizioneCategoria+"&PROFILO="+profilo+"&WHERECONDITION="+whereCondition,
+					dataType: 'json',
+					type: 'GET',
+					success: function (data) {
+						document.querySelector('#files').innerHTML="";
+						document.querySelector('#files_001').innerHTML="";
+						document.querySelector('#files_002').innerHTML="";
+						document.querySelector('#files_003').innerHTML="";
+						document.querySelector('#files_004').innerHTML="";
+						document.querySelector('#files_005').innerHTML="";
+						document.querySelector('#files_006').innerHTML="";
+						document.querySelector('#files_007').innerHTML="";
+						document.querySelector('#files_008').innerHTML="";
+						document.querySelector('#files_009').innerHTML="";
+						document.querySelector('#files_010').innerHTML="";
+						document.querySelector('#files_011').innerHTML="";
+						document.querySelector('#files_012').innerHTML="";
+						document.querySelector('#files_013').innerHTML="";
+						document.querySelector('#files_014').innerHTML="";
+						document.querySelector('#files_015').innerHTML="";
+						document.querySelector('#files_016').innerHTML="";
+						
+						$.each(data.rows,function(i,data) {
+							nomeFile=eval("data."+nomeFileTxt);
+							dataImport=eval("data."+dataImportTxt);
+							oraImport=eval("data."+oraImportTxt);
+							icona=eval("data."+iconaTxt);
+							idCategoria=eval("data."+idCategoriaTxt);
+							dir="astro?FUNCTIONID=Download&fileName=upload/"+nomeFile;
+							
+							if (icona=='fa-picture-o'){
+								document.querySelector('#files').innerHTML += '<div class="file-box"><div class="file"><a target="_blank" href="astro?FUNCTIONID=Download&fileName=upload/'+nomeFile+'"><span class="corner"></span><div class="icon"><img src="'+dir+'" class="image"><i class="fa '+icona+'"></i></div><div class="file-name">'+nomeFile+'<br/><small>Aggiunto: '+dataImport+' ore '+oraImport+'</small></div></a></div></div>';
+							}else{
+								document.querySelector('#files').innerHTML += '<div class="file-box"><div class="file"><a target="_blank" href="astro?FUNCTIONID=Download&fileName=upload/'+nomeFile+'"><span class="corner"></span><div class="icon"><i class="fa '+icona+'"></i></div><div class="file-name">'+nomeFile+'<br/><small>Aggiunto: '+dataImport+' ore '+oraImport+'</small></div></a></div></div>';
+							}
+							
+							document.querySelector('#files_'+idCategoria).innerHTML += '<div class="file-box"><div class="file"><a href="#"><span class="corner"></span><div class="icon"><i class="fa '+icona+'"></i></div><div class="file-name">'+nomeFile+'<br/><small>Aggiunto: '+dataImport+' ore '+oraImport+'</small></div></a></div></div>';
+						});
+					}
+				});
+				
+				
+			});	
+			
+	      	
+	      	
+			
+	      	
+	     	$.ajax({
+
+				url: "astro?FUNCTIONID=JSONDataSet&dataset=DSFileManager&columns="+nomeFileTxt+","+dataImportTxt+","+oraImportTxt+","+iconaTxt+","+idCategoriaTxt+","+descrizioneCategoria+"&PROFILO="+profilo+"&WHERECONDITION="+whereCondition,
+				dataType: 'json',
+				type: 'GET',
+				success: function (data) {
+					document.querySelector('#files').innerHTML="";
+					document.querySelector('#files_001').innerHTML="";
+					document.querySelector('#files_002').innerHTML="";
+					document.querySelector('#files_003').innerHTML="";
+					document.querySelector('#files_004').innerHTML="";
+					document.querySelector('#files_005').innerHTML="";
+					document.querySelector('#files_006').innerHTML="";
+					document.querySelector('#files_007').innerHTML="";
+					document.querySelector('#files_008').innerHTML="";
+					document.querySelector('#files_009').innerHTML="";
+					document.querySelector('#files_010').innerHTML="";
+					document.querySelector('#files_011').innerHTML="";
+					document.querySelector('#files_012').innerHTML="";
+					document.querySelector('#files_013').innerHTML="";
+					document.querySelector('#files_014').innerHTML="";
+					document.querySelector('#files_015').innerHTML="";
+					document.querySelector('#files_016').innerHTML="";
+					
+					$.each(data.rows,function(i,data) {
+						nomeFile=eval("data."+nomeFileTxt);
+						dataImport=eval("data."+dataImportTxt);
+						oraImport=eval("data."+oraImportTxt);
+						icona=eval("data."+iconaTxt);
+						idCategoria=eval("data."+idCategoriaTxt);
+						
+						dir="astro?FUNCTIONID=Download&fileName=upload/"+nomeFile;
+						
+						if (icona=='fa-picture-o'){
+							document.querySelector('#files').innerHTML += '<div class="file-box"><div class="file"><a target="_blank" href="astro?FUNCTIONID=Download&fileName=upload/'+nomeFile+'"><span class="corner"></span><div class="icon"><img src="'+dir+'" class="image"><i class="fa '+icona+'"></i></div><div class="file-name">'+nomeFile+'<br/><small>Aggiunto: '+dataImport+' ore '+oraImport+'</small></div></a></div></div>';
+						}else{
+							document.querySelector('#files').innerHTML += '<div class="file-box"><div class="file"><a target="_blank" href="astro?FUNCTIONID=Download&fileName=upload/'+nomeFile+'"><span class="corner"></span><div class="icon"><i class="fa '+icona+'"></i></div><div class="file-name">'+nomeFile+'<br/><small>Aggiunto: '+dataImport+' ore '+oraImport+'</small></div></a></div></div>';
+						}
+						document.querySelector('#files_'+idCategoria).innerHTML += '<div class="file-box"><div class="file"><a href="#"><span class="corner"></span><div class="icon"><i class="fa '+icona+'"></i></div><div class="file-name">'+nomeFile+'<br/><small>Aggiunto: '+dataImport+' ore '+oraImport+'</small></div></a></div></div>';
+					});
+				}
+			});
+			
+			
+		});	        
+		
+    </script> 
+
+</head>
+
+<body>
+
+	
+
+
+	<form action="astro" method="post" id="formDelete" name="formDelete">
+		<input type="hidden" id="FUNCTIONID_DELETE" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="DELETE">
+		<input type="hidden" id="keyField" name="keyField">
+		<input type="hidden" id="keyValue" name="keyValue">
+	</form>
+	
+	
+	
+	<div class="modal inmodal fade" id="modalQuestionDialog" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header"><span class="modal-title"></span></div>
+				<div class="modal-body"><span class="modal-text"></span></div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal" class="btn btn-white btn-sm" onclick="$('#modalQuestionDialog').collapse('hide');">${label_no}</button>
+					<button class="btn btn-primary btn-sm" onclick="$('#modalQuestionDialog').collapse('toggle');$('#formDelete').submit();" data-dismiss="modal" type="submit">${label_si}</button>
+				</div>
+			</div>
+		</div>
+	</div>	
+	
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+           
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->
+	                    					
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							<div class="row">
+								<div class="col-sm-12">							
+							
+									<form action="astro" method="get" id="formSearch" name="formSearch" class="form-horizontal">
+										<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="RicercaAnagraficaAntenne">
+										<input type="hidden" id="ID_UTENTE" name="ID_UTENTE">
+										
+										
+										
+											<div class="form-group"><label class="col-sm-2 control-label">Condominio</label>
+			                                    <div class="col-sm-4">
+													<select id="ID_CONDOMINIO" name="ID_CONDOMINIO" class="form-control" required>
+													</select>
+			                                    </div>
+			                                </div>
+		                                
+                                
+								
+										<div class="form-group">
+										
+		                                	<label class="col-sm-2 control-label">Ricerca in linea:</label>
+		                                    <div class="col-sm-10">
+				                                <input type="text" id="free-text-search" name="free-text-search"  class="form-control" placeholder="digita il testo che vuoi cercare per aggiornare subito i risultati">
+											</div>
+											
+										</div>												
+		                                
+										<div class="wrapper wrapper-content">
+								            <div class="row">
+								                <div class="col-lg-12">
+								                    <div class="row">
+								                        <div class="col-lg-12">
+								                        
+								                        	<div class="tabs-container">
+
+										                        <div class="tabs-left">
+										                             <ul class="nav nav-tabs">
+										                            	<li class="active"><a data-toggle="tab" href="#tab-0">Tutti i file</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-1">Foto condominio</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-2">Foto centrale termica</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-3">Cartello centrale termica</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-4">Contratto di nomina Terzo responsabile</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-5">Libretto impianto</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-6">Documenti caldaia</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-7">Dichiarazioni di conformit&#224;</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-8">Analisi dell'acqua</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-9">Interventi ordinari</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-10">Interventi straordinari</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-11">Segnalazione amministratore</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-12">Segnalazioni condomino</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-13">Vigili del fuoco VVFF</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-14">Stato pagamenti</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-15">Consigli</a></li>
+										                                <li class=""><a data-toggle="tab" href="#tab-16">INAIL</a></li>
+										                                
+										                                
+										                            </ul> 
+										                            <div class="tab-content ">
+										                            	<div id="tab-0" class="tab-pane active">
+										                                    <div class="panel-body">
+										                                        <strong>Tutti i file</strong>
+										                                        <div id="files"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-1" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Foto condominio</strong>
+										                                        <div id="files_001"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-2" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Foto centrale termica</strong>
+										                                        <div id="files_002"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-3" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Cartello centrale termica</strong>
+										                                        <div id="files_003"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-4" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Contratto di nomina Terzo responsabile</strong>
+										                                        <div id="files_004"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-5" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Libretto impianto</strong>
+										                                        <div id="files_005"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-6" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Documenti caldaia</strong>
+										                                        <div id="files_006"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-7" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Dichiarazioni di conformità</strong>
+										                                        <div id="files_007"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-8" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Analisi dell'acqua</strong>
+										                                        <div id="files_008"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-5" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Libretto impianto</strong>
+										                                        <div id="files_005"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-9" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Interventi ordinari</strong>
+										                                        <div id="files_009"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-10" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Interventi straordinari</strong>
+										                                        <div id="files_010"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-11" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Segnalazione amministratore</strong>
+										                                        <div id="files_011"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-12" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Segnalazioni condomino</strong>
+										                                        <div id="files_012"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-13" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Vigili del fuoco VVFF</strong>
+										                                        <div id="files_013"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-14" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Stato pagamenti</strong>
+										                                        <div id="files_014"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                <div id="tab-15" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>Consigli</strong>
+										                                        <div id="files_015"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                                 <div id="tab-16" class="tab-pane">
+										                                    <div class="panel-body">
+										                                        <strong>INAIL</strong>
+										                                        <div id="files_016"></div>
+										                                    </div>
+										                                </div>
+										                                
+										                            </div>
+										
+										                        </div>
+										
+										                    </div>
+								                        
+								                        
+								
+								                        </div>
+								                    </div>
+								                    </div>
+								                </div>
+                							</div>
+										
+
+										
+									
+									</form>
+									
+
+                    			</div>
+					
+                			</div>
+						</div>
+            		</div>
+				</div>
+			</div>
+						
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+
+</body>
+
+</html>

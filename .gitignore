@@ -1,0 +1,86 @@
+# ========================================
+# WERA - Git Ignore
+# ========================================
+
+# === Maven ===
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# === IDE ===
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.classpath
+.project
+.settings/
+bin/
+.vscode/
+*.code-workspace
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# === OS ===
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*~
+.directory
+
+# === Application ===
+logs/
+*.log
+*.log.*
+uploads/
+!uploads/.gitkeep
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# === Database ===
+*.db
+*.mv.db
+*.trace.db
+
+# === Spring Boot ===
+.spring-boot-devtools.properties
+
+# === Security ===
+application-prod.properties
+application-secret.properties
+*.key
+*.pem
+*.p12
+*.jks
+
+# === Build ===
+*.jar
+*.war
+*.ear
+*.class
+
+# === Other ===
+*.pid
+*.seed
+*.pid.lock
+node_modules/

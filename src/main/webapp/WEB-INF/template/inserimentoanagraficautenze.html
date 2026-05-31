@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+    
+	<script type="text/javascript">
+	
+		var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSUtenzeDettaglio&columns=ID_DETTAGLIO,ID_DETTAGLIO,STANZA,RILEVATORE,DESCRIZIONE_TIPO_RILEVATORE,DESCRIZIONE_TCS,MARCA,N_PROG,DESCRIZIONE_TVA,LARGHEZZA,ALTEZZA,PROFONDITA,ELEMENTI,COEFF,POTENZA,ESP,ESP_2,DESCRIZIONE_POS,DESCRIZIONE_DTT,DESCRIZIONE_MAT,PREREG,TIPO,TIPO_VALVOLA,POS,DIAMETRO,MAT_TUBO,TIPO_RILEVATORE&WHERECONDITION=";
+		var dtWhereCondition="<#if ID_MODULO?exists && ID_MODULO!=''>WHERE ID_MODULO = ${ID_MODULO}<#else> WHERE 1=0 </#if>";
+	
+	
+		$(function(){
+			
+			
+			
+			$("#ID_AZIENDA").trigger("loadDataSet",["DataSetAziende","ID_AZIENDA","RAGSOC","<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>"," WHERE 1=1 "]);
+			$("#ID_CONDOMINIO").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 "]);
+			
+			$("#TIPO_RILEVATORE").trigger("loadDataSet",["DSTipoRilevatoreUtenze","CODICE","DESCRIZIONE","<#if TIPO_RILEVATORE?exists>${TIPO_RILEVATORE}</#if>"," WHERE 1=1 "]);
+			$("#TIPO").trigger("loadDataSet",["DSTipoCorpoScaldante","CODICE","DESCRIZIONE","<#if TIPO?exists>${TIPO}</#if>"," WHERE 1=1 "]);
+			$("#TIPO_VALVOLA").trigger("loadDataSet",["DSTipoValvola","CODICE","DESCRIZIONE","<#if TIPO_VALVOLA?exists>${TIPO_VALVOLA}</#if>"," WHERE 1=1 "]);
+			$("#POS").trigger("loadDataSet",["DSPosizione","CODICE","DESCRIZIONE","<#if POS?exists>${POS}</#if>"," WHERE 1=1 "]);
+			$("#DIAMETRO").trigger("loadDataSet",["DSDiametroTubo","CODICE","DESCRIZIONE","<#if DIAMETRO?exists>${DIAMETRO}</#if>"," WHERE 1=1 "]);
+			$("#MAT_TUBO").trigger("loadDataSet",["DSMaterialeTubo","CODICE","DESCRIZIONE","<#if MAT_TUBO?exists>${MAT_TUBO}</#if>"," WHERE 1=1 "]);
+			
+			$("#TIPO_UTENZA").trigger("loadDataSet",["DSTipoUtenza","CODICE","DESCRIZIONE","<#if TIPO_UTENZA?exists>${TIPO_UTENZA}</#if>"," WHERE 1=1 "]);
+			
+
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			$("#ID_MODULO").val("<#if ID_MODULO?exists>${ID_MODULO}</#if>");
+			$("#DENOMINAZIONE").val("<#if DENOMINAZIONE?exists>${DENOMINAZIONE}</#if>");
+			$("#LOCATARIO").val("<#if LOCATARIO?exists>${LOCATARIO}</#if>");
+			$("#SCALA").val("<#if SCALA?exists>${SCALA}</#if>");
+			$("#PIANO").val("<#if PIANO?exists>${PIANO}</#if>");
+			$("#INTERNO").val("<#if INTERNO?exists>${INTERNO}</#if>");
+			$("#MILLESIMI").val("<#if MILLESIMI?exists>${MILLESIMI}</#if>");
+			$("#MILLESIMI_ACS").val("<#if MILLESIMI_ACS?exists>${MILLESIMI_ACS}</#if>");
+			$("#MILLESIMI_CLIMA").val("<#if MILLESIMI_CLIMA?exists>${MILLESIMI_CLIMA}</#if>");
+			$("#N_TELEFONO").val("<#if N_TELEFONO?exists>${N_TELEFONO}</#if>");
+			$("#ID_MODULO_DETTAGLIO").val("<#if ID_MODULO?exists>${ID_MODULO}</#if>");
+			
+			$("#FABBISOGNO_ACS").val("<#if FABBISOGNO_ACS?exists>${FABBISOGNO_ACS}</#if>");
+			$("#FABBISOGNO_CLIMA").val("<#if FABBISOGNO_CLIMA?exists>${FABBISOGNO_CLIMA}</#if>");
+			
+			
+			
+			$('#ID_DETTAGLIO').val("<#if ID_DETTAGLIO?exists>${ID_DETTAGLIO}</#if>");
+			$('#TIPO_RILEVATORE').val("<#if TIPO_RILEVATORE?exists>${TIPO_RILEVATORE}</#if>").change();
+			$('#STANZA').val("<#if STANZA?exists>${STANZA}</#if>");
+			$('#RILEVATORE').val("<#if RILEVATORE?exists>${RILEVATORE}</#if>");
+			$('#TIPO').val("<#if TIPO?exists>${TIPO}</#if>").change();
+			$('#MARCA').val("<#if MARCA?exists>${MARCA}</#if>");
+			$('#N_PROG').val("<#if N_PROG?exists>${N_PROG}</#if>");
+			$('#TIPO_VALVOLA').val("<#if TIPO_VALVOLA?exists>${TIPO_VALVOLA}</#if>").change();
+			$('#LARGHEZZA').val("<#if LARGHEZZA?exists>${LARGHEZZA}</#if>");
+			$('#ALTEZZA').val("<#if ALTEZZA?exists>${ALTEZZA}</#if>");
+			$('#PROFONDITA').val("<#if PROFONDITA?exists>${PROFONDITA}</#if>");
+			$('#ELEMENTI').val("<#if ELEMENTI?exists>${ELEMENTI}</#if>");
+			$('#COEFF').val("<#if COEFF?exists>${COEFF}</#if>");
+			$('#POTENZA').val("<#if POTENZA?exists>${POTENZA}</#if>");
+			$('#ESP').val("<#if ESP?exists>${ESP}</#if>");
+			$('#ESP_2').val("<#if ESP_2?exists>${ESP_2}</#if>");
+			$('#POS').val("<#if POS?exists>${POS}</#if>").change();
+			$('#DIAMETRO').val("<#if DIAMETRO?exists>${DIAMETRO}</#if>").change();
+			$('#MAT_TUBO').val("<#if MAT_TUBO?exists>${MAT_TUBO}</#if>").change();
+			$('#PREREG').val("<#if PREREG?exists>${PREREG}</#if>");
+			
+			$("#TIPO_RILEVATORE").on("select2:selecting", function(e) { 
+				var id= e.params.args.data.id;
+				if (id=='7'){
+					$("#MARCA").prop('readonly', true);
+					$("#N_PROG").prop('readonly', true);
+					$("#LARGHEZZA").prop('readonly', true);
+					$("#ALTEZZA").prop('readonly', true);
+					$("#PROFONDITA").prop('readonly', true);
+					$("#ELEMENTI").prop('readonly', true);
+					$("#COEFF").prop('readonly', true);
+					$("#POTENZA").prop('readonly', true);
+					$("#ESP").prop('readonly', true);
+					$("#ESP_2").prop('readonly', true);
+					$("#PREREG").prop('readonly', true);
+					
+					$('#TIPO').attr("disabled", true); 
+					$('#TIPO_VALVOLA').attr("disabled", true); 
+					$('#POS').attr("disabled", true); 
+					$('#DIAMETRO').attr("disabled", true); 
+					$('#MAT_TUBO').attr("disabled", true);
+				}else{
+					$("#MARCA").prop('readonly', false);
+					$("#N_PROG").prop('readonly', false);
+					$("#LARGHEZZA").prop('readonly', false);
+					$("#ALTEZZA").prop('readonly', false);
+					$("#PROFONDITA").prop('readonly', false);
+					$("#ELEMENTI").prop('readonly', false);
+					$("#COEFF").prop('readonly', false);
+					$("#POTENZA").prop('readonly', false);
+					$("#ESP").prop('readonly', false);
+					$("#ESP_2").prop('readonly', false);
+					$("#PREREG").prop('readonly', false);
+					
+					$('#TIPO').attr("disabled", false); 
+					$('#TIPO_VALVOLA').attr("disabled", false); 
+					$('#POS').attr("disabled", false); 
+					$('#DIAMETRO').attr("disabled", false); 
+					$('#MAT_TUBO').attr("disabled", false);
+				}
+
+				
+			});	
+			
+			
+			var idModulo=$("#ID_MODULO").val();
+			$("#RIPARTITORI_CENSITI").empty();
+			$("#RIPARTITORI_CENSITI").trigger("loadDataSetSimpleTextHidden",["DSRipartitoriCensitiUtenze","RILEVATORE","RILEVATORE"," WHERE ID_MODULO<>"+idModulo+" "]);
+			
+			
+			var operationType=$("#OPERATION_TYPE").val();
+			
+			if (operationType=="INSERT") {
+				$("#dettagli").hide();
+			}
+			
+			
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+            
+		  
+			$("#formInserimento").validate();
+			$("#formAggiungiDettaglio").validate();
+			
+			$("#formInserimento").submit(function(event) {
+				/* stop form from submitting normally */
+				event.preventDefault();			
+
+				if (!$("#formInserimento").valid()) {
+					document.getElementById("salva").style.display="block";
+					return false;
+				}
+				
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+				
+				$("#salva-group").hide();
+
+				var idModulo=$("#ID_MODULO").val();
+				if (idModulo!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+				}				
+				
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					
+					$("#salva-group").show();
+
+
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+
+							var operationType=$("#OPERATION_TYPE").val();
+				    		if (operationType != "" && operationType=="INSERT") {
+				    			var idModulo=result.id;
+				    			var nrModulo=result.nr;
+				    			if (idModulo != null && idModulo != "") {
+									$("#ID_MODULO").val(idModulo);
+									$("#NR_MODULO").val(nrModulo);
+									$("#ID_MODULO_DETTAGLIO").val(idModulo);
+									$("#dettagli").show();
+						
+		 						}
+				    		}
+				    		
+							
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+					
+					
+					
+						
+				});
+				
+				
+			});
+			
+			
+			
+			
+			$("#formAggiungiDettaglio").submit(function(event) {
+				/* stop form from submitting normally */
+				event.preventDefault();			
+
+				if (!$("#formAggiungiDettaglio").valid()) {
+					return false;
+				}		
+				
+				
+				
+
+				rilevatore=$("#RILEVATORE").val();
+				rilevatoriCensiti=$("#RIPARTITORI_CENSITI").val();
+				if (rilevatoriCensiti.includes(rilevatore)) {
+					$( ".alert-danger" ).text( "Ripartitore già associato ad altra utenza" ).fadeIn("slow").delay(1500).fadeOut("slow");
+					return false;
+				}
+				
+				
+				if ($("#ID_DETTAGLIO").val()=="") {
+					$("#OPERATION_TYPE_DETTAGLIO").val("INSERT");
+				} else {
+					$("#OPERATION_TYPE_DETTAGLIO").val("UPDATE");
+				}
+				
+				
+				$("#CREDITI_UTILIZZABILI").val('1');
+				if ($("#OPERATION_TYPE_DETTAGLIO").val()=="INSERT"){
+					
+					var utente="<#if ID_UTENTE?exists>${ID_UTENTE}</#if>";
+					var whereCondition1=" where usr.id_utente ="+utente;
+					var creditiUtilizzabili = "CREDITI_UTILIZZABILI";
+					
+					$.ajax({
+						url: "astro?FUNCTIONID=JSONDataSet&dataset=DSCrediti&columns="+creditiUtilizzabili+"&WHERECONDITION="+whereCondition1,
+						dataType: 'json',
+						type: 'GET',
+						async: false,
+						success: function (data) {
+							
+							$.each(data.rows,function(i,data) {
+								$("#CREDITI_UTILIZZABILI").val(eval("data."+creditiUtilizzabili));
+							});
+						}
+					});
+				}
+				
+				if($("#CREDITI_UTILIZZABILI").val()<1){
+					$( ".alert-danger" ).text( "L'inserimento del rilevatore non è possibile. Crediti esauriti, acquistare almeno 1 credito." ).fadeIn("slow").delay(3000).fadeOut("slow");
+					return false; 
+				}
+				
+				$("#formAggiungiDettaglio :input:visible").attr("disabled", false);
+				$("#aggiungi").text('Aggiungi'); 
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+				 
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) {
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+
+							// reset dettaglio
+							$('#ID_DETTAGLIO').val("");
+							$('#TIPO_RILEVATORE').val("").change();
+							$('#STANZA').val("");
+							$('#RILEVATORE').val("");
+							$('#TIPO').val("").change();
+							$('#MARCA').val("");
+							$('#N_PROG').val("");
+							$('#TIPO_VALVOLA').val("").change();
+							$('#LARGHEZZA').val("");
+							$('#ALTEZZA').val("");
+							$('#PROFONDITA').val("");
+							$('#ELEMENTI').val("");
+							$('#COEFF').val("");
+							$('#POTENZA').val("");
+							$('#ESP').val("");
+							$('#ESP_2').val("");
+							$('#POS').val("").change();
+							$('#DIAMETRO').val("").change();
+							$('#MAT_TUBO').val("").change();
+							$('#PREREG').val("");
+							// reset dettaglio
+							
+				    		var id=$("#ID_MODULO").val();
+				    		dtWhereCondition=" WHERE 1=0 ";
+				    		if (id != "") {
+				    			dtWhereCondition=" WHERE ID_MODULO = "+id;
+				    		}
+				    		
+							$( "#dt" ).DataTable().ajax.url( dtAjax+dtWhereCondition ).load();
+							
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+
+				});
+				
+			
+			});
+			
+			
+			
+			
+			
+			
+			$('#dt').DataTable({
+	            "paging":   false,
+	            "ordering": false,
+	            "info":     false,
+				"autoWidth": false,	  
+	            "ajax": dtAjax+dtWhereCondition,				
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						width:"1%",
+						visible: <#if (READONLY?exists && READONLY='Y') || (STATO?exists && STATO!='DRA')>false<#else>true</#if>,
+						targets:1,
+						orderable: false,
+						data:null,
+			            defaultContent: '<a href="#" class="deleteRow" title="${label_delete}"><i class="fa fa-trash-o fa-color-auto" aria-hidden="true"></i></a>'
+					},
+					{
+						visible: false,
+						targets:21
+					},
+					{
+						visible: false,
+						targets:22
+					},
+					{
+						visible: false,
+						targets:23
+					},
+					{
+						visible: false,
+						targets:24
+					},
+					{
+						visible: false,
+						targets:25
+					},
+					{
+						visible: false,
+						targets:26
+					}
+				],
+				
+	            dom: '<"html5buttons"B>lTgitp',
+	            language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+	
+	            buttons: [
+	            ],
+				aaSorting: []
+	
+	        });
+	        
+	        
+	        $('#dt tbody').on( 'click', '.editRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_DETTAGLIO').val(data[0]);
+				
+				tipoRilevatore=data[26];
+				$('#TIPO_RILEVATORE').val(data[26]).change();
+				$('#STANZA').val(data[2]);
+				$('#RILEVATORE').val(data[3]);
+				$('#TIPO').val(data[21]).change();
+				$('#MARCA').val(data[6]);
+				$('#N_PROG').val(data[7]);
+				$('#TIPO_VALVOLA').val(data[22]).change();
+				$('#LARGHEZZA').val(data[9]);
+				$('#ALTEZZA').val(data[10]);
+				$('#PROFONDITA').val(data[11]);
+				$('#ELEMENTI').val(data[12]);
+				$('#COEFF').val(data[13]);
+				$('#POTENZA').val(data[14]);
+				$('#ESP').val(data[15]);
+				$('#ESP_2').val(data[16]);
+				$('#POS').val(data[23]).change();
+				$('#DIAMETRO').val(data[24]).change();
+				$('#MAT_TUBO').val(data[25]).change();
+				$('#PREREG').val(data[20]);
+				
+				if (tipoRilevatore=='7'){
+					$("#MARCA").prop('readonly', true);
+					$("#N_PROG").prop('readonly', true);
+					$("#LARGHEZZA").prop('readonly', true);
+					$("#ALTEZZA").prop('readonly', true);
+					$("#PROFONDITA").prop('readonly', true);
+					$("#ELEMENTI").prop('readonly', true);
+					$("#COEFF").prop('readonly', true);
+					$("#POTENZA").prop('readonly', true);
+					$("#ESP").prop('readonly', true);
+					$("#ESP_2").prop('readonly', true);
+					$("#PREREG").prop('readonly', true);
+					
+					$('#TIPO').attr("disabled", true); 
+					$('#TIPO_VALVOLA').attr("disabled", true); 
+					$('#POS').attr("disabled", true); 
+					$('#DIAMETRO').attr("disabled", true); 
+					$('#MAT_TUBO').attr("disabled", true);
+				}else{
+					$("#MARCA").prop('readonly', false);
+					$("#N_PROG").prop('readonly', false);
+					$("#LARGHEZZA").prop('readonly', false);
+					$("#ALTEZZA").prop('readonly', false);
+					$("#PROFONDITA").prop('readonly', false);
+					$("#ELEMENTI").prop('readonly', false);
+					$("#COEFF").prop('readonly', false);
+					$("#POTENZA").prop('readonly', false);
+					$("#ESP").prop('readonly', false);
+					$("#ESP_2").prop('readonly', false);
+					$("#PREREG").prop('readonly', false);
+					
+					$('#TIPO').attr("disabled", false); 
+					$('#TIPO_VALVOLA').attr("disabled", false); 
+					$('#POS').attr("disabled", false); 
+					$('#DIAMETRO').attr("disabled", false); 
+					$('#MAT_TUBO').attr("disabled", false);
+				}
+				
+				$("#STANZA").focus(); 
+	        } );
+	        
+	        
+	        $('#dt tbody').on( 'click', '.deleteRow', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#keyField').val("ID_DETTAGLIO");
+				$('#keyValue').val(data[0]);
+				$('#FUNCTIONID_DELETE').val("InserimentoDettaglioAnagraficaUtenze");
+				$('.modal-title').html('${label_delete_title_message}');
+				$('.modal-text').html('${label_delete_text_message}');
+				$("#modalQuestionDialog").modal({backdrop: true});
+				$('#modalQuestionDialog').collapse("show");
+	        } );	
+			
+			
+			$("#formDelete").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();
+				
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					
+					
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Cancellazione non riuscita!',
+						    text: 'Si è verificato un errore, Cancellazione non riuscita.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$( "#dt" ).DataTable().ajax.reload();
+							Swal.close();
+							Swal.fire({
+							    title: 'Cancellazione completata!',
+							    text: 'Cancellazione effettuata con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+					
+					
+					
+
+				});
+			});
+			
+			
+			
+			
+			
+			
+			
+		});		
+		
+		
+    </script> 
+    
+</head>
+
+<body>
+	<form action="astro" method="post" id="formDelete" name="formDelete">
+		<input type="hidden" id="FUNCTIONID_DELETE" name="FUNCTIONID">
+		<input type="hidden" name="OPERATION_TYPE" value="DELETE"> 
+		<input type="hidden" id="keyField" name="keyField">
+		<input type="hidden" id="keyValue" name="keyValue">
+	</form>
+
+	<div class="modal inmodal fade" id="modalQuestionDialog" tabindex="-1"
+		role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-sm">
+			<div class="modal-content">
+				<div class="modal-header">
+					<span class="modal-title"></span>
+				</div>
+				<div class="modal-body">
+					<span class="modal-text"></span>
+				</div>
+				<div class="modal-footer">
+					<button type="button" data-dismiss="modal"
+						class="btn btn-white btn-sm"
+						onclick="$('#modalQuestionDialog').collapse('hide');">${label_no}</button>
+					<button class="btn btn-primary btn-sm"
+						onclick="$('#modalQuestionDialog').collapse('toggle');$('#formDelete').submit();"
+						data-dismiss="modal" type="submit">${label_si}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+     <div id="wrapper">
+   		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+					<form action="astro" method="post" id="formInserimento"  class="form-horizontal">
+			            	
+			            		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoAnagraficaUtenze" />
+								<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE">
+								<input type="hidden" id="ID_MODULO" name="ID_MODULO">	
+						
+						
+                    <div class="ibox">
+					
+						<!-- bread crumb-->
+	                   				
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+
+                        	
+							<div class="row">
+                        	<div class="col-sm-12">
+                        
+                               
+								
+								<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Azienda</label>
+	                                    <div class="col-sm-4">
+											<select id="ID_AZIENDA" name="ID_AZIENDA" class="form-control" required>
+											</select>
+	                                    </div>
+	                                </div>
+                                </div>
+
+										
+			                	<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Condominio</label>
+	                                    <div class="col-sm-4">
+											<select id="ID_CONDOMINIO" name="ID_CONDOMINIO" class="form-control" required>
+											</select>
+	                                    </div>
+	                                </div>
+                                </div>
+                                
+                                <div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Classificazione utenza</label>
+	                                    <div class="col-sm-4">
+											<select id="TIPO_UTENZA" name="TIPO_UTENZA" class="form-control" required>
+											</select>
+	                                    </div>
+	                                </div>
+                                </div>
+
+								
+				                
+			                	<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Denominazione</label>
+										<div class="col-sm-4">
+											<input type="text"class="form-control" id="DENOMINAZIONE" name="DENOMINAZIONE" required>
+										</div>
+									</div>
+                            	</div>
+                            	
+								  
+								<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Locatario</label>
+										<div class="col-sm-4">
+											<input type="text"class="form-control" id="LOCATARIO" name="LOCATARIO" required>
+										</div>
+									</div>
+                            	</div>
+                            	
+                            	
+                            	<div class="row">
+									<div class="form-group">
+										<label class="col-sm-2 control-label">Scala</label>
+										<div class="col-sm-4">
+											<input type="text"class="form-control" id="SCALA" name="SCALA">
+										</div>
+									
+										<label class="col-sm-1 control-label">Piano</label>
+										<div class="col-sm-1">
+											<input type="text"class="form-control" id="PIANO" name="PIANO">
+										</div>
+									
+										<label class="col-sm-1 control-label">Interno</label>
+										<div class="col-sm-1">
+											<input type="text"class="form-control" id="INTERNO" name="INTERNO">
+										</div>
+									</div>
+                            	</div>
+                            	
+                            	<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Telefono</label>
+										<div class="col-sm-2">
+											<input type="text"class="form-control" id="N_TELEFONO" name="N_TELEFONO" required>
+										</div>
+									</div>
+                            	</div>
+                            	
+                            	
+                            	<div class="row">
+									<div class="form-group">
+										<label class="col-sm-2 control-label">Millesimi</label>
+										<div class="col-sm-1">
+											<input type="number" min="0" class="form-control" id="MILLESIMI" name="MILLESIMI" required>
+										</div>
+										
+										<label class="col-sm-1 control-label">Millesimi climatiz. invernale</label>
+										<div class="col-sm-1">
+											<input type="number" min="0" class="form-control" id="MILLESIMI_CLIMA" name="MILLESIMI_CLIMA" required>
+										</div>
+									
+										<label class="col-sm-1 control-label">Millesimi ACS</label>
+										<div class="col-sm-1">
+											<input type="number" min="0" class="form-control" id="MILLESIMI_ACS" name="MILLESIMI_ACS" required>
+										</div>
+									</div>
+                            	</div>
+                            	
+                            	<div class="row">
+									<div class="form-group">
+										<label class="col-sm-2 control-label">Fabbisogno climatiz. invernale</label>
+										<div class="col-sm-1">
+											<input type="number" min="0" class="form-control" id="FABBISOGNO_CLIMA" name="FABBISOGNO_CLIMA" required>
+										</div>
+									
+										<label class="col-sm-1 control-label">Fabbisogno ACS</label>
+										<div class="col-sm-1">
+											<input type="number" min="0" class="form-control" id="FABBISOGNO_ACS" name="FABBISOGNO_ACS" required>
+										</div>
+									</div>
+                            	</div>
+                            	
+                            	
+                            	
+                            	
+                            	                          			  
+                                <div class="hr-line-dashed"></div>
+								
+								<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+                                	<div class="form-group">
+                                    	<div class="col-sm-1">
+	                                        <button class="btn btn-primary btn-sm" id="salva" type="submit">${label_save}</button>
+                                    	</div>
+                                	</div>
+								</#if>                                
+
+                            </div>
+                            
+                            
+                            </div>
+						</div>
+					</div>
+					
+					</form>
+					
+					
+					
+					
+		
+                    <div class="ibox" id="dettagli">
+						<!-- bread crumb-->
+	                    <div class="ibox-title titolo">
+	                    	<h4>Dettaglio</h4>
+	                    </div>						
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                        
+                       		
+							<div class="form-group">
+								<form action="astro" method="post" id="formAggiungiDettaglio" name="formAggiungiDettaglio">
+									<input type="hidden" name="FUNCTIONID" value="InserimentoDettaglioAnagraficaUtenze">
+									<input type="hidden" id="OPERATION_TYPE_DETTAGLIO" name="OPERATION_TYPE">
+									<input type="hidden" id="CREDITI_UTILIZZABILI" name="CREDITI_UTILIZZABILI">
+									<input type="hidden" id="ID_MODULO_DETTAGLIO" name="ID_MODULO">
+									<input type="hidden" id="ID_DETTAGLIO" name="ID_DETTAGLIO">
+									<input type="hidden" id="RIPARTITORI_CENSITI" name="RIPARTITORI_CENSITI">
+																
+									<table class="table table-bordered">
+										<tbody>
+											<tr>
+												<td>Tipo rilevatore</td>
+												<td><select class="form-control" id="TIPO_RILEVATORE" name="TIPO_RILEVATORE"></select></td>
+											</tr>
+											<tr>
+												<td>Locale</td>
+												<td><input type="text"class="form-control" id="STANZA" name="STANZA"></td>
+											</tr>
+											<tr>
+												<td>Rilevatore</td>
+												<td><input type="text"class="form-control" id="RILEVATORE" name="RILEVATORE"></td>
+											</tr>
+											<tr>
+												<td>Tipo corpo scaldante</td>
+												<td><select class="form-control" id="TIPO" name="TIPO"></select></td>
+											</tr>
+											<tr>
+												<td>Marca corpo scaldante</td>
+												<td><input type="text"class="form-control" id="MARCA" name="MARCA"></td>
+											</tr>
+											<tr>
+												<td>N° progr.</td>
+												<td><input type="text"class="form-control" id="N_PROG" name="N_PROG"></td>
+											</tr>
+											<tr>
+												<td>Tipo valvola</td>
+												<td><select class="form-control" id="TIPO_VALVOLA" name="TIPO_VALVOLA"></select></td>
+											</tr>
+											
+											<tr>
+												<td>L (mm)</td>
+												<td><input type="text"class="form-control" id="LARGHEZZA" name="LARGHEZZA"></td>
+											</tr>
+											<tr>
+												<td>H (mm)</td>
+												<td><input type="text"class="form-control" id="ALTEZZA" name="ALTEZZA"></td>
+											</tr>
+											<tr>
+												<td>P (mm)</td>
+												<td><input type="text"class="form-control" id="PROFONDITA" name="PROFONDITA"></td>
+											</tr>
+											<tr>
+												<td>N° elementi/ colonne</td>
+												<td><input type="text"class="form-control" id="ELEMENTI" name="ELEMENTI"></td>
+											</tr>
+											<tr>
+												<td>Coefficiente</td>
+												<td><input type="text"class="form-control" id="COEFF" name="COEFF"></td>
+											</tr>
+											<tr>
+												<td>Potenza</td>
+												<td><input type="text"class="form-control" id="POTENZA" name="POTENZA"></td>
+											</tr>
+											<tr>
+												<td>Esp.1 (Kc)</td>
+												<td><input type="text"class="form-control" id="ESP" name="ESP"></td>
+											</tr>
+											<tr>
+												<td>Esp.2 (KCHF)</td>
+												<td><input type="text"class="form-control" id="ESP_2" name="ESP_2"></td>
+											</tr>
+											<tr>
+												<td>Posizione</td>
+												<td><select class="form-control" id="POS" name="POS"></select></td>
+											</tr>
+											<tr>
+												<td>Diametro tubo</td>
+												<td><select class="form-control" id="DIAMETRO" name="DIAMETRO"></select></td>
+											</tr>
+											<tr>
+												<td>Materiale tubo</td>
+												<td><select class="form-control" id="MAT_TUBO" name="MAT_TUBO"></select></td>
+											</tr>
+											<tr>
+												<td>Prereg. valvole</td>
+												<td><input type="text"class="form-control" id="PREREG" name="PREREG"></td>
+											</tr>
+											
+										</tbody>
+
+									</table>
+									
+									<div class="alert alert-danger alert-message hidden-div"></div>
+									
+									<div class="form-group">
+	                                    <div>
+											<button class="btn btn-primary btn-sm" type="submit" id="aggiungi" name="aggiungi">${label_add}</button>
+	                                    </div>
+									</div>
+								</form>
+								
+								
+								
+								
+								
+								
+								<div class="row">
+		                        	<div class="col-sm-12">
+				                        <div class="table-responsive">
+											<table id="dt" class="table table-bordered">
+				                                <thead>
+					                                <tr>
+														<th></th>
+														<th></th>
+														
+														<th>Locale</th>
+														<th>Rilevatore</th>
+														<th>Tipo rilevatore</th>
+														<th>Tipo corpo scaldante</th>
+														<th>Marca corpo scaldante</th>
+														<th>N° progr.</th>
+														<th>Tipo valvola</th>
+														<th>L (mm)</th>
+														<th>H (mm)</th>
+														<th>P (mm)</th>
+														<th>N° elementi/ colonne</th>
+														<th>Coefficiente</th>
+														<th>Potenza</th>
+														<th>Esp.1 (Kc)</th>
+														<th>Esp.2 (KCHF)</th>
+														<th>Posizione</th>
+														<th>Diametro tubo</th>
+														<th>Materiale tubo</th>
+														<th>Prereg. valvole</th>
+														<th></th>
+					                                </tr>
+				                                </thead>
+				                            </table>											
+				                         </div>
+		                             </div>
+	                             </div>
+								
+								
+								
+								
+										
+													
+							</div>
+								
+						</div>						
+					</div>	
+		
+					
+                </div>
+            </div>		
+
+			
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+		
+
+</body>
+
+</html>
+

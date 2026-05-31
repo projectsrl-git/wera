@@ -1,0 +1,2732 @@
+<?xml version="1.0" standalone="yes"?>
+<siemeca>
+  <communicator>
+    <type>M</type>
+    <version>23</version>
+    <serialnr>10818994</serialnr>
+  </communicator>
+  <network nr="1">
+    <colectordev nr="1">
+      <fabnr />
+      <model>0801.0014.0023</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:25:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus>100 %</powerstatus>
+      <fixeddataheader>
+        <identnr>10173433</identnr>
+        <manufact>12901</manufact>
+        <version>23</version>
+        <devtype>14</devtype>
+        <accessnr>46</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <colectordev nr="2">
+      <fabnr />
+      <model>0801.0014.0024</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:25:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus>84 %</powerstatus>
+      <fixeddataheader>
+        <identnr>10183248</identnr>
+        <manufact>12901</manufact>
+        <version>24</version>
+        <devtype>14</devtype>
+        <accessnr>46</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <colectordev nr="3">
+      <fabnr />
+      <model>0801.0014.0024</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:25:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus>85 %</powerstatus>
+      <fixeddataheader>
+        <identnr>10183301</identnr>
+        <manufact>12901</manufact>
+        <version>24</version>
+        <devtype>14</devtype>
+        <accessnr>46</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <colectordev nr="4">
+      <fabnr />
+      <model>0801.0014.0023</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:25:00</time>
+      <subnet>0</subnet>
+      <receiver>4</receiver>
+      <powerstatus>76 %</powerstatus>
+      <fixeddataheader>
+        <identnr>10142158</identnr>
+        <manufact>12901</manufact>
+        <version>23</version>
+        <devtype>14</devtype>
+        <accessnr>46</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <colectordev nr="5">
+      <fabnr />
+      <model>0802.0014.0023</model>
+      <paramset>WTT16</paramset>
+      <hourson>361</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:25:00</time>
+      <subnet>0</subnet>
+      <receiver>5</receiver>
+      <powerstatus>Ext. Power</powerstatus>
+      <fixeddataheader>
+        <identnr>10168696</identnr>
+        <manufact>12901</manufact>
+        <version>23</version>
+        <devtype>14</devtype>
+        <accessnr>24</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <measuredev nr="1">
+      <fabnr />
+      <model>0603.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>82</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>47060639</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="2">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060645</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="3">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060644</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="4">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060643</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="5">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060647</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="6">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060640</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="7">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060653</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="8">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060654</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="9">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060854</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="10">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060847</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="11">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060842</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="12">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060832</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="13">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060828</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="14">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060825</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="15">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060823</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="16">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060822</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="17">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060817</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="18">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060637</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="19">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060638</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="20">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060636</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="21">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060634</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="22">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060635</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="23">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060614</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="24">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060611</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="25">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060615</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="26">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060617</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="27">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060618</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="28">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060621</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="29">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060625</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="30">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060624</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="31">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060626</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="32">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060620</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="33">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060631</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="34">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060632</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="35">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060633</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="36">
+      <fabnr />
+      <model>0603.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>47070450</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="37">
+      <fabnr />
+      <model>0603.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>291</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>47070452</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="38">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060628</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="39">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060629</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="40">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060627</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="41">
+      <fabnr />
+      <model>0603.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>20</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>47060663</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="42">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060642</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="43">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060630</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="44">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060658</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="45">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060852</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="46">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060872</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="47">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060850</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="48">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060849</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="49">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060851</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="50">
+      <fabnr />
+      <model>0600.0008.0020</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>47060865</identnr>
+        <manufact>12901</manufact>
+        <version>20</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="51">
+      <fabnr />
+      <model>0600.0013.0056</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>07583354</identnr>
+        <manufact>12901</manufact>
+        <version>56</version>
+        <devtype>13</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="52">
+      <fabnr />
+      <model>0600.0013.0056</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>07583410</identnr>
+        <manufact>12901</manufact>
+        <version>56</version>
+        <devtype>13</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="53">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:39:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>19.11.2015 12:39:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>215</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1466</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73623608</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="54">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623636</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="55">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623574</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="56">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623609</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="57">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623637</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="58">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623626</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="59">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623644</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="60">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623633</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="61">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623621</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="62">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:46:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>19.11.2015 12:46:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>164</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1210</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73623642</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="63">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623643</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="64">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>02.10.2015</errordate>
+      <date>19.11.2015</date>
+      <time>12:56:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>19.11.2015 12:56:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1454</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73623590</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>40</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="65">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623598</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="66">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:51:00</time>
+      <subnet>0</subnet>
+      <receiver>4</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>19.11.2015 12:51:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>216</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1402</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73623625</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="67">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623606</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="68">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623596</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="69">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623605</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="70">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623577</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="71">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623579</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="72">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623634</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="73">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623600</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="74">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623646</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="75">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623622</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="76">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623623</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="77">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623578</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="78">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623663</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="79">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623664</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="80">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623665</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="81">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623632</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="82">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623568</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="83">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623597</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="84">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623647</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="85">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623610</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="86">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623662</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="87">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623655</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="88">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623656</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="89">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623651</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="90">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623652</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="91">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623653</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="92">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73073801</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="93">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73073803</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="94">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73073802</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="95">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>73623661</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="96">
+      <fabnr />
+      <model>0600.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:48:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>19.11.2015 12:48:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>56</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>57</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73856549</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="97">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>76722768</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>0</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="98">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>77171931</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="99">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>77171929</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="100">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>77171922</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="101">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>77171924</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="102">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>77171926</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="103">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>77171923</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="104">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>77171925</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>1</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="105">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>19.11.2015</date>
+      <time>12:44:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>19.11.2015 12:44:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>172</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1049</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>76722769</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>0</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="106">
+      <fabnr />
+      <model>0600.0008.0044</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>19.11.2015</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>77171930</identnr>
+        <manufact>12901</manufact>
+        <version>44</version>
+        <devtype>8</devtype>
+        <accessnr>0</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+  </network>
+</siemeca>

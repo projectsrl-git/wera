@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+    <#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+	<link href="css/plugins/dropzone/basic.css" rel="stylesheet">
+    <link href="css/plugins/dropzone/dropzone.css" rel="stylesheet">
+    
+    <style>
+	    #progressBar {
+		  width: 90%;
+		  margin: 10px auto;
+		  height: 22px;
+		  background-color: #0A5F44;
+		}
+		
+		#progressBar div {
+		  height: 100%;
+		  text-align: right;
+		  padding: 0 10px;
+		  line-height: 22px; /* same as #progressBar height if we want text middle aligned */
+		  width: 0;
+		  color: white;
+		  font-weight: bold;
+		  background-color: #18a689;
+		  box-sizing: border-box;
+		}
+
+    </style>
+    
+    
+    
+	<script type="text/javascript">
+	
+		function inviaScarico(){
+	        $("#scaricoACS26").submit();
+		}
+	
+	
+		$(function(){
+			
+			
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			
+			$("#ID_CONDOMINIO").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 "]);
+			
+			$( "#scarica" ).click(function() {
+				$("#scaricoACS26").submit();
+        	});
+			
+			$( "#scarica_tutti" ).click(function() {
+				$("#scaricoACS26").submit();
+        	});
+			
+			
+			
+			
+			
+			
+			$("#Inserimento").validate();
+			
+			$("#Inserimento").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();			
+				
+				
+				if (id!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+				} else {
+					$("#OPERATION_TYPE").val("INSERT");
+				}
+				
+				
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					var result = eval('('+response+')');
+					if (result.result) {
+						$("#ID_MODULO").val(result.id);
+						$( ".alert-success" ).text( result.message ).fadeIn( "slow").delay( 1500 ).fadeOut("slow" );
+					} else {
+						$( ".alert-danger" ).text( result.message ).fadeIn( "slow").delay( 1500 ).fadeOut("slow" );
+					}
+				});
+
+			});			
+		});		
+		
+		
+    </script> 
+    
+</head>
+
+<body>
+
+     <div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+           
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->	
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							<div class="row">
+								<div class="col-sm-12">							
+
+		                        	<div class="alert alert-info">
+		                               <b>Download ed importazione dei dati del condominio selezionato in corso.<br/> Riepilogo disponibile tra qualche minuto (in base alla grandezza del file) in <i> Importazione dati / Archivio file importati</i></b>
+		                            </div>
+				
+                    			</div>
+					
+                			</div>
+						</div>
+            		</div>
+				</div>
+			</div>
+						
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+
+
+</body>
+
+</html>

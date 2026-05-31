@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+		
+    <script type="text/javascript">
+	
+		$(function(){
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			
+			// valorizziamo campi in caso di modifica
+			$("#ID_PROFILO").val("<#if ID_PROFILO?exists>${ID_PROFILO}</#if>");
+			$("#CODICE").val("<#if CODICE?exists>${CODICE}</#if>");
+			$("#DESCRIZIONE").val("<#if DESCRIZIONE?exists>${DESCRIZIONE}</#if>");
+			$("#LISTA_MENU_ABILITATI").trigger("loadDataSet",["DSMenuPerProfili","ID_MENU","PATH_DESCRI","<#if MENU_ABILITATI?exists>${MENU_ABILITATI}</#if>"," WHERE 1=1 "]);
+			$("#LISTA_AZIENDE").trigger("loadDataSet",["DataSetAziende","ID_AZIENDA","RAGSOC","<#if AZIENDE_MULTIPLE?exists>${AZIENDE_MULTIPLE}</#if>"," WHERE 1=1 "]);
+
+			
+			$("#LISTA_AZIENDE").change(function(){
+				var allOption=0;
+				$("#LISTA_AZIENDE > option").each(function() {
+					allOption=allOption+1;
+				});
+				selectedValue=$(this).val();
+			    if (allOption!=selectedValue.length){
+			    	$("#CHECKBOX_LISTA_AZIENDE").prop('checked',false);
+			    }else{
+			    	$("#CHECKBOX_LISTA_AZIENDE").prop('checked',true);
+			    }
+			});
+			
+			$("#LISTA_MENU_ABILITATI").change(function(){
+				var allOption=0;
+				$("#LISTA_MENU_ABILITATI > option").each(function() {
+					allOption=allOption+1;
+				});
+				selectedValue=$(this).val();
+			    if (allOption!=selectedValue.length){
+			    	$("#CHECKBOX_LISTA_MENU_ABILITATI").prop('checked',false);
+			    }else{
+			    	$("#CHECKBOX_LISTA_MENU_ABILITATI").prop('checked',true);
+			    }
+			});
+			
+			
+	        $("#CHECKBOX_LISTA_AZIENDE").click(function(){
+	            if($("#CHECKBOX_LISTA_AZIENDE").is(':checked') ){
+	                $("#LISTA_AZIENDE > option").prop("selected","selected");
+	                $("#LISTA_AZIENDE").trigger("change");
+	            }else{
+	                $("#LISTA_AZIENDE > option").removeAttr("selected");
+	                 $("#LISTA_AZIENDE").trigger("change");
+	             }
+	        });
+	        
+	        $("#CHECKBOX_LISTA_MENU_ABILITATI").click(function(){
+	            if($("#CHECKBOX_LISTA_MENU_ABILITATI").is(':checked') ){
+	                $("#LISTA_MENU_ABILITATI > option").prop("selected","selected");
+	                $("#LISTA_MENU_ABILITATI").trigger("change");
+	            }else{
+	                $("#LISTA_MENU_ABILITATI > option").removeAttr("selected");
+	                 $("#LISTA_MENU_ABILITATI").trigger("change");
+	             }
+	        });	        
+			
+			// trasformo il form formInserimento in un form validabile con libreria jquery-validator
+			$("#formInserimento").validate();
+
+			$("#formInserimento").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();			
+				
+				if (!$("#formInserimento").valid()) {
+					return false;
+				}
+
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+
+				
+
+				tokenizeOptionSelected("LISTA_MENU_ABILITATI","MENU_ABILITATI");
+				tokenizeOptionSelected("LISTA_AZIENDE","AZIENDE_MULTIPLE");
+				
+
+				$("#salva").hide();
+				
+				/* Send the data using Ajax post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) {
+					
+					document.getElementById("salva").style.display="block";
+					
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+				});
+				
+				
+			});
+
+		});
+		
+    </script> 
+
+</head>
+
+<body>
+
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists>
+		<#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->
+	                  						
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+
+
+                        <div class="ibox-content">
+                        
+                        
+							<div class="row">
+								<div class="col-sm-12">
+	                        
+		                            <form action="astro" method="post" id="formInserimento" name="formInserimento" class="form-horizontal">
+					            		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoProfili" />
+										<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE">
+										<input type="hidden" id="ID_PROFILO" name="ID_PROFILO">
+										<input type="hidden" id="MENU_ABILITATI" name="MENU_ABILITATI">
+										<input type="hidden" id="AZIENDE_MULTIPLE" name="AZIENDE_MULTIPLE">
+																		
+		                                <div class="form-group">
+		                                	<label class="col-sm-2">${label_codice_profilo}</label>
+		                                    <div class="col-sm-2"><input type="text" class="form-control" required id="CODICE" name="CODICE" maxlength="3"></div>
+		                                </div>
+		                                
+		                                <div class="form-group">
+		                                	<label class="col-sm-2">${label_descrizione_profilo}</label>
+		                                    <div class="col-sm-10"><input type="text" class="form-control" required id="DESCRIZIONE" name="DESCRIZIONE" maxlength="50"></div>
+		                                </div>
+	
+										<div class="form-group">
+											<label class="col-sm-2">${label_voci_di_menu}</label>
+											<div class="col-sm-10">
+												<select class="form-control hidden-dropdown" id="LISTA_MENU_ABILITATI" name="LISTA_MENU_ABILITATI" multiple="multiple">
+												</select>
+												<input type="checkbox" id="CHECKBOX_LISTA_MENU_ABILITATI">${label_select_all}
+											</div>
+										</div>		          
+										
+		                                <div class="form-group"><label class="col-sm-2 control-label-left">${label_companies_allowed}</label>
+		                                    <div class="col-sm-10">
+												<select id="LISTA_AZIENDE" name="LISTA_AZIENDE" class="form-control" multiple >
+												</select>
+												<input type="checkbox" id="CHECKBOX_LISTA_AZIENDE">${label_select_all}
+		                                    </div>
+		                                </div>
+								
+		                                <div class="hr-line-dashed"></div>                                
+		
+		                                <div class="form-group">
+											<div class="col-sm-12 col-sm-offset-2">
+												<button class="btn btn-primary btn-sm" id="salva" type="submit" name="salva">${label_save}</button>
+		                                    </div>
+		                                </div>
+		                                
+		                            </form>
+	                            
+	                        	</div> <!-- col-sm-12 -->
+		                    </div> <!-- row -->
+                		</div> <!-- ibox-content -->
+            		</div>	<!-- ibox -->	
+	            </div> <!-- col-sm-12 -->	
+			</div> <!-- row -->            
+			
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div> <!-- page-wrapper -->
+
+	</div> <!-- wrapper -->
+
+</body>
+
+</html>

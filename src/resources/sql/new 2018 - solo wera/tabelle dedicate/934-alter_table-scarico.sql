@@ -1,0 +1,9 @@
+﻿alter table scarico add column volume1 character varying(20);
+alter table scarico add column volume2 character varying(20);
+alter table scarico add column date1 character varying(10);
+alter table scarico add column energy1 character varying(20);
+alter table scarico add column energy2 character varying(20);
+alter table scarico add column volume_flow character varying(20);
+alter table scarico add column power character varying(20);
+alter table scarico add column flow_temperature character varying(6);
+alter table scarico add column return_temperature character varying(6);

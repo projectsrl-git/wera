@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+	<link rel="shortcut icon" href="img/favicon.ico" />
+	<title><#if PAGE_TITLE?exists>${PAGE_TITLE}</#if></title>
+	<script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+
+                <!--<h1 class="logo-name" style="margin-left:-110px;color:#c80000;opacity:0.5">DAFNE</h1>-->
+                <h1 class="logo-name" style="margin-left:-100px;"> <img src="img/wera-login.png" /></h1>
+
+            </div>
+            <!--<p>Login in. To see it in action.</p>-->
+            <div class="login">
+				<form action="astro" method="get">
+					<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="${NEXT_FUCNTION}">
+					<p><center>${INFO_MESSAGE}</center><br/></p>
+					
+					 <button type="submit" class="btn btn-primary block full-width m-b">Continua</button>
+					
+				</form>
+			</div>
+            <p> <small>Webcredit WERA || Vers. 1.0.0 &copy; WERA 2017-2020 || Powered by Project srl || All Rights Reserved</small> </p>
+        </div>
+    </div>
+
+
+</body>
+
+
+
+
+
+</html>

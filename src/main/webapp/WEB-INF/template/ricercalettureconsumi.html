@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if> 
+	
+	<!-- amcharts -->
+	<style>
+		#chartdiv {
+		  width: 100%;
+		  height: 500px;
+		  font-size: 11px;
+		}
+		
+		#chartdiv-volume-acs {
+		  width: 100%;
+		  height: 300px;
+		  font-size: 11px;
+		}
+		
+		#chartdiv-contatori {
+		  width: 100%;
+		  height: 300px;
+		  font-size: 11px;
+		}
+		
+		#chartdiv-condomino {
+		  width: 100%;
+		  height: 500px;
+		  font-size: 11px;
+		}
+		
+		#chartdiv-condomino-volume-acs {
+		  width: 100%;
+		  height: 300px;
+		  font-size: 11px;
+		}
+		
+		
+		
+		.amcharts-pie-slice {
+		  transform: scale(1);
+		  transform-origin: 50% 50%;
+		  transition-duration: 0.3s;
+		  transition: all .3s ease-out;
+		  -webkit-transition: all .3s ease-out;
+		  -moz-transition: all .3s ease-out;
+		  -o-transition: all .3s ease-out;
+		  cursor: pointer;
+		  box-shadow: 0 0 30px 0 #000;
+		}
+		
+		.amcharts-pie-slice:hover {
+		  transform: scale(1.1);
+		  filter: url(#shadow);
+		}			
+		
+	</style>
+		
+		
+	<script src="js/amcharts/lib/3/amcharts.js"></script>
+	<script src="js/amcharts/lib/3/pie.js"></script>
+	<script src="js/amcharts/lib/3/serial.js"></script>
+	<script src="js/amcharts/lib/3/plugins/export/export.min.js"></script>
+	<link rel="stylesheet" href="js/amcharts/lib/3/plugins/export/export.css" type="text/css" media="all" />
+	<script src="js/amcharts/lib/3/themes/none.js"></script>
+	
+	<!-- amcharts fine -->
+
+	
+    <script type="text/javascript">
+    	var profilo="<#if PROFILO?exists>${PROFILO}</#if>";
+		var flagRicerca=false;
+		var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSLettureConsumiCondomini&columns=ID_CONDOMINIO,DENOMINAZIONE,INDIRIZZO,LOCALITA,PROVINCIA,DATA_DI_LETTURA,NUM_RILEVATORI,NUM_CONTATORI,TIPOLOGIA,LETTURA_ATTUALE,VOLUME_ATTUALE,UNITA_DI_MISURA&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtAjax1="astro?FUNCTIONID=AJAXArray&dataset=DSLettureConsumiCondominiDettaglio&columns=ID_CONDOMINO,CONDOMINO,LOCATARIO,DATA_DI_LETTURA,NUM_RILEVATORI,NUM_CONTATORI,TIPOLOGIA,LETTURA_ATTUALE,VOLUME_ATTUALE,UNITA_DI_MISURA&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtAjax2="astro?FUNCTIONID=AJAXArray&dataset=DSLettureConsumiCondomino&columns=CONDOMINO,LOCATARIO,STANZA,RILEVATORE,DATA_DI_LETTURA,LETTURA_ATTUALE,VOLUME_ATTUALE,UNITA_DI_MISURA&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtWhereCondition="<#if WHERECONDITION?exists>${WHERECONDITION}<#else> WHERE 1=0 </#if>";
+		var dtWhereCondition2="UT.ID_MODULO=0";
+		
+		$(function(){
+	
+				
+			$("#ID_CONDOMINIO").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 ",false]);
+
+			// Setup - add a text input to each footer cell
+		    $('#dt thead tr').clone(true).appendTo( '#dt thead' );
+		    $('#dt thead tr:eq(1) th').each( function (i) {
+		        var title = $(this).text();
+		        if (title!=''){
+		        	$(this).html( '<input type="text" placeholder="Filtra '+title+'" />' );
+		        }
+		        
+		 
+		        $( 'input', this ).on( 'keyup change', function () {
+		            if ( table.column(i).search() !== this.value ) {
+		                table
+		                    .column(i)
+		                    .search( this.value )
+		                    .draw();
+		            }
+		        } );
+		    } );
+
+			
+		 	// Setup - add a text input to each footer cell
+		    $('#dt1 thead tr').clone(true).appendTo( '#dt1 thead' );
+		    $('#dt1 thead tr:eq(1) th').each( function (i) {
+		        var title = $(this).text();
+		        if (title!=''){
+		        	$(this).html( '<input type="text" placeholder="Filtra '+title+'" />' );
+		        }
+		        
+		 
+		        $( 'input', this ).on( 'keyup change', function () {
+		            if ( table1.column(i).search() !== this.value ) {
+		                table1
+		                    .column(i)
+		                    .search( this.value )
+		                    .draw();
+		            }
+		        } );
+		    } );
+		    
+		    
+			
+	        var table = $('#dt').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax+dtWhereCondition,
+				dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+			    columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						visible: <#if PROFILO?contains('CON')>false<#else>true</#if>,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="pdfA4Row" title="Stampa A4"><i class="fa fa-file-pdf-o fa-color-auto" aria-hidden="true"></i></a>';
+							}
+							return data;
+						}
+					},
+					{
+						targets:6,
+						className: 'dt-body-right'
+					},
+					{
+						targets:5,
+						className: 'dt-body-center'
+					},
+					{
+						targets:7,
+						className: 'dt-body-right'
+					},
+					{
+						targets:9,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:10,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:8,
+						className: 'dt-body-center'
+					},
+					{
+						targets:11,
+						className: 'dt-body-center'
+					}
+				],
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+		
+	        $('#free-text-search').keyup(function(){
+	        	$('#dt').DataTable().search($(this).val()).draw() ;
+	        })	      
+	        
+	        
+	        
+	        
+	         var table1 = $('#dt1').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax1+dtWhereCondition,
+				columnDefs: [
+					{
+						width:"1%",
+						targets:0,
+						orderable: false,
+						data:null,
+						render: function ( data, type, row, meta ) {
+							if(type === 'display' ) {
+								data = '<a href="#" class="viewRow1" title="${label_view}"><i class="fa fa-search fa-color-auto" aria-hidden="true"></i></a>';
+							}
+
+							return data;
+						}
+					},
+					
+					{
+						
+						targets:4,
+						className: 'dt-body-right'
+						
+					},
+					
+					{
+						
+						targets:5,
+						className: 'dt-body-right'
+						
+					},
+					
+					{
+						
+						targets:6,
+						className: 'dt-body-center'
+						
+					},
+					
+					{
+						
+						targets:7,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						
+						targets:8,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+						
+					},
+					
+					{
+						
+						targets:9,
+						className: 'dt-body-center'
+						
+					},
+					
+					{
+						
+						targets:3,
+						className: 'dt-body-center'
+						
+					}
+
+
+							
+				],
+				
+                dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt1').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+	        
+	        
+	        
+	        
+	     
+	        
+	        var table2 = $('#dt2').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax2+dtWhereCondition2,
+				dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+			    columnDefs: [
+			    	
+			    	
+			    	{
+			    		
+			    		targets:3,
+			    		className: 'dt-body-right'
+			    			
+			    		
+			    	},
+			    	
+			    	{
+			    		
+			    		targets:4,
+			    		className: 'dt-body-center'
+			    			
+			    		
+			    	},
+			    	
+			    	{
+			    		
+			    		targets:5,
+			    		className: 'dt-body-right',
+			    		render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+			    			
+			    		
+			    	},
+			    	
+			    	{
+			    		
+			    		targets:6,
+			    		className: 'dt-body-right',
+			    		render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+			    			
+			    		
+			    	},
+			    	
+			    	{
+			    		
+			    		targets:7,
+			    		className: 'dt-body-center'
+			    			
+			    		
+			    	},
+			    	
+			    	
+			    ],
+			    
+			    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt2').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+	        
+	        
+	        
+	        
+	        
+	        
+		
+	        $('#free-text-search').keyup(function(){
+	        	$('#dt').DataTable().search($(this).val()).draw() ;
+	        })	    
+	        
+	        
+	        
+			
+			$("#formDelete").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					var result = eval('('+response+')');
+					$( "#dt" ).DataTable().ajax.reload();
+					$( ".alert-success" ).text( result.message ).fadeIn("slow").delay(1500).fadeOut("slow");
+				});
+			});					
+			
+			
+	        $('#dt tbody').on( 'click', '.pdfA4Row', function () {
+	        	var table = $('#dt').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_CONDOMINIO_STAMPA').val(data[0]);
+				$('#formStampa').submit();
+	    	});
+		
+	        
+	        
+			$( "#report" ).click(function() {
+	    		var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+	    		if(dataCount>200) {
+					$('.modal-title').html('Attenzione!');
+					$('.modal-text').html('Il report che si desidera stampare supera le 200 righe. Si consiglia di restringere la ricerca');
+					$("#modalAlert").modal({backdrop: true});
+					$('#modalAlert').collapse("show");	    			
+	    		} else {
+		    		$('#dt').DataTable().button( 2 ).trigger();
+	    		}
+	    		
+	    	});
+	    	
+	    	$( "#excel" ).click(function() {
+	    		$('#dt').DataTable().button( 1 ).trigger();
+	    	});
+	    	
+	    	$( "#csv" ).click(function() {
+	    		$('#dt').DataTable().button( 0 ).trigger();
+	    	});		
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	
+	    	$('#dt1 tbody').on( 'click', '.viewRow1', function () {
+	        	var table = $('#dt1').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				//$('#ID_CONDOMINO').val(data[0]);
+				//$('#FUNCTIONID_EDIT').val("InserimentoLettureConsumi");
+				//$('#READONLY').val("Y");
+				//$("#formEdit").submit();
+				dtWhereCondition2=" ut.ID_MODULO = '"+data[0]+"' ";
+				$( "#dt2" ).DataTable().ajax.url( dtAjax2+dtWhereCondition2 ).load();
+				doGraficoCondomino(dtWhereCondition2);
+				doGraficoCondominoVolumeACS(dtWhereCondition2);
+	        } );
+	        
+	        
+	        
+	     
+	        
+	        
+			$( "#report" ).click(function() {
+	    		var dataCount=$('#dt1').DataTable().column( 0 ).data().length;
+	    		if(dataCount>200) {
+					$('.modal-title').html('Attenzione!');
+					$('.modal-text').html('Il report che si desidera stampare supera le 200 righe. Si consiglia di restringere la ricerca');
+					$("#modalAlert").modal({backdrop: true});
+					$('#modalAlert').collapse("show");	    			
+	    		} else {
+		    		$('#dt1').DataTable().button( 2 ).trigger();
+	    		}
+	    		
+	    	});
+	    	
+	    	$( "#excel" ).click(function() {
+	    		$('#dt1').DataTable().button( 1 ).trigger();
+	    	});
+	    	
+	    	$( "#csv" ).click(function() {
+	    		$('#dt1').DataTable().button( 0 ).trigger();
+	    	});		
+	    	
+	    	
+	    	
+	    	
+	    	$('#dt2 tbody').on( 'click', '.viewRow2', function () {
+	        	var table = $('#dt1').DataTable();
+	            var data = table.row( $(this).parents('tr') ).data();
+				$('#ID_MODULO').val(data[0]);
+				$('#FUNCTIONID_EDIT').val("InserimentoLettureConsumi");
+				$('#READONLY').val("Y");
+				$("#formEdit").submit();
+	        } );
+	        
+	        
+	        
+		
+	        
+	        
+			$( "#report" ).click(function() {
+	    		var dataCount=$('#dt2').DataTable().column( 0 ).data().length;
+	    		if(dataCount>200) {
+					$('.modal-title').html('Attenzione!');
+					$('.modal-text').html('Il report che si desidera stampare supera le 200 righe. Si consiglia di restringere la ricerca');
+					$("#modalAlert").modal({backdrop: true});
+					$('#modalAlert').collapse("show");	    			
+	    		} else {
+		    		$('#dt2').DataTable().button( 2 ).trigger();
+	    		}
+	    		
+	    	});
+	    	
+	    	$( "#excel" ).click(function() {
+	    		$('#dt2').DataTable().button( 1 ).trigger();
+	    	});
+	    	
+	    	$( "#csv" ).click(function() {
+	    		$('#dt2').DataTable().button( 0 ).trigger();
+	    	});		
+	    	
+	    	
+	    	
+			$("#formSearch").validate();
+			
+			$("#formSearch").submit(function(event) {
+				
+				/* stop form from submitting normally */
+				event.preventDefault();			
+
+				if (!$("#formSearch").valid()) {
+					return false;
+				}		
+				
+				flagRicerca=true;
+				
+				
+				dtWhereCondition="";
+	    		var condominio=$("#ID_CONDOMINIO").val();
+	    		if (condominio != "") {
+	    			dtWhereCondition=" AND scarico.ID_CONDOMINIO = '"+condominio+"' ";
+	    		}
+
+	    		var idUtente="<#if ID_UTENTE?exists>${ID_UTENTE}</#if>";
+	    		
+	    		
+	    		$( "#dt" ).DataTable().ajax.url( dtAjax+dtWhereCondition ).load();
+	    		
+	    		if (profilo.includes('CON')) {
+	    			dtWhereCondition=dtWhereCondition+" AND ID_UTENTE = "+idUtente;
+	    		}
+
+	    		
+				$( "#dt1" ).DataTable().ajax.url( dtAjax1+dtWhereCondition ).load();
+				$( "#dt2" ).DataTable().ajax.url( dtAjax2+dtWhereCondition2 ).load();
+				
+				if (profilo!='CON'){
+					doGrafico(dtWhereCondition);
+					doGraficoVolumeACS(dtWhereCondition);
+					doGraficoContatori(dtWhereCondition);
+				}		
+				
+				
+				
+				
+			});				
+				        
+		
+		});	        
+		
+		
+		
+		<!-- Chart code -->
+		AmCharts.addInitHandler(function(chart) {
+			  // check if there are graphs with autoColor: true set
+			  for(var i = 0; i < chart.graphs.length; i++) {
+			    var graph = chart.graphs[i];
+			    if (graph.autoColor !== true)
+			      continue;
+			    var colorKey = "autoColor-"+i;
+			    graph.lineColorField = colorKey;
+			    graph.fillColorsField = colorKey;
+			    for(var x = 0; x < chart.dataProvider.length; x++) {
+			      var color = chart.colors[x]
+			      chart.dataProvider[x][colorKey] = color;
+			    }
+			  }
+			  
+			}, ["serial"]);
+		
+		
+		function doGrafico(dtWhereCondition){
+			var dataset="DSLettureConsumiCondominiDettaglioGraficoHCAAttuale";
+	      	var locatario="LOCATARIO";
+	      	var lettura="LETTURA_ATTUALE";
+	      	
+    		arrayValori = new Array();
+	      	
+	      	$.ajax({
+				url: "astro?FUNCTIONID=JSONDataSet&dataset="+dataset+"&columns="+locatario+","+lettura+"&WHERECONDITION=WHERE 1=1"+dtWhereCondition,
+				dataType: 'json',
+				type: 'GET',
+				success: function (data) {
+					$.each(data.rows,function(i,data) {
+						arrayValori[i]=data;
+					}); 
+					
+					var obj= arrayValori;
+					
+					$("#chartdiv").empty();
+					
+					if (typeof arrayValori == 'undefined' || arrayValori.length <= 0) {
+						$( "#chartdiv-empty" ).html( "<p>Non sono disponibili dati da visualizzare per i consumi HCA</p>" );
+						document.getElementById("chartdiv-empty").style.display="block";
+						document.getElementById("chartdiv").style.display="none";
+					}else{
+						document.getElementById("chartdiv-empty").style.display="none";
+						document.getElementById("chartdiv").style.display="block";
+					}
+					
+					
+
+					<!-- Chart code -->
+					
+					var chart = AmCharts.makeChart("chartdiv", {
+					  "type": "pie",
+					  "startDuration": 0,
+					   "theme": "none",
+					   "titles": [{
+						    "text": "Consumi condomini"
+						  }, {
+						    "text": "Valori di lettura HCA",
+						    "bold": false
+						  }],
+					  "addClassNames": true,
+					  "legend":{
+					   	"position":"bottom",
+					    "marginRight":100,
+					    "autoMargins":false
+					  },
+					  "innerRadius": "30%",
+					  "defs": {
+					    "filter": [{
+					      "id": "shadow",
+					      "width": "200%",
+					      "height": "200%",
+					      "feOffset": {
+					        "result": "offOut",
+					        "in": "SourceAlpha",
+					        "dx": 0,
+					        "dy": 0
+					      },
+					      "feGaussianBlur": {
+					        "result": "blurOut",
+					        "in": "offOut",
+					        "stdDeviation": 5
+					      },
+					      "feBlend": {
+					        "in": "SourceGraphic",
+					        "in2": "blurOut",
+					        "mode": "normal"
+					      }
+					    }]
+					  },
+					  
+					  "dataProvider": 
+						  obj,
+						  "numberFormatter": {
+					            "decimalSeparator": ",",
+					            "thousandsSeparator": "."
+					        },
+					  "valueField": "LETTURA_ATTUALE",
+					  "titleField": "LOCATARIO",
+					  "export": {
+					    "enabled": true
+					  }
+					});
+					
+					chart.div.style.height = (obj.length * 30) + "px";
+					chart.validateNow();
+
+
+					chart.addListener("init", handleInit);
+
+					chart.addListener("rollOverSlice", function(e) {
+					  handleRollOver(e);
+					});
+
+					function handleInit(){
+					  chart.legend.addListener("rollOverItem", handleRollOver);
+					}
+
+					function handleRollOver(e){
+					  var wedge = e.dataItem.wedge.node;
+					  wedge.parentNode.appendChild(wedge);
+					}
+	
+				}
+	      	
+			});
+		}
+		
+		
+		
+		
+		function doGraficoVolumeACS(dtWhereCondition){
+			var dataset="DSLettureConsumiCondominiDettaglioGraficoACSAttuale";
+	      	var locatario="LOCATARIO";
+	      	var lettura="VOLUME_ATTUALE";
+	      	
+    		arrayValoriACS = new Array();
+    		
+    		
+	      	
+	      	$.ajax({
+				url: "astro?FUNCTIONID=JSONDataSet&dataset="+dataset+"&columns="+locatario+","+lettura+"&WHERECONDITION=WHERE 1=1"+dtWhereCondition,
+				dataType: 'json',
+				type: 'GET',
+				success: function (data) {
+					$.each(data.rows,function(i,data) {
+						arrayValoriACS[i]=data;
+						
+					}); 
+					
+					var obj= arrayValoriACS;
+					
+					$("#chartdiv-volume-acs").empty();
+					
+					if (typeof arrayValoriACS == 'undefined' || arrayValoriACS.length <= 0) {
+						$( "#chartdiv-volume-acs-empty" ).html( "<p>Non sono disponibili dati da visualizzare per i consumi ACS e AFS</p>" );
+						document.getElementById("chartdiv-volume-acs-empty").style.display="block";
+						document.getElementById("chartdiv-volume-acs").style.display="none";
+					}else{
+						document.getElementById("chartdiv-volume-acs-empty").style.display="none";
+						document.getElementById("chartdiv-volume-acs").style.display="block";
+					}
+					
+					
+
+					<!-- Chart code -->
+					
+					var chartVolumeACS = AmCharts.makeChart("chartdiv-volume-acs", {
+						  "type": "serial",
+						  "rotate": true,
+						  "categoryAxis": {
+							  "gridPosition": "start",
+							  "autoWrap": true
+							},
+						  "numberFormatter": {
+					            "precision": -1,
+					            "decimalSeparator": ",",
+					            "thousandsSeparator": "."
+					        },
+						  "theme": "none",
+						  "titles": [{
+							    "text": "Consumi condomini"
+							  }, {
+							    "text": "Valori di lettura totali ACS + AFS",
+							    "bold": false
+							  }],
+						  "marginRight": 70,
+						  "dataProvider": obj,
+						  "valueAxes": [ {
+						    "gridColor": "#FFFFFF",
+						    "gridAlpha": 0.2,
+						    "dashLength": 0
+						  } ],
+						  "gridAboveGraphs": true,
+						  "startDuration": 1,
+						  "graphs": [ {
+						    "balloonText": "[[category]]: <b>[[value]]</b>",
+						    "fillAlphas": 0.8,
+						    "lineAlpha": 0.2,
+						    "type": "column",
+						    "valueField": "VOLUME_ATTUALE",
+						    "autoColor": true
+						  } ],
+						  "chartCursor": {
+						    "categoryBalloonEnabled": false,
+						    "cursorAlpha": 0,
+						    "zoomable": false
+						  },
+						  "categoryField": "LOCATARIO",
+						  "categoryAxis": {
+						    "gridPosition": "start",
+						    "gridAlpha": 0,
+						    "tickPosition": "start",
+						    "tickLength": 20
+						  },
+						  "export": {
+						    "enabled": true
+						  }
+
+						});
+					
+						// Imposta altezza dinamica in base al numero di elementi
+						chartVolumeACS.div.style.height = (obj.length * 30) + "px";
+						chartVolumeACS.validateNow(); // forza il ridisegno dopo il resize
+				}
+	      	
+			});
+		}
+		
+		
+		
+		
+		
+		function doGraficoContatori(dtWhereCondition){
+			var dataset="DSLettureConsumiCondominiDettaglioGraficoContatori";
+	      	var locatario="DESCRIZIONE";
+	      	var lettura="LETTURA_ATTUALE";
+	      	
+    		arrayValoriContatori = new Array();
+	      	
+	      	$.ajax({
+				url: "astro?FUNCTIONID=JSONDataSet&dataset="+dataset+"&columns="+locatario+","+lettura+"&WHERECONDITION=WHERE 1=1"+dtWhereCondition,
+				dataType: 'json',
+				type: 'GET',
+				success: function (data) {
+					$.each(data.rows,function(i,data) {
+						arrayValoriContatori[i]=data;
+					}); 
+					
+					var obj= arrayValoriContatori;
+					
+					$("#chartdiv-contatori").empty();
+					
+					if (typeof arrayValoriContatori == 'undefined' || arrayValoriContatori.length <= 0) {
+						$( "#chartdiv-contatori-empty" ).html( "<p>Non sono disponibili dati da visualizzare per i consumi contatori</p>" );
+						document.getElementById("chartdiv-contatori-empty").style.display="block";
+						document.getElementById("chartdiv-contatori").style.display="none";
+					}else{
+						document.getElementById("chartdiv-contatori-empty").style.display="none";
+						document.getElementById("chartdiv-contatori").style.display="block";
+					}
+					
+					
+
+					
+					
+					var chartContatori = AmCharts.makeChart("chartdiv-contatori", {
+						  "type": "serial",
+						  "theme": "none",
+						  "titles": [{
+							    "text": "Consumi contatori"
+							  }, {
+							    "text": "Valori di lettura",
+							    "bold": false
+							  }],
+						  "marginRight": 70,
+						  "dataProvider": obj,
+						  "valueAxes": [ {
+						    "gridColor": "#FFFFFF",
+						    "gridAlpha": 0.2,
+						    "dashLength": 0
+						  } ],
+						  "gridAboveGraphs": true,
+						  "startDuration": 1,
+						  "graphs": [ {
+						    "balloonText": "[[category]]: <b>[[value]]</b>",
+						    "fillAlphas": 0.8,
+						    "lineAlpha": 0.2,
+						    "type": "column",
+						    "valueField": "LETTURA_ATTUALE",
+						    "autoColor": true
+						  } ],
+						  "chartCursor": {
+						    "categoryBalloonEnabled": false,
+						    "cursorAlpha": 0,
+						    "zoomable": false
+						  },
+						  "categoryField": "DESCRIZIONE",
+						  "categoryAxis": {
+						    "gridPosition": "start",
+						    "gridAlpha": 0,
+						    "tickPosition": "start",
+						    "tickLength": 20
+						  },
+						  "export": {
+						    "enabled": true
+						  }
+
+						});
+					
+				}
+	      	
+			});
+		}
+		
+		
+		
+		
+		function doGraficoCondomino(dtWhereCondition){
+			var dataset="DSLettureConsumiCondominoGraficoHCA";
+	      	var locatario="STANZA";
+	      	var lettura="LETTURA_ATTUALE";
+	      	
+    		arrayValoriCondomino = new Array();
+	      	$.ajax({
+				url: "astro?FUNCTIONID=JSONDataSet&dataset="+dataset+"&columns="+locatario+","+lettura+"&WHERECONDITION=WHERE "+dtWhereCondition,
+				dataType: 'json',
+				type: 'GET',
+				success: function (data) {
+					$.each(data.rows,function(i,data) {
+						arrayValoriCondomino[i]=data;
+					}); 
+					
+					var obj= arrayValoriCondomino;
+					
+					$("#chartdiv-condomino").empty();
+
+					if (typeof arrayValoriCondomino == 'undefined' || arrayValoriCondomino.length <= 0) {
+						$( "#chartdiv-condomino-empty" ).html( "<p>Non sono disponibili dati da visualizzare per i consumi HCA</p>" );
+						document.getElementById("chartdiv-condomino-empty").style.display="block";
+						document.getElementById("chartdiv-condomino").style.display="none";
+					}else{
+						document.getElementById("chartdiv-condomino-empty").style.display="none";
+						document.getElementById("chartdiv-condomino").style.display="block";
+					}
+					
+					
+
+					<!-- Chart code -->
+					
+					var chartCondomino = AmCharts.makeChart("chartdiv-condomino", {
+					  "type": "pie",
+					  "startDuration": 0,
+					   "theme": "none",
+					   "titles": [{
+						    "text": "Consumi condomino"
+						  }, {
+						    "text": "Valori di lettura HCA",
+						    "bold": false
+						  }],
+					  "addClassNames": true,
+					  "legend":{
+					   	"position":"bottom",
+					    "marginRight":100,
+					    "autoMargins":false
+					  },
+					  "innerRadius": "30%",
+					  "defs": {
+					    "filter": [{
+					      "id": "shadow",
+					      "width": "200%",
+					      "height": "200%",
+					      "feOffset": {
+					        "result": "offOut",
+					        "in": "SourceAlpha",
+					        "dx": 0,
+					        "dy": 0
+					      },
+					      "feGaussianBlur": {
+					        "result": "blurOut",
+					        "in": "offOut",
+					        "stdDeviation": 5
+					      },
+					      "feBlend": {
+					        "in": "SourceGraphic",
+					        "in2": "blurOut",
+					        "mode": "normal"
+					      }
+					    }]
+					  },
+					  
+					  "dataProvider": 
+						  obj,
+						  "numberFormatter": {
+					            "decimalSeparator": ",",
+					            "thousandsSeparator": "."
+					        },
+					  "valueField": "LETTURA_ATTUALE",
+					  "titleField": "STANZA",
+					  "export": {
+					    "enabled": true
+					  }
+					});
+
+					chartCondomino.addListener("init", handleInit);
+
+					chartCondomino.addListener("rollOverSlice", function(e) {
+					  handleRollOver(e);
+					});
+
+					function handleInit(){
+						chartCondomino.legend.addListener("rollOverItem", handleRollOver);
+					}
+
+					function handleRollOver(e){
+					  var wedge = e.dataItem.wedge.node;
+					  wedge.parentNode.appendChild(wedge);
+					}
+	
+				}
+	      	
+			});
+		}
+		
+		
+		
+		
+		function doGraficoCondominoVolumeACS(dtWhereCondition){
+			var dataset="DSLettureConsumiCondominoGraficoACS";
+	      	var locatario="STANZA";
+	      	var lettura="VOLUME_ATTUALE";
+	      	
+    		arrayValoriCondominoACS = new Array();
+	      	
+	      	$.ajax({
+				url: "astro?FUNCTIONID=JSONDataSet&dataset="+dataset+"&columns="+locatario+","+lettura+"&WHERECONDITION= WHERE "+dtWhereCondition,
+				dataType: 'json',
+				type: 'GET',
+				success: function (data) {
+					$.each(data.rows,function(i,data) {
+						arrayValoriCondominoACS[i]=data;
+					}); 
+					
+					var obj= arrayValoriCondominoACS;
+					
+					
+					$("#chartdiv-condomino-volume-acs").empty();
+					
+					if (typeof arrayValoriCondominoACS == 'undefined' || arrayValoriCondominoACS.length <= 0) {
+						$( "#chartdiv-condomino-volume-acs-empty" ).html( "<p>Non sono disponibili dati da visualizzare per i consumi ACS e AFS</p>" );
+						document.getElementById("chartdiv-condomino-volume-acs-empty").style.display="block";
+						document.getElementById("chartdiv-condomino-volume-acs").style.display="none";
+					}else{
+						document.getElementById("chartdiv-condomino-volume-acs-empty").style.display="none";
+						document.getElementById("chartdiv-condomino-volume-acs").style.display="block";
+					}
+					
+					
+
+					<!-- Chart code -->
+					
+					var chartCondominoVolumeACS = AmCharts.makeChart("chartdiv-condomino-volume-acs", {
+						  "type": "serial",
+						  "numberFormatter": {
+					            "precision": -1,
+					            "decimalSeparator": ",",
+					            "thousandsSeparator": "."
+					        },
+						  "theme": "none",
+						  "titles": [{
+							    "text": "Consumi condomino"
+							  }, {
+							    "text": "Valori di lettura ACS e AFS",
+							    "bold": false
+							  }],
+						  "marginRight": 70,
+						  "dataProvider": obj,
+						  "valueAxes": [ {
+						    "gridColor": "#FFFFFF",
+						    "gridAlpha": 0.2,
+						    "dashLength": 0
+						  } ],
+						  "gridAboveGraphs": true,
+						  "startDuration": 1,
+						  "graphs": [ {
+						    "balloonText": "",
+						    "fillAlphas": 0.8,
+						    "lineAlpha": 0.2,
+						    "type": "column",
+						    "valueField": "VOLUME_ATTUALE",
+						    "labelText": "[[category]]: [[value]]",
+						    "autoColor": true
+						  } ],
+						  "chartCursor": {
+						    "categoryBalloonEnabled": false,
+						    "cursorAlpha": 0,
+						    "zoomable": false
+						  },
+						  "categoryField": "STANZA",
+						  "categoryAxis": {
+						    "gridPosition": "start",
+						    "gridAlpha": 0,
+						    "tickPosition": "start",
+						    "tickLength": 20
+						  },
+						  "export": {
+						    "enabled": true
+						  }
+
+						});
+					
+					
+				}
+	      	
+			});
+		}
+		
+		
+		
+    </script> 
+
+</head>
+
+<body>
+
+	<form action="astro" method="post" id="formStampa" name="formStampa">
+		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="StampaLettureConsumi">	
+		<input type="hidden" id="ID_CONDOMINIO_STAMPA" name="ID_CONDOMINIO">
+	</form>
+	
+	
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+		
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+           
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+                <div class="col-sm-12">
+				
+                    <div class="ibox float-e-margins">
+					
+						<!-- bread crumb-->
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+
+						<!-- contenuto form-->
+                        <div class="ibox-content">
+                                   
+							<div class="row">
+								<div class="col-sm-12">							
+							
+									<form action="astro" method="get" id="formSearch" name="formSearch" class="form-horizontal">
+										<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="RicercaLettureConsumi">
+	
+		                                
+		                                 <div class="form-group">
+		                                	<label class="col-sm-2 control-label-left">Condominio</label>
+		                                    <div class="col-sm-10">
+												<select id="ID_CONDOMINIO" name="ID_CONDOMINIO" class="form-control" required>
+												</select>
+		                                    </div>
+		                                </div>
+                                
+		                                
+										<div class="form-group">
+										
+		                                	<label class="col-sm-2 control-label-left">Ricerca in linea:</label>
+		                                    <div class="col-sm-10">
+				                                <input type="text" id="free-text-search" name="free-text-search"  class="form-control" placeholder="digita il testo che vuoi cercare per aggiornare subito i risultati">
+											</div>
+											
+										</div>												
+		                                
+										<div class="form-group">
+										
+											<div class="col-sm-3">
+												<button class="btn btn-primary btn-sm" id="ricerca" type="submit" name="ricerca">${label_search}</button>
+												<!-- <button class="btn btn-primary btn-sm" type="button" id="report" name="report">PDF</button>
+												<button class="btn btn-primary btn-sm" type="button" id="excel" name="excel">XLS</button>
+												<button class="btn btn-primary btn-sm" type="button" id="csv" name="csv">CSV</button>-->
+											</div>
+											
+											<div class="col-sm-9">
+												<fieldset>
+													${label_legenda}:
+													<i class="fa fa-search" aria-hidden="true"></i>${label_view}
+													<i class="fa fa-file-pdf-o" aria-hidden="true"></i>PDF
+												</fieldset>
+											</div>
+										</div>			
+										
+
+										
+									
+									</form>
+									
+									<div class="hr-line-dashed"></div>
+									<strong>Dati condominio</strong>
+									
+			
+			                        <div class="table-responsive">
+										<table id="dt" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+							                        <th>Denominazione</th>
+									                <th>Indirizzo</th>
+									                <th>Località</th>
+									                <th>Provincia</th>
+									                <th>Data di lettura</th>
+									                <th>Tot. Nr. rilevatori</th>
+									                <th>Tot. Nr. contatori</th>
+									                <th>Tipologia</th>
+									                <th>Tot. Lettura attuale</th>
+									                <th>Tot. Volume attuale</th>
+									                <th>Unit&agrave; di misura</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+			                        
+			                        <div class="hr-line-dashed"></div>
+			                        <strong>Dati condomini</strong>
+			                        <div class="table-responsive">
+										<table id="dt1" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+							                        <th>Condomino</th>
+									                <th>Locatario</th>
+									                <th>Data di lettura</th>
+									                <th>Tot. Nr. rilevatori</th>
+									                <th>Tot. Nr. contatori</th>
+									                <th>Tipologia</th>
+									                <th>Tot. Lettura attuale</th>
+									                <th>Tot. Volume attuale</th>
+									                <th>Unit&agrave; di misura</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+			                        
+			                        
+			                        <div class="hr-line-dashed"></div>
+			                        <strong>Dati condomino</strong>
+			                        <div class="table-responsive">
+										<table id="dt2" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th>Condomino</th>
+													<th>Locatario</th>
+													<th>Stanza</th>
+													<th>Rilevatore</th>
+									                <th>Data di lettura</th>
+									                <th>Lettura attuale</th>
+									                <th>Volume attuale</th>
+									                <th>Unit&agrave; di misura</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+			                        
+			                        
+			                        
+			                        
+			                        
+			                        
+			                        <div class="hr-line-dashed"></div>
+								    <div class="row">
+						                <div class="col-lg-12">
+						                    <div class="tabs-container" id="schede">
+						                        <ul class="nav nav-tabs">
+						                        	<#if PROFILO?contains('CON')>
+						                        		<li class="active"><a data-toggle="tab" href="#tab-2">Grafici condomino</a></li>
+						                        	<#else>
+						                        		<li class="active"><a data-toggle="tab" href="#tab-1">Grafici condominio</a></li>
+					                        			<li class=""><a data-toggle="tab" href="#tab-2">Grafici condomino</a></li>
+						                        	</#if>
+					                        		
+						                        </ul>
+						                        <div class="tab-content">
+						                            <div id="tab-1" class="tab-pane <#if PROFILO?contains('CON')><#else>active</#if>">
+						                                <div class="panel-body">
+						
+						                                    <!-- iniziano i grafici -->
+		                        	                        
+									                        <div class="row">
+																<div class="col-lg-12">                  
+													            	<div class="ibox">
+													            		<div class="ibox-content float-e-margins">
+														                	 <div id="chartdiv-empty"></div>
+																			 <div id="chartdiv" style="max-height: 100%; position: relative;"></div>	          
+													                    </div>
+													            	</div> 
+												            	</div>                   
+												            </div>
+												            
+												            <div class="hr-line-dashed"></div>
+									                        <div class="row">
+																<div class="col-lg-12">                  
+													            	<div class="ibox">
+													            		 <div class="ibox-content float-e-margins">
+														                	 <div id="chartdiv-volume-acs-empty"></div>
+																			 <div id="chartdiv-volume-acs" style="max-height: 100%; position: relative;"></div>	          
+													                    </div>
+													            	</div> 
+												            	</div>                   
+												            </div>
+												            
+												            <div class="hr-line-dashed"></div>
+									                        <div class="row">
+																<div class="col-lg-12">                  
+													            	<div class="ibox">
+													            		<div class="ibox-content float-e-margins">
+														                	 <div id="chartdiv-contatori-empty"></div>
+																			 <div id="chartdiv-contatori" style="max-height: 100%; position: relative;"></div>	          
+													                    </div>
+													            	</div> 
+												            	</div>                   
+												            </div>
+												            
+												            
+						                                </div>
+						                            </div>
+						                            
+						                            
+						                            
+						                            <div id="tab-2" class="tab-pane <#if PROFILO?contains('CON')>active</#if>">
+						                                <div class="panel-body">
+
+															<div class="row">
+																<div class="col-lg-12">                  
+													            	<div class="ibox">
+													            		<div class="ibox-content float-e-margins">
+														                	 <div id="chartdiv-condomino-empty"></div>
+																			 <div id="chartdiv-condomino" style="max-height: 100%; position: relative;"></div>	          
+													                    </div>
+													            	</div> 
+												            	</div>                   
+												            </div>
+												            
+												            <div class="hr-line-dashed"></div>
+									                        <div class="row">
+																<div class="col-lg-12">                  
+													            	<div class="ibox">
+														                <div class="ibox-content float-e-margins">
+														                	 <div id="chartdiv-condomino-volume-acs-empty"></div>
+																			 <div id="chartdiv-condomino-volume-acs" style="max-height: 100%; position: relative;"></div>	          
+													                    </div>
+													            	</div> 
+												            	</div>                   
+												            </div>
+												            
+												            
+
+						                                </div>
+						                            </div>
+						                        </div>
+						
+						
+						                    </div>
+						                </div>
+					                </div>
+                
+                
+			                        
+			                        
+			                        
+			                       
+			                        
+			                        
+			                        
+			                        
+
+                    			</div>
+					
+                			</div>
+						</div>
+            		</div>
+				</div>
+			</div>
+						
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+		
+		</div>
+
+	</div>
+	
+
+</body>
+
+</html>

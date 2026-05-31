@@ -1,0 +1,9 @@
+<?xml version="1.0" standalone="yes"?>
+<siemeca>
+  <communicator>
+    <type>M</type>
+    <version>23</version>
+    <serialnr>10818312</serialnr>
+  </communicator>
+  <network nr="1" />
+</siemeca>

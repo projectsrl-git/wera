@@ -1,0 +1,4326 @@
+<?xml version="1.0" standalone="yes"?>
+<siemeca>
+  <communicator>
+    <type>M</type>
+    <version>23</version>
+    <serialnr>10818985</serialnr>
+  </communicator>
+  <network nr="1">
+    <colectordev nr="1">
+      <fabnr />
+      <model>0801.0014.0030</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>13:51:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus>100 %</powerstatus>
+      <fixeddataheader>
+        <identnr>10340483</identnr>
+        <manufact>12901</manufact>
+        <version>30</version>
+        <devtype>14</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <colectordev nr="2">
+      <fabnr />
+      <model>0802.0014.0024</model>
+      <paramset>WTT16</paramset>
+      <hourson>194</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>13:51:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus>Ext. Power</powerstatus>
+      <fixeddataheader>
+        <identnr>10169788</identnr>
+        <manufact>12901</manufact>
+        <version>24</version>
+        <devtype>14</devtype>
+        <accessnr>137</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <measuredev nr="1">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>13:56:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>515</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 13:56:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448062</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="2">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:07:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1239</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:07:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448063</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="3">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>10:34:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>2669</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 10:34:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448064</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="4">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:56:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1794</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:56:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448065</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="5">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:14:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1941</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:14:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448066</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="6">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>13:54:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>734</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 13:54:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515943</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="7">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:43:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>830</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:43:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515944</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="8">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:28:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1386</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:28:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515945</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="9">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>13:56:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1090</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 13:56:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515946</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="10">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:19:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>142</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:19:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515938</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="11">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>10:51:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1259</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 10:51:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515939</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="12">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:43:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>2073</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:43:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515940</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="13">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>10:52:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>657</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 10:52:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515941</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="14">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:16:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1377</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:16:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515942</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="15">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:29:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>169</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:29:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448067</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="16">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:02:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>556</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:02:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448068</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="17">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:37:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>81</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:37:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448069</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="18">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:54:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1333</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:54:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448070</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="19">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:16:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>528</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:16:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448071</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="20">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:33:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>909</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:33:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448072</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="21">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:12:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>846</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:12:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448073</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="22">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:22:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1208</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:22:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448074</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="23">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:57:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>463</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:57:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448075</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="24">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:15:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>134</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:15:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448076</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="25">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:46:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>310</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:46:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448077</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="26">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:31:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>468</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:31:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448078</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="27">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:33:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>496</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:33:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448079</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="28">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:38:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1159</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:38:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448080</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="29">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:29:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>691</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:29:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448081</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="30">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:52:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1329</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:52:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448082</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="31">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:48:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>491</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:48:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448083</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="32">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:35:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>635</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:35:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448084</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="33">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:45:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1475</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:45:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448085</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="34">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:40:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>596</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:40:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448086</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="35">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>11:03:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>763</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 11:03:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448087</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="36">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:43:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>21</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:43:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448088</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="37">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:13:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>936</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:13:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448089</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="38">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:09:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>549</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:09:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448090</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="39">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:27:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>951</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:27:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448091</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="40">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:23:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>903</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:23:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448092</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="41">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:42:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>2376</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:42:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448093</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="42">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:29:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>851</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:29:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448094</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="43">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:16:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>676</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:16:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448095</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="44">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:39:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1181</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:39:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448096</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="45">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>13:04:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>2768</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 13:04:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448097</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="46">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>11.04.2017</errordate>
+      <date>x x x</date>
+      <time>x x x</time>
+      <subnet>0</subnet>
+      <receiver>0</receiver>
+      <powerstatus />
+      <fixeddataheader>
+        <identnr>81448098</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>144</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="47">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:24:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1350</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:24:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448099</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="48">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>12:12:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>558</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 12:12:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448100</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="49">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:29:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>949</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:29:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448101</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="50">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:46:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>220</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:46:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448102</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="51">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:17:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1743</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:17:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448103</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="52">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:35:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>518</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:35:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448104</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="53">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:56:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1115</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:56:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448105</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="54">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:14:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>679</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:14:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448106</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="55">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:59:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>292</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:59:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448107</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="56">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:19:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>789</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:19:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448108</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="57">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>09:02:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>2197</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 09:02:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448109</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="58">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:09:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1451</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:09:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448110</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="59">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:39:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1791</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:39:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>81448111</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="60">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:17:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>751</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:17:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516969</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="61">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:58:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>730</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:58:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516970</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="62">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:29:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>832</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:29:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516971</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="63">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:16:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>685</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:16:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516972</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="64">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:46:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1350</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:46:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516973</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="65">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:30:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>865</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:30:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516974</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="66">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:09:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>120</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:09:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516975</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="67">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:52:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>767</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:52:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516976</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="68">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:15:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>517</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:15:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516977</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="69">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>09:00:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1631</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 09:00:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516978</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="70">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>09:26:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>370</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 09:26:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>84504716</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="71">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>13:56:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>4</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 13:56:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>84504717</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="72">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>13:08:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1073</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 13:08:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>84504718</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="73">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>10:12:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>937</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2016</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 10:12:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>84504715</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="74">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:09:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>717</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:09:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91515948</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="75">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:01:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>36</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:01:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516949</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="76">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>09:12:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>299</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 09:12:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516950</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="77">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>09:42:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>442</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 09:42:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516951</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="78">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>09:01:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>34</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 09:01:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516952</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="79">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>06:23:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1095</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 06:23:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516953</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="80">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:07:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>565</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:07:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516959</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="81">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:00:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1357</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:00:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516960</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="82">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:26:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1115</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:26:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516961</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="83">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:22:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>705</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:22:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516962</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="84">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>07:18:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>612</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 07:18:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516963</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="85">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>10:54:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1342</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 10:54:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516964</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="86">
+      <fabnr />
+      <model>0600.0008.0052</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>13.04.2017</date>
+      <time>08:10:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>2352</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>13.04.2017 08:10:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>91516965</identnr>
+        <manufact>12901</manufact>
+        <version>52</version>
+        <devtype>8</devtype>
+        <accessnr>3</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+  </network>
+</siemeca>

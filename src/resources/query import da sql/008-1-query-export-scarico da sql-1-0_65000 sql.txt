@@ -1,0 +1,57 @@
+select * from (
+
+SELECT 
+ROW_NUMBER() over (order by n_fabbrica_dispositivo) as id_modulo, 
+1 as id_azienda, 
+coalesce((select export1.id_modulo from export1 where export1.id_condominio=id_scarico),0) as id_condominio, 
+
+nome_file, data_import, 
+       ora_import, n_cliente_network, n_fabbrica_network, versione_software_i, 
+       data_di_lettura_i, giorno_settimana, ora_di_lettura_i, operat_hours, 
+       anomalia_i, data_anomalia_i, ora_anomalia_i, disp_radio_trovati, 
+       modello_antenna, n_progressivo_dispositivo, antenna_di_riferimento, 
+       
+	   case when len(data_di_lettura)>10 then 
+			case when charindex('/', data_di_lettura)=3 then
+			SUBSTRING(DATA_DI_LETTURA,7,4)+'/'+SUBSTRING(data_di_lettura,4,2)+'/'+SUBSTRING(data_di_lettura,1,2)
+			else ltrim(rtrim(SUBSTRING(data_di_lettura,1,10))) end
+	   else DATA_DI_LETTURA end as data_di_lettura, 
+
+	   case when len(data_di_lettura)>10 then ltrim(rtrim(SUBSTRING(data_di_lettura,11,LEN(data_di_lettura)))) else ora_di_lettura end as ora_di_lettura, 
+	   
+	   n_fabbrica_dispositivo, codice_di_produzione, 
+       versione_software, anomalia, data_anomalia, ora_anomalia, 
+	   iif(lettura_attuale like '%x%','0.00',lettura_attuale) as lettura_attuale, 
+	    
+       unita_di_misura, 
+	   iif(volume_attuale like '%x%','0.00',volume_attuale) as volume_attuale, 
+	   unita_di_misura1, fattore_energia, 
+       lettura_a_data_di_scarico, unita_di_misura2, data_di_scarico, 
+       data_inizio_statistica, stat_value1, stat_value2, stat_value3, 
+       stat_value4, stat_value5, stat_value6, stat_value7, stat_value8, 
+       stat_value9, stat_value10, stat_value11, stat_value12, stat_value13, 
+       stat_value14, stat_value15, stat_value16, stat_value17, stat_value18, 
+       unit_of_stat, currvalue_of_tariff1, unit_of_tariff1, set_day_val_of_tariff1, 
+       set_day_unit_of_tariff1, kdevadr292, zdat, zuhr, cbs104, zfdauer251, 
+       volumecumul, unvolumecumul, cvolstlval108, cvolstldim108, censtvlval111, 
+       censtvldim111, cvolstvlval112, cvolstvldim112, zdatstvl114, cpqmwmaxval169, 
+       cpqmwmaxdim169, zdatmwmax170, valcumultar1, umvalcumultar1, cvxtar2val194, 
+       cvxtar2dim194, cvxtar1stlval193, cvxtar1stldim193, cvxtar2stlval194, 
+       cvxtar2stldim194, 'true' as visibile, data_vis, ora_import_completa, 'false' as errore_sistemato, 
+ROW_NUMBER() over (order by n_fabbrica_dispositivo) as nr_modulo,  
+'2018/09/06'	as   dt_modulo, 
+	   'DRA' as stato, 
+       '' as lista_allegati, 
+	   '2018-09-26 16:00:51.671' as ts_ins, 
+	   1 as id_utente_ins, 
+	   '' as ts_mod, 
+	   '' as id_utente_mod
+  FROM scarico
+
+
+  ) as tab where id_modulo between 0 and 65000
+  order by id_modulo
+
+
+
+-- replace , con .

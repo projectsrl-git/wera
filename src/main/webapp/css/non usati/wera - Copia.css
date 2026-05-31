@@ -1,0 +1,336 @@
+body{
+    background-color: white;
+    font-size: 12px;
+    color: #375F9B;
+}
+
+
+.minimalize-styl-2 {
+  margin: 14px 5px 5px 30px;
+}
+.navbar-top-links li:last-child {
+  margin-right: 30px;
+}
+.skin-3.fixed-nav .minimalize-styl-2 {
+  margin: 14px 5px 5px 15px;
+}
+body.boxed-layout#wrapper {
+  background: #FFFFFF;
+}
+.skin-3.mini-navbar .nav-second-level {
+  background: #FFFFFF;
+}
+.breadcrumb {
+  background: transparent;
+}
+.page-heading {
+  border: none;
+}
+.nav > li.active {
+  background: #c9d5e6;
+}
+.fixed-nav.navbar-fixed-top {
+  background: #da1e2e;
+}
+.nav > li > a {
+  color: #36659e;
+}
+.nav > li.active > a {
+  color: #da1e2e;
+}
+
+.navbar-static-top {
+  background: transparent;
+}
+.dashboard-header {
+  background: transparent;
+  border-bottom: none !important;
+  border-top: none;
+  padding: 20px 30px 10px 30px;
+}
+.wrapper-content {
+  padding: 30px 15px;
+}
+#page-wrapper {
+  background: #ffffff;
+}
+.ibox-title,
+.ibox-content {
+  border-width: 1px;
+}
+.ibox-content:last-child {
+  border-style: solid solid solid solid;
+}
+.nav > li.active {
+  border: none;
+}
+.nav-header {
+  padding: 35px 25px 25px 25px;
+  background: #FFFFFF;
+}
+.nav-header a.dropdown-toggle {
+  color: #da1e2e;
+  margin-top: 10px;
+}
+.nav-header a.dropdown-toggle .text-muted {
+  color: #da1e2e;
+  opacity: 0.8;
+}
+.profile-element {
+  text-align: center;
+}
+.img-circle {
+  border-radius: 5px;
+}
+.navbar-default .nav > li > a:hover,
+.navbar-default .nav > li > a:focus {
+  background: #c9d5e6;
+  color: #da1e2e;
+}
+.nav.nav-tabs > li.active > a {
+  color: #555;
+}
+.nav.nav-tabs > li.active {
+  background: transparent;
+}
+
+
+
+.ibox-content {
+	color: #375F9B;
+}
+
+
+.btn {
+	border-radius: 3px;
+}
+
+.btn-white {
+	border: 1px solid #375F9B;
+	font-weight: bold;
+}
+
+.btn-primary {
+	background-color: #D7001E;
+	border: 1px solid #375F9B;
+	font-weight: bold;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .active.btn-primary, .open .btn-primary.dropdown-toggle, .btn-primary:focus:active, .btn-primary:hover:active, .active.btn-primary:hover, .active.btn-primary:focus {
+	background-color: #D7001E;
+	border: 1px solid #375F9B;
+}
+
+.logo-element {
+    font-size: 12px;
+    background-color: #375F9B;    
+}
+
+
+.mini-navbar .nav-second-level {
+    background-color: white;
+	border: 1px solid #375F9B;
+}
+
+
+.breadcrumb > li a {
+    color: #375F9B;
+}
+
+.navbar-right.nav > li > a {
+    color: #375F9B;
+}
+
+
+.navbar-default .nav > li > a:hover, .navbar-default .nav > li > a:focus {
+	background-color: #375F9B;  
+	color: white;  
+}
+
+
+.nav-tabs > li > a:hover, .nav-tabs > li > a:focus {
+    background-color: #e6e6e6;
+    color: #D7001E;
+}
+
+.nav-tabs.nav > li.active > a {
+    color: #D7001E;
+}
+
+
+.fa-color-auto {
+    color: #375F9B;
+}
+
+
+:empty.jstree-icon {
+    margin-bottom: 5px;
+}
+
+
+.tabs-container .nav-tabs > li.active > a, .tabs-container .nav-tabs > li.active > a:hover, .tabs-container .nav-tabs > li.active > a:focus {
+    border: 2px solid #bbbbbb;
+    border-bottom-color: white;
+    margin-bottom: -2px;
+}
+
+
+.tabs-container .panel-body {
+    border: 2px solid #bbbbbb;
+}
+
+.tabs-container .nav-tabs {
+    border-bottom: 2px solid #bbbbbb;
+}
+
+.dt-specifiche {
+	
+}
+
+.editRowSpecifiche{
+	
+}
+
+.ibox-title, .ibox-content {
+    border-width: 2px;
+    border-color: #bbbbbb;
+}
+
+.ibox-title {
+    border-radius: 4px 4px 0 0;
+}
+
+.noradius{
+    border-radius: 0 0 0 0;
+}
+
+.disabledTab{
+    pointer-events: none;
+}
+
+
+fieldset{
+	margin: 0 auto;
+ 	text-align: center;
+	padding: 5px 5px 5px 5px;
+    border: 2px solid #bbbbbb;
+	border-radius: 4px 4px 4px 4px;
+	display:inline-block;
+	font-size:11px;
+	width: 100%;	
+}
+
+.imgwrapper {
+   width: 80%;
+}
+
+
+div.dataTables_wrapper div.dataTables_info {
+    padding-top: 5px;
+    white-space: nowrap;
+    text-align: right;
+}
+
+.fa-rotate-90 {
+    padding-top: 10px;
+}
+
+.label-aperto {
+  background-color: royalblue;
+  color: #FFFFFF;
+}
+
+.label-chiuso {
+  background-color: red;
+  color: #FFFFFF;
+}
+
+.label-sospeso {
+  background-color: orange;
+  color: #FFFFFF;
+}
+
+.label-attivo {
+  background-color: green;
+  color: #FFFFFF;
+}
+
+.noresize {
+  resize: none;
+  cursor: default;
+  font-size: 16px;
+  background-color : red;
+}
+
+
+
+/* ALIREP - controlli su form */
+
+
+.form-control {
+    border-color: rgb(204,204,204);
+    border-radius: 4px;
+	box-shadow: inset 0 0 2px rgb(204,204,204);
+}
+
+input:required {
+	border-radius: 4px 4px 4px 4px;
+	background-color: beige;
+}
+
+textarea:required {
+	border-radius: 4px 4px 4px 4px;
+	background-color: beige;
+}
+
+[disabled].form-control, [readonly].form-control, fieldset[disabled] .form-control {
+    background-color: lightGray;
+}
+
+.select2-container--disabled.select2-container--bootstrap .select2-selection, .select2-container--disabled.select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+    background-color: lightGrey;
+}
+
+.align-center {
+  text-align: center;
+}
+
+.boxed-text {
+  border: 1px solid black ;
+  padding: 2px 0px 2px 0px;
+} 
+.boxed-text.required-fields{
+  background-color: beige;
+}
+ 
+
+.signature-wrapper {
+	position: relative;
+	width: 400px;
+	height: 200px;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+.signature-pad {
+	border: 1px solid black;
+	position: relative;
+	width:400px;
+	height:200px;
+}
+
+
+.statoClass {
+  border: 1px solid grey ;
+  padding: 2px 10px 2px 10px;
+}
+
+
+.group{
+    background-color:dodgerblue;
+    font-size:12px;
+ 	font-weight: bold;
+    color:black;
+}

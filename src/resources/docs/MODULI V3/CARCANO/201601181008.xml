@@ -1,0 +1,4407 @@
+<?xml version="1.0" standalone="yes"?>
+<siemeca>
+  <communicator>
+    <type>M</type>
+    <version>23</version>
+    <serialnr>10818985</serialnr>
+  </communicator>
+  <network nr="1">
+    <colectordev nr="1">
+      <fabnr />
+      <model>0802.0014.0023</model>
+      <paramset>WTT16</paramset>
+      <hourson>18552</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>08:56:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus>Ext. Power</powerstatus>
+      <fixeddataheader>
+        <identnr>10169788</identnr>
+        <manufact>12901</manufact>
+        <version>23</version>
+        <devtype>14</devtype>
+        <accessnr>42</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <colectordev nr="2">
+      <fabnr />
+      <model>0801.0014.0023</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>08:56:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus>83 %</powerstatus>
+      <fixeddataheader>
+        <identnr>10173402</identnr>
+        <manufact>12901</manufact>
+        <version>23</version>
+        <devtype>14</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <colectordev nr="3">
+      <fabnr />
+      <model>0801.0014.0023</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>08:56:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus>83 %</powerstatus>
+      <fixeddataheader>
+        <identnr>10173401</identnr>
+        <manufact>12901</manufact>
+        <version>23</version>
+        <devtype>14</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </colectordev>
+    <measuredev nr="1">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:11:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:11:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>354</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>408</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074731</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="2">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>01:06:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:06:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>276</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>561</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075684</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="3">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>01:06:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:06:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1486</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>2791</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075690</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="4">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>01:14:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:14:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>799</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1442</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074729</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>172</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="5">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>06:07:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:07:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>821</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1496</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074732</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>170</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="6">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>06:09:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:09:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>931</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1628</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075850</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>170</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="7">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>07:09:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 07:09:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>366</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>741</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074730</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>170</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="8">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>05:47:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 05:47:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>495</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>963</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075691</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>170</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="9">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:21:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:21:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1169</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>2001</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074718</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>170</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="10">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>16.01.2016</errordate>
+      <date>16.01.2016</date>
+      <time>01:23:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>16.01.2016 01:23:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>921</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1347</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074720</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>170</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="11">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:27:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:27:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>453</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>866</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>18</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>25</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>25</storagenr>
+        <value>358</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>24</storagenr>
+        <value>203</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>23</storagenr>
+        <value>69</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>22</storagenr>
+        <value>866</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>21</storagenr>
+        <value>x x x</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>20</storagenr>
+        <value>x x x</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>19</storagenr>
+        <value>x x x</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>18</storagenr>
+        <value>x x x</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>17</storagenr>
+        <value>x x x</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>16</storagenr>
+        <value>816</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>15</storagenr>
+        <value>646</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>14</storagenr>
+        <value>462</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>13</storagenr>
+        <value>274</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>12</storagenr>
+        <value>120</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>11</storagenr>
+        <value>37</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>10</storagenr>
+        <value>708</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>9</storagenr>
+        <value>708</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>708</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074807</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="12">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>14.10.2015</errordate>
+      <date>29.01.2015</date>
+      <time>02:48:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>29.01.2015 02:48:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>866</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2014</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1389</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074725</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="13">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>01:10:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:10:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>826</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1383</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074722</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="14">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>24.12.2015</errordate>
+      <date>18.01.2016</date>
+      <time>01:05:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:05:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>450</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>870</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075851</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>40</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="15">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>06:11:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:11:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1545</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>2667</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074808</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="16">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>03:36:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 03:36:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>12</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>830</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074761</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="17">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>05:48:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 05:48:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>47</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1560</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074812</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="18">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>03:23:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 03:23:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>181</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074810</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="19">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:28:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:28:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>452</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074758</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="20">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:16:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:16:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>229</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>639</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074760</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="21">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:29:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:29:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>56</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>201</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074811</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="22">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>07:09:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 07:09:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>293</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1450</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074764</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="23">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>03:23:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 03:23:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>22</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>734</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074759</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="24">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>07:30:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 07:30:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1241</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>2416</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074746</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="25">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>06:15:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:15:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>307</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>616</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074750</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="26">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:26:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:26:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1433</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1940</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074747</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="27">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>23.05.2014</errordate>
+      <date>18.01.2016</date>
+      <time>01:18:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:18:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>686</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1191</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074751</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>40</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="28">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>07:33:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 07:33:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1043</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1863</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074748</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="29">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>14.10.2015</errordate>
+      <date>29.01.2015</date>
+      <time>01:58:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>29.01.2015 01:58:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1240</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2014</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>2005</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074744</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="30">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>07:13:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 07:13:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>313</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>590</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074752</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="31">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>05:41:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 05:41:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>421</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>764</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074745</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="32">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>06:05:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:05:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>819</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1257</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074741</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="33">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:33:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:33:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1053</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1830</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074737</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="34">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:30:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:30:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>127</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>537</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074734</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="35">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>07:17:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 07:17:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>220</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>641</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074735</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="36">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>01:26:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:26:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1317</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>2256</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074738</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="37">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>01:17:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:17:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>397</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>680</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074733</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="38">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:33:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:33:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1266</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>2390</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074749</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="39">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>14.10.2015</errordate>
+      <date>29.01.2015</date>
+      <time>02:10:00</time>
+      <subnet>0</subnet>
+      <receiver>3</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>29.01.2015 02:10:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1302</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2014</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>2011</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73074736</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="40">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>06:24:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:24:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>340</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>600</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075680</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="41">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>01:18:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:18:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>531</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1019</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075678</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="42">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>07:18:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 07:18:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>912</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1999</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075687</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="43">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>01:28:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 01:28:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>335</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>732</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73073558</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="44">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>06:26:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:26:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>997</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1851</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075679</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="45">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>07:27:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 07:27:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>364</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>684</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075682</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="46">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:31:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:31:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>918</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1704</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075692</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="47">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>02:54:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 02:54:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>1267</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>2474</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075594</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="48">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>27.08.2015</errordate>
+      <date>18.01.2016</date>
+      <time>06:16:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:16:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>235</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>356</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075587</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>40</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="49">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>07:11:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 07:11:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>106</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>277</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075586</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="50">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>17.01.2016</date>
+      <time>19:07:00</time>
+      <subnet>0</subnet>
+      <receiver>2</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>17.01.2016 19:07:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>990</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1331</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075585</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="51">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>06:48:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:48:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>135</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>451</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075599</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="52">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>08:31:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 08:31:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>235</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>844</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075595</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="53">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>x x x</errordate>
+      <date>18.01.2016</date>
+      <time>06:32:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:32:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>580</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>1552</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075596</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>0</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+    <measuredev nr="54">
+      <fabnr />
+      <model>0606.0008.0042</model>
+      <paramset />
+      <hourson>0</hourson>
+      <errorflags />
+      <errordate>09.08.2014</errordate>
+      <date>18.01.2016</date>
+      <time>06:17:00</time>
+      <subnet>0</subnet>
+      <receiver>1</receiver>
+      <powerstatus />
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>18.01.2016 06:17:00</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>0</storagenr>
+        <value>248</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>30.09.2015</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>1</storagenr>
+        <value>956</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>storage block size</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>x x x</value>
+        <dimension>date</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>1</value>
+        <dimension>Month(s)</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <datapoint>
+        <storagenr>8</storagenr>
+        <value>0</value>
+        <dimension>H.C.A.</dimension>
+        <tariff>0</tariff>
+        <subunit>0</subunit>
+      </datapoint>
+      <fixeddataheader>
+        <identnr>73075614</identnr>
+        <manufact>12901</manufact>
+        <version>42</version>
+        <devtype>8</devtype>
+        <accessnr>169</accessnr>
+        <status>40</status>
+        <signature>0</signature>
+      </fixeddataheader>
+    </measuredev>
+  </network>
+</siemeca>

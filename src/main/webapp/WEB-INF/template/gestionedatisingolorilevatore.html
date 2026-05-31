@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+    
+	<script type="text/javascript">
+	
+		var flagRicerca=false;
+		var dtAjax="astro?FUNCTIONID=AJAXArray&dataset=DSDatiRilevatoriCensitiSingolo&columns=RILEVATORE,TIPOLOGIA,CONDOMINIO,CONDOMINO,LOCATARIO,STANZA,SCALA,PIANO,INTERNO,N_TELEFONO,INDIRIZZO,LOCALITA,PROVINCIA,CAP,SIM&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtAjax1="astro?FUNCTIONID=AJAXArray&dataset=DSRilevatoriGestioneSingolo&columns=VALORE_NON_VALIDO,LETTURA_ZERO,RILEVATORE_IN_ANOMALIA,N_PROGRESSIVO_DISPOSITIVO,ANTENNA_DI_RIFERIMENTO,DATA_DI_LETTURA,ORA_DI_LETTURA,N_FABBRICA_DISPOSITIVO,CODICE_DI_PRODUZIONE,VERSIONE_SOFTWARE,ANOMALIA,DATA_ANOMALIA,ORA_ANOMALIA,LETTURA_ATTUALE,UNITA_DI_MISURA,VOLUME_ATTUALE,UNITA_DI_MISURA1,FATTORE_ENERGIA,LETTURA_A_DATA_DI_SCARICO,UNITA_DI_MISURA2,DATA_DI_SCARICO,DATA_INIZIO_STATISTICA,STAT_VALUE1,STAT_VALUE2,STAT_VALUE3,STAT_VALUE4,STAT_VALUE5,STAT_VALUE6,STAT_VALUE7,STAT_VALUE8,STAT_VALUE9,STAT_VALUE10,STAT_VALUE11,STAT_VALUE12,STAT_VALUE13,STAT_VALUE14,STAT_VALUE15,STAT_VALUE16,STAT_VALUE17,STAT_VALUE18,UNIT_OF_STAT,CURRVALUE_OF_TARIFF1,UNIT_OF_TARIFF1,SET_DAY_VAL_OF_TARIFF1,SET_DAY_UNIT_OF_TARIFF1,NOME_FILE,VOLUME1,VOLUME2,DATE1,ENERGY1,ENERGY2,VOLUME_FLOW,POWER,FLOW_TEMPERATURE,RETURN_TEMPERATURE&JOLLY_CHAR=*&WHERECONDITION=";
+		var dtAjax2="astro?FUNCTIONID=AJAXArray&dataset=DSDatiRilevatori&columns=RILEVATORE,ANNO,DESCRIZIONE_MESE,LETTURA,LETTURA_ACS,LETTURA_AFS,UTENTE_INSERIMENTO,UTENTE_MODIFICA,DATA_MOD,LETTURA_PREC,LETTURA_ACS_PREC,LETTURA_AFS_PREC,NOME_FILE_DR,ID_MODULO&JOLLY_CHAR=*&WHERECONDITION=";
+		
+		var dtWhereCondition="<#if WHERECONDITION?exists>${WHERECONDITION}</#if> AND RILEVATORE=<#if RILEVATORE?exists>'${RILEVATORE}'</#if>";
+		var dtWhereCondition1="<#if WHERECONDITION?exists>${WHERECONDITION}</#if> AND N_FABBRICA_DISPOSITIVO=<#if RILEVATORE?exists>'${RILEVATORE}'</#if>";
+		var dtWhereCondition3="<#if WHERECONDITION?exists>${WHERECONDITION}</#if> WHERE RILEVATORE=<#if RILEVATORE?exists>'${RILEVATORE}'</#if>";
+	
+		$(function(){
+			
+			$( "#div_inserimento_non_censito" ).hide();
+			$( "#div_non_censito" ).hide();
+			$( "#div_ok" ).hide();
+			$( "#div_validi" ).hide();
+			$( "#div_zero" ).hide();
+			$( "#div_anomalia" ).hide();
+			
+			$( "#tabella_1" ).show();
+			
+			
+			var tipologia=<#if TIPOLOGIA?exists>'${TIPOLOGIA}'</#if>;
+			if (tipologia!='Antenna' && tipologia!='Gateway'){
+				$( "#modificaDati" ).show();
+			}else{
+				$( "#modificaDati" ).hide();
+			}
+			
+			
+			
+			
+			var textValido="VALORE_VALIDO";
+		    var textZero="LETTURA_ZERO";
+		    var textAnomalia="RILEVATORE_IN_ANOMALIA";
+		    var textOk="RILEVATORE_OK";
+		    var textNonCensito="NON_CENSITO";
+		    
+		    
+		    $.ajax({
+				url: "astro?FUNCTIONID=JSONDataSet&dataset=DSStatoRilevatore&columns="+textValido+","+textZero+","+textAnomalia+","+textOk+","+textNonCensito+"&WHERECONDITION= "+dtWhereCondition1,
+				dataType: 'json',
+				type: 'GET',
+				success: function (data) {
+					
+					
+					$.each(data.rows,function(i,data) {
+						var valueValidi=eval("data."+textValido);
+						var valueZero=eval("data."+textZero);
+						var valueAnomalia=eval("data."+textAnomalia);
+						var valueOk=eval("data."+textOk);
+						var valueNonCensito=eval("data."+textNonCensito);
+
+						document.querySelector('#div_non_censito').innerHTML = '<a class="alert-link" href="#">Rilevatore non censito</a>';
+						document.querySelector('#div_ok').innerHTML = '<a class="alert-link" href="#">Rilevatore funzionante (non in anomalia)</a>';
+						document.querySelector('#div_validi').innerHTML = '<a class="alert-link" href="#">Rilevatore con valore statistico di lettura valido</a>';
+						document.querySelector('#div_zero').innerHTML = '<a class="alert-link" href="#">Rilevatore con valore statistico a zero</a>';
+						document.querySelector('#div_anomalia').innerHTML = '<a class="alert-link" href="#">Rilevatore con valore statistico in anomalia</a>';
+						
+						
+						if (valueNonCensito){
+							$( "#div_non_censito" ).show();
+							$( "#div_inserimento_non_censito" ).show();
+							$("#tabella_1").hide();
+						}
+						if (valueOk){
+							$( "#div_ok" ).show();
+						}
+						if (valueValidi){
+							$( "#div_validi" ).show();						
+						}
+						if (valueZero){
+							$( "#div_zero" ).show();	
+						}
+						if (valueAnomalia){
+							$( "#div_anomalia" ).show();
+						}
+						
+					}); 
+				}
+			}); 
+		    
+		    
+			
+			var table = $('#dt').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax+dtWhereCondition,
+				dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+			
+			
+			
+			
+			var table1 = $('#dt1').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax1+dtWhereCondition1,
+				columnDefs: [
+					{
+						targets:0,
+						visible: false
+					},
+					{
+						targets:1,
+						visible: false
+					},
+					{
+						targets:2,
+						visible: false
+					}
+				],
+				
+				dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+    
+                buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt1').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+                'rowCallback': function(row, data, index){
+               	 if(data[0]==='true'){
+                        $(row).css('background-color', '#fcf8e3');
+               	 } else if(data[1]==='true'){
+                        $(row).css('background-color', '#fcf8e3');
+               	 } else if(data[2]==='true'){
+                       $(row).css('background-color', '#f2dede');
+                   }
+               },
+				aaSorting: []
+
+            });
+			
+			
+			
+			
+			
+			var table2 = $('#dt2').DataTable({
+	        	orderCellsTop: true,
+	        	fixedHeader: true,
+				ajax: dtAjax2+dtWhereCondition3,
+				columnDefs: [
+					{
+						targets:3,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:4,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:5,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:9,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:10,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:11,
+						className: 'dt-body-right',
+						render: $.fn.dataTable.render.number( '.', ',', 2, '' )
+					},
+					{
+						targets:13,
+						visible: false
+					},
+					
+				],
+				dom: '<"html5buttons"B>lTfgitp',
+                language: {
+			        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
+			    },
+			    buttons: [
+                    {extend: 'csv', title: $(document).find("title").text()},
+                    {extend: 'excel', title: $(document).find("title").text()},
+                    {extend: 'pdf', title: $(document).find("title").text(), orientation: 'landscape'}
+                ],
+               
+                "drawCallback": function( settings ) {
+                	$(".dataTables_filter").hide();    
+                	$(".html5buttons").hide();   
+    	    		
+                	var dataCount=$('#dt2').DataTable().column( 0 ).data().length;
+    	    		if(dataCount==0 && flagRicerca) {
+    					$('.modal-title').html('Attenzione!');
+    					$('.modal-text').html('Nessun risultato ottenuto: controllare i filtri impostati per la ricerca...');
+    					$("#modalAlert").modal({backdrop: true});
+    					$('#modalAlert').collapse("show");	    			
+    	    		}
+    	    		
+                },
+				aaSorting: []
+
+            });
+			
+			
+			//luca inizio
+			
+			$("#ID_AZIENDA_1").val("<#if ID_AZIENDA_1?exists>${ID_AZIENDA_1}</#if>");
+			$("#RILEVATORE_1").val("<#if RILEVATORE_1?exists>${RILEVATORE_1}</#if>");
+			
+			$("#ID_CONDOMINIO_1").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 "]);
+			$("#ID_UTENZA_1").trigger("loadDataSet",["DataSetUtenze","ID_MODULO","DENOMINAZIONE","<#if ID_UTENZA?exists>${ID_UTENZA}</#if>"," WHERE 1=1 "]);
+			
+			
+			$("#ID_CONDOMINIO_1").on("select2:selecting", function(e) { 
+				var id= e.params.args.data.id;
+				$("#ID_UTENZA_1").empty();
+				$("#ID_UTENZA_1").select2("destroy");
+				$("#ID_UTENZA_1").trigger("loadDataSet",["DataSetUtenze","ID_MODULO","DENOMINAZIONE","<#if ID_UTENZA_1?exists>${ID_UTENZA_1}</#if>"," WHERE ID_CONDOMINIO="+id+" "]);
+			});	
+			
+			$("#ID_AZIENDA_1").hide();
+			$("#RILEVATORE_1").hide();
+			//luca fine
+
+			
+			
+			
+			
+			$("#ID_AZIENDA").val("<#if ID_AZIENDA?exists>${ID_AZIENDA}<#else><#if ID_AZIENDA_2?exists>${ID_AZIENDA_2}</#if></#if>");	
+			$("#ID_CONDOMINIO").val("<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}<#else><#if ID_CONDOMINIO_2?exists>${ID_CONDOMINIO_2}</#if></#if>");
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			
+			$("#MESE").trigger("loadDataSet",["OpzioneMesi","CODICE","DESCR","<#if MESE?exists>${MESE}</#if>",""]);
+			$("#ANNO").trigger("loadDataSet",["DSUltimiTreAnni","CODICE","DESCRI","<#if ANNO?exists>${ANNO}</#if>"," WHERE 1=1 "]);
+			$("#ID_AZIENDA").hide();
+			$("#ID_CONDOMINIO").hide();
+			$("#RILEVATORE").hide();
+			$("#ID_MODULO").hide();
+			$("#UNITA_DI_MISURA").hide();
+			$("#UNIT_OF_STAT").hide();
+			$("#NOME_FILE_DR").hide();
+			$("#ID_UTENTE_MOD").hide();
+			$("#LETTURA_PREC").hide();
+			$("#LETTURA_ACS_PREC").hide();
+			$("#LETTURA_AFS_PREC").hide();
+			$("#TS_MOD").hide();
+			$("#FATTORE_ENERGIA").hide();
+			
+			$('#MESE').on("select2:selecting", function(e) { 
+				var mese= e.params.args.data.id;
+				var anno=$("#ANNO").val();
+				var rilevatore=<#if RILEVATORE?exists>'${RILEVATORE}'</#if>;
+				$("#RILEVATORE").val(rilevatore);
+				
+				$("#ID_MODULO").val('');
+				$("#ID_MODULO").trigger("loadDataSetSimpleText",["DSDatiRilevatori","ID_MODULO","ID_MODULO"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+				$("#LETTURA_PREC").trigger("loadDataSetSimpleText",["DSDatiRilevatori","LETTURA","LETTURA"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+				$("#LETTURA_ACS_PREC").trigger("loadDataSetSimpleText",["DSDatiRilevatori","LETTURA_ACS_PREC","LETTURA_ACS_PREC"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+				$("#LETTURA_AFS_PREC").trigger("loadDataSetSimpleText",["DSDatiRilevatori","LETTURA_AFCS_PREC","LETTURA_AFS_PREC"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+				$("#ID_AZIENDA").trigger("loadDataSetSimpleText",["DSDatiRilevatori","ID_AZIENDA","ID_AZIENDA"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+				$("#ID_CONDOMINIO").trigger("loadDataSetSimpleText",["DSDatiRilevatori","ID_CONDOMINIO","ID_CONDOMINIO"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+
+			});
+			
+			
+			$('#ANNO').on("select2:selecting", function(e) { 
+				var anno= e.params.args.data.id;
+				var mese=$("#MESE").val();
+				var rilevatore=<#if RILEVATORE?exists>'${RILEVATORE}'</#if>;
+				$("#RILEVATORE").val(rilevatore);
+				$("#ID_MODULO").val('');
+				$("#ID_MODULO").trigger("loadDataSetSimpleText",["DSDatiRilevatori","ID_MODULO","ID_MODULO"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+				$("#LETTURA_PREC").trigger("loadDataSetSimpleText",["DSDatiRilevatori","LETTURA","LETTURA"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+				$("#LETTURA_ACS_PREC").trigger("loadDataSetSimpleText",["DSDatiRilevatori","LETTURA_ACS_PREC","LETTURA_ACS_PREC"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+				$("#LETTURA_AFS_PREC").trigger("loadDataSetSimpleText",["DSDatiRilevatori","LETTURA_AFS_PREC","LETTURA_AFS_PREC"," WHERE RILEVATORE='"+rilevatore+"' AND ANNO='"+anno+"' AND MESE='"+mese+"' "]);
+			});
+			
+			
+			
+			
+			$("#Inserimento").validate();
+			
+			$("#Inserimento").submit(function(event) {
+				document.getElementById("salva").style.display="none";
+				/* stop form from submitting normally */
+				event.preventDefault();			
+			
+				if (!$("#Inserimento").valid()) {
+					document.getElementById("salva").style.display="block";
+					return false;
+				}
+				
+				
+
+				if($("#LETTURA_HCA").val()!=""){
+					$("#UNITA_DI_MISURA").val('HCA');
+					$("#UNIT_OF_STAT").val('HCA');
+					document.getElementById("FATTORE_ENERGIA").value='8';
+				}
+				
+				if($("#LETTURA_ACS").val()!=""){
+					$("#UNITA_DI_MISURA").val('M3');
+					$("#UNIT_OF_STAT").val('M3');
+					document.getElementById("FATTORE_ENERGIA").value='6';
+				}
+				
+				if($("#LETTURA_AFS").val()!=""){
+					$("#UNITA_DI_MISURA").val('M3');
+					$("#UNIT_OF_STAT").val('M3');
+					document.getElementById("FATTORE_ENERGIA").value='7';
+				}
+				
+				
+				
+				if (($("#MESE").val() != "") && ($("#ANNO").val() != "")) {
+				    var mese = $("#MESE").val();
+				    var anno = $("#ANNO").val();
+				    var table = $('#dt2').DataTable();
+				    var id = "";
+
+				    // Mappa dei mesi: "Gennaio" => "01", ecc.
+				    var mesiMap = {
+				        "Gennaio": "1",
+				        "Febbraio": "2",
+				        "Marzo": "3",
+				        "Aprile": "4",
+				        "Maggio": "5",
+				        "Giugno": "6",
+				        "Luglio": "7",
+				        "Agosto": "8",
+				        "Settembre": "9",
+				        "Ottobre": "10",
+				        "Novembre": "11",
+				        "Dicembre": "12"
+				    };
+				    
+				    var mese = parseInt($("#MESE").val(), 10).toString();
+				  
+				    table.rows().every(function(rowIdx, tableLoop, rowLoop) {
+				    	var data = this.data(); // data[1] = mese in lettere, data[2] = anno
+
+				        var meseTabella = mesiMap[data[2]]; // Converti "Gennaio" -> "01"
+				        var annoTabella = data[1];
+				   
+				        
+				        if (meseTabella == mese && annoTabella == anno) {
+				            id = data[13]; // colonna 0 = valore desiderato
+				            $("#ID_MODULO").val(id);
+				            if (data[12] !== "--- inserimento manuale ---") {
+				            	newName= data[12].replace(" --- modifica manuale ---", "").trim();
+				                $("#NOME_FILE_DR").val(newName + " --- modifica manuale ---");
+				            }else{
+				            	$("#NOME_FILE_DR").val("--- inserimento manuale ---");
+				            }
+				            return false; // Interrompe il ciclo una volta trovato
+				        }
+				    });
+				   
+				}
+				
+				
+				
+				//var id=$("#ID_MODULO").val();
+				
+				
+				if (id!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+					$("#ID_UTENTE_MOD").val(<#if ID_UTENTE?exists>${ID_UTENTE}</#if>);
+					
+					var today = new Date();
+					var dd = today.getDate();
+					var mm = today.getMonth()+1; //January is 0!
+					var yyyy = today.getFullYear();
+					var hh = today.getHours();
+					var mi = today.getMinutes();
+					var ss = today.getSeconds();
+					if(dd<10) {
+					    dd = '0'+dd
+					} 
+					if(mm<10) {
+					    mm = '0'+mm
+					} 
+					today = yyyy + '-' + mm + '-' + dd + ' '+hh +':'+mm +':'+ss +'.001';
+					$("#TS_MOD").val(today);
+				} else {
+					$("#OPERATION_TYPE").val("INSERT");
+					$("#NOME_FILE_DR").val("--- inserimento manuale ---");
+				}
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+					
+					document.getElementById("salva").style.display="block";
+					
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.id);
+							$( "#dt2" ).DataTable().ajax.reload();
+							$("#LETTURA").val('');
+							$("#LETTURA_ACS").val('');
+							$("#LETTURA_AFS").val('');
+
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+					
+					
+					
+				});
+
+			});	
+			
+			
+			
+			
+			$("#InserimentoAbbinamento").validate();
+			
+			$("#InserimentoAbbinamento").submit(function(event) {
+				event.preventDefault();
+				var id=$("#ID_UTENZA_1").val();
+				var rilevatore=$("#RILEVATORE_1").val();
+				window.location.href = "astro?FUNCTIONID=InserimentoAnagraficaUtenze&OPERATION_TYPE=UPDATE&READONLY=N&ID_MODULO="+id+"&RILEVATORE="+rilevatore;
+			});
+				
+				
+			
+			
+		});		
+		
+		
+    </script> 
+    
+</head>
+
+<body>
+
+     <div id="wrapper">
+
+    	<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+        <div id="page-wrapper" class="gray-bg">
+		
+        	<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+        	
+			<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+            	
+            		<div class="col-lg-12">
+
+	                	<div class="ibox float-e-margins">
+	                    
+			            <div class="ibox-content">
+			            
+			            
+			            		<div class="alert alert-danger" id="div_non_censito"></div>
+								<div class="alert alert-success-fixed" id="div_ok"></div>
+			                    <div class="alert alert-warning" id="div_zero"></div>
+			                    <div class="alert alert-danger" id="div_anomalia"></div>
+	                            <div class="alert alert-success-fixed" id="div_validi"></div>
+	                            		
+	                          
+	                            
+	                        
+			            	<div id="tabella_1">
+				            	<h4>Riepilogo dati utenza relativi a questo rilevatore</h4>
+				            	<div class="table-responsive">
+									<table id="dt" class="table table-striped table-bordered table-hover" >
+										<thead>
+											<tr>
+												<th>Rilevatore</th>
+												<th>Tipologia</th>
+												<th>Condominio</th>
+												<th>Condomino</th>
+												<th>Locatario</th>
+												<th>Stanza</th>
+												<th>Scala</th>
+												<th>Piano</th>
+												<th>Interno</th>
+												<th>Telefono</th>
+												<th>Indirizzo</th>
+												<th>Localit&#224;</th>
+												<th>Prov.</th>
+												<th>CAP</th>
+												<th>SIM</th>
+											</tr>
+										</thead>
+									
+									</table>
+		                        </div>
+		                    </div>
+	                        
+	                        
+	                        
+	                        <div id="div_inserimento_non_censito">
+		                        <form action="astro" method="post" id="InserimentoAbbinamento"  class="form-horizontal">
+				            	
+				            		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoDettaglioAnagraficaUtenze " />
+									<input type="text" id="ID_AZIENDA_1" name="ID_AZIENDA_1">
+									<input type="text" id="RILEVATORE_1" name="RILEVATORE_1">
+									
+															
+									
+				                	<div class="row">
+									
+										<div class="col-sm-12"><h4>Abbinamento rilevatore - utenza</h4>
+			                                <div class="row">
+												
+				                                <div class="form-group">
+													<label class="col-sm-2 control-label">Condominio</label>
+				                                    <div class="col-sm-4">
+														<select id="ID_CONDOMINIO_1" name="ID_CONDOMINIO_1" class="form-control" required>
+														</select>
+				                                    </div>
+				                                </div>
+				                                <div class="form-group">	
+				                                	<label class="col-sm-2 control-label">Utenza</label>
+				                                    <div class="col-sm-4">
+														<select id="ID_UTENZA_1" name="ID_UTENZA_1" class="form-control" required>
+														</select>
+				                                    </div>
+				                                </div>
+			                                </div>
+			                                
+			                                
+			                                 <div class="form-group">
+			                                    <div class="col-sm-1">
+			                                        <button class="btn btn-primary btn-sm" id="salva_1" type="submit">Vai ad anagrafica utenze</button>
+			                                    </div>
+			                                </div>
+			                            </div>
+			                        </div>
+	
+	
+					            </form> 	
+	                        </div>
+	                        
+	                        <div class="hr-line-dashed"></div>
+	                        
+	                        <!-- mod. o inserimento dati inizio -->
+	                        
+	                        
+	                        
+			            	
+			            	<form action="astro" method="post" id="Inserimento"  class="form-horizontal">
+			            	
+			            		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="GestioneDatiSingoloRilevatore" />
+								<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE">
+								<input type="text" id="ID_MODULO" name="ID_MODULO">
+								<input type="text" id="ID_AZIENDA" name="ID_AZIENDA">
+								<input type="text" id="ID_CONDOMINIO" name="ID_CONDOMINIO">
+								<input type="text" id="RILEVATORE" name="RILEVATORE">
+								<input type="text" id="UNITA_DI_MISURA" name="UNITA_DI_MISURA">
+								<input type="text" id="UNIT_OF_STAT" name="UNIT_OF_STAT">
+								<input type="text" id="NOME_FILE_DR" name="NOME_FILE_DR">
+								<input type="text" id="ID_UTENTE_MOD" name="ID_UTENTE_MOD">		
+								<input type="text" id="LETTURA_PREC" name="LETTURA_PREC">			
+								<input type="text" id="LETTURA_ACS_PREC" name="LETTURA_ACS_PREC">
+								<input type="text" id="LETTURA_AFS_PREC" name="LETTURA_AFS_PREC">
+								<input type="text" id="TS_MOD" name="TS_MOD">
+								<input type="text" id="FATTORE_ENERGIA" name="FATTORE_ENERGIA">
+														
+								
+			                	<div class="row" id="modificaDati">
+								
+									<div class="col-sm-9 b-r">
+										<h4>Valori mensili letture</h4>	
+										<div class="table-responsive">
+											<table id="dt2" class="table table-striped table-bordered table-hover" >
+												<thead>
+													<tr>
+														<th>Rilevatore</th>
+														<th>Anno</th>
+														<th>Mese</th>
+														<th>Lettura HCA</th>
+														<th>Lettura ACS</th>
+														<th>Lettura AFS</th>
+														<th>Utente inserimento</th>
+														<th>Utente modifica</th>
+														<th>Data modifica</th>
+														<th>Lettura HCA pre-modifica</th>
+														<th>Lettura ACS pre-modifica</th>
+														<th>Lettura AFS pre-modifica</th>
+														<th>Nome file</th>
+														<th></th>
+													</tr>
+												</thead>
+											
+											</table>
+				                        </div>
+	                                
+	                               	</div>
+		                            <div class="col-sm-3"><h4>Modifica / Inserimento valori</h4>
+		                                <div class="form-group"><label class="col-sm-3 control-label">Mese</label>
+		                                    <div class="col-sm-9"><select class="form-control" id="MESE" name="MESE" required></select></div>
+		                                </div>
+		                                
+		                                <div class="form-group"><label class="col-sm-3 control-label">Anno</label>
+		                                    <div class="col-sm-9"><select class="form-control" id="ANNO" name="ANNO" required></select></div>
+		                                </div>
+		                                
+		                                <div class="form-group"><label class="col-sm-3 control-label">Lettura HCA</label>
+		                                    <div class="col-sm-9"><input type="text" class="form-control" name="LETTURA" id="LETTURA"></div>
+		                                </div>
+		                                
+		                                <div class="form-group"><label class="col-sm-3 control-label">Lettura ACS</label>
+		                                    <div class="col-sm-9"><input type="text" class="form-control" name="LETTURA_ACS" id="LETTURA_ACS"></div>
+		                                </div>
+		                                
+		                                <div class="form-group"><label class="col-sm-3 control-label">Lettura AFS</label>
+		                                    <div class="col-sm-9"><input type="text" class="form-control" name="LETTURA_AFS" id="LETTURA_AFS"></div>
+		                                </div>
+		                                
+		                                 <div class="form-group">
+		                                    <div class="col-sm-1">
+		                                        <button class="btn btn-primary btn-sm" id="salva" type="submit">${label_save}</button>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>
+
+
+				            </form> 							
+			                 
+			                 
+			                 
+			                <!-- mod. o inserimento dati fine -->
+			                
+			                 
+			                
+			                <div class="hr-line-dashed"></div>
+									
+									<h4>Dati importati relativi a questo rilevatore</h4>
+									
+			                        <div class="table-responsive">
+										<table id="dt1" class="table table-striped table-bordered table-hover" >
+											<thead>
+												<tr>
+													<th></th>
+													<th></th>
+													<th></th>
+							                        <th>Num. Progressivo dispositivo</th>
+													<th>Antenna di riferimento</th>
+													<th>Data di lettura</th>
+													<th>Ora di lettura</th>
+													<th>Num. Fabbrica dispositivo</th>
+													<th>Codice di produzione</th>
+													<th>Versione software</th>
+													<th>Anomalia</th>
+													<th>Data anomalia</th>
+													<th>Ora anomalia</th>
+													<th>Lettura attuale</th>
+													<th>Unit&#224; di misura</th>
+													<th>Volume attuale</th>
+													<th>Unit&#224; di misura1</th>
+													<th>Fattore energia</th>
+													<th>Lettura a data di scarico</th>
+													<th>Unit&#224; di misura2</th>
+													<th>Data di download del file</th>
+													<th>Data inizio statistica</th>
+													<th>Stat Value1</th>
+													<th>Stat Value2</th>
+													<th>Stat Value3</th>
+													<th>Stat Value4</th>
+													<th>Stat Value5</th>
+													<th>Stat Value6</th>
+													<th>Stat Value7</th>
+													<th>Stat Value8</th>
+													<th>Stat Value9</th>
+													<th>Stat Value10</th>
+													<th>Stat Value11</th>
+													<th>Stat Value12</th>
+													<th>Stat Value13</th>
+													<th>Stat Value14</th>
+													<th>Stat Value15</th>
+													<th>Stat Value16</th>
+													<th>Stat Value17</th>
+													<th>Stat Value18</th>
+													<th>Unit of Stat</th>
+													<th>CurrValue of Tariff1</th>
+													<th>Unit of Tariff1</th>
+													<th>Set Day Val of Tariff1</th>
+													<th>Set Day Unit of Tariff1</th>
+													<th>Nome file</th>
+													
+													<!-- per antenne nuove 2023 -->
+													<th>Volume1</th>
+													<th>Volume2</th>
+													<th>Date1</th>
+													<th>Energy1</th>
+													<th>Energy2</th>
+													<th>Volume flow</th>
+													<th>Power</th>
+													<th>Flow temperature</th>
+													<th>Return temperature</th>
+												</tr>
+											</thead>
+										
+										</table>
+			                        </div>
+				                   
+	                       			
+		                </div>   <!-- chiude box content -->
+            		</div>       <!-- chiude ibox float-e-margins -->     
+	            </div>	<!-- col-lg-12 -->
+            </div>	<!-- chiude row -->
+            
+            
+        
+        
+        
+        	<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+        	
+        </div>
+	</div>
+
+
+</body>
+
+</html>

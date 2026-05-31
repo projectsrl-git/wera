@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+	<#if INCLUDED_HEAD_INSERT_FORM?exists><#include INCLUDED_HEAD_INSERT_FORM></#if>
+    
+	<script type="text/javascript">
+		$(function(){
+			
+			$("#ID_AZIENDA").trigger("loadDataSet",["DataSetAziende","ID_AZIENDA","RAGSOC","<#if ID_AZIENDA?exists>${ID_AZIENDA}</#if>"," WHERE 1=1 "]);
+			
+			$("#ID_CONDOMINIO").trigger("loadDataSet",["DataSetCondomini","ID_MODULO","DENOMINAZIONE","<#if ID_CONDOMINIO?exists>${ID_CONDOMINIO}</#if>"," WHERE 1=1 "]);
+			
+			$("#ID_TIPOLOGIA").trigger("loadDataSet",["DSTipologiaContatore","CODICE","DESCRIZIONE","<#if ID_TIPOLOGIA?exists>${ID_TIPOLOGIA}</#if>"," WHERE 1=1 "]);
+
+			
+			$("#OPERATION_TYPE").val("<#if OPERATION_TYPE?exists>${OPERATION_TYPE}</#if>");
+			
+			$("#ID_MODULO").val("<#if ID_MODULO?exists>${ID_MODULO}</#if>");
+			$("#CONTATORE").val("<#if CONTATORE?exists>${CONTATORE}</#if>");
+			$("#TIPOLOGIA").val("<#if TIPOLOGIA?exists>${TIPOLOGIA}</#if>");
+			
+
+			$('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green'
+            });
+            
+			$("#Inserimento").validate();
+			
+			$("#Inserimento").submit(function(event) {
+				document.getElementById("salva").style.display="none";
+				/* stop form from submitting normally */
+				event.preventDefault();			
+			
+				if (!$("#Inserimento").valid()) {
+					document.getElementById("salva").style.display="block";
+					return false;
+				}
+				
+				
+				var id=$("#ID_MODULO").val();
+				if (id!='') {
+					$("#OPERATION_TYPE").val("UPDATE");
+				} else {
+					$("#OPERATION_TYPE").val("INSERT");
+				}
+				
+				
+				$("#CREDITI_UTILIZZABILI").val('1');
+				if ($("#OPERATION_TYPE").val()=="INSERT"){
+					
+					var utente="<#if ID_UTENTE?exists>${ID_UTENTE}</#if>";
+					var whereCondition1=" where usr.id_utente ="+utente;
+					var creditiUtilizzabili = "CREDITI_UTILIZZABILI";
+					
+					$.ajax({
+						url: "astro?FUNCTIONID=JSONDataSet&dataset=DSCrediti&columns="+creditiUtilizzabili+"&WHERECONDITION="+whereCondition1,
+						dataType: 'json',
+						type: 'GET',
+						async: false,
+						success: function (data) {
+							
+							$.each(data.rows,function(i,data) {
+								$("#CREDITI_UTILIZZABILI").val(eval("data."+creditiUtilizzabili));
+							});
+						}
+					});
+				}
+				
+				if($("#CREDITI_UTILIZZABILI").val()<1){
+					$( ".alert-danger" ).text( "L'inserimento del rilevatore non è possibile. Crediti esauriti, acquistare almeno 1 credito." ).fadeIn("slow").delay(3000).fadeOut("slow");
+					return false; 
+				}
+				
+				
+				Swal.fire({
+				    title: 'Salvataggio in corso...',
+				    text: 'Attendere il completamento dell’elaborazione.',
+				    icon: 'info',
+				    allowOutsideClick: false,
+				    allowEscapeKey: false,
+				    showConfirmButton: false,
+				    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+				    allowEscapeKey: false,  	// disabilita tasto ESC
+				    didOpen: () => {
+				        Swal.showLoading();
+				    },
+				    customClass: {
+				        popup: 'swal-wide'
+				    }
+				});
+				
+				
+				
+				
+				
+				
+
+				/* Send the data using post */
+				$.post( $( this ).attr( 'action' ), $(this).serialize(),function( response ) { 
+
+					document.getElementById("salva").style.display="block";
+					
+					if (response==null || response==''){
+						Swal.close();
+						Swal.fire({
+						    title: 'Salvataggio non riuscito!',
+						    text: 'Si è verificato un errore, salvataggio non riuscito.',
+						    icon: 'error',
+						    showConfirmButton: false,   // Nasconde il bottone "OK"
+						    timer: 3000,                // Chiude dopo 3 secondi (3000 ms)
+						    timerProgressBar: false,     // Mostra barra di avanzamento
+						    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+						    allowEscapeKey: false,  	// disabilita tasto ESC
+						    customClass: {
+						        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+						    }
+						});
+					}else{
+						var result = eval('('+response+')');
+						if (result.result) {
+							$("#ID_MODULO").val(result.idCondominio);
+							Swal.close();
+							Swal.fire({
+							    title: 'Salvataggio completato!',
+							    text: 'Salvataggio effettuato con successo.',
+							    icon: 'success',
+							    showConfirmButton: false,   // Nasconde il bottone "OK"
+							    timer: 2000,                // Chiude dopo 3 secondi (3000 ms)
+							    timerProgressBar: false,     // Mostra barra di avanzamento
+							    allowOutsideClick: false,   //  disabilita clic fuori dal popup
+							    allowEscapeKey: false,  	// disabilita tasto ESC
+							    customClass: {
+							        popup: 'swal-wide'      // Applica classe CSS personalizzata per ingrandire
+							    }
+							});
+							
+						} 
+					}
+				});
+
+			});			
+		});		
+		
+		
+    </script> 
+    
+</head>
+
+<body>
+
+     <div id="wrapper">
+
+    	<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+        <div id="page-wrapper" class="gray-bg">
+		
+        	<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+        	
+        	<div class="row border-bottom">
+	        	<div class="ibox-title titolo">
+	           	    <#if INCLUDED_BOX_TITLE?exists><#include INCLUDED_BOX_TITLE></#if>
+	           	</div>
+		    </div>
+        	
+			<div class="row wrapper border-bottom page-heading">
+            	
+            		<div class="col-lg-12">
+
+	                	<div class="ibox float-e-margins">
+						<#if INCLUDED_BOX_CREDITI?exists><#include INCLUDED_BOX_CREDITI></#if>
+			            <div class="ibox-content">
+			            	<form action="astro" method="post" id="Inserimento"  class="form-horizontal">
+			            	
+			            		<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="InserimentoAnagraficaContatori" />
+								<input type="hidden" id="OPERATION_TYPE" name="OPERATION_TYPE">
+								<input type="hidden" id="ID_MODULO" name="ID_MODULO">		
+								<input type="hidden" id="CREDITI_UTILIZZABILI" name="CREDITI_UTILIZZABILI">						
+								
+			                	<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Azienda</label>
+	                                    <div class="col-sm-4">
+											<select id="ID_AZIENDA" name="ID_AZIENDA" class="form-control" required>
+											</select>
+	                                    </div>
+	                                </div>
+                                </div>
+                                
+                                
+                                <div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Condominio</label>
+	                                    <div class="col-sm-4">
+											<select id="ID_CONDOMINIO" name="ID_CONDOMINIO" class="form-control" required>
+											</select>
+	                                    </div>
+	                                </div>
+                                </div>
+
+								
+			                	<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Contatore</label>
+										<div class="col-sm-4">
+											<input type="text"class="form-control" id="CONTATORE" name="CONTATORE" required>
+										</div>
+									</div>
+                            	</div>
+                            	
+								  
+								<div class="row">
+									<div class="form-group"><label class="col-sm-2 control-label">Tipologia</label>
+	                                    <div class="col-sm-4">
+											<select id="ID_TIPOLOGIA" name="ID_TIPOLOGIA" class="form-control" required>
+											</select>
+	                                    </div>
+	                                </div>
+                            	</div>
+                            	
+                                
+                              			  
+                                <div class="hr-line-dashed"></div>
+								
+								<#if VALIDITA_CREDITI?exists && VALIDITA_CREDITI?contains('false')><#else>
+	                                <div class="form-group">
+	                                    <div class="col-sm-1">
+	                                        <button class="btn btn-primary btn-sm" id="salva" type="submit">${label_save}</button>
+	                                    </div>
+	                                </div>
+								</#if>
+							
+		                          
+				            </form> 							
+			                
+				                   
+	                       			
+		                </div>   <!-- chiude box content -->
+            		</div>       <!-- chiude ibox float-e-margins -->     
+	            </div>	<!-- col-lg-12 -->
+            </div>	<!-- chiude row -->
+            
+            
+        
+        
+        
+        	<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+        	
+        </div>
+	</div>
+
+
+</body>
+
+</html>

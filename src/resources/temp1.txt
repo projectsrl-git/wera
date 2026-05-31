@@ -1,0 +1,71 @@
+update PDL set STATO='CLO'
+where DT_PDL < (select to_char(current_date - interval '30 day','yyyy/mm/dd')) and STATO='OPE' OR STATO='';
+
+update PDL set CAPO_TURNO='INTERNO' where STATO='CLO' AND CAPO_TURNO is null;
+
+select * from pdl where substring(dt_pdl,1,4) ='2018';
+
+
+ALTER TABLE impianti ADD COLUMN FL_DISATTIVO boolean default false;
+ALTER TABLE area_lavoro ADD COLUMN FL_DISATTIVO boolean default false;
+alter table equipment add COLUMN FL_DISATTIVO boolean default false;
+
+alter table pdl ADD COLUMN TS_ATTIVAZIONE timestamp NULL;
+alter table pdl ADD COLUMN ID_UTENTE_ATTIVAZIONE integer NULL;
+alter table pdl ADD COLUMN TS_FINE_TURNO_ATTIVAZIONE timestamp NULL;
+
+
+select ts_attivazione,ID_UTENTE_ATTIVAZIONE,nr_pdl from pdl where ts_attivazione is not null order by ts_attivazione desc;
+
+select ts_ins,* from pdl where id_azienda=20 order by dt_pdl desc, nr_pdl desc;
+
+
+
+
+
+
+
+
+
+
+
+
+
+select FLG_OSSIGENO,* from V_PDL ORDER BY ts_ins DESC;
+
+SELECT * FROM V_PDL  WHERE  DT_PDL > (select to_char(current_date - interval '31 day','yyyy/mm/dd')) ORDER BY dt_pdl DESC, nr_pdl desc;
+--AND STATO='ACT' 
+ORDER BY dt_pdl DESC, nr_pdl desc;
+
+select DT_PDL::date  from V_PDL  ORDER BY dt_pdl DESC; 
+
+select * from V_PDL  ORDER BY dt_pdl DESC
+
+
+
+/*alter table PDL ADD column ALTRI_DOCUMENTI_SITO  text;
+alter table PDL ADD column DT_ATTIVAZIONE  char(10);
+alter table PDL ADD column DT_SOSPENSIONE  char(10);
+alter table PDL ADD column DT_CHIUSURA  char(10);
+select dt_chiusura,* from pdl where data_chiusura is not null;
+update pdl set dt_chiusura=to_char(data_chiusura,'yyyy/mm/dd')  where data_chiusura is not null;
+*/
+select * from profili
+
+--select * from utenti;
+--update utenti set email=username;
+DELETE FROM PASSWORD;
+ALTER SEQUENCE PASSWORD_id_password_seq RESTART WITH 1;
+INSERT INTO PASSWORD (ID_UTENTE,PASSWORD,DT_SCADENZA,FL_VALIDA) SELECT ID_UTENTE,'32ca9fc1a0f5b633e3f4c8c1bbecde9bedb9573','9999/12/31',TRUE FROM UTENTI;
+select * from PASSWORD where id_utente in (select id_utente from utenti where username='francesco.miduri@airliquide.com');
+
+	                	<#list DSImpianti as elenco>
+							${elenco.DESCR_IMPIANTO}
+						</#list>
+						
+						
+						
+
+select * from pdl where substring(dt_pdl,1,4) ='2018';
+
+select * from utenti where ts_login is not null;						
