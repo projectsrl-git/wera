@@ -38,3 +38,6 @@ Ogni ondata: nota in `.claude/<data>-<ondata>.md`, aggiornamento di questo `CLAU
 
 ## Ondata 1a (2026-07-17): login
 `login.html` riscritto (solo presentazione, form/direttive identici). Stili `.auth-*` in wera-theme.css sez. 19, riusabili per registrazione/resetpassword/newpassword. login.html è UTF-8 e ha un head autonomo: il link al tema va mantenuto anche lì.
+
+## Ondata 1b (2026-07-17): registrazione, resetpassword, newpassword
+Riscritte con stile `.auth-*` (card centrata). newpassword: script di validazione preservato verbatim, id INFO_MESSAGE/ERROR_MESSAGE mantenuti. Restano: profilo.html, home.html (ondata 1c).

@@ -728,3 +728,12 @@ body{font-size:14px;line-height:1.55}
 .auth-alt a{color:var(--accent-ink);font-weight:700;text-decoration:underline}
 .auth-foot{margin-top:28px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6}
 .req-mark{color:var(--ember)}
+
+/* ---- 19b. auth: messaggi info + varianti ---- */
+.auth-info{
+  background:var(--amber-bg);border:1px solid #f3dcab;color:var(--amber-ink);
+  border-radius:11px;padding:11px 14px;font-size:13.5px;font-weight:600;
+  text-align:center;margin-bottom:16px;
+}
+.auth-info:empty{display:none}
+.auth-sub{text-align:center;color:var(--muted);font-size:14px;margin:-16px 0 24px}

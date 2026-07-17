@@ -1,17 +1,9 @@
-restyle(ondata-1a): login come landing (dal demo)
+restyle(ondata-1b): registrazione, resetpassword, newpassword
 
-- login.html: presentazione riscritta (colonna centrata .auth-wrap,
-  card .auth-card con filo gradiente, claim Bricolage, errore
-  .auth-error nascosto se vuoto); rimossi wrapper display:table e
-  stili inline; la pagina ora carica font e wera-theme.css
-- wera-theme.css sez. 19: stili .auth-* riusabili per le altre
-  pagine auth
-- form INVARIATO: action/method/id, FUNCTIONID, SESSION_TOKEN,
-  ERROR_MESSAGE, name/id/required di USERNAME/PASSWORD, script e
-  href preservati identici
-- rev.2: login ricostruita sulla struttura del demo landing (hero,
-  profili, come-accedere, footer); nuovo css/wera-landing.css;
-  rimossi onsubmit/credenziali/link demo, CTA rimappate su
-  FUNCTIONID=Registrazione
-- rev.3: sezione #crediti sulla landing (bundle Silver/Gold/Platinum
-  dal demo app), voce in topnav, CTA verso FUNCTIONID=Registrazione
+- tre pagine auth riscritte con lo stile card centrata .auth-*
+  (wera-theme sez. 19/19b: aggiunti .auth-info e .auth-sub)
+- newpassword: script di validazione originale preservato verbatim,
+  id INFO_MESSAGE/ERROR_MESSAGE mantenuti come contenitori (chip,
+  nascosti se vuoti)
+- form INVARIATI: FUNCTIONID, SESSION_TOKEN, ERROR/INFO_MESSAGE,
+  name/id/required di tutti i campi, href e script in coda
