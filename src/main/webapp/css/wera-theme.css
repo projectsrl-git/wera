@@ -1,0 +1,468 @@
+/* ============================================================
+   WERA — wera-theme.css  ·  Design system "warm control room"
+   Ondata 0 (2026-07-16) — token + override Bootstrap 3 / INSPINIA
+   ------------------------------------------------------------
+   REGOLE: questo foglio SOLO AGGIUNGE override estetici.
+   Non ridefinisce comportamenti JS, non tocca hook di plugin.
+   Va caricato per ULTIMO in included_head.include.
+   ============================================================ */
+
+/* ---------- 1. TOKEN (sorgente: 01_wera_design_tokens.css) ---------- */
+:root{
+  --ink:#16181d; --ink-2:#2a2e36; --muted:#737a86; --muted-2:#9aa0ab;
+  --bg:#f5f4f2; --surface:#ffffff; --surface-2:#faf9f7; --line:#e8e6e1;
+  --side:#1b1e24; --side-2:#22262e; --side-line:rgba(255,255,255,.08); --side-ink:#aeb4bf;
+
+  --amber:#f9a825; --coral:#fb6340; --ember:#e8453c; --ember-ink:#b8331f;
+  --accent:#fb6340; --accent-ink:#b8331f;
+  --grad:linear-gradient(100deg,#f9a825,#fb6340 55%,#e8453c);
+
+  --teal:#1d9e75; --teal-bg:#e1f5ee; --teal-ink:#0f6e56;
+  --red:#e24b4a; --red-bg:#fceaea; --red-ink:#a32d2d;
+  --amber-bg:#fdf1dc; --amber-ink:#8a5a06;
+
+  --r-sm:9px; --r:13px; --r-lg:18px; --r-xl:24px;
+  --shadow:0 22px 48px -26px rgba(22,24,29,.4);
+  --shadow-sm:0 6px 18px -10px rgba(22,24,29,.28);
+  --fd:"Bricolage Grotesque",Georgia,serif;
+  --fb:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+/* ---------- 2. BASE ---------- */
+body{
+  font-family:var(--fb);
+  color:var(--ink);
+  background-color:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--fd);font-weight:700;letter-spacing:-.5px;color:var(--ink)}
+h4,h5,h6{font-family:var(--fb);font-weight:700;color:var(--ink)}
+a{color:var(--accent-ink)}
+a:hover,a:focus{color:var(--ember)}
+
+/* sfondi INSPINIA */
+body.gray-bg,.gray-bg{background-color:var(--bg)}
+.white-bg{background-color:var(--surface)}
+
+/* wrapper contenuti */
+#page-wrapper{background-color:var(--bg)}
+.wrapper-content{padding:24px 16px}
+
+/* ---------- 3. SIDEBAR (rail scuro) ---------- */
+.navbar-default.navbar-static-side{background-color:var(--side)}
+.navbar-static-side .sidebar-collapse{background-color:var(--side)}
+.nav.metismenu{background-color:var(--side)}
+#side-menu.nav > li{border:0}
+#side-menu.nav > li > a{
+  color:var(--side-ink);
+  font-weight:600;
+  font-size:13.5px;
+  padding:11px 18px;
+  border-radius:10px;
+  margin:2px 8px;
+}
+#side-menu.nav > li > a:hover,
+#side-menu.nav > li > a:focus{
+  background-color:var(--side-2);
+  color:#fff;
+}
+#side-menu.nav > li.active{border-left:0;background:transparent}
+#side-menu.nav > li.active > a{
+  background:var(--grad);
+  color:#fff;
+}
+.nav.nav-second-level{background-color:var(--side)}
+.nav.nav-second-level > li > a{
+  color:var(--side-ink);
+  padding:8px 14px 8px 46px;
+  font-size:13px;
+  font-weight:500;
+}
+.nav.nav-second-level > li > a:hover,
+.nav.nav-second-level > li.active > a{
+  color:#fff;
+  background-color:var(--side-2);
+}
+.nav.nav-third-level{background-color:var(--side)}
+.nav.nav-third-level > li > a{color:var(--side-ink);padding-left:60px;font-size:12.5px}
+.nav.nav-third-level > li > a:hover,
+.nav.nav-third-level > li.active > a{color:#fff}
+.nav > li > a i{margin-right:8px;opacity:.85}
+.nav .fa.arrow{opacity:.6}
+
+/* testata sidebar (logo) */
+.nav-header{background:var(--side)!important;padding:20px 18px;border-bottom:1px solid var(--side-line)}
+.nav-header .profile-element{text-align:center}
+.nav-header .profile-element img{max-height:38px;max-width:180px;width:auto}
+.logo-element{
+  background:var(--grad);
+  color:#fff;
+  font-family:var(--fd);
+  font-weight:800;
+}
+
+/* ---------- 4. TOPBAR ---------- */
+.row.border-bottom{border-bottom:1px solid var(--line)}
+.navbar-static-top{
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+}
+.navbar-top-links li a{
+  color:var(--ink-2);
+  font-weight:600;
+  padding:18px 12px;
+}
+.navbar-top-links li a:hover,.navbar-top-links li a:focus{
+  background-color:var(--surface-2);
+  color:var(--accent-ink);
+}
+.navbar-minimalize.btn-primary{
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  color:var(--ink-2);
+  box-shadow:none;
+  border-radius:var(--r-sm);
+}
+.navbar-minimalize.btn-primary:hover{
+  background:#fff;
+  border-color:var(--accent);
+  color:var(--accent-ink);
+}
+
+/* intestazione pagina + breadcrumb */
+.page-heading{
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+  padding:14px 16px;
+}
+h4.page-title,.page-heading h2{
+  font-family:var(--fd);
+  color:var(--ink);
+  letter-spacing:-.3px;
+}
+.breadcrumb{background:transparent;font-size:12.5px}
+.breadcrumb > li a{color:var(--muted)}
+.breadcrumb > .active{color:var(--ink-2);font-weight:600}
+
+/* ---------- 5. CARD (.ibox) ---------- */
+.ibox{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+  margin-bottom:24px;
+  overflow:hidden;
+}
+.ibox-title{
+  background:var(--surface);
+  border:0;
+  border-bottom:1px solid var(--line);
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+  padding:16px 20px 14px;
+  min-height:0;
+}
+.ibox-title h5{
+  font-family:var(--fd);
+  font-size:16px;
+  font-weight:700;
+  color:var(--ink);
+}
+.ibox-content{
+  background:var(--surface);
+  border:0;
+  border-radius:0 0 var(--r-lg) var(--r-lg);
+  padding:20px;
+  color:var(--ink);
+}
+.ibox-tools a{color:var(--muted)}
+.ibox-tools a:hover{color:var(--accent-ink)}
+
+/* ---------- 6. BOTTONI ---------- */
+.btn{
+  font-family:var(--fb);
+  font-weight:700;
+  border-radius:var(--r-sm);
+  transition:transform .12s,filter .12s,box-shadow .12s,border-color .12s;
+}
+.btn:active{transform:translateY(0)}
+.btn-primary,
+.btn-primary:focus{
+  background:var(--grad);
+  border:0;
+  color:#fff;
+  box-shadow:0 10px 20px -10px rgba(232,69,60,.55);
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary{
+  background:var(--grad);
+  border:0;
+  color:#fff;
+  filter:brightness(1.06);
+  transform:translateY(-1px);
+  box-shadow:0 14px 26px -10px rgba(232,69,60,.65);
+}
+.btn-primary:active:hover,.btn-primary.disabled,.btn-primary[disabled]{
+  background:var(--grad);border:0;filter:saturate(.5) brightness(1.05)
+}
+.btn-white,.btn-default{
+  background:#fff;
+  border:1.5px solid var(--line);
+  color:var(--ink-2);
+  box-shadow:none;
+}
+.btn-white:hover,.btn-white:focus,
+.btn-default:hover,.btn-default:focus{
+  background:#fff;
+  border-color:var(--accent);
+  color:var(--accent-ink);
+}
+.btn-success{background:var(--teal);border-color:var(--teal)}
+.btn-success:hover,.btn-success:focus{background:var(--teal-ink);border-color:var(--teal-ink)}
+.btn-danger{background:var(--red);border-color:var(--red)}
+.btn-danger:hover,.btn-danger:focus{background:var(--red-ink);border-color:var(--red-ink)}
+.btn-warning{background:var(--amber);border-color:var(--amber);color:#5b3c04}
+.btn-info{background:var(--ink-2);border-color:var(--ink-2)}
+
+/* ---------- 7. FORM ---------- */
+.form-control{
+  font-family:var(--fb);
+  font-size:14px;
+  color:var(--ink);
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  box-shadow:none;
+  transition:border-color .15s,box-shadow .15s,background .15s;
+}
+.form-control:focus{
+  border-color:var(--accent);
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(251,99,64,.14);
+  outline:0;
+}
+.form-control[disabled],.form-control[readonly],fieldset[disabled] .form-control{
+  background:var(--surface-2);
+  color:var(--muted);
+  opacity:.75;
+}
+.form-group > label,.control-label{
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--ink-2);
+  letter-spacing:.2px;
+}
+.help-block{color:var(--muted);font-size:12.5px}
+.has-error .form-control{border-color:var(--red)}
+.has-error .control-label,.has-error .help-block{color:var(--red-ink)}
+.has-success .form-control{border-color:var(--teal)}
+.input-group-addon{
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  color:var(--muted);
+}
+.hr-line-dashed{border-top:1px dashed var(--line);margin:18px 0}
+
+/* checkbox/radio: solo colore accent, nessun cambio strutturale */
+input[type="checkbox"],input[type="radio"]{accent-color:var(--accent)}
+
+/* ---------- 8. TABELLE ---------- */
+.table{font-size:13.5px;color:var(--ink)}
+.table > thead > tr > th{
+  background:var(--surface-2);
+  color:var(--muted);
+  font-size:11.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  border-bottom:1px solid var(--line);
+  padding:10px;
+}
+.table > tbody > tr > td{
+  border-top:1px solid var(--line);
+  padding:11px 10px;
+  vertical-align:middle;
+}
+.table-hover > tbody > tr:hover,
+.table-striped > tbody > tr:nth-of-type(odd):hover{background-color:var(--surface-2)}
+.table-striped > tbody > tr:nth-of-type(odd){background-color:#fbfaf8}
+.table-bordered,.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > td{border-color:var(--line)}
+
+/* DataTables: skin coerente (nessun hook JS toccato) */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select{
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  padding:7px 12px;
+}
+.dataTables_wrapper .dataTables_filter input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(251,99,64,.13);
+  outline:0;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+  background:var(--grad);
+  border-color:transparent;
+  color:#fff!important;
+  border-radius:8px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+  background:var(--surface-2);
+  border-color:var(--line);
+  color:var(--ink)!important;
+  border-radius:8px;
+}
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after{color:var(--accent)}
+
+/* paginazione Bootstrap */
+.pagination > li > a{color:var(--ink-2);border-color:var(--line)}
+.pagination > .active > a,.pagination > .active > a:hover{
+  background:var(--accent);border-color:var(--accent)
+}
+
+/* ---------- 9. TAB ---------- */
+.nav-tabs{border-bottom:1px solid var(--line)}
+.nav-tabs > li > a{
+  color:var(--muted);
+  font-weight:700;
+  font-size:13.5px;
+  border:0;
+  border-bottom:2.5px solid transparent;
+  border-radius:0;
+  margin-bottom:-1px;
+  background:transparent;
+}
+.nav-tabs > li > a:hover{
+  background:transparent;
+  border-color:transparent;
+  border-bottom-color:var(--line);
+  color:var(--ink-2);
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus{
+  color:var(--ember-ink);
+  background:transparent;
+  border:0;
+  border-bottom:2.5px solid var(--accent);
+}
+.tab-content > .tab-pane{background:transparent}
+.tabs-container .panel-body{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:0 var(--r) var(--r) var(--r);
+}
+
+/* ---------- 10. LABEL / BADGE (chip di stato) ---------- */
+.label,.badge{
+  font-family:var(--fb);
+  font-weight:700;
+  font-size:11px;
+  border-radius:999px;
+  padding:4px 11px;
+}
+.label-primary,.badge-primary{background:var(--accent)}
+.label-success,.badge-success{background:var(--teal-bg);color:var(--teal-ink)}
+.label-warning,.badge-warning{background:var(--amber-bg);color:var(--amber-ink)}
+.label-danger,.badge-danger{background:var(--red-bg);color:var(--red-ink)}
+.label-info,.badge-info{background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+
+/* ---------- 11. ALERT ---------- */
+.alert{border-radius:11px;font-size:13.5px;font-weight:600}
+.alert-success{background:var(--teal-bg);border:1px solid #b6e3d3;color:var(--teal-ink)}
+.alert-danger,.alert-error{background:var(--red-bg);border:1px solid #f5c6c2;color:var(--ember-ink)}
+.alert-info,.alert-warning{background:var(--amber-bg);border:1px solid #f3dcab;color:var(--amber-ink)}
+
+/* ---------- 12. FOOTER ---------- */
+.footer{
+  background:transparent;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:12px;
+}
+.footer strong{font-weight:700;color:var(--muted)}
+
+/* ---------- 13. PLUGIN SKIN (solo estetica, hook invariati) ---------- */
+/* Select2 */
+.select2-container--bootstrap .select2-selection,
+.select2-container .select2-selection--single,
+.select2-container .select2-selection--multiple{
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  box-shadow:none;
+}
+.select2-container--bootstrap.select2-container--focus .select2-selection,
+.select2-container--bootstrap.select2-container--open .select2-selection{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(251,99,64,.13);
+}
+.select2-container--bootstrap .select2-results__option--highlighted[aria-selected]{
+  background:var(--accent);
+}
+.select2-dropdown{border:1.5px solid var(--line);border-radius:11px;overflow:hidden}
+
+/* Datepicker */
+.datepicker table tr td.active,
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active.active{
+  background:var(--accent)!important;
+  background-image:none!important;
+  border-radius:8px;
+}
+.datepicker table tr td.today{
+  background:var(--amber-bg)!important;
+  background-image:none!important;
+  border-radius:8px;
+}
+.datepicker{border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+
+/* jsTree: nodo selezionato */
+.jstree-default .jstree-clicked{
+  background:var(--amber-bg);
+  border-radius:6px;
+  box-shadow:inset 0 0 1px var(--amber);
+}
+.jstree-default .jstree-hovered{background:var(--surface-2);border-radius:6px}
+
+/* Pace (barra caricamento) */
+.pace .pace-progress{background:var(--accent)}
+
+/* Toastr: angoli coerenti */
+#toast-container > div{border-radius:var(--r);box-shadow:var(--shadow-sm);opacity:.97}
+
+/* ---------- 14. VARIE INSPINIA ---------- */
+.text-navy{color:var(--teal)}
+.text-danger{color:var(--red-ink)}
+.text-muted{color:var(--muted)}
+.feed-activity-list .feed-element{border-bottom:1px solid var(--line)}
+.stat-percent{font-family:var(--fd)}
+.panel{border-radius:var(--r);border-color:var(--line);box-shadow:none}
+.panel-default > .panel-heading{background:var(--surface-2);border-color:var(--line)}
+.modal-content{border-radius:var(--r-lg);border:1px solid var(--line);box-shadow:var(--shadow)}
+.modal-header{border-bottom:1px solid var(--line)}
+.modal-header .modal-title{font-family:var(--fd)}
+.modal-footer{border-top:1px solid var(--line)}
+.dropdown-menu{border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.dropdown-menu > li > a:hover{background:var(--surface-2);color:var(--accent-ink)}
+.well{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r)}
+legend{font-family:var(--fd);color:var(--ink);border-bottom:1px solid var(--line)}
+::selection{background:rgba(249,168,37,.35)}
+
+/* scrollbar leggera (WebKit) */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#d5d2cc;border-radius:999px;border:2px solid var(--bg)}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- 15. TOPBAR: classi introdotte in included_header.include ---------- */
+.navbar-top-links li a.topbar-user{color:var(--ink-2);font-weight:700}
+.navbar-top-links li a.topbar-user:hover{color:var(--accent-ink)}
+.navbar-top-links li a.topbar-exit{color:var(--ember-ink);font-weight:700}
+.navbar-top-links li a.topbar-exit:hover{color:var(--ember)}

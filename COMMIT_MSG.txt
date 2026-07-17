@@ -1,0 +1,17 @@
+restyle(ondata-0): fondamenta CSS + layout condivisi
+
+- nuovo src/main/webapp/css/wera-theme.css: token design system
+  "warm control room" + override Bootstrap 3/INSPINIA (.ibox, .btn-*,
+  .form-control, .table, .nav-tabs, #side-menu, topbar, .label/.badge,
+  .alert, .footer) e skin plugin (select2, datepicker, dataTables,
+  jsTree, pace, toastr) — solo proprietà estetiche
+- included_head.include: font Bricolage Grotesque + Manrope e link a
+  wera-theme.css aggiunti per ULTIMI tra i CSS (encoding ISO-8859-1
+  preservato)
+- included_header.include: stili inline sostituiti dalle classi
+  topbar-user/topbar-exit
+- docs: .claude/2026-07-16-ondata-0.md, template release, CLAUDE.md,
+  QA.md
+
+Nessuna modifica a Java, config.cfg, SQL, direttive FreeMarker,
+cablaggio form o comportamento JS.

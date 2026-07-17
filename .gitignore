@@ -84,3 +84,4 @@ application-secret.properties
 *.seed
 *.pid.lock
 node_modules/
+*.patch
