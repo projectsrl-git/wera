@@ -224,3 +224,6 @@ html{scroll-behavior:smooth}
 .auth-error:empty{display:none}
 .topnav .logoimg,.foot .logoimg{height:34px;width:auto;display:block}
 .foot .logoimg{height:30px;opacity:.9;margin:0 auto 10px}
+
+/* ---- sezione crediti su landing: bottoni delle plan card ---- */
+.plan .btn{margin-top:auto;text-decoration:none}

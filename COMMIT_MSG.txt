@@ -13,3 +13,5 @@ restyle(ondata-1a): login come landing (dal demo)
   profili, come-accedere, footer); nuovo css/wera-landing.css;
   rimossi onsubmit/credenziali/link demo, CTA rimappate su
   FUNCTIONID=Registrazione
+- rev.3: sezione #crediti sulla landing (bundle Silver/Gold/Platinum
+  dal demo app), voce in topnav, CTA verso FUNCTIONID=Registrazione
