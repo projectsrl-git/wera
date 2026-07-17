@@ -35,3 +35,6 @@ Ogni ondata: nota in `.claude/<data>-<ondata>.md`, aggiornamento di questo `CLAU
 - `included_header.include`: stili inline sostituiti dalle classi `topbar-user`/`topbar-exit` (definite nel tema).
 - ATTENZIONE: `included_head.include` è codificato ISO-8859-1 — preservare l'encoding negli edit.
 - Prossima: ondata 1 (auth & dashboard — login, registrazione, reset password, profilo, home).
+
+## Ondata 1a (2026-07-17): login
+`login.html` riscritto (solo presentazione, form/direttive identici). Stili `.auth-*` in wera-theme.css sez. 19, riusabili per registrazione/resetpassword/newpassword. login.html è UTF-8 e ha un head autonomo: il link al tema va mantenuto anche lì.
