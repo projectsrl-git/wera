@@ -1,4 +1,4 @@
-restyle(ondata-1a): login
+restyle(ondata-1a): login come landing (dal demo)
 
 - login.html: presentazione riscritta (colonna centrata .auth-wrap,
   card .auth-card con filo gradiente, claim Bricolage, errore
@@ -9,3 +9,7 @@ restyle(ondata-1a): login
 - form INVARIATO: action/method/id, FUNCTIONID, SESSION_TOKEN,
   ERROR_MESSAGE, name/id/required di USERNAME/PASSWORD, script e
   href preservati identici
+- rev.2: login ricostruita sulla struttura del demo landing (hero,
+  profili, come-accedere, footer); nuovo css/wera-landing.css;
+  rimossi onsubmit/credenziali/link demo, CTA rimappate su
+  FUNCTIONID=Registrazione
