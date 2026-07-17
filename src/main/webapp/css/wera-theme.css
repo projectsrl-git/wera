@@ -574,3 +574,40 @@ h4.page-title::after{
 /* --- contrasto contenitore: leggero scurimento dell'area contenuti --- */
 #page-wrapper,.gray-bg,#page-wrapper.gray-bg{background-color:var(--bg)}
 .wrapper.wrapper-content{padding:26px 10px 10px}
+
+/* ============================================================
+   17. FIX ONDATA 0.2 — colonna sidebar e coerenza font
+   Cause: bow.css imposta body{background:#2f4050; font-size:11px;
+   font-family:"open sans"} — la colonna sotto il menu prende il
+   colore del body (trucco INSPINIA) e mezza UI ereditava 11px.
+   ============================================================ */
+
+/* base tipografica esplicita (bow.css lasciava 11px in eredità) */
+body{font-size:14px;line-height:1.55}
+
+/* colonna sidebar scura a TUTTA altezza (il colore viene da #wrapper, non dal nav) */
+#wrapper{background-color:var(--side);min-height:100vh}
+#page-wrapper{background-color:var(--bg);min-height:100vh}
+
+/* font unico su tutta la sidebar (icone FontAwesome escluse) */
+.navbar-static-side,
+.navbar-static-side .nav,
+#side-menu li > a,
+#side-menu .nav-label,
+.nav.nav-second-level > li > a,
+.nav.nav-third-level > li > a,
+.nav-header,
+.logo-element{
+  font-family:var(--fb);
+}
+#side-menu li > a{font-size:14px}
+.nav.nav-second-level > li > a{font-size:13px}
+.nav.nav-third-level > li > a{font-size:12.5px}
+/* le icone restano FontAwesome */
+.navbar-static-side .fa,
+.navbar-static-side [class^="fa-"],
+.navbar-static-side [class*=" fa-"]{font-family:FontAwesome!important}
+
+/* residui Open Sans/Trebuchet fuori sidebar */
+.label,.badge{font-family:var(--fb)}
+#toast-container > div,.toast{font-family:var(--fb)}

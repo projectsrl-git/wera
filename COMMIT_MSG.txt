@@ -1,4 +1,4 @@
-restyle(ondata-0): fondamenta CSS + layout condivisi (rev. 0.1)
+restyle(ondata-0): fondamenta CSS + layout condivisi (rev. 0.2)
 
 - nuovo src/main/webapp/css/wera-theme.css: token design system
   "warm control room" + override Bootstrap 3/INSPINIA (.ibox, .btn-*,
