@@ -611,3 +611,54 @@ body{font-size:14px;line-height:1.55}
 /* residui Open Sans/Trebuchet fuori sidebar */
 .label,.badge{font-family:var(--fb)}
 #toast-container > div,.toast{font-family:var(--fb)}
+
+/* ============================================================
+   18. FIX ONDATA 0.3 — rifinitura sidebar
+   ============================================================ */
+
+/* colonna uniforme: il nav copre tutta l'altezza (niente gradino
+   dove finisce il menu) */
+.navbar-static-side{min-height:100vh;height:100%}
+
+/* testata logo: centrata, con respiro */
+.nav-header{padding:22px 16px;text-align:center}
+.nav-header .profile-element{display:block}
+.nav-header .profile-element img{
+  max-height:40px;max-width:170px;width:auto;
+  border-radius:9px;display:inline-block;
+}
+
+/* voce di menu in flex: icona fissa, label flessibile, chevron a destra;
+   il testo che va a capo resta allineato al label, non sotto l'icona */
+#side-menu > li > a{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  line-height:1.35;
+}
+#side-menu > li > a > i:first-child{
+  width:19px;
+  flex:0 0 19px;
+  text-align:center;
+  margin-right:0;
+}
+#side-menu > li > a .nav-label{flex:1 1 auto;min-width:0}
+#side-menu > li > a .fa.arrow{
+  flex:0 0 auto;
+  margin-left:auto;
+  transition:transform .2s;
+}
+/* il &nbsp; tra label e arrow non deve creare buchi */
+#side-menu > li > a{white-space:normal}
+
+/* ritmo verticale voci */
+#side-menu > li{margin:1px 0}
+#side-menu > li > a{padding:11px 14px;margin:1px 8px}
+
+/* sottolivelli: rientro allineato al label del padre (19px icona + 11px gap) */
+.nav.nav-second-level > li > a{padding-left:52px}
+.nav.nav-third-level > li > a{padding-left:66px}
+
+/* scrollbar della sidebar discreta su fondo scuro */
+.navbar-static-side::-webkit-scrollbar-thumb,
+.sidebar-collapse::-webkit-scrollbar-thumb{background:#3a3f49;border-color:var(--side)}
