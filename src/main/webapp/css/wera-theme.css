@@ -466,3 +466,111 @@ legend{font-family:var(--fd);color:var(--ink);border-bottom:1px solid var(--line
 .navbar-top-links li a.topbar-user:hover{color:var(--accent-ink)}
 .navbar-top-links li a.topbar-exit{color:var(--ember-ink);font-weight:700}
 .navbar-top-links li a.topbar-exit:hover{color:var(--ember)}
+
+/* ============================================================
+   16. RAFFINAMENTO ONDATA 0.1 — dashboard e tabelle
+   (correzioni su markup reale: home.html, DataTables con filtri
+   di colonna iniettati via JS come <input> senza classe)
+   ============================================================ */
+
+/* --- card: header senza doppio bordo, ritmo verticale compatto --- */
+.ibox-title{border-bottom:0;padding:18px 20px 4px}
+.ibox-title h5{
+  font-family:var(--fb);
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:var(--muted);
+}
+.ibox-title + .ibox-content{padding-top:6px}
+.ibox-title .ibox-tools{margin-top:-2px}
+
+/* --- metriche: numeri grandi in Bricolage (h1 dentro le card home) --- */
+.ibox-content h1.no-margins{
+  font-family:var(--fd);
+  font-size:42px;
+  font-weight:800;
+  letter-spacing:-1.5px;
+  line-height:1.1;
+  color:var(--ink);
+}
+
+/* --- "Dettaglio": titolo come eyebrow, lista compatta --- */
+.ibox-content > h5:first-child{
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:var(--muted);
+  margin:2px 0 4px;
+}
+.ibox-content .table.small td{
+  padding:7px 6px;
+  border-top:1px solid var(--surface-2);
+  font-size:13px;
+}
+.ibox-content .table.small h5.no-margins{font-size:13px;font-weight:600;color:var(--ink-2)}
+.ibox-content .table .fa-circle{font-size:9px;vertical-align:middle}
+.fa-circle.text-navy{color:var(--teal)}
+.fa-circle.text-danger{color:var(--red)}
+/* righe segnaposto (pallino text-white + cella vuota): nascoste dove :has è supportato */
+.ibox-content tr:has(> td > .fa-circle.text-white){display:none}
+.fa-circle.text-white{opacity:0}
+
+/* --- filtri di colonna DataTables (input nudi iniettati da JS in thead) --- */
+.table thead input[type="text"]{
+  width:100%;
+  font-family:var(--fb);
+  font-size:12.5px;
+  color:var(--ink);
+  padding:7px 10px;
+  border:1.5px solid var(--line);
+  border-radius:9px;
+  background:#fff;
+  font-weight:500;
+}
+.table thead input[type="text"]:focus{
+  outline:0;
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(251,99,64,.13);
+}
+.table thead input[type="text"]::placeholder{color:var(--muted-2);font-weight:500}
+/* la riga clonata dei filtri: fondo bianco, niente doppio header grigio */
+.table > thead > tr + tr > th{background:#fff;padding:8px 10px 12px;text-transform:none;letter-spacing:0}
+
+/* --- barra strumenti DataTables (Visualizza / info / paginazione) --- */
+.dataTables_wrapper{font-size:13px;color:var(--muted)}
+.dataTables_wrapper .dataTables_length{margin-bottom:10px}
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_info{font-weight:600;color:var(--muted)}
+.dataTables_wrapper .dataTables_length select{
+  font-family:var(--fb);
+  padding:7px 10px;
+  margin:0 6px;
+  border:1.5px solid var(--line);
+  border-radius:9px;
+  background:var(--surface-2);
+  color:var(--ink);
+  font-weight:700;
+}
+.dataTables_wrapper .dataTables_info{padding-top:10px}
+
+/* --- firma brand: filo gradiente sotto il titolo pagina --- */
+h4.page-title{position:relative;display:inline-block;padding-bottom:8px}
+h4.page-title::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:34px;height:3px;
+  border-radius:999px;
+  background:var(--grad);
+}
+
+/* --- matita di modifica righe --- */
+.editRow{color:var(--muted);cursor:pointer}
+.editRow:hover{color:var(--accent-ink)}
+
+/* --- contrasto contenitore: leggero scurimento dell'area contenuti --- */
+#page-wrapper,.gray-bg,#page-wrapper.gray-bg{background-color:var(--bg)}
+.wrapper.wrapper-content{padding:26px 10px 10px}
