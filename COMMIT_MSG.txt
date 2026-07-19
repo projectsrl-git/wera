@@ -1,5 +1,7 @@
-docs(restyle): chiusura run ondate 2-6 — QA.md completo e stato in CLAUDE.md
+fix(menu): voce Home fissa come prima voce per tutti i profili
 
-- QA.md: checklist di smoke test per ogni ondata (2-6) + rollback
-- CLAUDE.md: ondate 0-6 completate, mappa sezioni tema 21-25,
-  esclusioni deliberate (mail.html, recolor Riscaldamento/ACS uni2018)
+La riga Home nel DB e la radice dell'albero menu (path vuoto) e il
+loop del template parte dal livello 1: non veniva mai renderizzata.
+Aggiunto <li> statico in included_menu.include con link
+astro?FUNCTIONID=Home, icona fa-home e stato attivo su SELECTED_PATH=''
+(vuoto solo sulla home). Nessuna modifica al loop ne al Java.

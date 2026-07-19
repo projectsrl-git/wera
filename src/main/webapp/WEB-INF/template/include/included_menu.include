@@ -5,7 +5,7 @@
 				<ul class="nav metismenu" id="side-menu">
 				
 					<li class="nav-header">
-						<div class="profile-element"> 
+						<div class="profile-element">
 							<span>
 								<img alt="image" src="img/${ALIAS_AZIENDA_UTENTE}-logo.png" />
 								<!--<img alt="image" src="img/sirbi-logo.png" />-->
@@ -15,7 +15,14 @@
 							WERA
 						</div>
 					</li>
-					
+
+					<#-- voce Home fissa per tutti i profili: la riga radice del menu
+					     (id_menu_sup IS NULL, path='') non viene mai renderizzata dal
+					     loop sottostante, che parte dal livello 1 -->
+					<li<#if SELECTED_PATH?exists && SELECTED_PATH=''> class="active"</#if>>
+						<a href="astro?FUNCTIONID=Home"><i class="fa fa-home"></i> <span class="nav-label">Home</span></a>
+					</li>
+
 
 					<#list menu_list as menuItem>
 					<#if menuItem.getItemLevel()=1>
