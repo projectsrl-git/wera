@@ -1,11 +1,8 @@
-restyle(topbar+home): breadcrumb-titolo in topbar, titoli card mockup, Richieste a lista
+restyle(theme): bottoni alla taglia del mockup, tab senza cornice (sez. 28)
 
-- breadcrumb unico nella topbar (included_header) con "/", catena
-  completa cliccabile; included_box_title ridotto ai soli alert e banda
-  intermedia collassata via CSS su tutti i template
-- titoli card in Bricolage scuro come il mockup; label metric card
-  muted sentence-case
-- home Richieste: 4 righe (ultime per prime), niente filtri colonna,
-  lente al posto della matita (stesso handler), chip di stato colorate,
-  dom solo tabella+paginazione
-- sezione 27 del tema + cache-buster ?20260719b
+- btn/btn-sm portati alle misure del demo (9px/16px @13.5px lo small);
+  eccezione per l'hamburger della topbar
+- tab .tabs-container: sottolineatura accento e angoli arrotondati al
+  posto della cornice grigia INSPINIA (regole piu specifiche + contro
+  !important nella media query <768px); panel-body senza scatola
+- cache-buster tema -> ?20260720

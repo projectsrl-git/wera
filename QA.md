@@ -25,6 +25,10 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Bottoni & tab (2026-07-20)
+- [ ] bottoni alla taglia del mockup (btn-sm ≈ 9px/16px @13.5px); hamburger topbar invariato.
+- [ ] tab: sottolineatura accento, angoli alti arrotondati, nessuna cornice grigia (anche <768px); pannello senza scatola.
+
 ## Topbar-titolo & Richieste (2026-07-19, sera)
 - [ ] breadcrumb unico nella topbar con separatore "/": ultimo elemento bold, intermedi cliccabili.
 - [ ] banda titolo intermedia sparita ovunque; alert "Salvataggio dati terminato" ancora visibile dopo un salvataggio.

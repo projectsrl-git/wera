@@ -1205,3 +1205,66 @@ form#my-awesome-dropzone.dropzone.dz-drag-hover{
 .stato-warn::before{background:var(--amber)}
 .stato-ko{color:var(--red-ink)}
 .stato-ko::before{background:var(--red)}
+
+/* ============================================================
+   28. BOTTONI ALLA TAGLIA DEL MOCKUP + TAB SENZA CORNICE
+   ============================================================ */
+
+/* --- bottoni: nel demo il base e 12px/22px e lo "small" 9px/16px @14px.
+       L'app usa quasi ovunque btn-sm (5px/10px @12px Bootstrap): lo si
+       porta alla taglia small del demo, e il base alla via di mezzo --- */
+.btn{padding:10px 18px;font-size:14px}
+.btn-sm,.btn-group-sm > .btn{
+  padding:9px 16px;
+  font-size:13.5px;
+  border-radius:var(--r-sm);
+  line-height:1.4;
+}
+.btn-xs{padding:4px 10px;font-size:12px}
+/* l'hamburger della topbar non deve gonfiarsi */
+.btn.navbar-minimalize{padding:6px 12px;font-size:14px}
+
+/* --- tab dentro .tabs-container: le regole INSPINIA piu specifiche
+       davano cornice grigia/nera e spigoli vivi; qui si impone lo
+       stile del mockup (sottolineatura accento, angoli superiori
+       arrotondati, nessuna scatola) --- */
+.tabs-container .nav-tabs{border-bottom:1px solid var(--line)}
+.tabs-container .nav-tabs > li > a{
+  border:0;
+  border-bottom:2.5px solid transparent;
+  border-radius:9px 9px 0 0;
+  background:transparent;
+  color:var(--muted);
+  font-weight:700;
+  font-size:13.5px;
+  padding:10px 16px;
+  margin:0 2px -1px 0;
+}
+.tabs-container .nav-tabs > li > a:hover,
+.tabs-container .nav-tabs > li > a:focus{
+  border:0;
+  border-bottom:2.5px solid var(--line);
+  background:var(--surface-2);
+  color:var(--ink-2);
+}
+.tabs-container .nav-tabs > li.active > a,
+.tabs-container .nav-tabs > li.active > a:hover,
+.tabs-container .nav-tabs > li.active > a:focus{
+  border:0;
+  border-bottom:2.5px solid var(--accent);
+  background:transparent;
+  color:var(--ember-ink);
+}
+/* il pannello sotto i tab non e piu una scatola bordata */
+.tabs-container .panel-body{
+  border:0;
+  border-radius:0;
+  background:transparent;
+  padding:18px 2px 0;
+}
+/* INSPINIA a <768px forza un bordo grigio con !important: si ripristina l'accento */
+@media (max-width: 767px){
+  .tabs-container .nav-tabs > li.active > a{
+    border-bottom:2.5px solid var(--accent)!important;
+  }
+}
