@@ -1041,3 +1041,56 @@ form#my-awesome-dropzone.dropzone.dz-drag-hover{
   text-transform:uppercase;
   letter-spacing:.4px;
 }
+
+/* ============================================================
+   25. ONDATA 6 — config di sistema & pagine standalone
+   ============================================================ */
+
+/* --- editor summernote (news, mailconfig): scope .ibox-content
+       per vincere sul CSS plugin caricato dopo il tema --- */
+.ibox-content .note-editor{
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  overflow:hidden;
+}
+.ibox-content .note-editor .note-toolbar{
+  background:var(--surface-2);
+  border-bottom:1px solid var(--line);
+}
+.ibox-content .note-editor .note-editable{
+  font-family:var(--fb);
+  color:var(--ink);
+}
+.ibox-content .note-editor .btn-default{border-radius:8px}
+
+/* --- pagine standalone middle-box (errore, errorpage, message):
+       il tema e i font sono linkati direttamente in quelle pagine --- */
+.middle-box{max-width:480px}
+.middle-box h1{
+  font-family:var(--fd);
+  font-weight:800;
+  letter-spacing:-4px;
+  color:var(--ink);
+}
+.middle-box h3.font-bold{font-family:var(--fd);color:var(--ink-2)}
+.middle-box .error-desc{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+  padding:24px 22px;
+  margin-top:14px;
+  color:var(--ink-2);
+  line-height:1.6;
+}
+.middle-box .logo-name{margin:0 0 10px}
+.middle-box .logo-name img{max-width:280px;height:auto}
+.middle-box .login{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+  padding:24px 22px;
+  margin-top:6px;
+}
+.middle-box small{color:var(--muted)}
