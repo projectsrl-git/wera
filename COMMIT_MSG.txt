@@ -1,7 +1,8 @@
-restyle(ondata-4): configurazione guidata via sola CSS (sezione 23)
+restyle(ondata-5): import, file manager e rilevatori via sola CSS (sez. 24)
 
-- indicatore jquery.steps come pill brand (current/done/disabled/error)
-- #progressBar su gradiente superando lo style di pagina per specificita
-- dropzone riskinnata (copre anche gli import dell'ondata 5)
-- step 6 e riepilogo gia coperti dalle sezioni 21/22
-- nessun template toccato: wizard, dropzone JS e form intatti
+- card file del file manager su token (file, file-name, corner, folder-list)
+- progress bar Bootstrap su gradiente brand; alert-link/alert-success-fixed
+- FullCalendar riskinnato con scope #calendar (bottoni ghost, oggi ambra,
+  eventi accento)
+- fileuploaddati* sono file vuoti: censiti, nessun intervento
+- nessun template toccato
