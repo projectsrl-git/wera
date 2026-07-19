@@ -1,8 +1,7 @@
-restyle(ondata-3): ripartizioni e letture via sola CSS (sezione 22)
+restyle(ondata-4): configurazione guidata via sola CSS (sezione 23)
 
-- input compatti nelle griglie editabili (Costi/Prezzi per unita)
-- alert di stato ripartizione con tipografia coerente (input trasparenti)
-- hover icone editRowAnomalie/viewRow1; eyebrow per i titoli nei tab
-- nessun template toccato: hook JS (rowCallback, tab, amcharts) intatti
-- saltato di proposito il recolor Riscaldamento/ACS in uni2018 (color
-  coding funzionale applicato anche via JS)
+- indicatore jquery.steps come pill brand (current/done/disabled/error)
+- #progressBar su gradiente superando lo style di pagina per specificita
+- dropzone riskinnata (copre anche gli import dell'ondata 5)
+- step 6 e riepilogo gia coperti dalle sezioni 21/22
+- nessun template toccato: wizard, dropzone JS e form intatti

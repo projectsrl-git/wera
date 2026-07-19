@@ -876,3 +876,78 @@ a.editRowAnomalie:hover .fa,a.viewRow1:hover .fa{color:var(--accent-ink)}
 
 /* --- tab-pane: le tabelle dentro i pannelli senza doppio margine --- */
 .tabs-container .panel-body .table{margin-bottom:12px}
+
+/* ============================================================
+   23. ONDATA 4 — configurazione guidata (wizard 0..6)
+   SOLO CSS. Il wizard jquery.steps e usato come semplice
+   indicatore di avanzamento (content/actions nascosti da CSS
+   di pagina): qui si riskinnano solo i colori/tipografia.
+   ============================================================ */
+
+/* --- indicatore step: pill con stati brand --- */
+.wizard > .steps a,
+.wizard > .steps a:hover,
+.wizard > .steps a:active{
+  font-family:var(--fb);
+  font-weight:700;
+  font-size:13px;
+  border-radius:999px;
+  padding:9px 16px;
+}
+.wizard > .steps .disabled a,
+.wizard > .steps .disabled a:hover,
+.wizard > .steps .disabled a:active{
+  background:var(--surface-2);
+  color:var(--muted-2);
+  border:1px solid var(--line);
+}
+.wizard > .steps .current a,
+.wizard > .steps .current a:hover,
+.wizard > .steps .current a:active{
+  background:var(--grad);
+  color:#fff;
+}
+.wizard > .steps .done a,
+.wizard > .steps .done a:hover,
+.wizard > .steps .done a:active{
+  background:var(--teal-bg);
+  color:var(--teal-ink);
+}
+.wizard > .steps .error a,
+.wizard > .steps .error a:hover,
+.wizard > .steps .error a:active{
+  background:var(--red-bg);
+  color:var(--red-ink);
+}
+
+/* --- barra avanzamento import (style di pagina verde INSPINIA:
+       specificita div#... > div per vincere senza !important) --- */
+div#progressBar{
+  background-color:var(--line);
+  border-radius:999px;
+  overflow:hidden;
+}
+div#progressBar > div{
+  background-color:transparent;
+  background-image:var(--grad);
+  color:#fff;
+  border-radius:999px;
+}
+
+/* --- dropzone upload (vale anche per import/fileupload ondata 5) --- */
+form#my-awesome-dropzone.dropzone{
+  background:var(--surface-2);
+  border:2px dashed var(--line);
+  border-radius:var(--r-lg);
+  transition:border-color .15s,background .15s;
+}
+form#my-awesome-dropzone.dropzone:hover,
+form#my-awesome-dropzone.dropzone.dz-drag-hover{
+  border-color:var(--accent);
+  background:#fff;
+}
+.dropzone .dz-message{
+  font-family:var(--fb);
+  font-weight:600;
+  color:var(--muted);
+}
