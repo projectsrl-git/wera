@@ -1,4 +1,5 @@
 <!DOCTYPE html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WERA &middot; Calore semplice</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
+
 /* ============================================================
    WERA — Design System  (tema "warm control room")
    Palette derivata dal logo a fiamma: ambra → corallo → ember
@@ -176,6 +177,7 @@ h1,h2,h3{font-family:var(--fd);font-weight:700;letter-spacing:-.5px;margin:0}
   @media(max-width:1000px){.app{grid-template-columns:1fr}.side{position:fixed;left:-260px;z-index:40;transition:.25s}.side.open{left:0}.ham{display:inline-block;cursor:pointer;font-size:22px;color:var(--ink-2)}.mgrid{grid-template-columns:repeat(2,1fr)}.row2,.donuts,.plans,.wsteps{grid-template-columns:1fr}.wsteps{grid-template-columns:repeat(3,1fr)}}
 
 
+
 </style></head>
 <body>
 <style>
@@ -281,7 +283,7 @@ h1,h2,h3{font-family:var(--fd);font-weight:700;letter-spacing:-.5px;margin:0}
         <li>Accesso a tutti i tuoi condomìni</li>
         <li>Report e ripartizioni a portata di click</li>
       </ul>
-      <a class="btn ghost block" href="app-amministratore.html">Accedi con user e password</a>
+      <a class="btn ghost block" href="#login" onclick="var u=document.getElementById('USERNAME');if(u)u.value='amministratore@wera.club'">Accedi con user e password</a>
     </div>
 
     <div class="card pcard feature">
@@ -319,5 +321,4 @@ h1,h2,h3{font-family:var(--fd);font-weight:700;letter-spacing:-.5px;margin:0}
   <p style="margin:14px 0 0">&copy; 2017&ndash;<script>document.write(new Date().getFullYear())</script> WebCredit WERA &middot; vers 3.0 &middot; Powered by Project srl</p>
 </footer>
 </body>
-
 </html>

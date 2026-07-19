@@ -1,3 +1,4 @@
+
 /* ============================================================
    WERA — Design System  (tema "warm control room")
    Palette derivata dal logo a fiamma: ambra → corallo → ember
@@ -173,4 +174,5 @@ h1,h2,h3{font-family:var(--fd);font-weight:700;letter-spacing:-.5px;margin:0}
   }
   .ham{display:none}
   @media(max-width:1000px){.app{grid-template-columns:1fr}.side{position:fixed;left:-260px;z-index:40;transition:.25s}.side.open{left:0}.ham{display:inline-block;cursor:pointer;font-size:22px;color:var(--ink-2)}.mgrid{grid-template-columns:repeat(2,1fr)}.row2,.donuts,.plans,.wsteps{grid-template-columns:1fr}.wsteps{grid-template-columns:repeat(3,1fr)}}
+
 
