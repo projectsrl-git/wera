@@ -1,8 +1,11 @@
-fix(home): cache-buster del tema a 20260719 + altezza donut in pagina
+restyle(topbar+home): breadcrumb-titolo in topbar, titoli card mockup, Richieste a lista
 
-Il browser serviva wera-theme.css dalla cache (link fermo a ?20260716,
-ondata 0): le sezioni 21-26 non arrivavano al client — per questo
-contrasto/riquadro esterno sembravano invariati e il donut mostrava solo
-la legenda. Aggiunta regola in CLAUDE.md: bump del cache-buster a ogni
-modifica del tema. Altezza #chartdiv-ripartitori anche nello style di
-pagina come cintura di sicurezza.
+- breadcrumb unico nella topbar (included_header) con "/", catena
+  completa cliccabile; included_box_title ridotto ai soli alert e banda
+  intermedia collassata via CSS su tutti i template
+- titoli card in Bricolage scuro come il mockup; label metric card
+  muted sentence-case
+- home Richieste: 4 righe (ultime per prime), niente filtri colonna,
+  lente al posto della matita (stesso handler), chip di stato colorate,
+  dom solo tabella+paginazione
+- sezione 27 del tema + cache-buster ?20260719b

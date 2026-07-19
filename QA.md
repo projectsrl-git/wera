@@ -25,6 +25,12 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Topbar-titolo & Richieste (2026-07-19, sera)
+- [ ] breadcrumb unico nella topbar con separatore "/": ultimo elemento bold, intermedi cliccabili.
+- [ ] banda titolo intermedia sparita ovunque; alert "Salvataggio dati terminato" ancora visibile dopo un salvataggio.
+- [ ] titoli card scuri (Bricolage), label metric card muted sentence-case.
+- [ ] Richieste in home: 4 righe (le ultime), paginazione, lente → apre la ripartizione, chip stato colorate.
+
 ## Home board (2026-07-19)
 - [ ] contatori con animazione di conteggio e separatore migliaia (it-IT).
 - [ ] pallini: ambra su "mai effettuato accesso" e "antenne con carica <30%", verde/rosso sugli altri stati.

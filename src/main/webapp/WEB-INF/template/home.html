@@ -70,28 +70,11 @@
     	<#else>
     	
     	
-    	// Setup - add a text input to each footer cell
-	    $('#dt thead tr').clone(true).appendTo( '#dt thead' );
-	    $('#dt thead tr:eq(1) th').each( function (i) {
-	        var title = $(this).text();
-	        if (title!=''){
-	        	$(this).html( '<input type="text" placeholder="Filtra '+title+'" />' );
-	        }
-	        
-	 
-	        $( 'input', this ).on( 'keyup change', function () {
-	            if ( table.column(i).search() !== this.value ) {
-	                table
-	                    .column(i)
-	                    .search( this.value )
-	                    .draw();
-	            }
-	        } );
-	    } );
-
-		var table = $('#dt').DataTable({
+    	var table = $('#dt').DataTable({
         	orderCellsTop: true,
         	fixedHeader: true,
+			pageLength: 4,
+			lengthChange: false,
 			ajax: dtAjax+dtWhereCondition,
 			columnDefs: [
 				{
@@ -101,7 +84,7 @@
 					data:null,
 					render: function ( data, type, row, meta ) {
 						if(type === 'display' ) {
-							data = '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-pencil fa-color-auto" aria-hidden="true"></i></a>';
+							data = '<a href="#" class="editRow" title="${label_edit}"><i class="fa fa-search fa-color-auto" aria-hidden="true"></i></a>';
 						}
 
 						return data;
@@ -114,11 +97,27 @@
 					width:"1%",
 					targets:14,
 					visible: false
+				},{
+					targets:2,
+					type:'num'
+				},{
+					targets:[5,7,8,9,10,11,12],
+					visible: false
+				},{
+					targets:13,
+					render: function ( data, type, row, meta ) {
+						if (type === 'display' && data != null && data !== '') {
+							var d = ('' + data).toLowerCase();
+							var cls = d.indexOf('approv') >= 0 ? 'ok' : ((d.indexOf('rifiut') >= 0 || d.indexOf('annull') >= 0) ? 'ko' : 'warn');
+							return '<span class="stato-chip stato-' + cls + '">' + data + '</span>';
+						}
+						return data;
+					}
 				}
 				
 			],
 			
-            dom: '<"html5buttons"B>lTfgitp',
+            dom: 'tp',
             language: {
 		        url: 'locales/${CURRENT_SELECTED_ISO_LANGUAGE}.json'
 		    },
@@ -141,7 +140,7 @@
 	    		}
 	    		
             },
-			aaSorting: []
+			aaSorting: [[2,'desc']]
 
         });
 		

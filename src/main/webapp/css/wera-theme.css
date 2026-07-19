@@ -473,15 +473,17 @@ legend{font-family:var(--fd);color:var(--ink);border-bottom:1px solid var(--line
    di colonna iniettati via JS come <input> senza classe)
    ============================================================ */
 
-/* --- card: header senza doppio bordo, ritmo verticale compatto --- */
+/* --- card: header senza doppio bordo, ritmo verticale compatto ---
+   2026-07-19: titolo card allineato al mockup (Bricolage scuro,
+   sentence case); le metric card hanno la variante muted in sez. 27 */
 .ibox-title{border-bottom:0;padding:18px 20px 4px}
 .ibox-title h5{
-  font-family:var(--fb);
-  font-size:12px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:.8px;
-  color:var(--muted);
+  font-family:var(--fd);
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:-.5px;
+  text-transform:none;
+  color:var(--ink);
 }
 .ibox-title + .ibox-content{padding-top:6px}
 .ibox-title .ibox-tools{margin-top:-2px}
@@ -1118,3 +1120,88 @@ form#my-awesome-dropzone.dropzone.dz-drag-hover{
 
 /* donut "Stato ripartitori" */
 #chartdiv-ripartitori{width:100%;height:300px;font-size:11px}
+
+/* ============================================================
+   27. TOPBAR-TITOLO, BAND TITOLO RIMOSSA, RICHIESTE COME MOCKUP
+   ============================================================ */
+
+/* --- label delle metric card: muted sentence-case come nel demo
+       (i titoli card normali sono Bricolage scuri, sez. 16) --- */
+.metricbox .ibox-title h5{
+  font-family:var(--fb);
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--muted);
+}
+
+/* --- breadcrumb-titolo nella topbar (included_header.include):
+       separatore "/", ultimo elemento in evidenza --- */
+.topbar-crumb{
+  float:left;
+  font-family:var(--fd);
+  font-size:17px;
+  letter-spacing:-.3px;
+  margin:15px 8px 0 12px;
+  color:var(--ink);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:46vw;
+}
+.topbar-crumb a{color:var(--muted);font-weight:600;text-decoration:none}
+.topbar-crumb a:hover{color:var(--accent-ink)}
+.topbar-crumb .crumb-sep{color:var(--muted-2);margin:0 7px;font-weight:500}
+.topbar-crumb .crumb-here{color:var(--ink);font-weight:800}
+
+/* --- la vecchia banda titolo intermedia (row + .ibox-title.titolo)
+       collassa a zero: dentro restano solo gli alert dei salvataggi,
+       nascosti finche il JS non li mostra --- */
+.ibox-title.titolo{
+  min-height:0;
+  background:transparent;
+  border:0;
+  margin:0;
+  padding:0;
+}
+
+/* --- home: tabella Richieste come lista del mockup --- */
+.homeboard #dt.table-bordered,
+.homeboard #dt.table-bordered > thead > tr > th,
+.homeboard #dt.table-bordered > tbody > tr > td{border:0}
+.homeboard #dt > thead > tr > th{
+  background:transparent;
+  border-bottom:1px solid var(--line);
+}
+.homeboard #dt > tbody > tr > td{border-top:1px solid var(--line)}
+.homeboard #dt > tbody > tr:first-child > td{border-top:0}
+.homeboard #dt.table-striped > tbody > tr:nth-of-type(odd),
+.homeboard #dt.table-striped > tbody > tr:nth-of-type(odd):hover{background:transparent}
+.homeboard #dt.table-hover > tbody > tr:hover{background:var(--surface-2)}
+
+/* chip di stato (render della colonna DESCR_STATO) */
+.stato-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:4px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.stato-chip::before{
+  content:"";
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--muted-2);
+}
+.stato-ok{color:var(--teal-ink)}
+.stato-ok::before{background:var(--teal)}
+.stato-warn{color:var(--amber-ink)}
+.stato-warn::before{background:var(--amber)}
+.stato-ko{color:var(--red-ink)}
+.stato-ko::before{background:var(--red)}
