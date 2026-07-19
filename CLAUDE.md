@@ -19,13 +19,19 @@ e `demo_riferimento_landing.html` (riferimento visivo).
 
 ## Restyling UI (branch `restyle/ui-2026`) — stato
 - Design system: `src/main/webapp/css/wera-theme.css` (token + override INSPINIA/Bootstrap/plugin,
-  sezioni numerate 1-20). Linkato per ULTIMO in `include/included_head.include`.
+  sezioni numerate 1-25). Linkato per ULTIMO in `include/included_head.include`; le pagine
+  standalone errore/errorpage/message lo linkano direttamente nell'head (+ Google Fonts).
 - Landing/auth: `src/main/webapp/css/wera-landing.css` (solo login.html, pagina standalone).
 - Font: Bricolage Grotesque (display) + Manrope (UI), via Google Fonts.
-- COMPLETATE: ondata 0 (fondamenta + include), ondata 1 (login=landing con sezioni
-  profili/crediti/accesso; registrazione/resetpassword/newpassword con stile `.auth-*`;
-  home con metric card unificate `.metricrow`; profilo coperto dal solo CSS).
-- DA FARE: ondate 2 (anagrafiche), 3 (ripartizioni/letture), 4 (config guidata), 5 (import/file/rilevatori), 6 (config sistema e varie).
+- COMPLETATE TUTTE le ondate 0-6 (2026-07-19). Ondate 2-6 quasi interamente CSS-only:
+  sez. 21 anagrafiche (export ghost, legenda chip, banda titolo), sez. 22 ripartizioni
+  (input compatti in griglia, alert stato), sez. 23 config guidata (jquery.steps pill,
+  progressBar, dropzone), sez. 24 import/file (file-box, progress, FullCalendar #calendar),
+  sez. 25 varie (summernote, pagine middle-box). Unici template toccati dopo l'ondata 1:
+  errore/errorpage/message (soli <link> additivi + rimozione margin-left legacy dal logo).
+- ESCLUSI di proposito: mail.html (template EMAIL con hack MSO: non riskinnare);
+  recolor intestazioni Riscaldamento/ACS in inserimentoripartizioniuni2018 (color coding
+  funzionale applicato anche via JS in rowCallback).
 - Approccio CSS-first: si ridefiniscono le classi esistenti; si interviene sui template solo dove
   il markup va ristrutturato (stili inline in conflitto, wrapper).
 

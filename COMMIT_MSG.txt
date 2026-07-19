@@ -1,7 +1,5 @@
-restyle(ondata-6): config di sistema e pagine standalone (sez. 25)
+docs(restyle): chiusura run ondate 2-6 — QA.md completo e stato in CLAUDE.md
 
-- skin summernote per news/mailconfig (scope .ibox-content)
-- errore/errorpage/message: linkati tema+font (non passano da
-  included_head); message: rimosso margin-left legacy dal logo
-- .middle-box: 500 in Bricolage, error-desc e login-box come card
-- saltato mail.html: e un template email (inline styles + hack MSO)
+- QA.md: checklist di smoke test per ogni ondata (2-6) + rollback
+- CLAUDE.md: ondate 0-6 completate, mappa sezioni tema 21-25,
+  esclusioni deliberate (mail.html, recolor Riscaldamento/ACS uni2018)
