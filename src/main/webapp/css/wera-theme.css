@@ -737,3 +737,19 @@ body{font-size:14px;line-height:1.55}
 }
 .auth-info:empty{display:none}
 .auth-sub{text-align:center;color:var(--muted);font-size:14px;margin:-16px 0 24px}
+
+/* ============================================================
+   20. ONDATA 1c — home: metric card unificate
+   ============================================================ */
+/* colonne a pari altezza (Bootstrap 3 non ha flex di suo) */
+.metricrow{display:flex;flex-wrap:wrap}
+.metricrow > [class*="col-"]{display:flex;flex-direction:column}
+.metricrow .metricbox{flex:1;display:flex;flex-direction:column;margin-bottom:24px}
+.metricbox .ibox-content{flex:1;display:flex;flex-direction:column}
+.metricbox h1.no-margins{margin-bottom:4px}
+.metric-sep{height:1px;background:var(--line);margin:12px 0 4px}
+.metricbox .table.small{margin-top:6px}
+.metricbox .table.small td{border-top:1px solid var(--surface-2)}
+.metricbox .table.small tr:first-child td{border-top:0}
+@media(max-width:1200px){.metricrow > [class*="col-"]{min-width:50%}}
+@media(max-width:768px){.metricrow > [class*="col-"]{min-width:100%}}

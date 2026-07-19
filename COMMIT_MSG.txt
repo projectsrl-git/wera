@@ -1,9 +1,10 @@
-restyle(ondata-1b): registrazione, resetpassword, newpassword
+restyle(ondata-1c): home con metric card unificate; ondata 1 completa
 
-- tre pagine auth riscritte con lo stile card centrata .auth-*
-  (wera-theme sez. 19/19b: aggiunti .auth-info e .auth-sub)
-- newpassword: script di validazione originale preservato verbatim,
-  id INFO_MESSAGE/ERROR_MESSAGE mantenuti come contenitori (chip,
-  nascosti se vuoti)
-- form INVARIATI: FUNCTIONID, SESSION_TOKEN, ERROR/INFO_MESSAGE,
-  name/id/required di tutti i campi, href e script in coda
+- home.html: le due righe (numeri / Dettaglio) diventano una sola
+  row.metricrow con 4 card unificate stile demo; tutti i 23 id
+  popolati da fetchData preservati (verifica automatica 1:1);
+  rimosse solo le righe segnaposto vuote; fix nesting preesistente
+  della 4a colonna; encoding ISO-8859-1 preservato
+- wera-theme.css sez. 20: metricrow flex a pari altezza, metric-sep,
+  breakpoint responsive
+- profilo.html: nessuna modifica necessaria (coperto dal tema)

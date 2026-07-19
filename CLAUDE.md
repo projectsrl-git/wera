@@ -41,3 +41,6 @@ Ogni ondata: nota in `.claude/<data>-<ondata>.md`, aggiornamento di questo `CLAU
 
 ## Ondata 1b (2026-07-17): registrazione, resetpassword, newpassword
 Riscritte con stile `.auth-*` (card centrata). newpassword: script di validazione preservato verbatim, id INFO_MESSAGE/ERROR_MESSAGE mantenuti. Restano: profilo.html, home.html (ondata 1c).
+
+## Ondata 1c (2026-07-17): home + profilo — ONDATA 1 COMPLETA
+home.html: metric card unificate (row.metricrow), 23 id fetchData preservati; ISO-8859-1, editare byte-level. profilo.html invariato (coperto dal tema). Prossima: ondata 2 (anagrafiche).
