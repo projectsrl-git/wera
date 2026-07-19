@@ -753,3 +753,82 @@ body{font-size:14px;line-height:1.55}
 .metricbox .table.small tr:first-child td{border-top:0}
 @media(max-width:1200px){.metricrow > [class*="col-"]{min-width:50%}}
 @media(max-width:768px){.metricrow > [class*="col-"]{min-width:100%}}
+
+/* ============================================================
+   21. ONDATA 2 — anagrafiche (inserimento + ricerca)
+   Solo CSS: nessun template toccato. Le regole valgono anche
+   per le ricerche/inserimenti delle ondate successive (stessi
+   pattern: #formSearch, #report/#excel/#csv, editRow/deleteRow).
+   ============================================================ */
+
+/* --- banda titolo pagina (.ibox-title.titolo, sopra ogni pagina):
+       tokens al posto dei grigi hardcoded di bow.css --- */
+.ibox-title.titolo{
+  background:var(--surface);
+  border-top:0;
+  border-bottom:1px solid var(--line);
+}
+
+/* --- etichette a sinistra (.control-label-left): stessa tipografia
+       delle control-label (bow.css ne definisce solo il padding) --- */
+.form-horizontal .control-label-left{
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--ink-2);
+  letter-spacing:.2px;
+}
+
+/* --- barra azioni ricerca: "Ricerca" resta primario a gradiente,
+       gli export PDF/XLS/CSV diventano ghost (id stabili in tutte
+       le pagine ricerca*; nessun hook JS toccato) --- */
+.btn-primary#report,.btn-primary#excel,.btn-primary#csv{
+  background:#fff;
+  border:1.5px solid var(--line);
+  color:var(--ink-2);
+  box-shadow:none;
+}
+.btn-primary#report:hover,.btn-primary#excel:hover,.btn-primary#csv:hover,
+.btn-primary#report:focus,.btn-primary#excel:focus,.btn-primary#csv:focus{
+  background:#fff;
+  border-color:var(--accent);
+  color:var(--accent-ink);
+  filter:none;
+  transform:none;
+  box-shadow:none;
+}
+
+/* --- legenda icone nelle ricerche (fieldset dentro il form):
+       da testo nudo a chip discreta --- */
+form fieldset{
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:6px 16px 6px 12px;
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+}
+form fieldset i{color:var(--ink-2)}
+
+/* --- icone azione nelle righe DataTables --- */
+a.editRow .fa,a.deleteRow .fa,a.pdfA4Row .fa,a.viewRow .fa,
+.fa.fa-color-auto{color:var(--muted);transition:color .12s}
+a.editRow:hover .fa,a.viewRow:hover .fa{color:var(--accent-ink)}
+a.deleteRow:hover .fa{color:var(--red-ink)}
+a.pdfA4Row:hover .fa{color:var(--ink)}
+
+/* --- tab con .ibox annidato nel panel-body (es. inserimentoaziende):
+       il contenitore interno non deve sembrare una seconda card --- */
+.tabs-container .panel-body .ibox{
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  margin-bottom:0;
+  overflow:visible;
+}
+
+/* --- SweetAlert2: raccordo tipografico (i colori inline dei
+       singoli dialoghi restano quelli impostati dai template) --- */
+.swal2-popup{border-radius:var(--r-lg);font-family:var(--fb)}
+.swal2-popup .swal2-title{font-family:var(--fd);color:var(--ink)}
+.swal2-popup .swal2-html-container,.swal2-popup .swal2-content{color:var(--ink-2)}

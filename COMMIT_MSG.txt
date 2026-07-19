@@ -1,8 +1,7 @@
-chore(restyle): handoff a Claude Code per run autonomo ondate 2-6
+restyle(ondata-2): anagrafiche via sola CSS (sezione 21 del tema)
 
-- .claude/design/: portati in repo i riferimenti (token, guida di
-  stile, scope/guardrail, inventario ondate, demo app e landing)
-- CLAUDE.md riscritto consolidato: stato ondate 0-1 completate,
-  riferimenti design, regole encoding ISO-8859-1/UTF-8, istruzioni
-  per il run autonomo (un commit per ondata, niente push, stop solo
-  su rischio logica/cablaggio)
+- .ibox-title.titolo su token; .control-label-left tipografia coerente
+- export #report/#excel/#csv ghost, "Ricerca" unico bottone primario
+- fieldset legenda come chip; hover icone riga per azione
+- fix card-nella-card nei tab (inserimentoaziende); skin SweetAlert2
+- nessun template toccato: zero rischi su cablaggio form e plugin
