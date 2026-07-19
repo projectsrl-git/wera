@@ -1,10 +1,8 @@
-restyle(ondata-1c): home con metric card unificate; ondata 1 completa
+chore(restyle): handoff a Claude Code per run autonomo ondate 2-6
 
-- home.html: le due righe (numeri / Dettaglio) diventano una sola
-  row.metricrow con 4 card unificate stile demo; tutti i 23 id
-  popolati da fetchData preservati (verifica automatica 1:1);
-  rimosse solo le righe segnaposto vuote; fix nesting preesistente
-  della 4a colonna; encoding ISO-8859-1 preservato
-- wera-theme.css sez. 20: metricrow flex a pari altezza, metric-sep,
-  breakpoint responsive
-- profilo.html: nessuna modifica necessaria (coperto dal tema)
+- .claude/design/: portati in repo i riferimenti (token, guida di
+  stile, scope/guardrail, inventario ondate, demo app e landing)
+- CLAUDE.md riscritto consolidato: stato ondate 0-1 completate,
+  riferimenti design, regole encoding ISO-8859-1/UTF-8, istruzioni
+  per il run autonomo (un commit per ondata, niente push, stop solo
+  su rischio logica/cablaggio)
