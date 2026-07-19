@@ -1,7 +1,8 @@
-restyle(ondata-2): anagrafiche via sola CSS (sezione 21 del tema)
+restyle(ondata-3): ripartizioni e letture via sola CSS (sezione 22)
 
-- .ibox-title.titolo su token; .control-label-left tipografia coerente
-- export #report/#excel/#csv ghost, "Ricerca" unico bottone primario
-- fieldset legenda come chip; hover icone riga per azione
-- fix card-nella-card nei tab (inserimentoaziende); skin SweetAlert2
-- nessun template toccato: zero rischi su cablaggio form e plugin
+- input compatti nelle griglie editabili (Costi/Prezzi per unita)
+- alert di stato ripartizione con tipografia coerente (input trasparenti)
+- hover icone editRowAnomalie/viewRow1; eyebrow per i titoli nei tab
+- nessun template toccato: hook JS (rowCallback, tab, amcharts) intatti
+- saltato di proposito il recolor Riscaldamento/ACS in uni2018 (color
+  coding funzionale applicato anche via JS)

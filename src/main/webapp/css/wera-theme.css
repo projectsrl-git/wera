@@ -832,3 +832,47 @@ a.pdfA4Row:hover .fa{color:var(--ink)}
 .swal2-popup{border-radius:var(--r-lg);font-family:var(--fb)}
 .swal2-popup .swal2-title{font-family:var(--fd);color:var(--ink)}
 .swal2-popup .swal2-html-container,.swal2-popup .swal2-content{color:var(--ink-2)}
+
+/* ============================================================
+   22. ONDATA 3 — ripartizioni & letture
+   SOLO CSS, massima prudenza: tab/wizard/tabelle editabili sono
+   pieni di hook JS. Nessun template toccato.
+   ============================================================ */
+
+/* --- griglie editabili (input dentro celle tabella): compatti,
+       così le tabelle Costi/Prezzi respirano senza scroll inutile --- */
+.table td .form-control{
+  padding:6px 10px;
+  height:auto;
+  font-size:13px;
+  border-radius:9px;
+}
+.table td .input-group-addon{border-radius:9px;padding:6px 10px}
+
+/* --- messaggi di stato ripartizione (alert con input trasparente
+       dentro: DESCR_TIPO_RIPARTIZIONE, ALERT_*): il testo eredita
+       colore e font dell'alert invece del default browser --- */
+.alert b > input{
+  font-family:var(--fb);
+  font-weight:800;
+  color:inherit;
+}
+
+/* --- icone azione aggiuntive di quest'area --- */
+a.editRowAnomalie .fa,a.viewRow1 .fa{color:var(--muted);transition:color .12s}
+a.editRowAnomalie:hover .fa,a.viewRow1:hover .fa{color:var(--accent-ink)}
+
+/* --- intestazioni di sezione dentro i tab (tabelle senza classe
+       usate come titolo: "COSTI COMBURENTE", ecc.) --- */
+.tabs-container .tab-pane table:not([class]) > thead > tr > th{
+  font-family:var(--fb);
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:var(--muted);
+  padding:4px 0 8px;
+}
+
+/* --- tab-pane: le tabelle dentro i pannelli senza doppio margine --- */
+.tabs-container .panel-body .table{margin-bottom:12px}
