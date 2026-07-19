@@ -1,11 +1,8 @@
-restyle(home): board come nel mockup — count-up, dot semantici, donut, contrasto
+fix(home): cache-buster del tema a 20260719 + altezza donut in pagina
 
-- contatori h1 con animazione di conteggio (easing come il demo, formato it-IT)
-- pallini ambra su "mai effettuato accesso" e "carica <30%" (text-warning)
-- donut amcharts "Stato ripartitori" dai valori gia caricati (Stat31/32/34),
-  nessun dataset o chiamata aggiuntiva; Richieste passa a col-lg-8
-- classe homeboard: card su sfondo --bg, rimossa la card esterna che
-  racchiudeva le card (causa del bianco-su-bianco)
-- home.html editato byte-level: ISO-8859-1 e CRLF preservati
-- saltato "Andamento letture mensili": manca un dataset serie mensile,
-  richiede una entry in config.cfg (fuori scope, proposta in nota)
+Il browser serviva wera-theme.css dalla cache (link fermo a ?20260716,
+ondata 0): le sezioni 21-26 non arrivavano al client — per questo
+contrasto/riquadro esterno sembravano invariati e il donut mostrava solo
+la legenda. Aggiunta regola in CLAUDE.md: bump del cache-buster a ogni
+modifica del tema. Altezza #chartdiv-ripartitori anche nello style di
+pagina come cintura di sicurezza.

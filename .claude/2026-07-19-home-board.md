@@ -33,6 +33,15 @@ grafico "Stato ripartitori", card sullo sfondo --bg senza doppia cornice.
 DataTable #dt e suoi handler, formEdit, blocco CON (grafici condomino), include, id esistenti:
 invariati. Nessun dataset/config/Java modificato.
 
+## Post-deploy (stesso giorno): fix cache CSS
+Dal primo deploy il punto "contrasto/riquadro esterno" risultava invariato e il donut mostrava
+solo la legenda: il link al tema aveva ancora il cache-buster `?20260716` (ondata 0), quindi il
+browser serviva la copia in cache SENZA le sezioni 21-26 (i pallini ambra arrivavano dal
+`.text-warning` di INSPINIA, non dal tema). Fix:
+- `included_head.include`: cache-buster aggiornato a `?20260719` (regola aggiunta a CLAUDE.md);
+- `home.html`: dimensioni di `#chartdiv-ripartitori` duplicate nello `<style>` di pagina
+  (belt&braces, immune alla cache del CSS).
+
 ## QA
 - [ ] home (profilo non-CON): i 4 contatori si animano e mostrano il separatore migliaia
 - [ ] dettagli card: pallini verdi/rossi/ambra (ambra su "mai effettuato accesso" e "carica <30%")

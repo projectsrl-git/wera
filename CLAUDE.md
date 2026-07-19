@@ -19,8 +19,10 @@ e `demo_riferimento_landing.html` (riferimento visivo).
 
 ## Restyling UI (branch `restyle/ui-2026`) — stato
 - Design system: `src/main/webapp/css/wera-theme.css` (token + override INSPINIA/Bootstrap/plugin,
-  sezioni numerate 1-25). Linkato per ULTIMO in `include/included_head.include`; le pagine
+  sezioni numerate 1-26). Linkato per ULTIMO in `include/included_head.include`; le pagine
   standalone errore/errorpage/message lo linkano direttamente nell'head (+ Google Fonts).
+  IMPORTANTE: a OGNI modifica del tema aggiornare il cache-buster `?AAAAMMGG` del link in
+  `included_head.include` (e nelle standalone), altrimenti i browser servono la copia in cache.
 - Landing/auth: `src/main/webapp/css/wera-landing.css` (solo login.html, pagina standalone).
 - Font: Bricolage Grotesque (display) + Manrope (UI), via Google Fonts.
 - COMPLETATE TUTTE le ondate 0-6 (2026-07-19). Ondate 2-6 quasi interamente CSS-only:
