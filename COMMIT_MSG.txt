@@ -1,7 +1,11 @@
-fix(menu): voce Home fissa come prima voce per tutti i profili
+restyle(home): board come nel mockup — count-up, dot semantici, donut, contrasto
 
-La riga Home nel DB e la radice dell'albero menu (path vuoto) e il
-loop del template parte dal livello 1: non veniva mai renderizzata.
-Aggiunto <li> statico in included_menu.include con link
-astro?FUNCTIONID=Home, icona fa-home e stato attivo su SELECTED_PATH=''
-(vuoto solo sulla home). Nessuna modifica al loop ne al Java.
+- contatori h1 con animazione di conteggio (easing come il demo, formato it-IT)
+- pallini ambra su "mai effettuato accesso" e "carica <30%" (text-warning)
+- donut amcharts "Stato ripartitori" dai valori gia caricati (Stat31/32/34),
+  nessun dataset o chiamata aggiuntiva; Richieste passa a col-lg-8
+- classe homeboard: card su sfondo --bg, rimossa la card esterna che
+  racchiudeva le card (causa del bianco-su-bianco)
+- home.html editato byte-level: ISO-8859-1 e CRLF preservati
+- saltato "Andamento letture mensili": manca un dataset serie mensile,
+  richiede una entry in config.cfg (fuori scope, proposta in nota)

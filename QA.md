@@ -25,6 +25,13 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Home board (2026-07-19)
+- [ ] contatori con animazione di conteggio e separatore migliaia (it-IT).
+- [ ] pallini: ambra su "mai effettuato accesso" e "antenne con carica <30%", verde/rosso sugli altri stati.
+- [ ] donut "Stato ripartitori" (funzionanti/in errore/non scaricati) accanto alla tabella Richieste; tooltip e legenda ok.
+- [ ] card su sfondo sabbia (contrasto come nel mockup), nessun riquadro esterno che racchiude le card.
+- [ ] tabella Richieste su 8 colonne: filtri colonna, matita, export invariati.
+
 ## Ondata 2 — anagrafiche
 - [ ] ricercaanagraficacondomini (o altra ricerca*): filtri di colonna, "ricerca in linea", export — "Ricerca" a gradiente, PDF/XLS/CSV ghost; matita/cestino/PDF riga con hover colorato.
 - [ ] legenda icone come chip discreta sotto i bottoni.

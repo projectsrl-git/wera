@@ -1094,3 +1094,27 @@ form#my-awesome-dropzone.dropzone.dz-drag-hover{
   margin-top:6px;
 }
 .middle-box small{color:var(--muted)}
+
+/* ============================================================
+   26. HOME — board come nel mockup
+   (classe .homeboard aggiunta alla row contenuti di home.html)
+   ============================================================ */
+
+/* le card poggiano sullo sfondo --bg (prima: bianco su bianco)
+   e il contenitore esterno non e piu una card dentro la card */
+.page-heading.homeboard{background:var(--bg)}
+.page-heading.homeboard > [class*="col-"] > .ibox{
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  overflow:visible;
+  margin-bottom:0;
+}
+
+/* pallino ambra per gli stati "attenzione" (mai effettuato accesso,
+   carica <30%), come i dot del mockup */
+.fa-circle.text-warning{color:var(--amber)}
+
+/* donut "Stato ripartitori" */
+#chartdiv-ripartitori{width:100%;height:300px;font-size:11px}

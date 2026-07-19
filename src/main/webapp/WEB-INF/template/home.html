@@ -163,6 +163,48 @@
 	      	var dataGrafico="VALORE";
 	      	
 	      	var whereCondition="";
+
+	      	window.weraStatValues = {};
+
+	      	// effetto conteggio progressivo dei contatori (solo estetica, come nel mockup)
+	      	function weraCountUp(el, target){
+	      		var start = performance.now();
+	      		function step(now){
+	      			var p = Math.min(1, (now - start) / 900);
+	      			el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))).toLocaleString('it-IT');
+	      			if (p < 1) requestAnimationFrame(step);
+	      		}
+	      		requestAnimationFrame(step);
+	      	}
+
+	      	// donut "Stato ripartitori": riusa i valori gia caricati dagli stessi dataset dei contatori
+	      	function doGraficoStatoRipartitori(){
+	      		var v = window.weraStatValues;
+	      		var dati = [
+	      			{"stato": "Funzionanti", "valore": (v.DataSetStat31 || 0), "colore": "#1d9e75"},
+	      			{"stato": "In errore", "valore": (v.DataSetStat32 || 0), "colore": "#e24b4a"},
+	      			{"stato": "Non scaricati", "valore": (v.DataSetStat34 || 0), "colore": "#f9a825"}
+	      		];
+	      		if ((dati[0].valore + dati[1].valore + dati[2].valore) === 0) {
+	      			document.getElementById("chartdiv-ripartitori").innerHTML = "<p>Non sono disponibili dati da visualizzare</p>";
+	      			return;
+	      		}
+	      		AmCharts.makeChart("chartdiv-ripartitori", {
+	      			"type": "pie",
+	      			"theme": "none",
+	      			"startDuration": 0,
+	      			"innerRadius": "62%",
+	      			"labelsEnabled": false,
+	      			"colorField": "colore",
+	      			"dataProvider": dati,
+	      			"valueField": "valore",
+	      			"titleField": "stato",
+	      			"balloonText": "[[title]]: [[value]]",
+	      			"legend": {"position": "bottom", "markerType": "circle", "valueText": "[[value]]", "autoMargins": false},
+	      			"export": {"enabled": false}
+	      		});
+	      	}
+
 	      	
 	      	function fetchData(dataset, targetDiv, suffix = "") {
 		        return $.ajax({
@@ -171,7 +213,9 @@
 		            type: 'GET'
 		        }).done(function(data) {
 		            var value = data.rows.length > 0 ? data.rows[0][dataGrafico] : 0;
-		            document.querySelector(targetDiv).innerHTML = value + suffix;
+		            var el = document.querySelector(targetDiv);
+		            window.weraStatValues[dataset] = Number(value) || 0;
+		            if (el && el.tagName === 'H1') { weraCountUp(el, Number(value) || 0); } else { el.innerHTML = value + suffix; }
 		        });
 		    }
 
@@ -202,6 +246,7 @@
 		        fetchData("DataSetStat45", "#div_antenne_censite", " censiti")
 		    ).done(function() {
 		        console.log("Tutte le chiamate AJAX completate.");
+		        doGraficoStatoRipartitori();
 		    });
 		     	
 	      	
@@ -526,7 +571,7 @@
 	           	</div>
 		    </div>
         	
-			<div class="row wrapper border-bottom page-heading">
+			<div class="row wrapper border-bottom page-heading homeboard">
 			
 			
                 <div class="col-sm-12">
@@ -597,7 +642,7 @@
                                         <td class="no-borders"><h5 class="no-margins" id="div_senza_ripartitori_associati"></h5></td>
                                     </tr>
                                     <tr>
-                                        <td class="no-borders"><i class="fa fa-circle text-danger"></i></td>
+                                        <td class="no-borders"><i class="fa fa-circle text-warning"></i></td>
                                         <td class="no-borders"><h5 class="no-margins" id="div_no_accesso"></h5></td>
                                     </tr>
                                     </tbody>
@@ -706,7 +751,7 @@
                                         <td class="no-borders"><h5 class="no-margins" id="div_antenne_non_censite"></h5></td>
                                     </tr>
                                     <tr>
-                                        <td class="no-borders"><i class="fa fa-circle text-danger"></i></td>
+                                        <td class="no-borders"><i class="fa fa-circle text-warning"></i></td>
                                         <td class="no-borders"><h5 class="no-margins" id="div_batteria"></h5></td>
                                     </tr>
                                     </tbody>
@@ -717,7 +762,7 @@
 					</div>
 
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-8">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <h5>Richieste di ripartizione in attesa di conferma / da completare</h5>
@@ -752,6 +797,16 @@
                                     
 								
 								</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="ibox float-e-margins">
+                            <div class="ibox-title">
+                                <h5>Stato ripartitori</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <div id="chartdiv-ripartitori"></div>
                             </div>
                         </div>
                     </div>
