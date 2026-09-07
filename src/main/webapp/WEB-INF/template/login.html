@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 
 <head>
 
@@ -7,13 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WERA - Login</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="css/wera-landing.css?20260717" rel="stylesheet">
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    
     <script type="text/javascript">
 		$(function(){
 			$("#Login").validate({
@@ -28,83 +26,149 @@
 
 </head>
 
-<body class="gray-bg">
+<body>
 
-  <div class="auth-box" style="min-height: 100vh; display: table; width: 100%; background: #f8f9fa;">
- 	 <div class="container" style="height:100vh; display: table; width: 100%;">
-  		<div class="row" style="display: table-cell; vertical-align: middle;">
-  		
-  		<div class="text-center" style="margin-bottom: 15px; max-width: 400px; margin-left: auto; margin-right: auto;">
-  		<img src="img/wera-login.png" alt="Wera logo" style="max-width: 380px; height: auto;">
-  		</div>
-  		
-    	<div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2" style="max-width: 400px; margin: 0 auto; float: none;">
+<header class="topnav"><div class="in">
+  <a href="#login"><img class="logoimg" src="img/wera-login.png" alt="Webcredit WERA"></a>
+  <div class="navlinks">
+    <a class="link" href="#profili">Profili</a>
+    <a class="link" href="#crediti">Crediti</a>
+    <a class="link" href="#accesso">Come accedere</a>
+    <a class="link" href="#login">Accedi</a>
+  </div>
+</div></header>
 
-      
-        <!-- Brand / Logo -->
-		<div class="text-center" style="margin-bottom: 30px; max-width: 400px; margin-left: auto; margin-right: auto;">
-		  
-		
-		  <h4 style="font-weight: 700; margin-top: 15px;">
-		    Lo strumento che permette di monitorare, gestire e ridurre il consumo delle risorse energetiche della propria struttura
-		  </h4>
-		
-		  <!-- <p class="text-muted" style="max-width: 350px; margin: 10px auto 0;">
-		    Al servizio di installatori, condomini e amministratori, offrendo loro tutte le informazioni necessarie per verificare il corretto funzionamento degli impianti, l'andamento dei consumi e la loro ripartizione.
-		  </p> -->
-		</div>
-
-
-        <!-- Card-like box -->
-        <div class="panel panel-default" style="border-radius: 5px; padding: 30px;">
-          <form class="m-t" action="astro" method="post" id="Login">
-           	<input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="Home" />
-			<#if SESSION_TOKEN?exists><input type="hidden" id="SESSION_TOKEN" name="SESSION_TOKEN" value="${SESSION_TOKEN}"></#if>
-			<p><center><#if ERROR_MESSAGE?exists>${ERROR_MESSAGE}</#if></center></p>
-
-            <div class="form-group">
-              <label for="userEmail">Username <span style="color: #d9534f;">*</span></label>
-              <input type="email" class="form-control" name="USERNAME" id="USERNAME" required>
-            </div>
-
-            <div class="form-group">
-              <label for="userPassword">Password <span style="color: #d9534f;">*</span></label>
-              <input type="password" class="form-control" name="PASSWORD" id="PASSWORD" required>
-            </div>
-
-            <div class="row" style="margin-bottom: 15px;">
-              <div class="col-xs-5">
-                <div class="checkbox" style="margin-top: 0;">
-                  <label>
-                   
-                  </label>
-                </div>
-              </div>
-              <div class="col-xs-7 text-right" style="padding-top: 6px;">
-                <a href="astro?FUNCTIONID=ResetPassword" style="text-decoration: underline; color: #6c757d; font-size: 13px;">
-                  Password dimenticata?
-                </a>
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block" style="font-weight: 600; padding: 10px 0;">
-              Login
-            </button>
-          </form>
-
-          <p class="text-muted text-center" style="margin-top: 20px; font-size: 14px;">
-            Non hai un account? <a href="astro?FUNCTIONID=Registrazione" style="text-decoration: underline; font-weight: 600;">Registrati</a>
-          </p>
-        </div>
-
-        <p class="text-center text-muted" style="margin-top: 30px; font-size: 13px;">
-          © 2017-<script>document.write(new Date().getFullYear())</script> Webcredit WERA — vers 3.0 <br/> Powered by Project srl
-        </p>
-
-      </div>
+<section class="hero"><div class="in">
+  <div>
+    <span class="chip warm" style="background:rgba(249,168,37,.16);border-color:rgba(249,168,37,.3);color:#ffd9a0">Contabilizzazione &amp; ripartizione calore &middot; UNI 10200</span>
+    <h1>Semplicemente <em>calore.</em></h1>
+    <p class="sub">Monitora, gestisci e ripartisci i consumi di riscaldamento dei condom&igrave;ni. Letture sempre aggiornate, ripartizioni trasparenti, tutto via web &mdash; per installatori, amministratori e inquilini.</p>
+    <div class="cta">
+      <a class="btn" href="#login">Accedi al tuo account</a>
+      <a class="btn dark" href="#profili">Scopri i profili</a>
+    </div>
+    <div class="stats">
+      <div class="s"><b>4.596</b><span>Ripartitori gestiti</span></div>
+      <div class="s"><b>49</b><span>Condom&igrave;ni attivi</span></div>
+      <div class="s"><b>UNI 10200</b><span>2013 &middot; 2015 &middot; 2018</span></div>
     </div>
   </div>
-</div>
+
+  <div class="loginc" id="login">
+    <h3>Accedi</h3>
+    <p class="muted" style="margin:0 0 22px;font-size:14px">Inserisci le credenziali ricevute o registrati.</p>
+    <form action="astro" method="post" id="Login">
+      <input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="Home" />
+		<#if SESSION_TOKEN?exists><input type="hidden" id="SESSION_TOKEN" name="SESSION_TOKEN" value="${SESSION_TOKEN}"></#if>
+      <div class="auth-error"><#if ERROR_MESSAGE?exists>${ERROR_MESSAGE}</#if></div>
+      <div class="field"><label for="USERNAME">Username <span class="req">*</span></label>
+        <input type="email" class="form-control" id="USERNAME" name="USERNAME" autocomplete="username" placeholder="nome.utente@dominio.it" required></div>
+      <div class="field"><label for="PASSWORD">Password <span class="req">*</span></label>
+        <input type="password" class="form-control" id="PASSWORD" name="PASSWORD" autocomplete="current-password" placeholder="La tua password" required></div>
+      <div style="text-align:right;margin:-4px 0 16px"><a href="astro?FUNCTIONID=ResetPassword" style="color:var(--muted);font-size:13px;text-decoration:none">Password dimenticata?</a></div>
+      <button class="btn block" type="submit">Login</button>
+    </form>
+    <p class="muted center" style="margin:16px 0 0;font-size:13.5px">Non hai un account? <a href="astro?FUNCTIONID=Registrazione" style="color:var(--accent-ink);font-weight:700;text-decoration:none">Registrati</a></p>
+  </div>
+</div></section>
+
+<section class="section" id="profili">
+  <h2>Scegli il tuo profilo</h2>
+  <p class="lead">Ogni utente accede a ci&ograve; che gli serve. Tre esperienze su misura, un'unica piattaforma.</p>
+  <div class="profiles">
+
+    <div class="card pcard">
+      <div class="ic t">&#127968;</div>
+      <h3>Inquilino</h3>
+      <p>Controlla i tuoi consumi e verifica il corretto funzionamento dei tuoi ripartitori, comodamente da casa.</p>
+      <ul class="steps">
+        <li>Ti registri da solo</li>
+        <li>Ti serve solo il <b>codice del ripartitore</b></li>
+        <li>Accesso immediato ai tuoi dati</li>
+      </ul>
+      <a class="btn ghost block" href="astro?FUNCTIONID=Registrazione">Registrati con il codice</a>
+    </div>
+
+    <div class="card pcard">
+      <div class="ic a">&#127970;</div>
+      <h3>Amministratore</h3>
+      <p>Vedi i ripartitori di tutti gli appartamenti dei tuoi condom&igrave;ni, le letture e i riparti, sempre aggiornati.</p>
+      <ul class="steps">
+        <li>Credenziali fornite dall'installatore</li>
+        <li>Accesso a tutti i tuoi condom&igrave;ni</li>
+        <li>Report e ripartizioni a portata di click</li>
+      </ul>
+      <a class="btn ghost block" href="#login">Accedi con user e password</a>
+    </div>
+
+    <div class="card pcard feature">
+      <div class="ic e">&#128295;</div>
+      <h3>Installatore</h3>
+      <p>Il profilo completo: gestisci tutti i condom&igrave;ni, configuri gli impianti e calcoli le ripartizioni. Piattaforma <b>re-brandabile</b> con il tuo logo.</p>
+      <ul class="steps">
+        <li>Registrazione azienda (B2B)</li>
+        <li>Crediti prepagati per i ripartitori</li>
+        <li>Calcolo ripartizioni UNI 10200</li>
+      </ul>
+      <a class="btn block" href="astro?FUNCTIONID=Registrazione">Registra la tua azienda</a>
+      <a class="btn ghost block" style="margin-top:10px" href="#crediti">Vedi i bundle di crediti</a>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="crediti" style="padding-top:0">
+  <h2>Crediti prepagati, senza sorprese</h2>
+  <p class="lead">Un credito, un ripartitore gestito. Scegli il bundle della tua dimensione: pi&ugrave; grande il taglio, pi&ugrave; basso il costo per credito.</p>
+  <div class="plans">
+
+    <div class="card plan">
+      <div class="tier" style="color:#6b7280">Silver</div>
+      <div class="cr" style="color:#374151">500 <small>crediti</small></div>
+      <div class="per">2,00 &euro; / credito</div>
+      <div class="tot"><b>1.000 &euro;</b><span>IVA esclusa</span></div>
+      <a class="btn ghost sm" href="astro?FUNCTIONID=Registrazione">Inizia con Silver</a>
+    </div>
+
+    <div class="card plan gold">
+      <div class="badge-top">Pi&ugrave; scelto</div>
+      <div class="tier" style="color:var(--ember-ink)">Gold</div>
+      <div class="cr" style="color:var(--ember)">2.000 <small>crediti</small></div>
+      <div class="per">1,75 &euro; / credito &middot; &minus;12,5%</div>
+      <div class="tot"><b>3.500 &euro;</b><span>IVA esclusa</span></div>
+      <a class="btn sm" href="astro?FUNCTIONID=Registrazione">Inizia con Gold</a>
+    </div>
+
+    <div class="card plan">
+      <div class="tier" style="color:#7a5b14">Platinum</div>
+      <div class="cr" style="color:#8a5a06">5.000 <small>crediti</small></div>
+      <div class="per">1,50 &euro; / credito &middot; &minus;25%</div>
+      <div class="tot"><b>7.500 &euro;</b><span>IVA esclusa</span></div>
+      <a class="btn ghost sm" href="astro?FUNCTIONID=Registrazione">Inizia con Platinum</a>
+    </div>
+
+  </div>
+  <p class="muted center" style="margin:26px 0 0;font-size:13.5px">I bundle si attivano dal profilo installatore, dopo la registrazione dell'azienda.</p>
+</section>
+
+<section style="background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)" id="accesso">
+ <div class="section" style="padding:56px 24px">
+  <h2 style="font-size:28px">Come accedere, in breve</h2>
+  <div class="profiles" style="margin-top:34px">
+    <div><div class="chip" style="margin-bottom:10px"><span class="dot g"></span> Inquilino</div>
+      <p class="muted" style="font-size:14.5px">Apri <b>&ldquo;Registrati con il codice&rdquo;</b>, inserisci il codice stampato sul tuo ripartitore, crea email e password. Fatto.</p></div>
+    <div><div class="chip" style="margin-bottom:10px"><span class="dot a"></span> Amministratore</div>
+      <p class="muted" style="font-size:14.5px">Usa lo <b>username e la password</b> che ti ha consegnato l'installatore nel riquadro <b>Accedi</b> qui sopra.</p></div>
+    <div><div class="chip" style="margin-bottom:10px"><span class="dot r"></span> Installatore</div>
+      <p class="muted" style="font-size:14.5px">Registra l'azienda (serve un <b>codice ATECO</b> del settore termoidraulico), scegli un bundle di crediti e inizia.</p></div>
+  </div>
+ </div>
+</section>
+
+<footer class="foot">
+  <img class="logoimg" src="img/wera-login.png" alt="Webcredit WERA">
+  &copy; 2017-<script>document.write(new Date().getFullYear())</script> Webcredit WERA &ndash; vers 3.0 &middot; Powered by Project srl
+</footer>
 
 
 

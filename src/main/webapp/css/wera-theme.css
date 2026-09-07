@@ -1,0 +1,1270 @@
+/* ============================================================
+   WERA — wera-theme.css  ·  Design system "warm control room"
+   Ondata 0 (2026-07-16) — token + override Bootstrap 3 / INSPINIA
+   ------------------------------------------------------------
+   REGOLE: questo foglio SOLO AGGIUNGE override estetici.
+   Non ridefinisce comportamenti JS, non tocca hook di plugin.
+   Va caricato per ULTIMO in included_head.include.
+   ============================================================ */
+
+/* ---------- 1. TOKEN (sorgente: 01_wera_design_tokens.css) ---------- */
+:root{
+  --ink:#16181d; --ink-2:#2a2e36; --muted:#737a86; --muted-2:#9aa0ab;
+  --bg:#f5f4f2; --surface:#ffffff; --surface-2:#faf9f7; --line:#e8e6e1;
+  --side:#1b1e24; --side-2:#22262e; --side-line:rgba(255,255,255,.08); --side-ink:#aeb4bf;
+
+  --amber:#f9a825; --coral:#fb6340; --ember:#e8453c; --ember-ink:#b8331f;
+  --accent:#fb6340; --accent-ink:#b8331f;
+  --grad:linear-gradient(100deg,#f9a825,#fb6340 55%,#e8453c);
+
+  --teal:#1d9e75; --teal-bg:#e1f5ee; --teal-ink:#0f6e56;
+  --red:#e24b4a; --red-bg:#fceaea; --red-ink:#a32d2d;
+  --amber-bg:#fdf1dc; --amber-ink:#8a5a06;
+
+  --r-sm:9px; --r:13px; --r-lg:18px; --r-xl:24px;
+  --shadow:0 22px 48px -26px rgba(22,24,29,.4);
+  --shadow-sm:0 6px 18px -10px rgba(22,24,29,.28);
+  --fd:"Bricolage Grotesque",Georgia,serif;
+  --fb:"Manrope",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+/* ---------- 2. BASE ---------- */
+body{
+  font-family:var(--fb);
+  color:var(--ink);
+  background-color:var(--bg);
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--fd);font-weight:700;letter-spacing:-.5px;color:var(--ink)}
+h4,h5,h6{font-family:var(--fb);font-weight:700;color:var(--ink)}
+a{color:var(--accent-ink)}
+a:hover,a:focus{color:var(--ember)}
+
+/* sfondi INSPINIA */
+body.gray-bg,.gray-bg{background-color:var(--bg)}
+.white-bg{background-color:var(--surface)}
+
+/* wrapper contenuti */
+#page-wrapper{background-color:var(--bg)}
+.wrapper-content{padding:24px 16px}
+
+/* ---------- 3. SIDEBAR (rail scuro) ---------- */
+.navbar-default.navbar-static-side{background-color:var(--side)}
+.navbar-static-side .sidebar-collapse{background-color:var(--side)}
+.nav.metismenu{background-color:var(--side)}
+#side-menu.nav > li{border:0}
+#side-menu.nav > li > a{
+  color:var(--side-ink);
+  font-weight:600;
+  font-size:13.5px;
+  padding:11px 18px;
+  border-radius:10px;
+  margin:2px 8px;
+}
+#side-menu.nav > li > a:hover,
+#side-menu.nav > li > a:focus{
+  background-color:var(--side-2);
+  color:#fff;
+}
+#side-menu.nav > li.active{border-left:0;background:transparent}
+#side-menu.nav > li.active > a{
+  background:var(--grad);
+  color:#fff;
+}
+.nav.nav-second-level{background-color:var(--side)}
+.nav.nav-second-level > li > a{
+  color:var(--side-ink);
+  padding:8px 14px 8px 46px;
+  font-size:13px;
+  font-weight:500;
+}
+.nav.nav-second-level > li > a:hover,
+.nav.nav-second-level > li.active > a{
+  color:#fff;
+  background-color:var(--side-2);
+}
+.nav.nav-third-level{background-color:var(--side)}
+.nav.nav-third-level > li > a{color:var(--side-ink);padding-left:60px;font-size:12.5px}
+.nav.nav-third-level > li > a:hover,
+.nav.nav-third-level > li.active > a{color:#fff}
+.nav > li > a i{margin-right:8px;opacity:.85}
+.nav .fa.arrow{opacity:.6}
+
+/* testata sidebar (logo) */
+.nav-header{background:var(--side)!important;padding:20px 18px;border-bottom:1px solid var(--side-line)}
+.nav-header .profile-element{text-align:center}
+.nav-header .profile-element img{max-height:38px;max-width:180px;width:auto}
+.logo-element{
+  background:var(--grad);
+  color:#fff;
+  font-family:var(--fd);
+  font-weight:800;
+}
+
+/* ---------- 4. TOPBAR ---------- */
+.row.border-bottom{border-bottom:1px solid var(--line)}
+.navbar-static-top{
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+}
+.navbar-top-links li a{
+  color:var(--ink-2);
+  font-weight:600;
+  padding:18px 12px;
+}
+.navbar-top-links li a:hover,.navbar-top-links li a:focus{
+  background-color:var(--surface-2);
+  color:var(--accent-ink);
+}
+.navbar-minimalize.btn-primary{
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  color:var(--ink-2);
+  box-shadow:none;
+  border-radius:var(--r-sm);
+}
+.navbar-minimalize.btn-primary:hover{
+  background:#fff;
+  border-color:var(--accent);
+  color:var(--accent-ink);
+}
+
+/* intestazione pagina + breadcrumb */
+.page-heading{
+  background:var(--surface);
+  border-bottom:1px solid var(--line);
+  padding:14px 16px;
+}
+h4.page-title,.page-heading h2{
+  font-family:var(--fd);
+  color:var(--ink);
+  letter-spacing:-.3px;
+}
+.breadcrumb{background:transparent;font-size:12.5px}
+.breadcrumb > li a{color:var(--muted)}
+.breadcrumb > .active{color:var(--ink-2);font-weight:600}
+
+/* ---------- 5. CARD (.ibox) ---------- */
+.ibox{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+  margin-bottom:24px;
+  overflow:hidden;
+}
+.ibox-title{
+  background:var(--surface);
+  border:0;
+  border-bottom:1px solid var(--line);
+  border-radius:var(--r-lg) var(--r-lg) 0 0;
+  padding:16px 20px 14px;
+  min-height:0;
+}
+.ibox-title h5{
+  font-family:var(--fd);
+  font-size:16px;
+  font-weight:700;
+  color:var(--ink);
+}
+.ibox-content{
+  background:var(--surface);
+  border:0;
+  border-radius:0 0 var(--r-lg) var(--r-lg);
+  padding:20px;
+  color:var(--ink);
+}
+.ibox-tools a{color:var(--muted)}
+.ibox-tools a:hover{color:var(--accent-ink)}
+
+/* ---------- 6. BOTTONI ---------- */
+.btn{
+  font-family:var(--fb);
+  font-weight:700;
+  border-radius:var(--r-sm);
+  transition:transform .12s,filter .12s,box-shadow .12s,border-color .12s;
+}
+.btn:active{transform:translateY(0)}
+.btn-primary,
+.btn-primary:focus{
+  background:var(--grad);
+  border:0;
+  color:#fff;
+  box-shadow:0 10px 20px -10px rgba(232,69,60,.55);
+}
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary{
+  background:var(--grad);
+  border:0;
+  color:#fff;
+  filter:brightness(1.06);
+  transform:translateY(-1px);
+  box-shadow:0 14px 26px -10px rgba(232,69,60,.65);
+}
+.btn-primary:active:hover,.btn-primary.disabled,.btn-primary[disabled]{
+  background:var(--grad);border:0;filter:saturate(.5) brightness(1.05)
+}
+.btn-white,.btn-default{
+  background:#fff;
+  border:1.5px solid var(--line);
+  color:var(--ink-2);
+  box-shadow:none;
+}
+.btn-white:hover,.btn-white:focus,
+.btn-default:hover,.btn-default:focus{
+  background:#fff;
+  border-color:var(--accent);
+  color:var(--accent-ink);
+}
+.btn-success{background:var(--teal);border-color:var(--teal)}
+.btn-success:hover,.btn-success:focus{background:var(--teal-ink);border-color:var(--teal-ink)}
+.btn-danger{background:var(--red);border-color:var(--red)}
+.btn-danger:hover,.btn-danger:focus{background:var(--red-ink);border-color:var(--red-ink)}
+.btn-warning{background:var(--amber);border-color:var(--amber);color:#5b3c04}
+.btn-info{background:var(--ink-2);border-color:var(--ink-2)}
+
+/* ---------- 7. FORM ---------- */
+.form-control{
+  font-family:var(--fb);
+  font-size:14px;
+  color:var(--ink);
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  box-shadow:none;
+  transition:border-color .15s,box-shadow .15s,background .15s;
+}
+.form-control:focus{
+  border-color:var(--accent);
+  background:#fff;
+  box-shadow:0 0 0 4px rgba(251,99,64,.14);
+  outline:0;
+}
+.form-control[disabled],.form-control[readonly],fieldset[disabled] .form-control{
+  background:var(--surface-2);
+  color:var(--muted);
+  opacity:.75;
+}
+.form-group > label,.control-label{
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--ink-2);
+  letter-spacing:.2px;
+}
+.help-block{color:var(--muted);font-size:12.5px}
+.has-error .form-control{border-color:var(--red)}
+.has-error .control-label,.has-error .help-block{color:var(--red-ink)}
+.has-success .form-control{border-color:var(--teal)}
+.input-group-addon{
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  color:var(--muted);
+}
+.hr-line-dashed{border-top:1px dashed var(--line);margin:18px 0}
+
+/* checkbox/radio: solo colore accent, nessun cambio strutturale */
+input[type="checkbox"],input[type="radio"]{accent-color:var(--accent)}
+
+/* ---------- 8. TABELLE ---------- */
+.table{font-size:13.5px;color:var(--ink)}
+.table > thead > tr > th{
+  background:var(--surface-2);
+  color:var(--muted);
+  font-size:11.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+  border-bottom:1px solid var(--line);
+  padding:10px;
+}
+.table > tbody > tr > td{
+  border-top:1px solid var(--line);
+  padding:11px 10px;
+  vertical-align:middle;
+}
+.table-hover > tbody > tr:hover,
+.table-striped > tbody > tr:nth-of-type(odd):hover{background-color:var(--surface-2)}
+.table-striped > tbody > tr:nth-of-type(odd){background-color:#fbfaf8}
+.table-bordered,.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > td{border-color:var(--line)}
+
+/* DataTables: skin coerente (nessun hook JS toccato) */
+.dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_length select{
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  border-radius:10px;
+  padding:7px 12px;
+}
+.dataTables_wrapper .dataTables_filter input:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(251,99,64,.13);
+  outline:0;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover{
+  background:var(--grad);
+  border-color:transparent;
+  color:#fff!important;
+  border-radius:8px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover{
+  background:var(--surface-2);
+  border-color:var(--line);
+  color:var(--ink)!important;
+  border-radius:8px;
+}
+table.dataTable thead .sorting:after,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_desc:after{color:var(--accent)}
+
+/* paginazione Bootstrap */
+.pagination > li > a{color:var(--ink-2);border-color:var(--line)}
+.pagination > .active > a,.pagination > .active > a:hover{
+  background:var(--accent);border-color:var(--accent)
+}
+
+/* ---------- 9. TAB ---------- */
+.nav-tabs{border-bottom:1px solid var(--line)}
+.nav-tabs > li > a{
+  color:var(--muted);
+  font-weight:700;
+  font-size:13.5px;
+  border:0;
+  border-bottom:2.5px solid transparent;
+  border-radius:0;
+  margin-bottom:-1px;
+  background:transparent;
+}
+.nav-tabs > li > a:hover{
+  background:transparent;
+  border-color:transparent;
+  border-bottom-color:var(--line);
+  color:var(--ink-2);
+}
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus{
+  color:var(--ember-ink);
+  background:transparent;
+  border:0;
+  border-bottom:2.5px solid var(--accent);
+}
+.tab-content > .tab-pane{background:transparent}
+.tabs-container .panel-body{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:0 var(--r) var(--r) var(--r);
+}
+
+/* ---------- 10. LABEL / BADGE (chip di stato) ---------- */
+.label,.badge{
+  font-family:var(--fb);
+  font-weight:700;
+  font-size:11px;
+  border-radius:999px;
+  padding:4px 11px;
+}
+.label-primary,.badge-primary{background:var(--accent)}
+.label-success,.badge-success{background:var(--teal-bg);color:var(--teal-ink)}
+.label-warning,.badge-warning{background:var(--amber-bg);color:var(--amber-ink)}
+.label-danger,.badge-danger{background:var(--red-bg);color:var(--red-ink)}
+.label-info,.badge-info{background:var(--surface-2);color:var(--ink-2);border:1px solid var(--line)}
+
+/* ---------- 11. ALERT ---------- */
+.alert{border-radius:11px;font-size:13.5px;font-weight:600}
+.alert-success{background:var(--teal-bg);border:1px solid #b6e3d3;color:var(--teal-ink)}
+.alert-danger,.alert-error{background:var(--red-bg);border:1px solid #f5c6c2;color:var(--ember-ink)}
+.alert-info,.alert-warning{background:var(--amber-bg);border:1px solid #f3dcab;color:var(--amber-ink)}
+
+/* ---------- 12. FOOTER ---------- */
+.footer{
+  background:transparent;
+  border-top:1px solid var(--line);
+  color:var(--muted);
+  font-size:12px;
+}
+.footer strong{font-weight:700;color:var(--muted)}
+
+/* ---------- 13. PLUGIN SKIN (solo estetica, hook invariati) ---------- */
+/* Select2 */
+.select2-container--bootstrap .select2-selection,
+.select2-container .select2-selection--single,
+.select2-container .select2-selection--multiple{
+  background:var(--surface-2);
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  box-shadow:none;
+}
+.select2-container--bootstrap.select2-container--focus .select2-selection,
+.select2-container--bootstrap.select2-container--open .select2-selection{
+  border-color:var(--accent);
+  box-shadow:0 0 0 4px rgba(251,99,64,.13);
+}
+.select2-container--bootstrap .select2-results__option--highlighted[aria-selected]{
+  background:var(--accent);
+}
+.select2-dropdown{border:1.5px solid var(--line);border-radius:11px;overflow:hidden}
+
+/* Datepicker */
+.datepicker table tr td.active,
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active.active{
+  background:var(--accent)!important;
+  background-image:none!important;
+  border-radius:8px;
+}
+.datepicker table tr td.today{
+  background:var(--amber-bg)!important;
+  background-image:none!important;
+  border-radius:8px;
+}
+.datepicker{border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+
+/* jsTree: nodo selezionato */
+.jstree-default .jstree-clicked{
+  background:var(--amber-bg);
+  border-radius:6px;
+  box-shadow:inset 0 0 1px var(--amber);
+}
+.jstree-default .jstree-hovered{background:var(--surface-2);border-radius:6px}
+
+/* Pace (barra caricamento) */
+.pace .pace-progress{background:var(--accent)}
+
+/* Toastr: angoli coerenti */
+#toast-container > div{border-radius:var(--r);box-shadow:var(--shadow-sm);opacity:.97}
+
+/* ---------- 14. VARIE INSPINIA ---------- */
+.text-navy{color:var(--teal)}
+.text-danger{color:var(--red-ink)}
+.text-muted{color:var(--muted)}
+.feed-activity-list .feed-element{border-bottom:1px solid var(--line)}
+.stat-percent{font-family:var(--fd)}
+.panel{border-radius:var(--r);border-color:var(--line);box-shadow:none}
+.panel-default > .panel-heading{background:var(--surface-2);border-color:var(--line)}
+.modal-content{border-radius:var(--r-lg);border:1px solid var(--line);box-shadow:var(--shadow)}
+.modal-header{border-bottom:1px solid var(--line)}
+.modal-header .modal-title{font-family:var(--fd)}
+.modal-footer{border-top:1px solid var(--line)}
+.dropdown-menu{border-radius:var(--r);border:1px solid var(--line);box-shadow:var(--shadow-sm)}
+.dropdown-menu > li > a:hover{background:var(--surface-2);color:var(--accent-ink)}
+.well{background:var(--surface-2);border:1px solid var(--line);border-radius:var(--r)}
+legend{font-family:var(--fd);color:var(--ink);border-bottom:1px solid var(--line)}
+::selection{background:rgba(249,168,37,.35)}
+
+/* scrollbar leggera (WebKit) */
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:#d5d2cc;border-radius:999px;border:2px solid var(--bg)}
+::-webkit-scrollbar-track{background:transparent}
+
+/* ---------- 15. TOPBAR: classi introdotte in included_header.include ---------- */
+.navbar-top-links li a.topbar-user{color:var(--ink-2);font-weight:700}
+.navbar-top-links li a.topbar-user:hover{color:var(--accent-ink)}
+.navbar-top-links li a.topbar-exit{color:var(--ember-ink);font-weight:700}
+.navbar-top-links li a.topbar-exit:hover{color:var(--ember)}
+
+/* ============================================================
+   16. RAFFINAMENTO ONDATA 0.1 — dashboard e tabelle
+   (correzioni su markup reale: home.html, DataTables con filtri
+   di colonna iniettati via JS come <input> senza classe)
+   ============================================================ */
+
+/* --- card: header senza doppio bordo, ritmo verticale compatto ---
+   2026-07-19: titolo card allineato al mockup (Bricolage scuro,
+   sentence case); le metric card hanno la variante muted in sez. 27 */
+.ibox-title{border-bottom:0;padding:18px 20px 4px}
+.ibox-title h5{
+  font-family:var(--fd);
+  font-size:17px;
+  font-weight:700;
+  letter-spacing:-.5px;
+  text-transform:none;
+  color:var(--ink);
+}
+.ibox-title + .ibox-content{padding-top:6px}
+.ibox-title .ibox-tools{margin-top:-2px}
+
+/* --- metriche: numeri grandi in Bricolage (h1 dentro le card home) --- */
+.ibox-content h1.no-margins{
+  font-family:var(--fd);
+  font-size:42px;
+  font-weight:800;
+  letter-spacing:-1.5px;
+  line-height:1.1;
+  color:var(--ink);
+}
+
+/* --- "Dettaglio": titolo come eyebrow, lista compatta --- */
+.ibox-content > h5:first-child{
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:var(--muted);
+  margin:2px 0 4px;
+}
+.ibox-content .table.small td{
+  padding:7px 6px;
+  border-top:1px solid var(--surface-2);
+  font-size:13px;
+}
+.ibox-content .table.small h5.no-margins{font-size:13px;font-weight:600;color:var(--ink-2)}
+.ibox-content .table .fa-circle{font-size:9px;vertical-align:middle}
+.fa-circle.text-navy{color:var(--teal)}
+.fa-circle.text-danger{color:var(--red)}
+/* righe segnaposto (pallino text-white + cella vuota): nascoste dove :has è supportato */
+.ibox-content tr:has(> td > .fa-circle.text-white){display:none}
+.fa-circle.text-white{opacity:0}
+
+/* --- filtri di colonna DataTables (input nudi iniettati da JS in thead) --- */
+.table thead input[type="text"]{
+  width:100%;
+  font-family:var(--fb);
+  font-size:12.5px;
+  color:var(--ink);
+  padding:7px 10px;
+  border:1.5px solid var(--line);
+  border-radius:9px;
+  background:#fff;
+  font-weight:500;
+}
+.table thead input[type="text"]:focus{
+  outline:0;
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px rgba(251,99,64,.13);
+}
+.table thead input[type="text"]::placeholder{color:var(--muted-2);font-weight:500}
+/* la riga clonata dei filtri: fondo bianco, niente doppio header grigio */
+.table > thead > tr + tr > th{background:#fff;padding:8px 10px 12px;text-transform:none;letter-spacing:0}
+
+/* --- barra strumenti DataTables (Visualizza / info / paginazione) --- */
+.dataTables_wrapper{font-size:13px;color:var(--muted)}
+.dataTables_wrapper .dataTables_length{margin-bottom:10px}
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_info{font-weight:600;color:var(--muted)}
+.dataTables_wrapper .dataTables_length select{
+  font-family:var(--fb);
+  padding:7px 10px;
+  margin:0 6px;
+  border:1.5px solid var(--line);
+  border-radius:9px;
+  background:var(--surface-2);
+  color:var(--ink);
+  font-weight:700;
+}
+.dataTables_wrapper .dataTables_info{padding-top:10px}
+
+/* --- firma brand: filo gradiente sotto il titolo pagina --- */
+h4.page-title{position:relative;display:inline-block;padding-bottom:8px}
+h4.page-title::after{
+  content:"";
+  position:absolute;
+  left:0;bottom:0;
+  width:34px;height:3px;
+  border-radius:999px;
+  background:var(--grad);
+}
+
+/* --- matita di modifica righe --- */
+.editRow{color:var(--muted);cursor:pointer}
+.editRow:hover{color:var(--accent-ink)}
+
+/* --- contrasto contenitore: leggero scurimento dell'area contenuti --- */
+#page-wrapper,.gray-bg,#page-wrapper.gray-bg{background-color:var(--bg)}
+.wrapper.wrapper-content{padding:26px 10px 10px}
+
+/* ============================================================
+   17. FIX ONDATA 0.2 — colonna sidebar e coerenza font
+   Cause: bow.css imposta body{background:#2f4050; font-size:11px;
+   font-family:"open sans"} — la colonna sotto il menu prende il
+   colore del body (trucco INSPINIA) e mezza UI ereditava 11px.
+   ============================================================ */
+
+/* base tipografica esplicita (bow.css lasciava 11px in eredità) */
+body{font-size:14px;line-height:1.55}
+
+/* colonna sidebar scura a TUTTA altezza (il colore viene da #wrapper, non dal nav) */
+#wrapper{background-color:var(--side);min-height:100vh}
+#page-wrapper{background-color:var(--bg);min-height:100vh}
+
+/* font unico su tutta la sidebar (icone FontAwesome escluse) */
+.navbar-static-side,
+.navbar-static-side .nav,
+#side-menu li > a,
+#side-menu .nav-label,
+.nav.nav-second-level > li > a,
+.nav.nav-third-level > li > a,
+.nav-header,
+.logo-element{
+  font-family:var(--fb);
+}
+#side-menu li > a{font-size:14px}
+.nav.nav-second-level > li > a{font-size:13px}
+.nav.nav-third-level > li > a{font-size:12.5px}
+/* le icone restano FontAwesome */
+.navbar-static-side .fa,
+.navbar-static-side [class^="fa-"],
+.navbar-static-side [class*=" fa-"]{font-family:FontAwesome!important}
+
+/* residui Open Sans/Trebuchet fuori sidebar */
+.label,.badge{font-family:var(--fb)}
+#toast-container > div,.toast{font-family:var(--fb)}
+
+/* ============================================================
+   18. FIX ONDATA 0.3 — rifinitura sidebar
+   ============================================================ */
+
+/* colonna uniforme: il nav copre tutta l'altezza (niente gradino
+   dove finisce il menu) */
+.navbar-static-side{min-height:100vh;height:100%}
+
+/* testata logo: centrata, con respiro */
+.nav-header{padding:22px 16px;text-align:center}
+.nav-header .profile-element{display:block}
+.nav-header .profile-element img{
+  max-height:40px;max-width:170px;width:auto;
+  border-radius:9px;display:inline-block;
+}
+
+/* voce di menu in flex: icona fissa, label flessibile, chevron a destra;
+   il testo che va a capo resta allineato al label, non sotto l'icona */
+#side-menu > li > a{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  line-height:1.35;
+}
+#side-menu > li > a > i:first-child{
+  width:19px;
+  flex:0 0 19px;
+  text-align:center;
+  margin-right:0;
+}
+#side-menu > li > a .nav-label{flex:1 1 auto;min-width:0}
+#side-menu > li > a .fa.arrow{
+  flex:0 0 auto;
+  margin-left:auto;
+  transition:transform .2s;
+}
+/* il &nbsp; tra label e arrow non deve creare buchi */
+#side-menu > li > a{white-space:normal}
+
+/* ritmo verticale voci */
+#side-menu > li{margin:1px 0}
+#side-menu > li > a{padding:11px 14px;margin:1px 8px}
+
+/* sottolivelli: rientro allineato al label del padre (19px icona + 11px gap) */
+.nav.nav-second-level > li > a{padding-left:52px}
+.nav.nav-third-level > li > a{padding-left:66px}
+
+/* scrollbar della sidebar discreta su fondo scuro */
+.navbar-static-side::-webkit-scrollbar-thumb,
+.sidebar-collapse::-webkit-scrollbar-thumb{background:#3a3f49;border-color:var(--side)}
+
+/* ============================================================
+   19. ONDATA 1 — pagine AUTH (login, registrazione, reset)
+   ============================================================ */
+.auth-page{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:36px 16px;
+  background:
+    radial-gradient(900px 420px at 85% -10%, rgba(249,168,37,.10), transparent 60%),
+    radial-gradient(700px 380px at -10% 110%, rgba(232,69,60,.07), transparent 60%),
+    var(--bg);
+}
+.auth-wrap{width:100%;max-width:432px}
+.auth-logo{text-align:center;margin-bottom:20px}
+.auth-logo img{max-width:290px;height:auto}
+.auth-claim{
+  font-family:var(--fd);
+  font-size:19px;
+  font-weight:700;
+  letter-spacing:-.3px;
+  line-height:1.35;
+  text-align:center;
+  color:var(--ink-2);
+  margin:0 0 26px;
+}
+.auth-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow);
+  padding:30px 28px 26px;
+  position:relative;
+  overflow:hidden;
+}
+.auth-card::before{
+  content:"";
+  position:absolute;top:0;left:0;right:0;height:4px;
+  background:var(--grad);
+}
+.auth-card .form-group{margin-bottom:16px}
+.auth-error{
+  background:var(--red-bg);
+  border:1px solid #f5c6c2;
+  color:var(--ember-ink);
+  border-radius:11px;
+  padding:11px 14px;
+  font-size:13.5px;
+  font-weight:600;
+  text-align:center;
+  margin-bottom:16px;
+}
+.auth-error:empty{display:none}
+.auth-aux{
+  display:flex;
+  justify-content:flex-end;
+  margin:-4px 0 16px;
+}
+.auth-aux a{color:var(--muted);font-size:13px;text-decoration:underline}
+.auth-aux a:hover{color:var(--accent-ink)}
+.auth-alt{margin:18px 0 0;text-align:center;font-size:14px;color:var(--muted)}
+.auth-alt a{color:var(--accent-ink);font-weight:700;text-decoration:underline}
+.auth-foot{margin-top:28px;text-align:center;font-size:12.5px;color:var(--muted);line-height:1.6}
+.req-mark{color:var(--ember)}
+
+/* ---- 19b. auth: messaggi info + varianti ---- */
+.auth-info{
+  background:var(--amber-bg);border:1px solid #f3dcab;color:var(--amber-ink);
+  border-radius:11px;padding:11px 14px;font-size:13.5px;font-weight:600;
+  text-align:center;margin-bottom:16px;
+}
+.auth-info:empty{display:none}
+.auth-sub{text-align:center;color:var(--muted);font-size:14px;margin:-16px 0 24px}
+
+/* ============================================================
+   20. ONDATA 1c — home: metric card unificate
+   ============================================================ */
+/* colonne a pari altezza (Bootstrap 3 non ha flex di suo) */
+.metricrow{display:flex;flex-wrap:wrap}
+.metricrow > [class*="col-"]{display:flex;flex-direction:column}
+.metricrow .metricbox{flex:1;display:flex;flex-direction:column;margin-bottom:24px}
+.metricbox .ibox-content{flex:1;display:flex;flex-direction:column}
+.metricbox h1.no-margins{margin-bottom:4px}
+.metric-sep{height:1px;background:var(--line);margin:12px 0 4px}
+.metricbox .table.small{margin-top:6px}
+.metricbox .table.small td{border-top:1px solid var(--surface-2)}
+.metricbox .table.small tr:first-child td{border-top:0}
+@media(max-width:1200px){.metricrow > [class*="col-"]{min-width:50%}}
+@media(max-width:768px){.metricrow > [class*="col-"]{min-width:100%}}
+
+/* ============================================================
+   21. ONDATA 2 — anagrafiche (inserimento + ricerca)
+   Solo CSS: nessun template toccato. Le regole valgono anche
+   per le ricerche/inserimenti delle ondate successive (stessi
+   pattern: #formSearch, #report/#excel/#csv, editRow/deleteRow).
+   ============================================================ */
+
+/* --- banda titolo pagina (.ibox-title.titolo, sopra ogni pagina):
+       tokens al posto dei grigi hardcoded di bow.css --- */
+.ibox-title.titolo{
+  background:var(--surface);
+  border-top:0;
+  border-bottom:1px solid var(--line);
+}
+
+/* --- etichette a sinistra (.control-label-left): stessa tipografia
+       delle control-label (bow.css ne definisce solo il padding) --- */
+.form-horizontal .control-label-left{
+  font-size:12.5px;
+  font-weight:700;
+  color:var(--ink-2);
+  letter-spacing:.2px;
+}
+
+/* --- barra azioni ricerca: "Ricerca" resta primario a gradiente,
+       gli export PDF/XLS/CSV diventano ghost (id stabili in tutte
+       le pagine ricerca*; nessun hook JS toccato) --- */
+.btn-primary#report,.btn-primary#excel,.btn-primary#csv{
+  background:#fff;
+  border:1.5px solid var(--line);
+  color:var(--ink-2);
+  box-shadow:none;
+}
+.btn-primary#report:hover,.btn-primary#excel:hover,.btn-primary#csv:hover,
+.btn-primary#report:focus,.btn-primary#excel:focus,.btn-primary#csv:focus{
+  background:#fff;
+  border-color:var(--accent);
+  color:var(--accent-ink);
+  filter:none;
+  transform:none;
+  box-shadow:none;
+}
+
+/* --- legenda icone nelle ricerche (fieldset dentro il form):
+       da testo nudo a chip discreta --- */
+form fieldset{
+  background:var(--surface-2);
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:6px 16px 6px 12px;
+  font-size:12px;
+  font-weight:600;
+  color:var(--muted);
+}
+form fieldset i{color:var(--ink-2)}
+
+/* --- icone azione nelle righe DataTables --- */
+a.editRow .fa,a.deleteRow .fa,a.pdfA4Row .fa,a.viewRow .fa,
+.fa.fa-color-auto{color:var(--muted);transition:color .12s}
+a.editRow:hover .fa,a.viewRow:hover .fa{color:var(--accent-ink)}
+a.deleteRow:hover .fa{color:var(--red-ink)}
+a.pdfA4Row:hover .fa{color:var(--ink)}
+
+/* --- tab con .ibox annidato nel panel-body (es. inserimentoaziende):
+       il contenitore interno non deve sembrare una seconda card --- */
+.tabs-container .panel-body .ibox{
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  margin-bottom:0;
+  overflow:visible;
+}
+
+/* --- SweetAlert2: raccordo tipografico (i colori inline dei
+       singoli dialoghi restano quelli impostati dai template) --- */
+.swal2-popup{border-radius:var(--r-lg);font-family:var(--fb)}
+.swal2-popup .swal2-title{font-family:var(--fd);color:var(--ink)}
+.swal2-popup .swal2-html-container,.swal2-popup .swal2-content{color:var(--ink-2)}
+
+/* ============================================================
+   22. ONDATA 3 — ripartizioni & letture
+   SOLO CSS, massima prudenza: tab/wizard/tabelle editabili sono
+   pieni di hook JS. Nessun template toccato.
+   ============================================================ */
+
+/* --- griglie editabili (input dentro celle tabella): compatti,
+       così le tabelle Costi/Prezzi respirano senza scroll inutile --- */
+.table td .form-control{
+  padding:6px 10px;
+  height:auto;
+  font-size:13px;
+  border-radius:9px;
+}
+.table td .input-group-addon{border-radius:9px;padding:6px 10px}
+
+/* --- messaggi di stato ripartizione (alert con input trasparente
+       dentro: DESCR_TIPO_RIPARTIZIONE, ALERT_*): il testo eredita
+       colore e font dell'alert invece del default browser --- */
+.alert b > input{
+  font-family:var(--fb);
+  font-weight:800;
+  color:inherit;
+}
+
+/* --- icone azione aggiuntive di quest'area --- */
+a.editRowAnomalie .fa,a.viewRow1 .fa{color:var(--muted);transition:color .12s}
+a.editRowAnomalie:hover .fa,a.viewRow1:hover .fa{color:var(--accent-ink)}
+
+/* --- intestazioni di sezione dentro i tab (tabelle senza classe
+       usate come titolo: "COSTI COMBURENTE", ecc.) --- */
+.tabs-container .tab-pane table:not([class]) > thead > tr > th{
+  font-family:var(--fb);
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:var(--muted);
+  padding:4px 0 8px;
+}
+
+/* --- tab-pane: le tabelle dentro i pannelli senza doppio margine --- */
+.tabs-container .panel-body .table{margin-bottom:12px}
+
+/* ============================================================
+   23. ONDATA 4 — configurazione guidata (wizard 0..6)
+   SOLO CSS. Il wizard jquery.steps e usato come semplice
+   indicatore di avanzamento (content/actions nascosti da CSS
+   di pagina): qui si riskinnano solo i colori/tipografia.
+   ============================================================ */
+
+/* --- indicatore step: pill con stati brand --- */
+.wizard > .steps a,
+.wizard > .steps a:hover,
+.wizard > .steps a:active{
+  font-family:var(--fb);
+  font-weight:700;
+  font-size:13px;
+  border-radius:999px;
+  padding:9px 16px;
+}
+.wizard > .steps .disabled a,
+.wizard > .steps .disabled a:hover,
+.wizard > .steps .disabled a:active{
+  background:var(--surface-2);
+  color:var(--muted-2);
+  border:1px solid var(--line);
+}
+.wizard > .steps .current a,
+.wizard > .steps .current a:hover,
+.wizard > .steps .current a:active{
+  background:var(--grad);
+  color:#fff;
+}
+.wizard > .steps .done a,
+.wizard > .steps .done a:hover,
+.wizard > .steps .done a:active{
+  background:var(--teal-bg);
+  color:var(--teal-ink);
+}
+.wizard > .steps .error a,
+.wizard > .steps .error a:hover,
+.wizard > .steps .error a:active{
+  background:var(--red-bg);
+  color:var(--red-ink);
+}
+
+/* --- barra avanzamento import (style di pagina verde INSPINIA:
+       specificita div#... > div per vincere senza !important) --- */
+div#progressBar{
+  background-color:var(--line);
+  border-radius:999px;
+  overflow:hidden;
+}
+div#progressBar > div{
+  background-color:transparent;
+  background-image:var(--grad);
+  color:#fff;
+  border-radius:999px;
+}
+
+/* --- dropzone upload (vale anche per import/fileupload ondata 5) --- */
+form#my-awesome-dropzone.dropzone{
+  background:var(--surface-2);
+  border:2px dashed var(--line);
+  border-radius:var(--r-lg);
+  transition:border-color .15s,background .15s;
+}
+form#my-awesome-dropzone.dropzone:hover,
+form#my-awesome-dropzone.dropzone.dz-drag-hover{
+  border-color:var(--accent);
+  background:#fff;
+}
+.dropzone .dz-message{
+  font-family:var(--fb);
+  font-weight:600;
+  color:var(--muted);
+}
+
+/* ============================================================
+   24. ONDATA 5 — import / file manager / rilevatori
+   SOLO CSS. Dropzone e progressBar sono gia in sezione 23.
+   ============================================================ */
+
+/* --- card file del file manager (INSPINIA .file-box) --- */
+.file-box .file{
+  border:1px solid var(--line);
+  border-radius:var(--r);
+  background:var(--surface);
+  overflow:hidden;
+  transition:box-shadow .15s,border-color .15s;
+}
+.file-box .file:hover{border-color:var(--accent);box-shadow:var(--shadow-sm)}
+.file .icon{color:var(--muted)}
+.file .file-name{
+  background:var(--surface-2);
+  border-top:1px solid var(--line);
+  font-family:var(--fb);
+  font-size:12.5px;
+  color:var(--ink-2);
+}
+.file .corner{border-color:transparent var(--line) var(--line) transparent}
+.folder-list li{border-bottom:1px solid var(--line)}
+.folder-list li a{color:var(--ink-2)}
+.folder-list li a:hover{color:var(--accent-ink)}
+.folder-list li i{color:var(--muted)}
+
+/* --- barra di avanzamento Bootstrap (import rilevatori) --- */
+.progress{
+  background:var(--line);
+  border-radius:999px;
+  box-shadow:none;
+  overflow:hidden;
+}
+.progress-bar{
+  background-color:transparent;
+  background-image:var(--grad);
+  box-shadow:none;
+  font-weight:700;
+}
+
+/* --- alert dei riepiloghi import: link ereditano il colore stato --- */
+.alert .alert-link{color:inherit;font-weight:700}
+.alert-success-fixed{
+  background:var(--teal-bg);
+  border-color:#b6e3d3;
+  color:var(--teal-ink);
+}
+
+/* --- calendario file manager (FullCalendar v2, scope #calendar
+       per vincere sul CSS plugin caricato dopo il tema) --- */
+#calendar .fc-state-default{
+  background:#fff;
+  border:1.5px solid var(--line);
+  color:var(--ink-2);
+  box-shadow:none;
+  text-shadow:none;
+  font-family:var(--fb);
+  font-weight:700;
+}
+#calendar .fc-state-hover{color:var(--accent-ink);border-color:var(--accent)}
+#calendar .fc-state-active,
+#calendar .fc-state-down{
+  background:var(--surface-2);
+  color:var(--accent-ink);
+  border-color:var(--accent);
+}
+#calendar.fc-unthemed th,#calendar.fc-unthemed td,
+#calendar .fc-unthemed th,#calendar .fc-unthemed td,
+#calendar th,#calendar td{border-color:var(--line)}
+#calendar .fc-today,#calendar.fc-unthemed .fc-today{background:var(--amber-bg)}
+#calendar .fc-event{
+  background:var(--accent);
+  border:0;
+  border-radius:7px;
+  padding:2px 6px;
+  font-family:var(--fb);
+  font-weight:600;
+}
+#calendar .fc-toolbar h2{font-family:var(--fd);letter-spacing:-.3px}
+#calendar .fc-day-header{
+  background:var(--surface-2);
+  color:var(--muted);
+  font-size:11.5px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.4px;
+}
+
+/* ============================================================
+   25. ONDATA 6 — config di sistema & pagine standalone
+   ============================================================ */
+
+/* --- editor summernote (news, mailconfig): scope .ibox-content
+       per vincere sul CSS plugin caricato dopo il tema --- */
+.ibox-content .note-editor{
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  overflow:hidden;
+}
+.ibox-content .note-editor .note-toolbar{
+  background:var(--surface-2);
+  border-bottom:1px solid var(--line);
+}
+.ibox-content .note-editor .note-editable{
+  font-family:var(--fb);
+  color:var(--ink);
+}
+.ibox-content .note-editor .btn-default{border-radius:8px}
+
+/* --- pagine standalone middle-box (errore, errorpage, message):
+       il tema e i font sono linkati direttamente in quelle pagine --- */
+.middle-box{max-width:480px}
+.middle-box h1{
+  font-family:var(--fd);
+  font-weight:800;
+  letter-spacing:-4px;
+  color:var(--ink);
+}
+.middle-box h3.font-bold{font-family:var(--fd);color:var(--ink-2)}
+.middle-box .error-desc{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+  padding:24px 22px;
+  margin-top:14px;
+  color:var(--ink-2);
+  line-height:1.6;
+}
+.middle-box .logo-name{margin:0 0 10px}
+.middle-box .logo-name img{max-width:280px;height:auto}
+.middle-box .login{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+  padding:24px 22px;
+  margin-top:6px;
+}
+.middle-box small{color:var(--muted)}
+
+/* ============================================================
+   26. HOME — board come nel mockup
+   (classe .homeboard aggiunta alla row contenuti di home.html)
+   ============================================================ */
+
+/* le card poggiano sullo sfondo --bg (prima: bianco su bianco)
+   e il contenitore esterno non e piu una card dentro la card */
+.page-heading.homeboard{background:var(--bg)}
+.page-heading.homeboard > [class*="col-"] > .ibox{
+  background:transparent;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  overflow:visible;
+  margin-bottom:0;
+}
+
+/* pallino ambra per gli stati "attenzione" (mai effettuato accesso,
+   carica <30%), come i dot del mockup */
+.fa-circle.text-warning{color:var(--amber)}
+
+/* donut "Stato ripartitori" */
+#chartdiv-ripartitori{width:100%;height:300px;font-size:11px}
+
+/* ============================================================
+   27. TOPBAR-TITOLO, BAND TITOLO RIMOSSA, RICHIESTE COME MOCKUP
+   ============================================================ */
+
+/* --- label delle metric card: muted sentence-case come nel demo
+       (i titoli card normali sono Bricolage scuri, sez. 16) --- */
+.metricbox .ibox-title h5{
+  font-family:var(--fb);
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:0;
+  text-transform:none;
+  color:var(--muted);
+}
+
+/* --- breadcrumb-titolo nella topbar (included_header.include):
+       separatore "/", ultimo elemento in evidenza --- */
+.topbar-crumb{
+  float:left;
+  font-family:var(--fd);
+  font-size:17px;
+  letter-spacing:-.3px;
+  margin:15px 8px 0 12px;
+  color:var(--ink);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:46vw;
+}
+.topbar-crumb a{color:var(--muted);font-weight:600;text-decoration:none}
+.topbar-crumb a:hover{color:var(--accent-ink)}
+.topbar-crumb .crumb-sep{color:var(--muted-2);margin:0 7px;font-weight:500}
+.topbar-crumb .crumb-here{color:var(--ink);font-weight:800}
+
+/* --- la vecchia banda titolo intermedia (row + .ibox-title.titolo)
+       collassa a zero: dentro restano solo gli alert dei salvataggi,
+       nascosti finche il JS non li mostra --- */
+.ibox-title.titolo{
+  min-height:0;
+  background:transparent;
+  border:0;
+  margin:0;
+  padding:0;
+}
+
+/* --- home: tabella Richieste come lista del mockup --- */
+.homeboard #dt.table-bordered,
+.homeboard #dt.table-bordered > thead > tr > th,
+.homeboard #dt.table-bordered > tbody > tr > td{border:0}
+.homeboard #dt > thead > tr > th{
+  background:transparent;
+  border-bottom:1px solid var(--line);
+}
+.homeboard #dt > tbody > tr > td{border-top:1px solid var(--line)}
+.homeboard #dt > tbody > tr:first-child > td{border-top:0}
+.homeboard #dt.table-striped > tbody > tr:nth-of-type(odd),
+.homeboard #dt.table-striped > tbody > tr:nth-of-type(odd):hover{background:transparent}
+.homeboard #dt.table-hover > tbody > tr:hover{background:var(--surface-2)}
+
+/* chip di stato (render della colonna DESCR_STATO) */
+.stato-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:4px 12px;
+  border-radius:999px;
+  border:1px solid var(--line);
+  background:#fff;
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.stato-chip::before{
+  content:"";
+  width:8px;height:8px;
+  border-radius:50%;
+  background:var(--muted-2);
+}
+.stato-ok{color:var(--teal-ink)}
+.stato-ok::before{background:var(--teal)}
+.stato-warn{color:var(--amber-ink)}
+.stato-warn::before{background:var(--amber)}
+.stato-ko{color:var(--red-ink)}
+.stato-ko::before{background:var(--red)}
+
+/* ============================================================
+   28. BOTTONI ALLA TAGLIA DEL MOCKUP + TAB SENZA CORNICE
+   ============================================================ */
+
+/* --- bottoni: nel demo il base e 12px/22px e lo "small" 9px/16px @14px.
+       L'app usa quasi ovunque btn-sm (5px/10px @12px Bootstrap): lo si
+       porta alla taglia small del demo, e il base alla via di mezzo --- */
+.btn{padding:10px 18px;font-size:14px}
+.btn-sm,.btn-group-sm > .btn{
+  padding:9px 16px;
+  font-size:13.5px;
+  border-radius:var(--r-sm);
+  line-height:1.4;
+}
+.btn-xs{padding:4px 10px;font-size:12px}
+/* l'hamburger della topbar non deve gonfiarsi */
+.btn.navbar-minimalize{padding:6px 12px;font-size:14px}
+
+/* --- tab dentro .tabs-container: le regole INSPINIA piu specifiche
+       davano cornice grigia/nera e spigoli vivi; qui si impone lo
+       stile del mockup (sottolineatura accento, angoli superiori
+       arrotondati, nessuna scatola) --- */
+.tabs-container .nav-tabs{border-bottom:1px solid var(--line)}
+.tabs-container .nav-tabs > li > a{
+  border:0;
+  border-bottom:2.5px solid transparent;
+  border-radius:9px 9px 0 0;
+  background:transparent;
+  color:var(--muted);
+  font-weight:700;
+  font-size:13.5px;
+  padding:10px 16px;
+  margin:0 2px -1px 0;
+}
+.tabs-container .nav-tabs > li > a:hover,
+.tabs-container .nav-tabs > li > a:focus{
+  border:0;
+  border-bottom:2.5px solid var(--line);
+  background:var(--surface-2);
+  color:var(--ink-2);
+}
+.tabs-container .nav-tabs > li.active > a,
+.tabs-container .nav-tabs > li.active > a:hover,
+.tabs-container .nav-tabs > li.active > a:focus{
+  border:0;
+  border-bottom:2.5px solid var(--accent);
+  background:transparent;
+  color:var(--ember-ink);
+}
+/* il pannello sotto i tab non e piu una scatola bordata */
+.tabs-container .panel-body{
+  border:0;
+  border-radius:0;
+  background:transparent;
+  padding:18px 2px 0;
+}
+/* INSPINIA a <768px forza un bordo grigio con !important: si ripristina l'accento */
+@media (max-width: 767px){
+  .tabs-container .nav-tabs > li.active > a{
+    border-bottom:2.5px solid var(--accent)!important;
+  }
+}

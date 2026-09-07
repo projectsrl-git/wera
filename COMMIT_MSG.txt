@@ -1,0 +1,8 @@
+restyle(theme): bottoni alla taglia del mockup, tab senza cornice (sez. 28)
+
+- btn/btn-sm portati alle misure del demo (9px/16px @13.5px lo small);
+  eccezione per l'hamburger della topbar
+- tab .tabs-container: sottolineatura accento e angoli arrotondati al
+  posto della cornice grigia INSPINIA (regole piu specifiche + contro
+  !important nella media query <768px); panel-body senza scatola
+- cache-buster tema -> ?20260720

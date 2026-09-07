@@ -5,16 +5,31 @@
 					<div class="navbar-header">
 						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary btn-sm " href="#"><i class="fa fa-bars"></i> </a>
 					</div>
+
+					<div class="topbar-crumb">
+						<#if SELECTED_MENU_ITEM?exists>
+						<#assign tci=0>
+						<#list SELECTED_MENU_ITEM.getPathDescriChain() as descriChain>
+							<#if (tci>0)><span class="crumb-sep">/</span></#if>
+							<#if tci<SELECTED_MENU_ITEM.getItemLevel()>
+								<a href="${SELECTED_MENU_ITEM.getLinkChain()[tci]}">${descriChain}</a>
+							<#else>
+								<span class="crumb-here">${descriChain}</span>
+							</#if>
+							<#assign tci=tci+1>
+						</#list>
+						</#if>
+					</div>
 				
 					<ul class="nav navbar-top-links navbar-right">
 						<li>
-							<a href="astro?FUNCTIONID=Profilo" style="color:#676a6c">
+							<a href="astro?FUNCTIONID=Profilo" class="topbar-user">
 								<!--<i class="fa fa-user" style="color:#676a6c"></i>--> 
 								${NOME_UTENTE} ${COGNOME_UTENTE} - ${DESCRIZIONE_PROFILO}
 							</a>
 						</li>
 						<li>
-							<a href="astro?FUNCTIONID=Logout" style="color:firebrick">
+							<a href="astro?FUNCTIONID=Logout" class="topbar-exit">
 								<i class="fa fa-sign-out"></i> Esci
 							</a>
 						</li>
