@@ -74,3 +74,14 @@ NON pushare: il push lo fa l'operatore a fine run. Fermarsi SOLO se una modifica
 rischia di toccare logica/cablaggio: in quel caso saltare il punto, annotarlo nella nota di
 rilascio e proseguire. A fine run: aggiornare `QA.md` e produrre un riepilogo unico
 (file toccati per ondata, punti saltati, rischi).
+
+## Istanza di test in parallelo (`deploy/`)
+Per collaudare la GUI accanto alla produzione si deploya un secondo contesto `/wera-test`
+generato da `deploy/make_test_war.bat` (Windows) o `deploy/patch-config-test.sh` (Linux):
+il `config.cfg` viene patchato NEL SOLO ARTEFATTO, mai nel repo. Override: `Quartz-scheduler.tasklist`
+azzerata (kill switch: `SchedulerServletApplication.init()` esce prima di creare lo scheduler),
+directory di I/O e `xmlconfig.ACS` isolati, SMTP su mailcatcher locale, datasource `jdbc/wera_test`.
+Isolare i path e' obbligatorio anche a Quartz spento: `FunctionScaricoDatiManuale` riscrive
+`AnlConfig.xml` da GUI. Nel deploy del test MAI `-clean` (rimuoverebbe la webapp `wera`) ne'
+`-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` e nella nota
+`.claude/2026-09-07-deploy-parallelo-test-gui.md`.

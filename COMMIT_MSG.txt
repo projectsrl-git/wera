@@ -1,8 +1,38 @@
-restyle(theme): bottoni alla taglia del mockup, tab senza cornice (sez. 28)
+chore(deploy): istanza di test in parallelo alla produzione
 
-- btn/btn-sm portati alle misure del demo (9px/16px @13.5px lo small);
-  eccezione per l'hamburger della topbar
-- tab .tabs-container: sottolineatura accento e angoli arrotondati al
-  posto della cornice grigia INSPINIA (regole piu specifiche + contro
-  !important nella media query <768px); panel-body senza scatola
-- cache-buster tema -> ?20260720
+Aggiunge gli strumenti per affiancare alla produzione un secondo
+contesto /wera-test su cui collaudare la GUI restylizzata, senza che
+possa interferire con l'esercizio.
+
+Interferenze neutralizzate:
+- Quartz: tasklist azzerata. SchedulerServletApplication.init() esce
+  prima di makeScheduler() se la property e' vuota, quindi nella JVM
+  di test non nasce alcun thread di schedulazione. Il job critico e'
+  JobImportAutomatico (ogni 5 min): rinomina in *_A e importa i file
+  della cartella ACS26, sottraendoli alla produzione.
+- Cartelle di I/O: directory.external_files e cartella.scarico.ACS
+  sono path assoluti, quindi condivisi fra istanze. Isolati su
+  /usr/share/webapps/wera-test/.
+- AnlConfig.xml: xmlconfig.ACS isolato. Necessario anche a Quartz
+  spento perche' FunctionScaricoDatiManuale lo riscrive da GUI,
+  azzerando la pianificazione dei modem di produzione.
+- Mail: SMTP dirottato su mailcatcher locale. I quattro job mail sono
+  read-only sul DB, il rischio e' il doppio invio a destinatari reali.
+- DB: datasource JNDI separato (jdbc/wera_test).
+
+File aggiunti:
+- deploy/make_test_war.bat       genera wera-test.war dal WAR buildato
+- deploy/patch_config_test.ps1   motore di patch del config (ISO-8859-1
+                                 e fine-riga LF preservati; fail-fast se
+                                 una chiave attesa non esiste piu')
+- deploy/patch-config-test.sh    equivalente per il server Linux
+- deploy/README.md               procedura, prerequisiti, avvertenze
+- .claude/2026-09-07-deploy-parallelo-test-gui.md  analisi e verifiche
+
+CLAUDE.md: nuova sezione sull'istanza di test.
+
+Nessuna modifica all'applicazione: config.cfg, codice Java, SQL e
+template FreeMarker restano invariati. La patch del config avviene
+solo sull'artefatto di deploy.
+
+Refs: CLAUDE.md (regole DA NON TOCCARE), QA.md (smoke test)
