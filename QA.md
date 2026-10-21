@@ -25,6 +25,12 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Restyle r2 — home v2 (2026-10-22)
+- [ ] card "I tuoi crediti": residui/totale (coerenti col tab Crediti del profilo), barra proporzionata, count-up.
+- [ ] stati: nota ambra se scadenza ≤30 gg, rossa se crediti scaduti; "Gestisci crediti" → profilo.
+- [ ] donut "Stato ripartitori" nella riga sotto le Richieste, ancora funzionante.
+- [ ] profilo CON: home condomino invariata (nessuna card crediti).
+
 ## Bottoni & tab (2026-07-20)
 - [ ] bottoni alla taglia del mockup (btn-sm ≈ 9px/16px @13.5px); hamburger topbar invariato.
 - [ ] tab: sottolineatura accento, angoli alti arrotondati, nessuna cornice grigia (anche <768px); pannello senza scatola.

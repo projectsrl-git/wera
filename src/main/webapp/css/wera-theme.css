@@ -1268,3 +1268,33 @@ form#my-awesome-dropzone.dropzone.dz-drag-hover{
     border-bottom:2.5px solid var(--accent)!important;
   }
 }
+
+/* ============================================================
+   29. HOME v2 (mockup giro 12) — card "I tuoi crediti"
+   ============================================================ */
+.creditibox h1.no-margins{display:flex;align-items:baseline;gap:6px}
+.cred-tot{
+  font-family:var(--fb);
+  font-size:14px;
+  font-weight:600;
+  color:var(--muted);
+  letter-spacing:0;
+}
+.cred-bar{
+  height:9px;
+  border-radius:999px;
+  background:var(--line);
+  overflow:hidden;
+  margin:14px 0 10px;
+}
+.cred-bar i{
+  display:block;
+  height:100%;
+  width:0;
+  border-radius:999px;
+  background:var(--grad);
+  transition:width .8s ease;
+}
+.cred-note{font-size:13px;color:var(--muted);font-weight:600;margin:0 0 14px}
+.cred-note.cred-warn{color:var(--amber-ink)}
+.cred-note.cred-ko{color:var(--red-ink)}

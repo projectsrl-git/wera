@@ -253,6 +253,38 @@
 		        console.log("Tutte le chiamate AJAX completate.");
 		        doGraficoStatoRipartitori();
 		    });
+
+		    // card "I tuoi crediti": stesso dataset del profilo (DSCrediti), nessun dataset nuovo
+		    $.ajax({
+		        url: "astro?FUNCTIONID=JSONDataSet&dataset=DSCrediti&columns=CREDITI_ACQUISTATI,CREDITI_UTILIZZATI,CREDITI_UTILIZZABILI,DATA_SCADENZA_CREDITI,SCADENZA_GIORNI&WHERECONDITION=" + " where usr.id_utente =" + utente,
+		        dataType: 'json',
+		        type: 'GET'
+		    }).done(function(data) {
+		        if (!data || !data.rows || data.rows.length === 0) { return; }
+		        var r = data.rows[0];
+		        var acquistati = Number(r.CREDITI_ACQUISTATI) || 0;
+		        var utilizzabili = Number(r.CREDITI_UTILIZZABILI) || 0;
+		        var utilizzati = Number(r.CREDITI_UTILIZZATI) || 0;
+		        weraCountUp(document.getElementById("cred_residui"), utilizzabili);
+		        if (acquistati > 0) {
+		            document.getElementById("cred_totale").textContent = " / " + acquistati.toLocaleString('it-IT');
+		            document.getElementById("cred_bar").style.width = Math.max(0, Math.min(100, Math.round(utilizzabili * 100 / acquistati))) + "%";
+		        }
+		        var note = document.getElementById("cred_note");
+		        var giorni = Number(r.SCADENZA_GIORNI);
+		        var nota = utilizzati.toLocaleString('it-IT') + " utilizzati";
+		        if (r.DATA_SCADENZA_CREDITI) { nota += " \u00b7 scadenza " + r.DATA_SCADENZA_CREDITI; }
+		        note.textContent = nota;
+		        if (validitaCrediti.indexOf('false') >= 0) {
+		            note.textContent = "Crediti scaduti" + (dataScadenzaCrediti ? " il " + dataScadenzaCrediti : "");
+		            note.className = "cred-note cred-ko";
+		            document.getElementById("cred_bar").style.width = "0%";
+		        } else if (isFinite(giorni) && giorni >= 0 && giorni <= 30) {
+		            note.className = "cred-note cred-warn";
+		            note.textContent = nota + " (" + giorni + " gg)";
+		        }
+		    });
+
 		     	
 	      	
 		      	</#if>
@@ -806,6 +838,24 @@
                         </div>
                     </div>
                     <div class="col-lg-4">
+                        <div class="ibox float-e-margins creditibox">
+                            <div class="ibox-title">
+                                <h5>I tuoi crediti</h5>
+                            </div>
+                            <div class="ibox-content">
+                                <h1 class="no-margins"><span id="cred_residui">&#8212;</span><small class="cred-tot" id="cred_totale"></small></h1>
+                                <div class="cred-bar"><i id="cred_bar"></i></div>
+                                <p class="cred-note" id="cred_note">&nbsp;</p>
+                                <a class="btn btn-primary btn-sm" href="astro?FUNCTIONID=Profilo">Gestisci crediti</a>
+                            </div>
+                        </div>
+                    </div>
+						
+
+   
+                    </div>
+                <div class="row">
+                    <div class="col-lg-4">
                         <div class="ibox float-e-margins">
                             <div class="ibox-title">
                                 <h5>Stato ripartitori</h5>
@@ -815,10 +865,7 @@
                             </div>
                         </div>
                     </div>
-						
-
-   
-                    </div>
+                </div>
                 </div> <!-- chiude wrapper content -->
 						
 						

@@ -17,9 +17,16 @@ Tutto in `.claude/design/`: `01_wera_design_tokens.css` (token, sorgente di veri
 DA RISPETTARE INTEGRALMENTE), `04_inventario_template.md` (ondate), `demo_riferimento_app.html`
 e `demo_riferimento_landing.html` (riferimento visivo).
 
-## Restyling UI (branch `restyle/ui-2026`) — stato
+## Restyling UI — stato
+- Fase 1 (branch `restyle/ui-2026`, MERGED in main): ondate 0-6 complete.
+- Fase 2 (branch `restyle/ui-2026-r2`, in corso dal 2026-10-22): allineamento al nuovo mockup
+  giro 12 in `D:\SVILUPPO\wera_demo` (fuori repo; la copia in `src/resources/wera_demo` e al
+  giro di luglio). Il tema di riferimento del mockup e INVARIATO: le novita sono nelle pagine
+  (landing/index con hero carousel e login in dialog, registrazione amministratore, spesa in
+  euro inquilino/amministratore). Fatto: home v2 (card "I tuoi crediti" da DSCrediti, donut in
+  riga propria — sez. 29).
 - Design system: `src/main/webapp/css/wera-theme.css` (token + override INSPINIA/Bootstrap/plugin,
-  sezioni numerate 1-26). Linkato per ULTIMO in `include/included_head.include`; le pagine
+  sezioni numerate 1-29). Linkato per ULTIMO in `include/included_head.include`; le pagine
   standalone errore/errorpage/message lo linkano direttamente nell'head (+ Google Fonts).
   IMPORTANTE: a OGNI modifica del tema aggiornare il cache-buster `?AAAAMMGG` del link in
   `included_head.include` (e nelle standalone), altrimenti i browser servono la copia in cache.
