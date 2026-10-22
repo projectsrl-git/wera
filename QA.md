@@ -25,6 +25,13 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Restyle r2 — landing/login v2 (2026-10-22)
+- [ ] login con credenziali valide; con credenziali errate il dialog si riapre da solo con l'errore.
+- [ ] carosello 4 slide: autoplay 7s, pausa su hover, frecce, dot, swipe; personaggi caricati (img/landing/).
+- [ ] dialog: apertura da topbar/CTA/#login, chiusura X/ESC/click fuori.
+- [ ] "Password dimenticata?" e "Registrati con il codice ripartitore" funzionanti.
+- [ ] mobile (375px): barra controlli sopra le slide, topbar con 2 bottoni, nessuno scroll orizzontale.
+
 ## Restyle r2 — home v2 (2026-10-22)
 - [ ] card "I tuoi crediti": residui/totale (coerenti col tab Crediti del profilo), barra proporzionata, count-up.
 - [ ] stati: nota ambra se scadenza ≤30 gg, rossa se crediti scaduti; "Gestisci crediti" → profilo.

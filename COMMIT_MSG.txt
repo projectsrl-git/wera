@@ -1,17 +1,20 @@
-restyle(r2-home): card "I tuoi crediti" e donut in riga propria (sez. 29)
+restyle(r2-landing): login.html come la homepage del mockup giro 12
 
-Prima ondata dell'allineamento al mockup giro 12 (D:\SVILUPPO\wera_demo):
-la home adotta il layout della dashboard demo.
-
-- card "I tuoi crediti" accanto alle Richieste: residui/totale con
-  count-up, barra a gradiente, stati scadenza (ambra <=30gg, rosso se
-  scaduti), CTA al profilo. Dati reali da DSCrediti con la stessa
-  chiamata JSONDataSet di profilo.html: nessun dataset nuovo,
-  config.cfg intatto
-- donut "Stato ripartitori" spostato in riga propria sotto le Richieste
-- home.html editato byte-level (ISO-8859-1 e CRLF preservati)
-- ancora in attesa di dataset: andamento letture mensili, consumi per
-  condominio, previsione, scadenze C.T. (annotati in nota di rilascio)
-- cache-buster tema -> ?20261022
+- hero carosello 4 slide (claim + tre profili) con i personaggi del
+  mockup (nuova img/landing/), autoplay, frecce, dot, swipe, tastiera,
+  prefers-reduced-motion
+- login spostato in dialog: si apre da topbar/CTA/#login e si RIAPRE
+  da solo quando il server rimanda ERROR_MESSAGE; cablaggio del form
+  preservato identico (astro, FUNCTIONID=Home, SESSION_TOKEN,
+  USERNAME/PASSWORD, link reset e registrazione)
+- topbar scura sticky con Registrati/Accedi; sezione profili
+  riordinata; sezione bundle crediti rimossa come nel mockup
+- wera-landing.css riscritto dagli style di index.html (esclusi
+  app-shell e blocco reward), cache-buster ?20261022
+- CTA adattate al reale: solo la registrazione inquilino esiste;
+  SALTATE slide reward e promo coupon (nessuna logica dietro, vedi
+  nota di rilascio)
+- rimosso lo script validate() rotto da sempre (jQuery non ancora
+  caricato, plugin mai incluso): restano i required nativi
 
 Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>

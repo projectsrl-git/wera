@@ -24,7 +24,10 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   giro di luglio). Il tema di riferimento del mockup e INVARIATO: le novita sono nelle pagine
   (landing/index con hero carousel e login in dialog, registrazione amministratore, spesa in
   euro inquilino/amministratore). Fatto: home v2 (card "I tuoi crediti" da DSCrediti, donut in
-  riga propria — sez. 29).
+  riga propria — sez. 29); landing/login v2 (login.html = hero carosello 4 slide + login in
+  dialog, wera-landing.css riscritto dal mockup, personaggi in img/landing/; ESCLUSE slide 5
+  reward e promo coupon: programma senza logica reale, da riaggiungere solo su decisione
+  esplicita).
 - Design system: `src/main/webapp/css/wera-theme.css` (token + override INSPINIA/Bootstrap/plugin,
   sezioni numerate 1-29). Linkato per ULTIMO in `include/included_head.include`; le pagine
   standalone errore/errorpage/message lo linkano direttamente nell'head (+ Google Fonts).

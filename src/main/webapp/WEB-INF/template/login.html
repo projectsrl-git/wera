@@ -5,70 +5,107 @@
 
  <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WERA - Login</title>
+    <title>WERA &middot; Calore semplice</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="css/wera-landing.css?20260717" rel="stylesheet">
-
-    <script type="text/javascript">
-		$(function(){
-			$("#Login").validate({
-				submitHandler: function(form) {
-					// do other things for a valid form
-					form.submit();
-				}
-			});
-		});
-    </script> 
-    
+    <link href="css/wera-landing.css?20261022" rel="stylesheet">
 
 </head>
 
 <body>
 
 <header class="topnav"><div class="in">
-  <a href="#login"><img class="logoimg" src="img/wera-login.png" alt="Webcredit WERA"></a>
-  <div class="navlinks">
-    <a class="link" href="#profili">Profili</a>
-    <a class="link" href="#crediti">Crediti</a>
-    <a class="link" href="#accesso">Come accedere</a>
-    <a class="link" href="#login">Accedi</a>
-  </div>
+  <a href="astro?FUNCTIONID=Login" class="logoplate" aria-label="WERA &mdash; vai alla home"><img src="img/wera-login.png" alt="Webcredit WERA" style="height:34px"></a>
+  <div class="navlinks"><a class="link" href="#profili">Profili</a><a class="link" href="#accesso">Come accedere</a><a class="btn outline-w" href="#profili">Registrati</a><a class="btn" href="#login" onclick="openLogin();return false">Accedi</a></div>
 </div></header>
 
-<section class="hero"><div class="in">
-  <div>
-    <span class="chip warm" style="background:rgba(249,168,37,.16);border-color:rgba(249,168,37,.3);color:#ffd9a0">Contabilizzazione &amp; ripartizione calore &middot; UNI 10200</span>
-    <h1>Semplicemente <em>calore.</em></h1>
-    <p class="sub">Monitora, gestisci e ripartisci i consumi di riscaldamento dei condom&igrave;ni. Letture sempre aggiornate, ripartizioni trasparenti, tutto via web &mdash; per installatori, amministratori e inquilini.</p>
-    <div class="cta">
-      <a class="btn" href="#login">Accedi al tuo account</a>
-      <a class="btn dark" href="#profili">Scopri i profili</a>
-    </div>
-    <div class="stats">
-      <div class="s"><b>4.596</b><span>Ripartitori gestiti</span></div>
-      <div class="s"><b>49</b><span>Condom&igrave;ni attivi</span></div>
-      <div class="s"><b>UNI 10200</b><span>2013 &middot; 2015 &middot; 2018</span></div>
-    </div>
-  </div>
+<section class="hero"><div class="heroin">
+  <div class="hcar" id="hcar">
+    <div class="hview">
+      <div class="htrack" id="htrack">
 
-  <div class="loginc" id="login">
-    <h3>Accedi</h3>
-    <p class="muted" style="margin:0 0 22px;font-size:14px">Inserisci le credenziali ricevute o registrati.</p>
-    <form action="astro" method="post" id="Login">
-      <input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="Home" />
-		<#if SESSION_TOKEN?exists><input type="hidden" id="SESSION_TOKEN" name="SESSION_TOKEN" value="${SESSION_TOKEN}"></#if>
-      <div class="auth-error"><#if ERROR_MESSAGE?exists>${ERROR_MESSAGE}</#if></div>
-      <div class="field"><label for="USERNAME">Username <span class="req">*</span></label>
-        <input type="email" class="form-control" id="USERNAME" name="USERNAME" autocomplete="username" placeholder="nome.utente@dominio.it" required></div>
-      <div class="field"><label for="PASSWORD">Password <span class="req">*</span></label>
-        <input type="password" class="form-control" id="PASSWORD" name="PASSWORD" autocomplete="current-password" placeholder="La tua password" required></div>
-      <div style="text-align:right;margin:-4px 0 16px"><a href="astro?FUNCTIONID=ResetPassword" style="color:var(--muted);font-size:13px;text-decoration:none">Password dimenticata?</a></div>
-      <button class="btn block" type="submit">Login</button>
-    </form>
-    <p class="muted center" style="margin:16px 0 0;font-size:13.5px">Non hai un account? <a href="astro?FUNCTIONID=Registrazione" style="color:var(--accent-ink);font-weight:700;text-decoration:none">Registrati</a></p>
+        <!-- slide 1 - claim istituzionale -->
+        <div class="hslide grp"><div class="hgrid"><div class="htext">
+          <span class="chip warm" style="background:rgba(249,168,37,.16);border-color:rgba(249,168,37,.3);color:#ffd9a0">Contabilizzazione &amp; ripartizione calore &middot; UNI 10200</span>
+          <h1 style="margin-top:18px">Semplicemente <em>calore.</em></h1>
+          <p class="sub">Monitora, gestisci e ripartisci i consumi di riscaldamento dei condom&igrave;ni. Letture sempre aggiornate, ripartizioni trasparenti, tutto via web &mdash; per installatori, amministratori e inquilini.</p>
+          <div class="cta">
+            <a class="btn" href="#profili">Registrati</a>
+            <a class="btn dark" href="#login" onclick="openLogin();return false">Accedi se sei gi&agrave; registrato</a>
+          </div>
+          <div class="stats">
+            <div class="s"><b>4.596</b><span>Ripartitori gestiti</span></div>
+            <div class="s"><b>49</b><span>Condom&igrave;ni attivi</span></div>
+            <div class="s"><b>UNI 10200</b><span>2013 &middot; 2015 &middot; 2018</span></div>
+          </div>
+        </div>
+        <div class="hfig group"><img src="img/landing/hero-tre-profili.png" alt="Installatore, amministratore e inquilina"></div>
+        </div></div>
+
+        <!-- slide 2 - amministratore -->
+        <div class="hslide"><div class="hgrid">
+          <div class="htext">
+            <span class="chip warm" style="background:rgba(249,168,37,.16);border-color:rgba(249,168,37,.3);color:#ffd9a0">Per l'amministratore di condominio</span>
+            <h1 style="margin-top:18px">Amministratore<em>.</em></h1>
+            <p class="sub">Vedi i ripartitori di tutti gli appartamenti dei tuoi condom&igrave;ni, le letture e i riparti, sempre aggiornati.</p>
+            <ul class="pts">
+              <li>Credenziali fornite dall'installatore</li>
+              <li>Accesso a tutti i tuoi condom&igrave;ni</li>
+              <li>Report e ripartizioni a portata di click</li>
+            </ul>
+            <div class="cta">
+              <a class="btn" href="#login" onclick="openLogin();return false">Accedi con user e password</a>
+            </div>
+          </div>
+          <div class="hfig"><img src="img/landing/char-amministratore.png" alt="Amministratore di condominio"></div>
+        </div></div>
+
+        <!-- slide 3 - inquilino -->
+        <div class="hslide"><div class="hgrid">
+          <div class="htext">
+            <span class="chip warm" style="background:rgba(249,168,37,.16);border-color:rgba(249,168,37,.3);color:#ffd9a0">Per l'inquilino</span>
+            <h1 style="margin-top:18px">Inquilino<em>.</em></h1>
+            <p class="sub">Controlla i tuoi consumi e verifica il corretto funzionamento dei tuoi ripartitori, comodamente da casa.</p>
+            <ul class="pts">
+              <li>Ti registri da solo</li>
+              <li>Ti serve solo il codice del ripartitore</li>
+              <li>Accesso immediato ai tuoi dati</li>
+            </ul>
+            <div class="cta">
+              <a class="btn" href="astro?FUNCTIONID=Registrazione">Registrati</a>
+              <a class="btn dark" href="#accesso">Come funziona</a>
+            </div>
+          </div>
+          <div class="hfig"><img src="img/landing/char-inquilina.png" alt="Inquilina"></div>
+        </div></div>
+
+        <!-- slide 4 - installatore -->
+        <div class="hslide"><div class="hgrid">
+          <div class="htext">
+            <span class="chip warm" style="background:rgba(249,168,37,.16);border-color:rgba(249,168,37,.3);color:#ffd9a0">Per l'installatore &middot; B2B</span>
+            <h1 style="margin-top:18px">Installatore<em>.</em></h1>
+            <p class="sub">Il profilo completo: gestisci tutti i condom&igrave;ni, configuri gli impianti e calcoli le ripartizioni. Piattaforma <b style="color:#fff">re-brandabile</b> con il tuo logo.</p>
+            <ul class="pts">
+              <li>Registrazione azienda (B2B)</li>
+              <li>Crediti prepagati per i ripartitori</li>
+              <li>Calcolo ripartizioni UNI 10200</li>
+            </ul>
+            <div class="cta">
+              <a class="btn" href="#accesso">Lavora con noi</a>
+            </div>
+          </div>
+          <div class="hfig"><img src="img/landing/char-installatore.png" alt="Installatore"></div>
+        </div></div>
+
+      </div>
+    </div>
+    <div class="hbar">
+      <button class="hnav" onclick="hgo(hcur-1,1)" aria-label="Slide precedente">&#10094;</button>
+      <div class="hdots" id="hdots"></div>
+      <button class="hnav" onclick="hgo(hcur+1,1)" aria-label="Slide successiva">&#10095;</button>
+    </div>
   </div>
 </div></section>
 
@@ -76,6 +113,18 @@
   <h2>Scegli il tuo profilo</h2>
   <p class="lead">Ogni utente accede a ci&ograve; che gli serve. Tre esperienze su misura, un'unica piattaforma.</p>
   <div class="profiles">
+
+    <div class="card pcard">
+      <div class="ic a">&#127970;</div>
+      <h3>Amministratore</h3>
+      <p>Vedi i ripartitori di tutti gli appartamenti dei tuoi condom&igrave;ni, le letture e i riparti, sempre aggiornati.</p>
+      <ul class="steps">
+        <li>Credenziali fornite dall'installatore</li>
+        <li>Accesso a tutti i tuoi condom&igrave;ni</li>
+        <li>Report e ripartizioni a portata di click</li>
+      </ul>
+      <a class="btn ghost block" href="#login" onclick="openLogin();return false">Accedi con user e password</a>
+    </div>
 
     <div class="card pcard">
       <div class="ic t">&#127968;</div>
@@ -89,18 +138,6 @@
       <a class="btn ghost block" href="astro?FUNCTIONID=Registrazione">Registrati con il codice</a>
     </div>
 
-    <div class="card pcard">
-      <div class="ic a">&#127970;</div>
-      <h3>Amministratore</h3>
-      <p>Vedi i ripartitori di tutti gli appartamenti dei tuoi condom&igrave;ni, le letture e i riparti, sempre aggiornati.</p>
-      <ul class="steps">
-        <li>Credenziali fornite dall'installatore</li>
-        <li>Accesso a tutti i tuoi condom&igrave;ni</li>
-        <li>Report e ripartizioni a portata di click</li>
-      </ul>
-      <a class="btn ghost block" href="#login">Accedi con user e password</a>
-    </div>
-
     <div class="card pcard feature">
       <div class="ic e">&#128295;</div>
       <h3>Installatore</h3>
@@ -110,55 +147,20 @@
         <li>Crediti prepagati per i ripartitori</li>
         <li>Calcolo ripartizioni UNI 10200</li>
       </ul>
-      <a class="btn block" href="astro?FUNCTIONID=Registrazione">Registra la tua azienda</a>
-      <a class="btn ghost block" style="margin-top:10px" href="#crediti">Vedi i bundle di crediti</a>
+      <a class="btn block" href="#accesso">Lavora con noi</a>
     </div>
 
   </div>
-</section>
-
-<section class="section" id="crediti" style="padding-top:0">
-  <h2>Crediti prepagati, senza sorprese</h2>
-  <p class="lead">Un credito, un ripartitore gestito. Scegli il bundle della tua dimensione: pi&ugrave; grande il taglio, pi&ugrave; basso il costo per credito.</p>
-  <div class="plans">
-
-    <div class="card plan">
-      <div class="tier" style="color:#6b7280">Silver</div>
-      <div class="cr" style="color:#374151">500 <small>crediti</small></div>
-      <div class="per">2,00 &euro; / credito</div>
-      <div class="tot"><b>1.000 &euro;</b><span>IVA esclusa</span></div>
-      <a class="btn ghost sm" href="astro?FUNCTIONID=Registrazione">Inizia con Silver</a>
-    </div>
-
-    <div class="card plan gold">
-      <div class="badge-top">Pi&ugrave; scelto</div>
-      <div class="tier" style="color:var(--ember-ink)">Gold</div>
-      <div class="cr" style="color:var(--ember)">2.000 <small>crediti</small></div>
-      <div class="per">1,75 &euro; / credito &middot; &minus;12,5%</div>
-      <div class="tot"><b>3.500 &euro;</b><span>IVA esclusa</span></div>
-      <a class="btn sm" href="astro?FUNCTIONID=Registrazione">Inizia con Gold</a>
-    </div>
-
-    <div class="card plan">
-      <div class="tier" style="color:#7a5b14">Platinum</div>
-      <div class="cr" style="color:#8a5a06">5.000 <small>crediti</small></div>
-      <div class="per">1,50 &euro; / credito &middot; &minus;25%</div>
-      <div class="tot"><b>7.500 &euro;</b><span>IVA esclusa</span></div>
-      <a class="btn ghost sm" href="astro?FUNCTIONID=Registrazione">Inizia con Platinum</a>
-    </div>
-
-  </div>
-  <p class="muted center" style="margin:26px 0 0;font-size:13.5px">I bundle si attivano dal profilo installatore, dopo la registrazione dell'azienda.</p>
 </section>
 
 <section style="background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)" id="accesso">
  <div class="section" style="padding:56px 24px">
   <h2 style="font-size:28px">Come accedere, in breve</h2>
   <div class="profiles" style="margin-top:34px">
+    <div><div class="chip" style="margin-bottom:10px"><span class="dot a"></span> Amministratore</div>
+      <p class="muted" style="font-size:14.5px">Usa lo <b>username e la password</b> che ti ha consegnato l'installatore: bottone <b>Accedi</b> in alto a destra.</p></div>
     <div><div class="chip" style="margin-bottom:10px"><span class="dot g"></span> Inquilino</div>
       <p class="muted" style="font-size:14.5px">Apri <b>&ldquo;Registrati con il codice&rdquo;</b>, inserisci il codice stampato sul tuo ripartitore, crea email e password. Fatto.</p></div>
-    <div><div class="chip" style="margin-bottom:10px"><span class="dot a"></span> Amministratore</div>
-      <p class="muted" style="font-size:14.5px">Usa lo <b>username e la password</b> che ti ha consegnato l'installatore nel riquadro <b>Accedi</b> qui sopra.</p></div>
     <div><div class="chip" style="margin-bottom:10px"><span class="dot r"></span> Installatore</div>
       <p class="muted" style="font-size:14.5px">Registra l'azienda (serve un <b>codice ATECO</b> del settore termoidraulico), scegli un bundle di crediti e inizia.</p></div>
   </div>
@@ -166,11 +168,101 @@
 </section>
 
 <footer class="foot">
-  <img class="logoimg" src="img/wera-login.png" alt="Webcredit WERA">
-  &copy; 2017-<script>document.write(new Date().getFullYear())</script> Webcredit WERA &ndash; vers 3.0 &middot; Powered by Project srl
+  <span class="logoplate" style="background:transparent;padding:0"><img src="img/wera-login.png" alt="Webcredit WERA" style="height:30px;opacity:.9"></span>
+  <p style="margin:14px 0 0">&copy; 2017-<script>document.write(new Date().getFullYear())</script> Webcredit WERA &ndash; vers 3.0 &middot; Powered by Project srl</p>
 </footer>
 
+<div class="lgovl" id="lgovl" onclick="if(event.target===this)closeLogin()">
+  <div class="lgbox">
+    <button class="lgclose" onclick="closeLogin()" aria-label="Chiudi">&#10005;</button>
+  <div class="loginc" id="login">
+    <h3>Accedi</h3>
+    <p class="muted" style="margin:0 0 22px;font-size:14px">Inserisci le credenziali ricevute o registrati.</p>
+    <form action="astro" method="post" id="Login">
+      <input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="Home" />
+		<#if SESSION_TOKEN?exists><input type="hidden" id="SESSION_TOKEN" name="SESSION_TOKEN" value="${SESSION_TOKEN}"></#if>
+      <div class="auth-error"><#if ERROR_MESSAGE?exists>${ERROR_MESSAGE}</#if></div>
+      <div class="field"><label for="USERNAME">Username <span class="req">*</span></label>
+        <input type="email" class="form-control" id="USERNAME" name="USERNAME" autocomplete="username" placeholder="nome.utente@dominio.it" required></div>
+      <div class="field"><label for="PASSWORD">Password <span class="req">*</span></label>
+        <input type="password" class="form-control" id="PASSWORD" name="PASSWORD" autocomplete="current-password" placeholder="La tua password" required></div>
+      <div style="text-align:right;margin:-4px 0 16px"><a href="astro?FUNCTIONID=ResetPassword" style="color:var(--muted);font-size:13px;text-decoration:none">Password dimenticata?</a></div>
+      <button class="btn block" type="submit">Accedi</button>
+    </form>
+    <p class="muted center" style="margin:16px 0 0;font-size:13.5px">Sei un inquilino? <a href="astro?FUNCTIONID=Registrazione" style="color:var(--accent-ink);font-weight:700;text-decoration:none">Registrati con il codice ripartitore</a></p>
+  </div>
+  </div>
+</div>
 
+<script>
+function openLogin(){
+  var o=document.getElementById('lgovl');
+  o.classList.add('open');document.body.style.overflow='hidden';
+  var u=document.getElementById('USERNAME');if(u)setTimeout(function(){u.focus();u.select();},60);
+}
+function closeLogin(){
+  document.getElementById('lgovl').classList.remove('open');
+  document.body.style.overflow='';
+  if(location.hash==='#login')history.replaceState(null,'',location.pathname);
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLogin();});
+if(location.hash==='#login')openLogin();
+window.addEventListener('hashchange',function(){if(location.hash==='#login')openLogin();});
+
+var hcur=0,hN=4,htimer=null,hpaused=false;
+function hgo(i,manual){
+  hcur=(i+hN)%hN;
+  var t=document.getElementById('htrack');
+  t.style.transform='translateX('+(-hcur*100)+'%)';
+  var sl=t.children;
+  for(var k=0;k<sl.length;k++){
+    var tx=sl[k].querySelector('.htext');
+    if(tx){tx.style.animation='none';void tx.offsetWidth;tx.style.animation='';}
+    sl[k].setAttribute('aria-hidden',k===hcur?'false':'true');
+  }
+  hfit();
+  var d=document.getElementById('hdots').children;
+  for(var j=0;j<d.length;j++)d[j].className='hdot'+(j===hcur?' on':'');
+  if(manual)hrestart();
+}
+function hfit(){
+  var v=document.querySelector('.hview'),sl=document.getElementById('htrack').children[hcur];
+  if(v&&sl)v.style.height=sl.offsetHeight+'px';
+}
+window.addEventListener('resize',hfit);
+window.addEventListener('load',hfit);
+function hrestart(){clearInterval(htimer);htimer=setInterval(function(){if(!hpaused)hgo(hcur+1);},7000);}
+(function(){
+  var dots=document.getElementById('hdots');
+  for(var i=0;i<hN;i++){
+    var b=document.createElement('button');
+    b.className='hdot'+(i?'':' on');b.setAttribute('aria-label','Vai alla slide '+(i+1));
+    b.onclick=(function(n){return function(){hgo(n,1);};})(i);
+    dots.appendChild(b);
+  }
+  var c=document.getElementById('hcar');
+  c.addEventListener('mouseenter',function(){hpaused=true;});
+  c.addEventListener('mouseleave',function(){hpaused=false;});
+  var x0=null;
+  c.addEventListener('touchstart',function(e){x0=e.touches[0].clientX;hpaused=true;},{passive:true});
+  c.addEventListener('touchend',function(e){
+    if(x0===null)return;
+    var dx=e.changedTouches[0].clientX-x0;
+    if(Math.abs(dx)>45)hgo(hcur+(dx<0?1:-1),1);
+    x0=null;hpaused=false;
+  },{passive:true});
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight')hgo(hcur+1,1);
+    if(e.key==='ArrowLeft')hgo(hcur-1,1);
+  });
+  hrestart();
+  hfit();
+})();
+<#if ERROR_MESSAGE?exists>
+// login fallito: il server ha rimandato la pagina con ERROR_MESSAGE -> riapri il dialog
+openLogin();
+</#if>
+</script>
 
 <!-- Mainly scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>
