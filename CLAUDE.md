@@ -142,7 +142,10 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
   utente, serve al reset password), ogni altro indirizzo in qualunque tabella -> `<casella>`.
   `utenti.username` NON toccato (e la login). Rilanciarlo dopo ogni nuovo restore.
 - Al DB locale manca la vista `vista_scarico_data_massima` (restore incompleto): Letture
-  consumi -> ricerca per condominio va in 500 finche non viene ricreata.
+  consumi e Storico letture vanno in 500 finche non viene ricreata. Assenti anche
+  `v_utenze_id_condomino`, `v_utenti_aziende_profili`, `v_dipendenti` e altre minori (elenco
+  in QA.md). Nessuna ripartizione UNI2018 nel DB locale. Smoke test superuser ondate 0-6
+  fatto il 2026-10-22: nessuna regressione del restyle.
 - `deploy/make_test_war.bat` riconfeziona con `jar.exe` del JDK (fix 2026-10-22: PowerShell
   ZipFile produceva entry con backslash e Tomcat rifiutava il WAR).
 - ATTENZIONE: `D:\SVILUPPO\scripts\deploy_war_tomcat9.bat` (fuori repo) usa `wmic` nel

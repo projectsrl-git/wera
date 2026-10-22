@@ -25,6 +25,40 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Smoke test superuser ondate 0-6 su /wera-test, DB locale (2026-10-22)
+Esito della sessione (superuser, branch restyle/ui-2026-r2 deployato):
+- [x] tutte le 53 voci di menu + Profilo + ScaricoDatiManuale: HTTP 200, tema caricato,
+      nessuna 500; unici errori FreeMarker nelle 4 Inserimento ripartizioni (vedi sotto).
+- [x] ondata 0/home: sfondo #f5f4f2, Manrope, voce attiva a gradiente; 4 card, crediti
+      993.033/1.000.000, donut, Richieste 4 righe con lente e chip. Layout 1366x768 senza
+      scroll orizzontale. (Su DB locale la home completa impiega ~10 s: query lente.)
+- [x] ondata 2: ricerca condomini (filtri colonna, ricerca in linea, export, matita/cestino,
+      legenda), inserimento condomini (8 select2, datepicker), SALVATAGGIO reale in UPDATE
+      con Swal "Salvataggio completato!" + alert; aziende (tab senza card-nella-card,
+      underline accento); profili ("seleziona tutti" 86/86); utenti (toggle in riga).
+- [x] ondata 3: inserimentoripartizioni 5 tab e ricalcolo totali; ricerca ripartizioni.
+- [ ] ondata 3: intestazioni Riscaldamento/ACS UNI2018 non verificabili (0 ripartizioni
+      UNI2018 nel DB locale); storico letture e letture consumi bloccati dalla vista mancante.
+- [x] ondata 4: config guidata tipo + Inizia, step a pill; step 0-6 e riepilogo rispondono,
+      dropzone negli step 0 e 5.
+- [x] ondata 5: dropzone import (bordo dashed), file manager (146 card), calendario
+      (mese/settimana), gestione rilevatori non scaricati (265 righe, ~50 s di query).
+- [x] ondata 6: summernote in news e mail config; distribution list, configurazione errori;
+      SALVATAGGIO reale di un parametro con Swal.
+- Bug PREESISTENTI trovati (identici al commit iniziale, NON corretti: fuori perimetro):
+  - `configurazioneguidata1.html` r.273: `<div class="col-sm-4"` senza `>` -> l'input
+    INDIRIZZO diventa attributo del div: il campo Indirizzo del condominio NON esiste nello
+    step 1 del wizard (ne visibile ne inviato). Fix = un `>`, ma attiva un campo `required`:
+    da decidere con l'operatore.
+  - `SALVATAGGIO_IN_CORSO!=''` anche in inserimentoripartizioniuni / uni2018 / letture
+    (stesso difetto di inserimentoripartizioni): il popup "Salvataggio in corso..." non
+    compare mai.
+- DB locale incompleto: mancano `vista_scarico_data_massima` (letture/storico), e inoltre
+  `v_utenze_id_condomino`, `v_utenti_aziende_profili`, `v_dipendenti`, `gerarchia_aziende`,
+  `risorse`, `tipi_richiesta`, `para_old` (citate in config.cfg; alcune forse legacy).
+- File manager su /wera-test: le miniature puntano a file assenti nella cartella upload
+  isolata (atteso: FileNotFoundException nel crash log, nessun impatto sul test UI).
+
 ## QA profilo amministratore su /wera-test, DB locale (2026-10-22)
 Esito della sessione (DB PostgreSQL locale con email anonimizzate, vedi CLAUDE.md):
 - [x] login amministratore; menu ridotto (Home, Anagrafiche, Letture, Ripartizioni, Storico, Centrali termiche).

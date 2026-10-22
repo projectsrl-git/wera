@@ -1,10 +1,12 @@
-chore(test-mail): mailcatcher perl e collaudo registrazione/reset
+docs(qa): smoke test superuser ondate 0-6 su /wera-test
 
-- deploy/mailcatcher.pl: SMTP minimale in perl puro su 127.0.0.1:1025
-  (AUTH qualsiasi, niente TLS, niente inoltro) che salva le mail come .eml.
-- Collaudati end-to-end sulle pagine v2: registrazione con rilevatore,
-  reset password, primo accesso con password scaduta -> nuova password.
-- CLAUDE.md, QA.md e nota .claude/2026-10-22-mailcatcher-registrazione-reset.md.
+- QA.md: esito per ondata (53 voci di menu a 200 con tema, verifiche
+  interattive, due salvataggi reali, layout 1366x768); limiti dovuti al DB
+  locale (vista vista_scarico_data_massima assente, 0 ripartizioni UNI2018).
+- Bug preesistenti trovati e NON corretti: campo Indirizzo assente nello
+  step 1 della configurazione guidata (div non chiuso); SALVATAGGIO_IN_CORSO
+  confrontato con '' nei 4 inserimento ripartizioni.
+- Nota .claude/2026-10-22-smoke-superuser-ondate-0-6.md, CLAUDE.md aggiornato.
 
 Nessuna modifica a Java, config.cfg, template o CSS.
 
