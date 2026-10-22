@@ -1,13 +1,13 @@
-fix(deploy): make_test_war riconfeziona con jar.exe (zip conforme)
+docs(handoff): consolidamento sessione r2 + configurazione laptop
 
-PowerShell ZipFile::CreateFromDirectory produce entry con separatore
-backslash (css\animate.css): Tomcat rifiuta il WAR con "Exception
-fixing docBase" e il contesto wera-test non parte. Trovato al primo
-deploy end-to-end su Windows; ora si usa jar.exe del JDK (richiede
-JAVA_HOME o jar nel PATH, fail-fast con messaggio chiaro).
-
-Nota di deploy/QA in .claude/2026-10-22-deploy-wera-test.md
-(include la segnalazione wmic mancante su Win11 nel wait-loop di
-deploy_war_tomcat9.bat, script fuori repo).
+- CLAUDE.md riscritto nelle sezioni di stato: fase 1 compattata, fase 2
+  r2 con i commit e le esclusioni; DB corretto in PostgreSQL (i vecchi
+  docs citavano SQL Server); build/QA con toolchain del laptop;
+  configurazione ATTIVA dell'istanza /wera-test sul laptop (Tomcat senza
+  servizio via Terminal, hosts db-wera-etc-host, wera-test.xml, fix
+  jar.exe, wmic assente, mailcatcher mancante); tecnica perl byte-level
+  per i file ISO-8859-1; nota CLDR sui numeri
+- .claude/2026-10-22-handoff-r2.md: stato esatto, cose da fare in
+  ordine, trappole gia incontrate — per la sessione successiva
 
 Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>

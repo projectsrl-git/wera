@@ -3,7 +3,11 @@
 ## Cos'e
 WERA / WebCredit WERA: web app Java per contabilizzazione calore e ripartizione spese in condominio.
 Framework proprietario ALI BOW/astro (config-driven), template FreeMarker, UI Bootstrap 3 + tema INSPINIA.
-Stack: Java 7, servlet, FreeMarker, SQL Server (jTDS via JNDI), Maven -> WAR, Tomcat.
+Stack: Java 7 (build ok con JDK8), servlet, FreeMarker, Maven -> WAR, Tomcat 9.
+DB: **PostgreSQL** (datasource JNDI definito in `src/main/webapp/META-INF/context.xml`,
+host placeholder `db-wera-etc-host` risolto via file hosts; le query in config.cfg sono
+sintassi Postgres. I vecchi documenti citano SQL Server/jTDS: il driver jtds e nel WAR
+ma non e quello usato).
 
 ## Struttura rilevante
 - Template FreeMarker: `src/main/webapp/WEB-INF/template/*.html` (84) + layout condivisi in `.../template/include/`.
@@ -17,40 +21,46 @@ Tutto in `.claude/design/`: `01_wera_design_tokens.css` (token, sorgente di veri
 DA RISPETTARE INTEGRALMENTE), `04_inventario_template.md` (ondate), `demo_riferimento_app.html`
 e `demo_riferimento_landing.html` (riferimento visivo).
 
-## Restyling UI — stato
-- Fase 1 (branch `restyle/ui-2026`, MERGED in main): ondate 0-6 complete.
-- Fase 2 (branch `restyle/ui-2026-r2`, in corso dal 2026-10-22): allineamento al nuovo mockup
-  giro 12 in `D:\SVILUPPO\wera_demo` (fuori repo; la copia in `src/resources/wera_demo` e al
-  giro di luglio). Il tema di riferimento del mockup e INVARIATO: le novita sono nelle pagine
-  (landing/index con hero carousel e login in dialog, registrazione amministratore, spesa in
-  euro inquilino/amministratore). Fatto: home v2 (card "I tuoi crediti" da DSCrediti, donut in
-  riga propria — sez. 29); landing/login v2 (login.html = hero carosello 4 slide + login in
-  dialog, wera-landing.css riscritto dal mockup, personaggi in img/landing/; ESCLUSE slide 5
-  reward e promo coupon: programma senza logica reale, da riaggiungere solo su decisione
-  esplicita); registrazione v2 (guida "Dove trovo il codice?" + form card da
-  registrazione-inquilino.html, campi e POST invariati, niente password/privacy del mockup:
-  il backend non li prevede); reset/new password v2 (stesso stack landing: topbar + card
-  .onecol; cablaggio e script legacy conservati). TUTTO il percorso pubblico
-  (login/registrazione/reset/newpassword) ora usa wera-landing.css; wera-theme resta per
-  l'app interna.
-- Design system: `src/main/webapp/css/wera-theme.css` (token + override INSPINIA/Bootstrap/plugin,
-  sezioni numerate 1-29). Linkato per ULTIMO in `include/included_head.include`; le pagine
-  standalone errore/errorpage/message lo linkano direttamente nell'head (+ Google Fonts).
-  IMPORTANTE: a OGNI modifica del tema aggiornare il cache-buster `?AAAAMMGG` del link in
-  `included_head.include` (e nelle standalone), altrimenti i browser servono la copia in cache.
-- Landing/auth: `src/main/webapp/css/wera-landing.css` (solo login.html, pagina standalone).
-- Font: Bricolage Grotesque (display) + Manrope (UI), via Google Fonts.
-- COMPLETATE TUTTE le ondate 0-6 (2026-07-19). Ondate 2-6 quasi interamente CSS-only:
-  sez. 21 anagrafiche (export ghost, legenda chip, banda titolo), sez. 22 ripartizioni
-  (input compatti in griglia, alert stato), sez. 23 config guidata (jquery.steps pill,
-  progressBar, dropzone), sez. 24 import/file (file-box, progress, FullCalendar #calendar),
-  sez. 25 varie (summernote, pagine middle-box). Unici template toccati dopo l'ondata 1:
-  errore/errorpage/message (soli <link> additivi + rimozione margin-left legacy dal logo).
-- ESCLUSI di proposito: mail.html (template EMAIL con hack MSO: non riskinnare);
+## Restyling UI — stato (consolidato 2026-10-22)
+- **Fase 1** (branch `restyle/ui-2026`, MERGED in main): ondate 0-6 complete (2026-07).
+  Quasi tutto CSS-only nel tema: sez. 21 anagrafiche, 22 ripartizioni, 23 config guidata,
+  24 import/file, 25 varie, 26 home board, 27 topbar-titolo/Richieste, 28 bottoni+tab.
+  Esclusi di proposito: mail.html (template EMAIL con hack MSO: non riskinnare);
   recolor intestazioni Riscaldamento/ACS in inserimentoripartizioniuni2018 (color coding
   funzionale applicato anche via JS in rowCallback).
-- Approccio CSS-first: si ridefiniscono le classi esistenti; si interviene sui template solo dove
-  il markup va ristrutturato (stili inline in conflitto, wrapper).
+- **Fase 2 r2** (branch `restyle/ui-2026-r2`, da main, NON pushato): allineamento al mockup
+  giro 12 in `D:\SVILUPPO\wera_demo` (fuori repo; la copia in `src/resources/wera_demo` e
+  ferma a luglio). Il tema di riferimento del mockup e INVARIATO rispetto a fase 1: le
+  novita sono nelle pagine. Commit:
+  1. `27f339f` home v2 — card "I tuoi crediti" con dati reali da DSCrediti (stessa chiamata
+     JSONDataSet di profilo.html, nessun dataset nuovo), donut in riga propria (tema sez. 29).
+  2. `872e4c1` landing v2 — login.html = hero carosello 4 slide con personaggi
+     (`img/landing/`), login in DIALOG che si RIAPRE da solo su ERROR_MESSAGE;
+     wera-landing.css riscritto dagli style del mockup.
+  3. `5455a56` registrazione v2 — guida "Dove trovo il codice?" + form card; campi e POST
+     INVARIATI (il mockup aggiunge password/privacy/PROFILO che il backend non prevede: saltati).
+  4. `356548c` reset/new password v2 — stesso stack landing (.onecol); script legacy
+     validatePassword conservato (morto da sempre), rimosso solo l'ERROR_MESSAGE duplicato.
+  5. `a481529` fix deploy — make_test_war.bat riconfeziona con jar.exe (vedi Istanza di test).
+  TUTTO il percorso pubblico (login/registrazione/reset/newpassword) usa `wera-landing.css`;
+  `wera-theme.css` (sez. 1-29) resta per l'app interna.
+- **ESCLUSO su decisione (fase 2)**: slide 5 "reward"/promo coupon della landing — il LEGGIMI
+  del mockup la dichiara testo promozionale senza logica; riaggiungerla SOLO su indicazione
+  esplicita dell'operatore (markup pronto nel mockup).
+- **In attesa di backend/dataset** (non fattibili senza toccare config.cfg/Java):
+  "Andamento letture mensili (HCA)" in home (serve un DS MESE/VALORE in config.cfg),
+  "Consumi per condominio", "Previsione consumi", "Scadenziario Centrale termica",
+  registrazione amministratore/installatore, "spesa in euro" inquilino/amministratore.
+- Design system: `src/main/webapp/css/wera-theme.css` (token + override, sezioni numerate
+  1-29), linkato per ULTIMO in `include/included_head.include`; errore/errorpage/message lo
+  linkano direttamente. IMPORTANTE: a OGNI modifica di un CSS aggiornare il cache-buster
+  `?AAAAMMGG` dei link (included_head + pagine standalone + login/registrazione/reset per
+  wera-landing), altrimenti i browser servono la copia in cache.
+- Font: Bricolage Grotesque (display) + Manrope (UI), via Google Fonts.
+- Approccio CSS-first: si ridefiniscono le classi esistenti; si interviene sui template solo
+  dove serve (stili inline in conflitto, wrapper), preservando il cablaggio.
+- Nota numeri: `toLocaleString('it-IT')` raggruppa solo da 10.000 in su (CLDR
+  minimumGroupingDigits=2): "1258" senza punto e corretto, non e un bug.
 
 ## Regole "DA NON TOCCARE"
 - Codice Java, `pom.xml`, `config.cfg`, SQL/`DBDataSet`, logica di business.
@@ -71,10 +81,14 @@ Repo storicamente pubblico con criticita note: credenziali SMTP in chiaro in `co
 in history, SQL injection, hashing SHA-1. Rendere privato + ruotare credenziali + ripulire history
 (`git filter-repo`). Non committare segreti; se emergono segreti o dati personali, segnalarli e non riprodurli.
 
-## Build & QA
-`mvn clean package` -> deploy WAR su Tomcat (Java 7). Il build Java e a carico dell'operatore umano.
+## Build & QA (riferimento: laptop, D:\SVILUPPO\wera_git)
+Build verificata anche da Claude Code: `mvn clean package` (dalla shell dell'operatore mvn e
+nel PATH; dal Bash tool usare `D:\SVILUPPO\apache-maven-3.3.9\bin\mvn.cmd` con
+`JAVA_HOME=D:\Programmi\Java\openjdk8` — target 1.7 compila con JDK8). WAR in `target\wera.war`.
 Smoke test per ondata: login, home, una ricerca*, una inserimento*, inserimentoripartizioni
 (tab Costi per unita), configurazione guidata, profilo. Checklist complete in `QA.md`.
+Per il collaudo visuale senza Tomcat: servire una copia statica (template + css/img) con un
+mini server (es. perl in scratchpad), strippando le direttive FreeMarker.
 
 ## Convenzione di rilascio (obbligatoria, ogni ondata)
 1. Nota in `.claude/<AAAA-MM-GG>-<ondata>.md` (modello: `.claude/000-template-release.md`).
@@ -82,13 +96,20 @@ Smoke test per ondata: login, home, una ricerca*, una inserimento*, inserimentor
 3. `COMMIT_MSG.txt` (conventional) -> `git commit -F COMMIT_MSG.txt`.
 Procedere a ondate, mai un unico commit gigante.
 
-## Run autonomo in Claude Code (ondate 2-6)
+## Run autonomo in Claude Code (modalita standard delle ondate)
 Procedere SENZA attendere conferme: per OGNI ondata produrre i tre artefatti e committare
 con `git commit -F COMMIT_MSG.txt` prima di passare alla successiva. Un commit per ondata.
 NON pushare: il push lo fa l'operatore a fine run. Fermarsi SOLO se una modifica estetica
 rischia di toccare logica/cablaggio: in quel caso saltare il punto, annotarlo nella nota di
 rilascio e proseguire. A fine run: aggiornare `QA.md` e produrre un riepilogo unico
 (file toccati per ondata, punti saltati, rischi).
+
+## Tecnica per i file ISO-8859-1 (home.html, include/*.include)
+Gli strumenti Edit/Write rifiutano o corromperebbero i file non-UTF8: editarli BYTE-LEVEL
+con uno script perl (`open ':raw'`, sostituzioni con `\Q...\E` o regex, CRLF espliciti
+`\r\n` nel testo inserito, contatore per verificare che OGNI sostituzione sia univoca,
+`die` senza scrivere se no). Dopo l'edit verificare con `file` (deve restare "ISO-8859 ...
+CRLF") e col conteggio dei byte non-ASCII. Esempi funzionanti nelle note di luglio/ottobre.
 
 ## Istanza di test in parallelo (`deploy/`)
 Per collaudare la GUI accanto alla produzione si deploya un secondo contesto `/wera-test`
@@ -97,6 +118,28 @@ il `config.cfg` viene patchato NEL SOLO ARTEFATTO, mai nel repo. Override: `Quar
 azzerata (kill switch: `SchedulerServletApplication.init()` esce prima di creare lo scheduler),
 directory di I/O e `xmlconfig.ACS` isolati, SMTP su mailcatcher locale, datasource `jdbc/wera_test`.
 Isolare i path e' obbligatorio anche a Quartz spento: `FunctionScaricoDatiManuale` riscrive
-`AnlConfig.xml` da GUI. Nel deploy del test MAI `-clean` (rimuoverebbe la webapp `wera`) ne'
-`-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` e nella nota
+`AnlConfig.xml` da GUI. Sul SERVER di produzione MAI `-clean` (rimuoverebbe la webapp `wera`)
+ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` e nella nota
 `.claude/2026-09-07-deploy-parallelo-test-gui.md`.
+
+### Configurazione ATTIVA sul laptop (dal 2026-10-22, riferimento corrente)
+- Tomcat 9 locale: `D:\Programmi\apache-tomcat-9.0.70`, NESSUN servizio Windows: si avvia in
+  un tab del Terminal panel con `$env:JAVA_HOME='D:\Programmi\Java\openjdk8'`,
+  `$env:CATALINA_HOME='D:\Programmi\apache-tomcat-9.0.70'`, poi `catalina.bat run`
+  (MAI avviarlo da una chiamata Bash dell'agente: muore con la pulizia del process tree).
+- Procedura (verificata): `mvn clean package` -> `deploy\make_test_war.bat` ->
+  `..\scripts\deploy_war_tomcat9.bat D:\SVILUPPO\wera_git\target\wera-test.war wera-test -clean`
+  (il `-clean` sul laptop e accettato dall'operatore: ha rimosso le webapp locali
+  wera/openproteo; su un server condiviso resta vietato).
+- DB: file hosts mappa `db-wera-etc-host` sul DB di prova (oggi `192.168.0.67`; riga
+  `192.168.0.182` commentata). Datasource del contesto test in
+  `conf\Catalina\localhost\wera-test.xml` (FUORI repo): risorsa `jdbc/wera_test` ->
+  `jdbc:postgresql://db-wera-etc-host:5432/wera`, credenziali copiate dal context wera.
+- `deploy/make_test_war.bat` riconfeziona con `jar.exe` del JDK (fix 2026-10-22: PowerShell
+  ZipFile produceva entry con backslash e Tomcat rifiutava il WAR).
+- ATTENZIONE: `D:\SVILUPPO\scripts\deploy_war_tomcat9.bat` (fuori repo) usa `wmic` nel
+  wait-loop di stop; wmic non esiste su Win11 -> il loop e cieco, verificare a mano che
+  Tomcat sia fermo prima della copia.
+- Mancante: mailcatcher su `127.0.0.1:1025` (serve per testare registrazione/reset che
+  inviano mail). Log applicativi: `D:\usr\share\logs\wera`.
+- Credenziali di test: NON nel repo, le fornisce l'operatore in chat.
