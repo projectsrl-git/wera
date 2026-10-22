@@ -75,8 +75,20 @@ for %%D in (import upload output ACS26V3 ANLCONFIG) do (
 
 echo === Riconfeziono "%WAR_OUT%" ...
 if exist "%WAR_OUT%" del /f /q "%WAR_OUT%"
-powershell -NoProfile -ExecutionPolicy Bypass -Command ^
-  "Add-Type -AssemblyName System.IO.Compression.FileSystem; [IO.Compression.ZipFile]::CreateFromDirectory('%BUILD%','%WAR_OUT%')"
+REM NON usare PowerShell ZipFile::CreateFromDirectory: su .NET Framework
+REM produce entry con separatore backslash (css\animate.css) e Tomcat
+REM rifiuta il WAR ("Exception fixing docBase"). jar.exe del JDK genera
+REM uno zip conforme (separatore /).
+set "JAR_EXE=jar"
+if defined JAVA_HOME if exist "%JAVA_HOME%\bin\jar.exe" set "JAR_EXE=%JAVA_HOME%\bin\jar.exe"
+where "%JAR_EXE%" >nul 2>&1
+if errorlevel 1 (
+  if not exist "%JAR_EXE%" (
+    echo ERRORE: jar.exe non trovato. Imposta JAVA_HOME su un JDK.
+    exit /b 5
+  )
+)
+"%JAR_EXE%" -cf "%WAR_OUT%" -C "%BUILD%" .
 if errorlevel 1 (
   echo ERRORE: creazione del WAR fallita.
   exit /b 5

@@ -1,14 +1,13 @@
-restyle(r2-password): reset/new password sullo stack landing
+fix(deploy): make_test_war riconfeziona con jar.exe (zip conforme)
 
-- entrambe le pagine sul design della landing/registrazione: topbar
-  scura "Torna alla home", chip Area riservata, card form .onecol
-- cablaggio INVARIATO: FUNCTIONID ResetPassword/NewPassword,
-  SESSION_TOKEN, campi con stessi name/id/ordine, div INFO_MESSAGE/
-  ERROR_MESSAGE con i loro <#if> FreeMarker; script validatePassword
-  legacy conservato com'era (morto da sempre, submit nativo)
-- rimosso solo il blocco ERROR_MESSAGE duplicato nel form di
-  newpassword (il messaggio appariva due volte)
-- wera-landing.css: .onecol, .auth-info con :empty, topbar responsive
-  (<420px) — il percorso pubblico e ora tutto su wera-landing.css
+PowerShell ZipFile::CreateFromDirectory produce entry con separatore
+backslash (css\animate.css): Tomcat rifiuta il WAR con "Exception
+fixing docBase" e il contesto wera-test non parte. Trovato al primo
+deploy end-to-end su Windows; ora si usa jar.exe del JDK (richiede
+JAVA_HOME o jar nel PATH, fail-fast con messaggio chiaro).
+
+Nota di deploy/QA in .claude/2026-10-22-deploy-wera-test.md
+(include la segnalazione wmic mancante su Win11 nel wait-loop di
+deploy_war_tomcat9.bat, script fuori repo).
 
 Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
