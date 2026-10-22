@@ -43,6 +43,17 @@ Esito della sessione (DB PostgreSQL locale con email anonimizzate, vedi CLAUDE.m
     `js/popper.min.js` che non esistono (404) -> "Bootstrap's JavaScript requires jQuery".
   - `FUNCTIONID=Login` con sessione attiva -> 500 (ClassCastException MenuItem).
 
+## Mail: registrazione e reset con mailcatcher (2026-10-22, DB locale)
+Mailcatcher `deploy/mailcatcher.pl` su 127.0.0.1:1025 (vedi CLAUDE.md).
+- [x] registrazione v2 con rilevatore senza utente: pagina di esito, mail "Invio password
+      provvisoria" catturata; utente creato con profilo 4 (condomino), utenza e azienda.
+- [x] reset password v2: pagina di esito, mail catturata.
+- [x] login con provvisoria (scade oggi) -> pagina "Nuova password" v2 con avviso
+      "LA PASSWORD E' SCADUTA..."; cambio -> Home; login con la nuova -> Home;
+      vecchia provvisoria rifiutata con il messaggio di errore nel dialog.
+- Note (gia cosi su main, non regressioni): pagina di esito `message.html` senza `<title>`;
+  in newpassword lo username non e precompilato anche se il Java lo passa al template.
+
 ## Restyle r2 — reset/new password v2 (2026-10-22)
 - [ ] reset: invio email con esito server invariato; newpassword: cambio password reale ok.
 - [ ] messaggi INFO/ERROR visibili quando il server li manda, nessun box vuoto quando assenti.

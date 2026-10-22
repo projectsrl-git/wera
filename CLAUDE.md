@@ -148,8 +148,14 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
 - ATTENZIONE: `D:\SVILUPPO\scripts\deploy_war_tomcat9.bat` (fuori repo) usa `wmic` nel
   wait-loop di stop; wmic non esiste su Win11 -> il loop e cieco, verificare a mano che
   Tomcat sia fermo prima della copia.
-- Mancante: mailcatcher su `127.0.0.1:1025` (serve per testare registrazione/reset che
-  inviano mail). Log applicativi: `D:\usr\share\logs\wera`; gli stack trace finiscono in
+- Mailcatcher: `deploy/mailcatcher.pl` (perl puro, nessun download) su `127.0.0.1:1025`,
+  accetta AUTH qualsiasi e salva ogni mail in `D:\usr\share\logs\wera\mailcatcher\*.eml`.
+  Avvio in un tab del Terminal panel: `& 'D:\Programmi\Git\usr\bin\perl.exe' deploy/mailcatcher.pl`.
+  Registrazione e reset password verificati end-to-end il 2026-10-22.
+- Login da script (curl): prima una GET di `FUNCTIONID=Login` (crea la sessione), poi POST
+  con `FUNCTIONID=Home` (NON `Login`: il form di login.html invia Home) + USERNAME/PASSWORD;
+  passare le password con `--data-urlencode "PASSWORD@file"` per non scriverle nei comandi.
+  Log applicativi: `D:\usr\share\logs\wera`; gli stack trace finiscono in
   `D:\usr\share\logs\wera\crash\` (cartella creata a mano il 2026-10-22: se manca, i crash
   si perdono e si vede solo la 500).
 - Il vecchio DB di prova `192.168.0.67` e raggiungibile SOLO dalla LAN 192.168.0.x: da

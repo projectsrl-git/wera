@@ -1,13 +1,10 @@
-chore(test-db): DB locale, anonimizzazione email e QA amministratore
+chore(test-mail): mailcatcher perl e collaudo registrazione/reset
 
-- deploy/anonimizza-email-test.sql: riscrive tutti gli indirizzi email del DB
-  di test verso la casella passata con -v dest=... (utenti.email resta unica
-  con plus-addressing +u<ID> per non rompere il reset password; username non
-  toccati; rifiuta server non loopback; rilanciabile).
-- CLAUDE.md: configurazione laptop con PostgreSQL 9.4 locale, crash log,
-  bug di sessione su Login, come entrare con un utente di test.
-- QA.md + nota .claude/2026-10-22-db-locale-qa-amministratore.md: esito QA
-  profilo amministratore e bug preesistenti trovati (non corretti).
+- deploy/mailcatcher.pl: SMTP minimale in perl puro su 127.0.0.1:1025
+  (AUTH qualsiasi, niente TLS, niente inoltro) che salva le mail come .eml.
+- Collaudati end-to-end sulle pagine v2: registrazione con rilevatore,
+  reset password, primo accesso con password scaduta -> nuova password.
+- CLAUDE.md, QA.md e nota .claude/2026-10-22-mailcatcher-registrazione-reset.md.
 
 Nessuna modifica a Java, config.cfg, template o CSS.
 
