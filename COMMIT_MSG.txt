@@ -1,20 +1,15 @@
-restyle(r2-landing): login.html come la homepage del mockup giro 12
+restyle(r2-registrazione): layout del mockup registrazione-inquilino
 
-- hero carosello 4 slide (claim + tre profili) con i personaggi del
-  mockup (nuova img/landing/), autoplay, frecce, dot, swipe, tastiera,
-  prefers-reduced-motion
-- login spostato in dialog: si apre da topbar/CTA/#login e si RIAPRE
-  da solo quando il server rimanda ERROR_MESSAGE; cablaggio del form
-  preservato identico (astro, FUNCTIONID=Home, SESSION_TOKEN,
-  USERNAME/PASSWORD, link reset e registrazione)
-- topbar scura sticky con Registrati/Accedi; sezione profili
-  riordinata; sezione bundle crediti rimossa come nel mockup
-- wera-landing.css riscritto dagli style di index.html (esclusi
-  app-shell e blocco reward), cache-buster ?20261022
-- CTA adattate al reale: solo la registrazione inquilino esiste;
-  SALTATE slide reward e promo coupon (nessuna logica dietro, vedi
-  nota di rilascio)
-- rimosso lo script validate() rotto da sempre (jQuery non ancora
-  caricato, plugin mai incluso): restano i required nativi
+- due colonne: guida "Dove trovo il codice?" (3 passi numerati +
+  illustrazione SVG del ripartitore) e card del form; topbar scura
+  con "Torna alla home"; stack CSS passato a wera-landing.css
+- cablaggio form INVARIATO: astro POST, FUNCTIONID=Registrazione,
+  NOME/COGNOME/EMAIL/RILEVATORE con stessi name/id/ordine; etichetta
+  del campo resa "Codice ripartitore" (solo testo)
+- SALTATI password/conferma/privacy/PROFILO del mockup (il backend
+  non li prevede) e il rewardbox (stessa policy della landing)
+- "Accedi" porta a Login#login: il dialog si apre direttamente
+- stili scoped in wera-landing.css (.guide .steps per non toccare
+  i .steps delle card profilo della landing)
 
 Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>

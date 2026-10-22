@@ -25,6 +25,11 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Restyle r2 — registrazione v2 (2026-10-22)
+- [ ] registrazione con codice valido: POST identico (NOME/COGNOME/EMAIL/RILEVATORE), esito ok.
+- [ ] guida "Dove trovo il codice?" con illustrazione; due colonne su desktop, impilate su mobile.
+- [ ] "Torna alla home" → login; "Accedi" apre il dialog (#login).
+
 ## Restyle r2 — landing/login v2 (2026-10-22)
 - [ ] login con credenziali valide; con credenziali errate il dialog si riapre da solo con l'errore.
 - [ ] carosello 4 slide: autoplay 7s, pausa su hover, frecce, dot, swipe; personaggi caricati (img/landing/).

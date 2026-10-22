@@ -1,76 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 
 <head>
 
  <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WERA - Registrazione</title>
+    <title>WERA &middot; Registrazione</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
-    <!-- WERA theme 2026: font + design system. DEVE restare ULTIMO tra i CSS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="css/wera-theme.css?20260717" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="css/wera-landing.css?20261022" rel="stylesheet">
 
 </head>
 
-<body class="gray-bg auth-page">
+<body>
 
-  <div class="auth-wrap">
+<div class="topbar">
+  <span class="logoplate"><img src="img/wera-login.png" alt="Webcredit WERA" style="height:34px"></span>
+  <a href="astro?FUNCTIONID=Login">&larr; Torna alla home</a>
+</div>
 
-    <div class="auth-logo">
-      <a href="astro?FUNCTIONID=Login"><img src="img/wera-login.png" alt="Wera logo"></a>
+<div class="wrap">
+  <div class="head">
+    <span class="chip"><span class="dot g"></span> Registrazione inquilino</span>
+    <h1 style="margin-top:14px">Crea il tuo accesso in 3 passi</h1>
+    <p>Ti basta il <b>codice del ripartitore</b> installato nel tuo appartamento. Non serve nessuna password fornita da terzi: ti registri da solo.</p>
+  </div>
+
+  <div class="cols">
+
+    <div class="card guide">
+      <h3>Dove trovo il codice?</h3>
+      <p class="muted" style="font-size:14.5px;margin:4px 0 0">Il codice identifica il ripartitore installato sul tuo radiatore.</p>
+      <ol class="steps">
+        <li><b>Avvicinati a un radiatore</b> della tua abitazione con un ripartitore installato.</li>
+        <li><b>Leggi il codice</b> a 8 cifre stampato sull'etichetta del dispositivo (o mostrato sul display).</li>
+        <li><b>Inseriscilo qui a fianco</b> insieme a nome, cognome e la tua email.</li>
+      </ol>
+
+      <div class="illu">
+        <svg viewBox="0 0 360 210" width="100%" role="img" aria-label="Ripartitore sul radiatore con codice evidenziato">
+          <!-- radiatore -->
+          <g fill="#e8e6e1" stroke="#cfccc6">
+            <rect x="20" y="40" width="180" height="120" rx="8"/>
+            <line x1="50" y1="46" x2="50" y2="154" stroke="#cfccc6" stroke-width="6"/>
+            <line x1="80" y1="46" x2="80" y2="154" stroke="#cfccc6" stroke-width="6"/>
+            <line x1="110" y1="46" x2="110" y2="154" stroke="#cfccc6" stroke-width="6"/>
+            <line x1="140" y1="46" x2="140" y2="154" stroke="#cfccc6" stroke-width="6"/>
+            <line x1="170" y1="46" x2="170" y2="154" stroke="#cfccc6" stroke-width="6"/>
+          </g>
+          <!-- ripartitore -->
+          <rect x="92" y="70" width="56" height="74" rx="7" fill="#fff" stroke="#fb6340" stroke-width="2.5"/>
+          <rect x="100" y="80" width="40" height="20" rx="3" fill="#16181d"/>
+          <text x="120" y="94" fill="#ffd9a0" font-family="monospace" font-size="11" text-anchor="middle">8390</text>
+          <circle cx="120" cy="124" r="9" fill="none" stroke="#fb6340" stroke-width="2"/>
+          <!-- callout -->
+          <line x1="148" y1="90" x2="232" y2="70" stroke="#fb6340" stroke-width="2"/>
+          <rect x="232" y="52" width="118" height="40" rx="8" fill="#fdf1dc" stroke="#f3dcab"/>
+          <text x="291" y="70" fill="#8a5a06" font-size="11" font-weight="700" text-anchor="middle">Codice</text>
+          <text x="291" y="84" fill="#8a5a06" font-family="monospace" font-size="13" font-weight="700" text-anchor="middle">8390 40 40</text>
+        </svg>
+        <p class="muted center" style="font-size:12.5px;margin:6px 0 0">Esempio: il codice &egrave; in genere un numero di 8 cifre.</p>
+      </div>
     </div>
 
-    <h1 class="auth-claim">Registrati su WebCredit WERA</h1>
-    <p class="auth-sub">Crea il tuo account.</p>
-
-    <div class="auth-card">
+    <div class="card formcard">
+      <h3 style="font-size:20px;margin-bottom:4px">I tuoi dati</h3>
+      <p class="muted" style="font-size:14px;margin:0 0 20px">Tutti i campi con <span style="color:var(--ember)">*</span> sono obbligatori. Riceverai le credenziali via email.</p>
       <form action="astro" method="post" id="Registrazione">
         <input type="hidden" id="FUNCTIONID" name="FUNCTIONID" value="Registrazione" />
 
-        <div class="form-group">
-          <label for="userEmail">Nome <span class="req-mark">*</span></label>
-          <input type="text" class="form-control" name="NOME" id="NOME" placeholder="Nome" required="">
+        <div class="grid-2">
+          <div class="field"><label for="NOME">Nome <span class="req">*</span></label>
+            <input type="text" name="NOME" id="NOME" placeholder="Nome" required></div>
+          <div class="field"><label for="COGNOME">Cognome <span class="req">*</span></label>
+            <input type="text" name="COGNOME" id="COGNOME" placeholder="Cognome" required></div>
         </div>
 
-        <div class="form-group">
-          <label for="userPassword">Cognome <span class="req-mark">*</span></label>
-          <input type="text" class="form-control" name="COGNOME" id="COGNOME" placeholder="Cognome" required="">
-        </div>
+        <div class="field"><label for="EMAIL">Email <span class="req">*</span></label>
+          <input type="email" name="EMAIL" id="EMAIL" autocomplete="email" placeholder="Indirizzo mail" required></div>
 
-        <div class="form-group">
-          <label for="userPassword">Email <span class="req-mark">*</span></label>
-          <input type="email" class="form-control" name="EMAIL" id="EMAIL" placeholder="Indirizzo mail" required="">
-        </div>
+        <div class="field"><label for="RILEVATORE">Codice ripartitore <span class="req">*</span></label>
+          <input type="text" name="RILEVATORE" id="RILEVATORE" inputmode="numeric" placeholder="es. 83904040" required>
+          <div class="hint">Lo trovi sull'etichetta o sul display del dispositivo.</div></div>
 
-        <div class="form-group">
-          <label for="userPassword">Rilevatore <span class="req-mark">*</span></label>
-          <input type="text" class="form-control" name="RILEVATORE" id="RILEVATORE" placeholder="Rilevatore" required="">
-          <p class="hint" style="font-size:12.5px;color:var(--muted);margin:6px 0 0">Il codice stampato sul tuo ripartitore.</p>
-        </div>
-
-        <button type="submit" class="btn btn-primary btn-block">
-          Registrati
-        </button>
+        <button class="btn block" type="submit">Crea il mio accesso</button>
       </form>
-
-      <p class="auth-alt">
-        Hai gi&agrave; un account? <a href="astro?FUNCTIONID=Login">Login</a>
-      </p>
+      <p class="muted center" style="margin:16px 0 0;font-size:13.5px">Hai gi&agrave; un account? <a href="astro?FUNCTIONID=Login#login" style="color:var(--accent-ink);font-weight:700;text-decoration:none">Accedi</a></p>
     </div>
 
-    <p class="auth-foot">
-      &copy; 2017-<script>document.write(new Date().getFullYear())</script> Webcredit WERA &ndash; vers 3.0 <br/> Powered by Project srl
-    </p>
-
   </div>
+
+  <p class="auth-foot">
+    &copy; 2017-<script>document.write(new Date().getFullYear())</script> Webcredit WERA &ndash; vers 3.0 &middot; Powered by Project srl
+  </p>
+</div>
 
 <!-- Mainly scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>

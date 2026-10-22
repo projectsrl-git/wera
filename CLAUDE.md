@@ -27,7 +27,9 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   riga propria — sez. 29); landing/login v2 (login.html = hero carosello 4 slide + login in
   dialog, wera-landing.css riscritto dal mockup, personaggi in img/landing/; ESCLUSE slide 5
   reward e promo coupon: programma senza logica reale, da riaggiungere solo su decisione
-  esplicita).
+  esplicita); registrazione v2 (guida "Dove trovo il codice?" + form card da
+  registrazione-inquilino.html, campi e POST invariati, niente password/privacy del mockup:
+  il backend non li prevede).
 - Design system: `src/main/webapp/css/wera-theme.css` (token + override INSPINIA/Bootstrap/plugin,
   sezioni numerate 1-29). Linkato per ULTIMO in `include/included_head.include`; le pagine
   standalone errore/errorpage/message lo linkano direttamente nell'head (+ Google Fonts).
