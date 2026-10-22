@@ -25,6 +25,11 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Restyle r2 — reset/new password v2 (2026-10-22)
+- [ ] reset: invio email con esito server invariato; newpassword: cambio password reale ok.
+- [ ] messaggi INFO/ERROR visibili quando il server li manda, nessun box vuoto quando assenti.
+- [ ] link incrociati (home/dialog login/registrazione); mobile 350px: topbar su una riga.
+
 ## Restyle r2 — registrazione v2 (2026-10-22)
 - [ ] registrazione con codice valido: POST identico (NOME/COGNOME/EMAIL/RILEVATORE), esito ok.
 - [ ] guida "Dove trovo il codice?" con illustrazione; due colonne su desktop, impilate su mobile.

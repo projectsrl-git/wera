@@ -29,7 +29,10 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   reward e promo coupon: programma senza logica reale, da riaggiungere solo su decisione
   esplicita); registrazione v2 (guida "Dove trovo il codice?" + form card da
   registrazione-inquilino.html, campi e POST invariati, niente password/privacy del mockup:
-  il backend non li prevede).
+  il backend non li prevede); reset/new password v2 (stesso stack landing: topbar + card
+  .onecol; cablaggio e script legacy conservati). TUTTO il percorso pubblico
+  (login/registrazione/reset/newpassword) ora usa wera-landing.css; wera-theme resta per
+  l'app interna.
 - Design system: `src/main/webapp/css/wera-theme.css` (token + override INSPINIA/Bootstrap/plugin,
   sezioni numerate 1-29). Linkato per ULTIMO in `include/included_head.include`; le pagine
   standalone errore/errorpage/message lo linkano direttamente nell'head (+ Google Fonts).

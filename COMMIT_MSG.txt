@@ -1,15 +1,14 @@
-restyle(r2-registrazione): layout del mockup registrazione-inquilino
+restyle(r2-password): reset/new password sullo stack landing
 
-- due colonne: guida "Dove trovo il codice?" (3 passi numerati +
-  illustrazione SVG del ripartitore) e card del form; topbar scura
-  con "Torna alla home"; stack CSS passato a wera-landing.css
-- cablaggio form INVARIATO: astro POST, FUNCTIONID=Registrazione,
-  NOME/COGNOME/EMAIL/RILEVATORE con stessi name/id/ordine; etichetta
-  del campo resa "Codice ripartitore" (solo testo)
-- SALTATI password/conferma/privacy/PROFILO del mockup (il backend
-  non li prevede) e il rewardbox (stessa policy della landing)
-- "Accedi" porta a Login#login: il dialog si apre direttamente
-- stili scoped in wera-landing.css (.guide .steps per non toccare
-  i .steps delle card profilo della landing)
+- entrambe le pagine sul design della landing/registrazione: topbar
+  scura "Torna alla home", chip Area riservata, card form .onecol
+- cablaggio INVARIATO: FUNCTIONID ResetPassword/NewPassword,
+  SESSION_TOKEN, campi con stessi name/id/ordine, div INFO_MESSAGE/
+  ERROR_MESSAGE con i loro <#if> FreeMarker; script validatePassword
+  legacy conservato com'era (morto da sempre, submit nativo)
+- rimosso solo il blocco ERROR_MESSAGE duplicato nel form di
+  newpassword (il messaggio appariva due volte)
+- wera-landing.css: .onecol, .auth-info con :empty, topbar responsive
+  (<420px) — il percorso pubblico e ora tutto su wera-landing.css
 
 Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
