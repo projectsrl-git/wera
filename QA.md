@@ -45,14 +45,12 @@ Esito della sessione (superuser, branch restyle/ui-2026-r2 deployato):
       (mese/settimana), gestione rilevatori non scaricati (265 righe, ~50 s di query).
 - [x] ondata 6: summernote in news e mail config; distribution list, configurazione errori;
       SALVATAGGIO reale di un parametro con Swal.
-- Bug PREESISTENTI trovati (identici al commit iniziale, NON corretti: fuori perimetro):
-  - `configurazioneguidata1.html` r.273: `<div class="col-sm-4"` senza `>` -> l'input
-    INDIRIZZO diventa attributo del div: il campo Indirizzo del condominio NON esiste nello
-    step 1 del wizard (ne visibile ne inviato). Fix = un `>`, ma attiva un campo `required`:
-    da decidere con l'operatore.
-  - `SALVATAGGIO_IN_CORSO!=''` anche in inserimentoripartizioniuni / uni2018 / letture
-    (stesso difetto di inserimentoripartizioni): il popup "Salvataggio in corso..." non
-    compare mai.
+- Bug PREESISTENTI trovati (identici al commit iniziale), CORRETTI su richiesta
+  dell'operatore (nota .claude/2026-10-22-fix-bug-preesistenti-template.md):
+  - [x] `configurazioneguidata1.html` r.273: `<div class="col-sm-4"` senza `>`: il campo
+    Indirizzo del wizard step 1 non esisteva. Ora visibile, obbligatorio e salvato sul DB.
+  - [x] `SALVATAGGIO_IN_CORSO!=''` nei 4 inserimento ripartizioni: ora il popup
+    "Salvataggio in corso..." compare con flag true e non compare con false/inserimento.
 - DB locale incompleto: mancano `vista_scarico_data_massima` (letture/storico), e inoltre
   `v_utenze_id_condomino`, `v_utenti_aziende_profili`, `v_dipendenti`, `gerarchia_aziende`,
   `risorse`, `tipi_richiesta`, `para_old` (citate in config.cfg; alcune forse legacy).
