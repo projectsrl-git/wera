@@ -1,17 +1,9 @@
-fix(template): campo Indirizzo nel wizard e popup salvataggio in corso
+docs: hash aggiornati dopo la pulizia dei dati personali dalle note
 
-Due bug presenti dal commit iniziale, corretti su richiesta dell'operatore:
-
-- configurazioneguidata1.html: chiuso il tag <div class="col-sm-4"> davanti
-  all'input INDIRIZZO; prima il browser lo leggeva come attributo del div e
-  nello step 1 della configurazione guidata il campo Indirizzo non esisteva.
-- inserimentoripartizioni / uni / uni2018 / letture: la condizione su
-  SALVATAGGIO_IN_CORSO (Boolean dal Java) confrontava un booleano con '';
-  FreeMarker stampava l'errore dentro lo script e il popup "Salvataggio in
-  corso..." non compariva mai. Ora: booleano vero, oppure stringa non vuota.
-
-Collaudato su /wera-test (DB locale): popup con flag true e assente con
-false su Standard/UNI/Letture, nessun errore FreeMarker, condominio salvato
-dal wizard con indirizzo. Nota .claude/2026-10-22-fix-bug-preesistenti-template.md.
+I commit non pubblicati sono stati riscritti in locale (prima del primo push)
+per togliere da due note .claude/ uno username di produzione e un indirizzo
+email personale. Gli hash da a481529 in poi sono cambiati: a481529 -> 4caa34d.
+Aggiornati i riferimenti in CLAUDE.md (anche fix template 174f53f) e
+nell'handoff r2.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

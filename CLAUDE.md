@@ -41,8 +41,8 @@ e `demo_riferimento_landing.html` (riferimento visivo).
      INVARIATI (il mockup aggiunge password/privacy/PROFILO che il backend non prevede: saltati).
   4. `356548c` reset/new password v2 — stesso stack landing (.onecol); script legacy
      validatePassword conservato (morto da sempre), rimosso solo l'ERROR_MESSAGE duplicato.
-  5. `a481529` fix deploy — make_test_war.bat riconfeziona con jar.exe (vedi Istanza di test).
-  6. fix template (2026-10-22, SU RICHIESTA ESPLICITA dell'operatore, deroga a "DA NON
+  5. `4caa34d` fix deploy — make_test_war.bat riconfeziona con jar.exe (vedi Istanza di test).
+  6. `174f53f` fix template (2026-10-22, SU RICHIESTA ESPLICITA dell'operatore, deroga a "DA NON
      TOCCARE"): `>` mancante sul div Indirizzo di configurazioneguidata1 e condizione
      `SALVATAGGIO_IN_CORSO` (booleano) nei 4 inserimento ripartizioni. Dettagli nella nota
      `.claude/2026-10-22-fix-bug-preesistenti-template.md`.
