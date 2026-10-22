@@ -1,13 +1,14 @@
-docs(handoff): consolidamento sessione r2 + configurazione laptop
+chore(test-db): DB locale, anonimizzazione email e QA amministratore
 
-- CLAUDE.md riscritto nelle sezioni di stato: fase 1 compattata, fase 2
-  r2 con i commit e le esclusioni; DB corretto in PostgreSQL (i vecchi
-  docs citavano SQL Server); build/QA con toolchain del laptop;
-  configurazione ATTIVA dell'istanza /wera-test sul laptop (Tomcat senza
-  servizio via Terminal, hosts db-wera-etc-host, wera-test.xml, fix
-  jar.exe, wmic assente, mailcatcher mancante); tecnica perl byte-level
-  per i file ISO-8859-1; nota CLDR sui numeri
-- .claude/2026-10-22-handoff-r2.md: stato esatto, cose da fare in
-  ordine, trappole gia incontrate — per la sessione successiva
+- deploy/anonimizza-email-test.sql: riscrive tutti gli indirizzi email del DB
+  di test verso la casella passata con -v dest=... (utenti.email resta unica
+  con plus-addressing +u<ID> per non rompere il reset password; username non
+  toccati; rifiuta server non loopback; rilanciabile).
+- CLAUDE.md: configurazione laptop con PostgreSQL 9.4 locale, crash log,
+  bug di sessione su Login, come entrare con un utente di test.
+- QA.md + nota .claude/2026-10-22-db-locale-qa-amministratore.md: esito QA
+  profilo amministratore e bug preesistenti trovati (non corretti).
 
-Co-Authored-By: Claude Fable 5 <noreply@anthropic.com>
+Nessuna modifica a Java, config.cfg, template o CSS.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

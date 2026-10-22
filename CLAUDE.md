@@ -131,15 +131,35 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
   `..\scripts\deploy_war_tomcat9.bat D:\SVILUPPO\wera_git\target\wera-test.war wera-test -clean`
   (il `-clean` sul laptop e accettato dall'operatore: ha rimosso le webapp locali
   wera/openproteo; su un server condiviso resta vietato).
-- DB: file hosts mappa `db-wera-etc-host` sul DB di prova (oggi `192.168.0.67`; riga
-  `192.168.0.182` commentata). Datasource del contesto test in
-  `conf\Catalina\localhost\wera-test.xml` (FUORI repo): risorsa `jdbc/wera_test` ->
-  `jdbc:postgresql://db-wera-etc-host:5432/wera`, credenziali copiate dal context wera.
+- DB (dal 2026-10-22 pomeriggio): **PostgreSQL 9.4 LOCALE** (servizio `postgresql-x64-9.4`,
+  binari `D:\Programmi\PostgreSQL\9.4\bin`), DB `wera` ripristinato dall'operatore: e un DB
+  di pasticcio, si possono distruggere i dati. Il file hosts mappa `db-wera-etc-host` su
+  `127.0.0.1` (righe `192.168.0.67` e `192.168.0.182` commentate). Datasource del contesto
+  test in `conf\Catalina\localhost\wera-test.xml` (FUORI repo): risorsa `jdbc/wera_test` ->
+  `jdbc:postgresql://db-wera-etc-host:5432/wera`, utente `postgres` (password solo li).
+- Email anonimizzate sul DB locale con `deploy/anonimizza-email-test.sql` (destinazione
+  passata a riga di comando): `utenti.email` -> `<casella>+u<ID_UTENTE>@<dominio>` (unica per
+  utente, serve al reset password), ogni altro indirizzo in qualunque tabella -> `<casella>`.
+  `utenti.username` NON toccato (e la login). Rilanciarlo dopo ogni nuovo restore.
+- Al DB locale manca la vista `vista_scarico_data_massima` (restore incompleto): Letture
+  consumi -> ricerca per condominio va in 500 finche non viene ricreata.
 - `deploy/make_test_war.bat` riconfeziona con `jar.exe` del JDK (fix 2026-10-22: PowerShell
   ZipFile produceva entry con backslash e Tomcat rifiutava il WAR).
 - ATTENZIONE: `D:\SVILUPPO\scripts\deploy_war_tomcat9.bat` (fuori repo) usa `wmic` nel
   wait-loop di stop; wmic non esiste su Win11 -> il loop e cieco, verificare a mano che
   Tomcat sia fermo prima della copia.
 - Mancante: mailcatcher su `127.0.0.1:1025` (serve per testare registrazione/reset che
-  inviano mail). Log applicativi: `D:\usr\share\logs\wera`.
+  inviano mail). Log applicativi: `D:\usr\share\logs\wera`; gli stack trace finiscono in
+  `D:\usr\share\logs\wera\crash\` (cartella creata a mano il 2026-10-22: se manca, i crash
+  si perdono e si vede solo la 500).
+- Il vecchio DB di prova `192.168.0.67` e raggiungibile SOLO dalla LAN 192.168.0.x: da
+  un'altra rete le pagine che leggono dal DB vanno in timeout (~21 s) e danno 500, con
+  `Connection to db-wera-etc-host:5432 refused` nel crash log.
+- Sul DB di prova/locale l'amministratore di test NON ha lo username di produzione
+  (verificare in Configurazione > Utenti). La scheda utente non ha campo password: per
+  entrare con un utente di test si copia sul DB l'hash di una password nota (tabella
+  `password`, SHA-1 hex senza sale, `dt_scadenza` 'AAAA/MM/GG'). Credenziali solo in chat.
+- Bug di sessione (Java, preesistente): aprire `FUNCTIONID=Login` con una sessione ancora
+  attiva da 500 (`ClassCastException ... MenuItem` in `getPathDescription`): passare prima
+  da `FUNCTIONID=Logout`.
 - Credenziali di test: NON nel repo, le fornisce l'operatore in chat.

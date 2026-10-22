@@ -25,6 +25,24 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## QA profilo amministratore su /wera-test, DB locale (2026-10-22)
+Esito della sessione (DB PostgreSQL locale con email anonimizzate, vedi CLAUDE.md):
+- [x] login amministratore; menu ridotto (Home, Anagrafiche, Letture, Ripartizioni, Storico, Centrali termiche).
+- [x] home: 4 card popolate, "I tuoi crediti", donut, Richieste (DataTable).
+- [x] Anagrafiche > Utenze > Ricerca: 128 righe (coerente con la card home), DataTable ok.
+- [x] tutte le voci di menu del profilo rispondono 200 con il tema (ricerche/inserimenti
+      ripartizioni Standard/UNI2018/Letture, Storico, Centrali termiche, Profilo).
+- [x] Profilo: dati, mail anonimizzata, scadenza password.
+- [ ] Letture consumi > ricerca per condominio: 500 per vista mancante
+      `vista_scarico_data_massima` sul DB locale (restore incompleto, non e il restyle).
+- Bug PREESISTENTI trovati (template/Java invariati da main, NON corretti: fuori perimetro):
+  - `inserimentoripartizioni.html` r.1689: `SALVATAGGIO_IN_CORSO!=''` confronta un booleano
+    con una stringa; FreeMarker in DEBUG stampa l'errore DENTRO lo `<script>` e l'intero
+    blocco `$(document).ready` (5,4 KB) non viene eseguito.
+  - login/registrazione/resetpassword/newpassword caricano `js/jquery-3.1.1.min.js` e
+    `js/popper.min.js` che non esistono (404) -> "Bootstrap's JavaScript requires jQuery".
+  - `FUNCTIONID=Login` con sessione attiva -> 500 (ClassCastException MenuItem).
+
 ## Restyle r2 — reset/new password v2 (2026-10-22)
 - [ ] reset: invio email con esito server invariato; newpassword: cambio password reale ok.
 - [ ] messaggi INFO/ERROR visibili quando il server li manda, nessun box vuoto quando assenti.
