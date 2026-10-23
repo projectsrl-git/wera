@@ -46,6 +46,9 @@ e `demo_riferimento_landing.html` (riferimento visivo).
      TOCCARE"): `>` mancante sul div Indirizzo di configurazioneguidata1 e condizione
      `SALVATAGGIO_IN_CORSO` (booleano) nei 4 inserimento ripartizioni. Dettagli nella nota
      `.claude/2026-10-22-fix-bug-preesistenti-template.md`.
+  7. home: card "I tuoi crediti" NASCOSTA su decisione dell'operatore (2026-10-23): classe
+     `wera-crediti-off` sulla riga Richieste in home.html + regole in fondo alla sez. 29 del
+     tema; markup/JS intatti. Per riattivarla togliere la classe. Cache-buster tema `?20261023`.
   TUTTO il percorso pubblico (login/registrazione/reset/newpassword) usa `wera-landing.css`;
   `wera-theme.css` (sez. 1-29) resta per l'app interna.
 - **ESCLUSO su decisione (fase 2)**: slide 5 "reward"/promo coupon della landing — il LEGGIMI

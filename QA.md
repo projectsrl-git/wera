@@ -25,6 +25,11 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Home: card "I tuoi crediti" nascosta (2026-10-23)
+- [x] superuser e amministratore: card crediti non visibile, Richieste a tutta riga (>=1200px),
+      donut ok, nessuno scroll orizzontale; tema `?20261023`.
+- Per riattivarla: togliere la classe `wera-crediti-off` dalla riga Richieste in home.html.
+
 ## Smoke test superuser ondate 0-6 su /wera-test, DB locale (2026-10-22)
 Esito della sessione (superuser, branch restyle/ui-2026-r2 deployato):
 - [x] tutte le 53 voci di menu + Profilo + ScaricoDatiManuale: HTTP 200, tema caricato,

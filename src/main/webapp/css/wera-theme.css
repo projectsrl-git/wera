@@ -1298,3 +1298,8 @@ form#my-awesome-dropzone.dropzone.dz-drag-hover{
 .cred-note{font-size:13px;color:var(--muted);font-weight:600;margin:0 0 14px}
 .cred-note.cred-warn{color:var(--amber-ink)}
 .cred-note.cred-ko{color:var(--red-ink)}
+/* Card crediti NASCOSTA su decisione dell'operatore (2026-10-23): markup e JS restano in
+   home.html; per riattivarla togliere la classe wera-crediti-off dalla riga delle Richieste.
+   Con la card nascosta le Richieste occupano tutta la riga. */
+.wera-crediti-off .creditibox-col{display:none}
+@media (min-width:1200px){.wera-crediti-off .richieste-col{width:100%}}

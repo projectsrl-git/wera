@@ -1,3 +1,15 @@
-docs(claude): stato fase 2 r2 pushata, PR verso main
+restyle(home): nasconde la card "I tuoi crediti"
+
+Su decisione dell'operatore la card crediti della home v2 resta nascosta
+per ora; markup e JS restano nel template.
+
+- home.html (byte-level, ISO-8859-1 e CRLF preservati): classe interruttore
+  wera-crediti-off sulla riga Richieste, classi richieste-col/creditibox-col
+  sulle colonne. Solo classi aggiunte.
+- wera-theme.css sez. 29: card nascosta e Richieste a tutta riga da 1200px.
+- cache-buster tema -> ?20261023.
+
+Per riattivarla basta togliere la classe wera-crediti-off.
+Collaudato su /wera-test come superuser e amministratore.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
