@@ -1,17 +1,23 @@
-chore(deploy): log isolati nel WAR di test e guardia DB nello script email
+feat(deploy): WAR wera2026 in due profili (test e prod) accanto a wera
 
-- patch_config_test.ps1 / make_test_war.bat / patch-config-test.sh:
-  Logger.CrashDir/DebugFile/ApplicationLog su /usr/share/logs/wera-test/,
-  controllo residui esteso a /usr/share/logs/wera/, creazione cartella
-  log/crash. Prima l'istanza di test scriveva nei file di log di PROD.
-- anonimizza-email-test.sql: gira solo su un DB marcato con
-  COMMENT ON DATABASE ... 'WERA-TEST...'. Il controllo "server locale" da
-  solo non bastava: sul server anche il DB di produzione e locale e si
-  chiama wera come le copie.
-- README: Logger nella tabella degli override, datasource di esempio
-  PostgreSQL (era jTDS/SQL Server), marcatore DB, cartelle da creare.
+La nuova interfaccia si affianca a /wera come contesto /wera2026 (prima
+/wera-test), sia sul server di test sia in produzione:
 
-Verificato: wera-test.war rigenerato senza riferimenti attivi a PROD,
-log scritti in wera-test sul laptop, script rifiutato su DB non marcato.
+- profilo test: istanza isolata come il vecchio wera-test (Quartz spento,
+  I/O e AnlConfig in /usr/share/webapps/wera2026/, mailcatcher, datasource
+  jdbc/wera2026, log /usr/share/logs/wera2026/);
+- profilo prod: dati veri (stesso DB jdbc/wera, SMTP reale, cartelle di
+  wera) con Quartz spento, cosi job e mail automatiche restano solo su
+  wera, e log separati.
+
+Strumenti:
+- make_wera2026.bat (nuovo): target\test\wera2026.war e target\prod\wera2026.war;
+- make_test_war.bat: argomenti [war] [contesto] [test|prod];
+- patch_config_test.ps1 / patch-config-test.sh: parametri contesto e profilo,
+  rifiutano il contesto wera, controllo finale per profilo, fine riga CRLF
+  del config conservati (prima il ps1 riscriveva tutto in LF).
+
+Verificato: config dei due profili vs produzione (30 e 17 righe), script
+Linux equivalente in sandbox, /wera2026 profilo test attivo sul laptop.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

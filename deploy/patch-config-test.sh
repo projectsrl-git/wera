@@ -1,107 +1,134 @@
 #!/bin/bash
 # ============================================================================
-# WERA - Preparazione WAR per istanza di TEST GUI in parallelo alla produzione
+# WERA - Preparazione WAR di un'istanza IN PARALLELO alla produzione (wera)
 # ----------------------------------------------------------------------------
 # Prende in input il WAR prodotto da `mvn clean package` (target/wera.war),
-# lo esplode, neutralizza schedulazioni e I/O condivisi, e riconfeziona
-# wera-test.war (context /wera-test).
+# lo esplode, applica gli override del profilo e riconfeziona <contesto>.war.
+#
+# Profili:
+#   test  istanza isolata su una COPIA del DB: Quartz spento, cartelle di I/O e
+#         AnlConfig separati, SMTP su mailcatcher, datasource jdbc/<contesto>,
+#         log separati.
+#   prod  nuova interfaccia sui dati veri accanto a wera: stesso DB, SMTP e
+#         cartelle; Quartz SPENTO (job e mail automatiche solo su wera) e log
+#         separati.
 #
 # NON modifica il repo: agisce solo sull'artefatto di deploy.
 #
-# Uso:  ./patch-config-test.sh /percorso/target/wera.war
+# Uso:  ./patch-config-test.sh [war] [contesto] [test|prod]
+#       ./patch-config-test.sh target/wera.war wera2026 prod
 # ============================================================================
 
 set -euo pipefail
 
 WAR_IN="${1:-target/wera.war}"
-CTX="wera-test"
-BUILD="/tmp/wera-test-build"
-EXT_DIR="/usr/share/webapps/${CTX}/"
-LOG_DIR="/usr/share/logs/${CTX}/"
+CTX="${2:-wera-test}"
+PROFILO="${3:-test}"
 
+[ "$CTX" != "wera" ] || { echo "ERRORE: 'wera' e' il contesto di produzione"; exit 1; }
+case "$PROFILO" in test|prod) ;; *) echo "ERRORE: profilo '$PROFILO' non valido (test|prod)"; exit 1;; esac
 [ -f "$WAR_IN" ] || { echo "ERRORE: WAR non trovato: $WAR_IN"; exit 1; }
 
-echo ">> Esplodo $WAR_IN"
+BUILD="/tmp/${CTX}-${PROFILO}-build"
+OUT_DIR="/tmp/${PROFILO}"
+EXT_DIR="/usr/share/webapps/${CTX}/"
+LOG_DIR="/usr/share/logs/${CTX}/"
+DS_NAME="jdbc/${CTX//-/_}"
+MARKER="#${PROFILO^^}-OFF#"
+
+echo ">> [$CTX / $PROFILO] Esplodo $WAR_IN"
 rm -rf "$BUILD"; mkdir -p "$BUILD"
 unzip -q "$WAR_IN" -d "$BUILD"
 
 CFG="$BUILD/WEB-INF/config/config.cfg"
 [ -f "$CFG" ] || { echo "ERRORE: config.cfg non trovato nel WAR"; exit 1; }
 
-cp "$CFG" "$CFG.orig"
-
 # --- Il file e' ISO-8859-1: sed opera byte-wise, l'encoding e' preservato ----
 
-echo ">> [1/6] Kill switch Quartz (tasklist vuota)"
+# Sostituisce chiave=valore e fallisce se la chiave non esiste piu'.
+# Il valore si ferma prima di un eventuale CR: il file e' a fine-riga CRLF e
+# le righe sostituite devono restare CRLF come le altre.
+CR=$'\r'
+set_key() {
+    grep -q -E "^${1//./\\.}=" "$CFG" || { echo "ERRORE: chiave $1 non trovata in config.cfg"; exit 2; }
+    sed -i -E "s|^${1//./\\.}=[^${CR}]*|$1=$2|" "$CFG"
+}
+
+echo ">> Kill switch Quartz (tasklist vuota) + job commentati"
 # SchedulerServletApplication.init(): se tasklist == "" fa return PRIMA di
 # makeScheduler() -> nessun thread Quartz viene mai creato.
-sed -i -E 's|^Quartz-scheduler\.tasklist=.*|Quartz-scheduler.tasklist=|' "$CFG"
+set_key Quartz-scheduler.tasklist ""
+sed -i -E "s|^(Quartz-scheduler\.job\..*)$|${MARKER} \1|" "$CFG"
 
-echo ">> [2/6] Commento le singole definizioni job (difesa in profondita')"
-sed -i -E 's|^(Quartz-scheduler\.job\..*)$|#TEST-OFF# \1|' "$CFG"
+echo ">> Log applicativi separati da quelli di produzione"
+set_key Logger.CrashDir "${LOG_DIR}crash/wera_crash"
+set_key Logger.DebugFile "${LOG_DIR}wera_debug"
+set_key Logger.ApplicationLog "${LOG_DIR}wera_application.log"
 
-echo ">> [3/6] Isolo le directory di I/O condivise"
-sed -i -E "s|^directory\.external_files=.*|directory.external_files=${EXT_DIR}|" "$CFG"
-sed -i -E "s|^cartella\.scarico\.ACS=.*|cartella.scarico.ACS=${EXT_DIR}ACS26V3/|" "$CFG"
-sed -i -E "s|^cartella\.scarico\.ACS\.webapp=.*|cartella.scarico.ACS.webapp=C:/ACS26V3-TEST/|" "$CFG"
-sed -i -E "s|^xmlconfig\.ACS=.*|xmlconfig.ACS=${EXT_DIR}ANLCONFIG/AnlConfig.xml|" "$CFG"
+if [ "$PROFILO" = "test" ]; then
+    echo ">> Isolo le directory di I/O condivise"
+    set_key directory.external_files "${EXT_DIR}"
+    set_key cartella.scarico.ACS "${EXT_DIR}ACS26V3/"
+    set_key cartella.scarico.ACS.webapp "C:/ACS26V3-TEST/"
+    set_key xmlconfig.ACS "${EXT_DIR}ANLCONFIG/AnlConfig.xml"
 
-echo ">> [4/6] Dirotto SMTP su mailcatcher locale"
-# mail.SMTPHost.user DEVE restare non vuoto: SendSMTPMail ha un invariant.
-sed -i -E 's|^mail\.SMTPHost=.*|mail.SMTPHost=127.0.0.1|' "$CFG"
-sed -i -E 's|^mail\.SMTPHost\.port=.*|mail.SMTPHost.port=1025|' "$CFG"
-sed -i -E 's|^mail\.SMTPHost\.user=.*|mail.SMTPHost.user=test|' "$CFG"
-sed -i -E 's|^mail\.SMTPHost\.password=.*|mail.SMTPHost.password=test|' "$CFG"
-sed -i -E 's|^mail\.SMTPHost\.starttls\.enable=.*|mail.SMTPHost.starttls.enable=false|' "$CFG"
-sed -i -E 's|^mail\.from=.*|mail.from=noreply@test.invalid|' "$CFG"
-sed -i -E 's|^mail\.from\.service=.*|mail.from.service=noreply@test.invalid|' "$CFG"
+    echo ">> Dirotto SMTP su mailcatcher locale"
+    # mail.SMTPHost.user DEVE restare non vuoto: SendSMTPMail ha un invariant.
+    set_key mail.SMTPHost 127.0.0.1
+    set_key mail.SMTPHost.port 1025
+    set_key mail.SMTPHost.user test
+    set_key mail.SMTPHost.password test
+    set_key mail.SMTPHost.starttls.enable false
+    set_key mail.from noreply@test.invalid
+    set_key mail.from.service noreply@test.invalid
 
-echo ">> [5/6] Datasource JNDI separato"
-sed -i -E 's|^DB\.ConnectionURL=.*|DB.ConnectionURL=java:comp/env/jdbc/wera_test|' "$CFG"
-sed -i -E 's|^DB\.ConnectionURL\.generic=.*|DB.ConnectionURL.generic=java:comp/env/jdbc/wera_test|' "$CFG"
-
-echo ">> [6/6] Log applicativi separati da quelli di produzione"
-sed -i -E "s|^Logger\.CrashDir=.*|Logger.CrashDir=${LOG_DIR}crash/wera_crash|" "$CFG"
-sed -i -E "s|^Logger\.DebugFile=.*|Logger.DebugFile=${LOG_DIR}wera_debug|" "$CFG"
-sed -i -E "s|^Logger\.ApplicationLog=.*|Logger.ApplicationLog=${LOG_DIR}wera_application.log|" "$CFG"
+    echo ">> Datasource JNDI separato ($DS_NAME)"
+    set_key DB.ConnectionURL "java:comp/env/${DS_NAME}"
+    set_key DB.ConnectionURL.generic "java:comp/env/${DS_NAME}"
+    VIETATI="/usr/share/(webapps|logs)/wera/"
+else
+    VIETATI="/usr/share/logs/wera/"
+fi
 
 # ---------------------------------------------------------------------------
 echo
-echo "===================== VERIFICA ====================="
-echo "--- Quartz ---"
-grep -n -E "^Quartz-scheduler\.tasklist=|^#TEST-OFF#" "$CFG" || true
-echo "--- Percorsi ---"
+echo "========== VERIFICA  contesto=$CTX  profilo=$PROFILO =========="
+grep -n -E "^Quartz-scheduler\.tasklist=|^#(TEST|PROD)-OFF#" "$CFG" || true
 grep -n -E "^directory\.external_files=|^cartella\.scarico|^xmlconfig\.ACS=" "$CFG"
-echo "--- Mail ---"
 grep -n -E "^mail\.SMTPHost=|^mail\.SMTPHost\.port=|^mail\.from" "$CFG"
-echo "--- DB ---"
 grep -n -E "^DB\.ConnectionURL" "$CFG"
-echo "--- Log ---"
 grep -n -E "^Logger\.(CrashDir|DebugFile|ApplicationLog)=" "$CFG"
-echo "===================================================="
+echo "==============================================================="
 
-# Nessun riferimento residuo alla produzione
 echo
-echo ">> Controllo residui verso /usr/share/webapps/wera/ e /usr/share/logs/wera/ :"
-if grep -n -E "/usr/share/(webapps|logs)/wera/" "$CFG" | grep -v "^[0-9]*:#"; then
-    echo "!! ATTENZIONE: trovati riferimenti attivi ai path di produzione (sopra)"
-    exit 1
+echo ">> Controllo: Quartz spento e nessun riferimento attivo a $VIETATI"
+if grep -n -E "^Quartz-scheduler\.tasklist=[[:space:]]*[^[:space:]]" "$CFG" \
+   || grep -n -E "$VIETATI" "$CFG" | grep -v "^[0-9]*:#"; then
+    echo "!! ATTENZIONE: riferimenti attivi che dovevano essere isolati (sopra)"
+    exit 3
 else
-    echo "   OK - nessun riferimento attivo"
+    echo "   OK"
 fi
 
-rm -f "$CFG.orig"
+echo
+echo ">> Creo le directory"
+mkdir -p "${LOG_DIR}crash"   # senza crash gli stack trace andrebbero persi
+if [ "$PROFILO" = "test" ]; then
+    mkdir -p "${EXT_DIR}"{import,upload,output,ACS26V3,ANLCONFIG}
+fi
+
+echo ">> Riconfeziono ${OUT_DIR}/${CTX}.war"
+mkdir -p "$OUT_DIR"
+rm -f "${OUT_DIR}/${CTX}.war"
+( cd "$BUILD" && zip -qr "${OUT_DIR}/${CTX}.war" . )
+rm -rf "$BUILD"
 
 echo
-echo ">> Creo le directory isolate"
-mkdir -p "${EXT_DIR}"{import,upload,output,ACS26V3,ANLCONFIG}
-# senza la sottocartella crash gli stack trace andrebbero persi
-mkdir -p "${LOG_DIR}crash"
-
-echo ">> Riconfeziono ${CTX}.war"
-( cd "$BUILD" && zip -qr "/tmp/${CTX}.war" . )
-
-echo
-echo "FATTO -> /tmp/${CTX}.war"
-echo "Deploy:  cp /tmp/${CTX}.war \$CATALINA_BASE/webapps/"
+echo "FATTO -> ${OUT_DIR}/${CTX}.war   [contesto /${CTX}, profilo ${PROFILO}]"
+echo "Deploy:  cp ${OUT_DIR}/${CTX}.war \$CATALINA_BASE/webapps/"
+if [ "$PROFILO" = "test" ]; then
+    echo "Serve:   conf/Catalina/localhost/${CTX}.xml con ${DS_NAME} su una COPIA del DB"
+else
+    echo "Nessun descrittore conf/Catalina/localhost/${CTX}.xml: usa jdbc/wera (DB di produzione)"
+fi
 echo "URL:     http://<host>:<porta>/${CTX}/astro"

@@ -25,6 +25,17 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## wera2026: WAR in due profili, test e prod (2026-10-23)
+- [x] `make_wera2026.bat` -> `target\test\wera2026.war` e `target\prod\wera2026.war`.
+- [x] config test vs produzione: 30 righe diverse (Quartz, I/O, SMTP, `jdbc/wera2026`, log);
+      config prod vs produzione: 17 righe (Quartz e log; DB, SMTP e cartelle invariati);
+      fine riga CRLF conservati; 1971 entry, nessun backslash.
+- [x] `patch-config-test.sh` (in sandbox) produce lo stesso contenuto del motore PowerShell
+      per entrambi i profili.
+- [x] laptop: `/wera2026` profilo test deployato al posto di `/wera-test` (404), login ok,
+      log in `D:\usr\share\logs\wera2026\` (crash compresi), nessuna traccia di Quartz.
+- [ ] server di test e di produzione: deploy a cura dell'operatore (prerequisiti in deploy/README.md).
+
 ## Pacchetto di test: log isolati e guardia script email (2026-10-23)
 - [x] wera-test.war rigenerato: `Logger.*` su `/usr/share/logs/wera-test/`, nessun riferimento
       attivo a `/usr/share/(webapps|logs)/wera/`, smtps/aruba, `jdbc/wera`; tasklist Quartz vuota;

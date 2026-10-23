@@ -118,14 +118,21 @@ con uno script perl (`open ':raw'`, sostituzioni con `\Q...\E` o regex, CRLF esp
 `die` senza scrivere se no). Dopo l'edit verificare con `file` (deve restare "ISO-8859 ...
 CRLF") e col conteggio dei byte non-ASCII. Esempi funzionanti nelle note di luglio/ottobre.
 
-## Istanza di test in parallelo (`deploy/`)
-Per collaudare la GUI accanto alla produzione si deploya un secondo contesto `/wera-test`
-generato da `deploy/make_test_war.bat` (Windows) o `deploy/patch-config-test.sh` (Linux):
-il `config.cfg` viene patchato NEL SOLO ARTEFATTO, mai nel repo. Override: `Quartz-scheduler.tasklist`
-azzerata (kill switch: `SchedulerServletApplication.init()` esce prima di creare lo scheduler),
-directory di I/O e `xmlconfig.ACS` isolati, SMTP su mailcatcher locale, datasource `jdbc/wera_test`.
-Isolare i path e' obbligatorio anche a Quartz spento: `FunctionScaricoDatiManuale` riscrive
-`AnlConfig.xml` da GUI. Sul SERVER di produzione MAI `-clean` (rimuoverebbe la webapp `wera`)
+## Istanza in parallelo a wera: `/wera2026` (`deploy/`)
+Dal 2026-10-23 la nuova interfaccia si affianca a `/wera` come contesto **`/wera2026`**
+(prima `/wera-test`), in due PROFILI generati da `deploy/make_wera2026.bat`
+(-> `target\test\wera2026.war` e `target\prod\wera2026.war`) o da
+`deploy/patch-config-test.sh <war> wera2026 <test|prod>` (Linux): il `config.cfg` viene
+patchato NEL SOLO ARTEFATTO, mai nel repo.
+- **test** (server di test, copia del DB): `Quartz-scheduler.tasklist` azzerata (kill switch:
+  `SchedulerServletApplication.init()` esce prima di creare lo scheduler), directory di I/O e
+  `xmlconfig.ACS` isolati in `/usr/share/webapps/wera2026/`, SMTP su mailcatcher locale,
+  datasource `jdbc/wera2026` (descrittore `conf/Catalina/localhost/wera2026.xml`), log in
+  `/usr/share/logs/wera2026/`. Isolare i path e' obbligatorio anche a Quartz spento:
+  `FunctionScaricoDatiManuale` riscrive `AnlConfig.xml` da GUI.
+- **prod** (server di produzione, dati veri): stesso DB (`jdbc/wera` dal META-INF/context.xml,
+  NESSUN descrittore), SMTP reale, cartelle di wera condivise; Quartz SPENTO (job e mail
+  automatiche solo su wera, niente doppioni) e log in `/usr/share/logs/wera2026/`. Sul SERVER di produzione MAI `-clean` (rimuoverebbe la webapp `wera`)
 ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` e nella nota
 `.claude/2026-09-07-deploy-parallelo-test-gui.md`.
 
@@ -134,15 +141,18 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
   un tab del Terminal panel con `$env:JAVA_HOME='D:\Programmi\Java\openjdk8'`,
   `$env:CATALINA_HOME='D:\Programmi\apache-tomcat-9.0.70'`, poi `catalina.bat run`
   (MAI avviarlo da una chiamata Bash dell'agente: muore con la pulizia del process tree).
-- Procedura (verificata): `mvn clean package` -> `deploy\make_test_war.bat` ->
-  `..\scripts\deploy_war_tomcat9.bat D:\SVILUPPO\wera_git\target\wera-test.war wera-test -clean`
-  (il `-clean` sul laptop e accettato dall'operatore: ha rimosso le webapp locali
-  wera/openproteo; su un server condiviso resta vietato).
+- Sul laptop gira **`/wera2026` profilo test** (dal 2026-10-23, al posto di `/wera-test`):
+  http://localhost:8080/wera2026/. Procedura: `mvn clean package` -> `deploy\make_wera2026.bat`
+  -> Tomcat fermo -> copiare `target\test\wera2026.war` in `webapps` (togliendo
+  `webapps\wera2026[.war]` e `work\Catalina\localhost\wera2026`) -> avvio nel Terminal panel.
+  Lo script `..\scripts\deploy_war_tomcat9.bat <war> wera2026 -clean` funziona ma avvia
+  Tomcat da solo (dall'agente muore): il `-clean` sul laptop e accettato dall'operatore, su
+  un server condiviso resta vietato. Il vecchio descrittore e' `wera-test.xml.disabled`.
 - DB (dal 2026-10-22 pomeriggio): **PostgreSQL 9.4 LOCALE** (servizio `postgresql-x64-9.4`,
   binari `D:\Programmi\PostgreSQL\9.4\bin`), DB `wera` ripristinato dall'operatore: e un DB
   di pasticcio, si possono distruggere i dati. Il file hosts mappa `db-wera-etc-host` su
   `127.0.0.1` (righe `192.168.0.67` e `192.168.0.182` commentate). Datasource del contesto
-  test in `conf\Catalina\localhost\wera-test.xml` (FUORI repo): risorsa `jdbc/wera_test` ->
+  in `conf\Catalina\localhost\wera2026.xml` (FUORI repo): risorsa `jdbc/wera2026` ->
   `jdbc:postgresql://db-wera-etc-host:5432/wera`, utente `postgres` (password solo li).
 - Email anonimizzate sul DB locale con `deploy/anonimizza-email-test.sql` (destinazione
   passata a riga di comando): `utenti.email` -> `<casella>+u<ID_UTENTE>@<dominio>` (unica per
@@ -168,8 +178,8 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
 - Login da script (curl): prima una GET di `FUNCTIONID=Login` (crea la sessione), poi POST
   con `FUNCTIONID=Home` (NON `Login`: il form di login.html invia Home) + USERNAME/PASSWORD;
   passare le password con `--data-urlencode "PASSWORD@file"` per non scriverle nei comandi.
-  Log applicativi di /wera-test (dal 2026-10-23, `Logger.*` isolati nel WAR di test):
-  `D:\usr\share\logs\wera-test`, stack trace in `D:\usr\share\logs\wera-test\crash\`
+  Log applicativi di /wera2026 (`Logger.*` isolati in entrambi i profili):
+  `D:\usr\share\logs\wera2026`, stack trace in `D:\usr\share\logs\wera2026\crash\`
   (creata da make_test_war.bat: se manca, i crash si perdono e si vede solo la 500).
   `D:\usr\share\logs\wera` resta la cartella dei log di produzione.
 - Il vecchio DB di prova `192.168.0.67` e raggiungibile SOLO dalla LAN 192.168.0.x: da
