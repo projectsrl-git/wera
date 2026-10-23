@@ -13,6 +13,7 @@ REM    - import automatico     -> cartelle di I/O isolate
 REM    - riscrittura AnlConfig -> path isolato
 REM    - invio mail reali      -> SMTP dirottato su mailcatcher locale
 REM    - scritture sul DB      -> datasource JNDI separato
+REM    - log applicativi       -> cartella log separata (non quella di PROD)
 REM
 REM  NON tocca il repo: lavora su una copia esplosa del WAR.
 REM  NON deploya: produce solo l'artefatto (vedi README.md).
@@ -29,6 +30,7 @@ if not defined WAR_IN set "WAR_IN=%~dp0..\target\wera.war"
 
 set "CTX=wera-test"
 set "EXT_DIR=/usr/share/webapps/%CTX%/"
+set "LOG_DIR=/usr/share/logs/%CTX%/"
 set "BUILD=%TEMP%\%CTX%-build"
 
 if not exist "%WAR_IN%" (
@@ -62,7 +64,7 @@ REM  config.cfg e' ISO-8859-1: lettura e scrittura forzate a 28591,
 REM  altrimenti gli accenti vengono corrotti.
 REM ================================================================
 echo === Patch del config per l'istanza di test ...
-powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0patch_config_test.ps1" -ConfigPath "%CFG%" -ExtDir "%EXT_DIR%"
+powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0patch_config_test.ps1" -ConfigPath "%CFG%" -ExtDir "%EXT_DIR%" -LogDir "%LOG_DIR%"
 if errorlevel 1 (
   echo ERRORE: patch del config fallita - vedi messaggi sopra.
   exit /b 4
@@ -72,6 +74,8 @@ echo === Creo le cartelle isolate ...
 for %%D in (import upload output ACS26V3 ANLCONFIG) do (
   if not exist "%~d0\usr\share\webapps\%CTX%\%%D" mkdir "%~d0\usr\share\webapps\%CTX%\%%D" 2>nul
 )
+REM Log separati: senza la sottocartella crash gli stack trace andrebbero persi.
+if not exist "%~d0\usr\share\logs\%CTX%\crash" mkdir "%~d0\usr\share\logs\%CTX%\crash" 2>nul
 
 echo === Riconfeziono "%WAR_OUT%" ...
 if exist "%WAR_OUT%" del /f /q "%WAR_OUT%"
@@ -106,6 +110,7 @@ echo.
 echo  Prima del deploy servono:
 echo    - conf\Catalina\localhost\%CTX%.xml con la risorsa jdbc/wera_test
 echo    - un mailcatcher in ascolto su 127.0.0.1:1025
+echo    - sul server: %EXT_DIR% e %LOG_DIR%crash scrivibili da Tomcat
 echo  Dettagli in deploy\README.md
 echo ================================================================
 exit /b 0

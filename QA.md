@@ -25,6 +25,15 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Pacchetto di test: log isolati e guardia script email (2026-10-23)
+- [x] wera-test.war rigenerato: `Logger.*` su `/usr/share/logs/wera-test/`, nessun riferimento
+      attivo a `/usr/share/(webapps|logs)/wera/`, smtps/aruba, `jdbc/wera`; tasklist Quartz vuota;
+      encoding config ISO-8859-1 invariato; nessuna entry con backslash.
+- [x] deploy sul laptop: debug, application e crash scritti in `D:\usr\share\logs\wera-test\`,
+      nessuna scrittura in `D:\usr\share\logs\wera\`.
+- [x] anonimizza-email-test.sql: DB non marcato -> rifiuto (transazione annullata); DB marcato
+      `WERA-TEST` -> esegue; rilancio -> 0 righe.
+
 ## Home: card "I tuoi crediti" nascosta (2026-10-23)
 - [x] superuser e amministratore: card crediti non visibile, Richieste a tutta riga (>=1200px),
       donut ok, nessuno scroll orizzontale; tema `?20261023`.

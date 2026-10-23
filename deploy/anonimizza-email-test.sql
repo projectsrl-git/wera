@@ -15,7 +15,12 @@
 --   * ogni altra colonna di testo di ogni tabella (distribution_list, email_log, mail_config,
 --     e qualunque tabella presente nel dump): ogni indirizzo trovato -> dest.
 --   * Rilanciabile: una seconda esecuzione non cambia nulla.
---   * Rifiuta di girare se il server non e su loopback (mai sul DB di produzione).
+--   * Rifiuta di girare se il server non e su loopback.
+--   * Rifiuta di girare se il DB NON e marcato come copia di test. Il nome non basta: la
+--     produzione si chiama "wera" come molte copie locali. Il marcatore e il commento del
+--     database, da impostare UNA volta, a mano, SOLO su una copia ripristinata:
+--       COMMENT ON DATABASE <nome> IS 'WERA-TEST: copia di prova, dati sacrificabili';
+--     Sul DB di produzione quel commento non deve MAI esistere.
 
 \set QUIET on
 BEGIN;
@@ -27,11 +32,19 @@ DECLARE
     dest   text := current_setting('wera.dest');
     re     text := '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}';
     srv    text := host(inet_server_addr());
+    marca  text := coalesce(shobj_description(
+                       (SELECT oid FROM pg_database WHERE datname = current_database()),
+                       'pg_database'), '');
     r      record;
     n      bigint;
 BEGIN
     IF srv IS NOT NULL AND srv NOT IN ('127.0.0.1', '::1') THEN
         RAISE EXCEPTION 'server % non locale: script consentito solo sul DB di test in locale', srv;
+    END IF;
+    IF left(marca, 9) <> 'WERA-TEST' THEN
+        RAISE EXCEPTION 'il database "%" non e marcato come copia di test (commento attuale: "%"). '
+            'Se e DAVVERO una copia sacrificabile: COMMENT ON DATABASE % IS ''WERA-TEST: ...''; '
+            'sul DB di produzione NON farlo mai.', current_database(), marca, current_database();
     END IF;
     IF dest !~ ('^' || re || '$') OR position('+' in dest) > 0 THEN
         RAISE EXCEPTION 'dest non valido (serve un indirizzo semplice, senza +): %', dest;

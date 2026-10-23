@@ -148,6 +148,9 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
   passata a riga di comando): `utenti.email` -> `<casella>+u<ID_UTENTE>@<dominio>` (unica per
   utente, serve al reset password), ogni altro indirizzo in qualunque tabella -> `<casella>`.
   `utenti.username` NON toccato (e la login). Rilanciarlo dopo ogni nuovo restore.
+  Gira SOLO su un DB marcato `COMMENT ON DATABASE <db> IS 'WERA-TEST: ...'` (il nome non
+  basta: anche la produzione si chiama `wera`). Il DB locale del laptop e marcato dal
+  2026-10-23; dopo un nuovo restore va rimarcato a mano. MAI marcare la produzione.
 - Al DB locale manca la vista `vista_scarico_data_massima` (restore incompleto): Letture
   consumi e Storico letture vanno in 500 finche non viene ricreata. Assenti anche
   `v_utenze_id_condomino`, `v_utenti_aziende_profili`, `v_dipendenti` e altre minori (elenco
@@ -165,9 +168,10 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
 - Login da script (curl): prima una GET di `FUNCTIONID=Login` (crea la sessione), poi POST
   con `FUNCTIONID=Home` (NON `Login`: il form di login.html invia Home) + USERNAME/PASSWORD;
   passare le password con `--data-urlencode "PASSWORD@file"` per non scriverle nei comandi.
-  Log applicativi: `D:\usr\share\logs\wera`; gli stack trace finiscono in
-  `D:\usr\share\logs\wera\crash\` (cartella creata a mano il 2026-10-22: se manca, i crash
-  si perdono e si vede solo la 500).
+  Log applicativi di /wera-test (dal 2026-10-23, `Logger.*` isolati nel WAR di test):
+  `D:\usr\share\logs\wera-test`, stack trace in `D:\usr\share\logs\wera-test\crash\`
+  (creata da make_test_war.bat: se manca, i crash si perdono e si vede solo la 500).
+  `D:\usr\share\logs\wera` resta la cartella dei log di produzione.
 - Il vecchio DB di prova `192.168.0.67` e raggiungibile SOLO dalla LAN 192.168.0.x: da
   un'altra rete le pagine che leggono dal DB vanno in timeout (~21 s) e danno 500, con
   `Connection to db-wera-etc-host:5432 refused` nel crash log.

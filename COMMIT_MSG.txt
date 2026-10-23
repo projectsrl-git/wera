@@ -1,15 +1,17 @@
-restyle(home): nasconde la card "I tuoi crediti"
+chore(deploy): log isolati nel WAR di test e guardia DB nello script email
 
-Su decisione dell'operatore la card crediti della home v2 resta nascosta
-per ora; markup e JS restano nel template.
+- patch_config_test.ps1 / make_test_war.bat / patch-config-test.sh:
+  Logger.CrashDir/DebugFile/ApplicationLog su /usr/share/logs/wera-test/,
+  controllo residui esteso a /usr/share/logs/wera/, creazione cartella
+  log/crash. Prima l'istanza di test scriveva nei file di log di PROD.
+- anonimizza-email-test.sql: gira solo su un DB marcato con
+  COMMENT ON DATABASE ... 'WERA-TEST...'. Il controllo "server locale" da
+  solo non bastava: sul server anche il DB di produzione e locale e si
+  chiama wera come le copie.
+- README: Logger nella tabella degli override, datasource di esempio
+  PostgreSQL (era jTDS/SQL Server), marcatore DB, cartelle da creare.
 
-- home.html (byte-level, ISO-8859-1 e CRLF preservati): classe interruttore
-  wera-crediti-off sulla riga Richieste, classi richieste-col/creditibox-col
-  sulle colonne. Solo classi aggiunte.
-- wera-theme.css sez. 29: card nascosta e Richieste a tutta riga da 1200px.
-- cache-buster tema -> ?20261023.
-
-Per riattivarla basta togliere la classe wera-crediti-off.
-Collaudato su /wera-test come superuser e amministratore.
+Verificato: wera-test.war rigenerato senza riferimenti attivi a PROD,
+log scritti in wera-test sul laptop, script rifiutato su DB non marcato.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

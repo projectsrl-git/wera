@@ -6,7 +6,7 @@
  rendono l'istanza innocua verso la produzione.
 
  Invocato da make_test_war.bat. Utilizzabile anche a mano:
-   powershell -File patch_config_test.ps1 -ConfigPath "...\config.cfg" -ExtDir "/usr/share/webapps/wera-test/"
+   powershell -File patch_config_test.ps1 -ConfigPath "...\config.cfg" -ExtDir "/usr/share/webapps/wera-test/" [-LogDir "/usr/share/logs/wera-test/"]
 
  IMPORTANTE: config.cfg e' ISO-8859-1 (codepage 28591). Lettura e
  scrittura sono forzate a quell'encoding: risalvarlo in UTF-8
@@ -17,7 +17,8 @@
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)] [string] $ConfigPath,
-    [Parameter(Mandatory = $true)] [string] $ExtDir
+    [Parameter(Mandatory = $true)] [string] $ExtDir,
+    [string] $LogDir = '/usr/share/logs/wera-test/'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -58,6 +59,12 @@ $overrides = [ordered]@{
     # [4] Datasource separato.
     'DB.ConnectionURL'               = 'java:comp/env/jdbc/wera_test'
     'DB.ConnectionURL.generic'       = 'java:comp/env/jdbc/wera_test'
+
+    # [6] Log applicativi separati: con i path di produzione le due istanze
+    #     scriverebbero negli stessi file debug/application/crash.
+    'Logger.CrashDir'                = "${LogDir}crash/wera_crash"
+    'Logger.DebugFile'               = "${LogDir}wera_debug"
+    'Logger.ApplicationLog'          = "${LogDir}wera_application.log"
 }
 
 $applied = @{}
@@ -104,7 +111,7 @@ if ($missing.Count -gt 0) {
 # --- Verifica: nessun riferimento attivo alla produzione ---------
 $leftovers = @(
     [System.IO.File]::ReadAllLines($ConfigPath, $enc) |
-        Where-Object { $_ -match '/usr/share/webapps/wera/' -and $_ -notmatch '^\s*#' }
+        Where-Object { $_ -match '/usr/share/(webapps|logs)/wera/' -and $_ -notmatch '^\s*#' }
 )
 if ($leftovers.Count -gt 0) {
     Write-Host ''
@@ -117,7 +124,7 @@ if ($leftovers.Count -gt 0) {
 Write-Host ''
 Write-Host '===================== VERIFICA ====================='
 [System.IO.File]::ReadAllLines($ConfigPath, $enc) |
-    Where-Object { $_ -match '^(Quartz-scheduler\.tasklist=|#TEST-OFF#|directory\.external_files=|cartella\.scarico|xmlconfig\.ACS=|mail\.SMTPHost=|mail\.SMTPHost\.port=|mail\.from|DB\.ConnectionURL)' } |
+    Where-Object { $_ -match '^(Quartz-scheduler\.tasklist=|#TEST-OFF#|directory\.external_files=|cartella\.scarico|xmlconfig\.ACS=|mail\.SMTPHost=|mail\.SMTPHost\.port=|mail\.from|DB\.ConnectionURL|Logger\.(CrashDir|DebugFile|ApplicationLog)=)' } |
     ForEach-Object { Write-Host "  $_" }
 Write-Host '===================================================='
 Write-Host '  OK - nessun riferimento attivo ai path di produzione' -ForegroundColor Green

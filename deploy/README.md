@@ -30,9 +30,11 @@ Nessuno dei tre tocca il repo: lavorano su una copia esplosa del WAR.
 | `mail.SMTPHost` (+ porta, TLS) | `smtps.aruba.it:587` STARTTLS | `127.0.0.1:1025`, TLS off |
 | `mail.from`, `mail.from.service` | dominio reale | `noreply@test.invalid` |
 | `DB.ConnectionURL[.generic]` | `jdbc/wera` | `jdbc/wera_test` |
+| `Logger.CrashDir`, `Logger.DebugFile`, `Logger.ApplicationLog` | `/usr/share/logs/wera/...` | `/usr/share/logs/wera-test/...` |
 
 Lo script **fallisce** (exit 2) se una di queste chiavi non esiste più in `config.cfg`,
-e (exit 3) se dopo la patch resta un riferimento attivo a `/usr/share/webapps/wera/`.
+e (exit 3) se dopo la patch resta un riferimento attivo a `/usr/share/webapps/wera/` o
+`/usr/share/logs/wera/`.
 Meglio un build che si ferma di un WAR di test che scrive in produzione.
 
 ---
@@ -75,15 +77,24 @@ sviluppo, è irrilevante.
 ```xml
 <Context docBase="wera-test" path="/wera-test">
   <Resource name="jdbc/wera_test" auth="Container" type="javax.sql.DataSource"
-            driverClassName="net.sourceforge.jtds.jdbc.Driver"
-            url="jdbc:jtds:sqlserver://HOST:1433/WERA_TEST"
+            driverClassName="org.postgresql.Driver"
+            url="jdbc:postgresql://HOST:5432/wera_test"
             username="..." password="..."
-            maxTotal="10" maxIdle="3"/>
+            maxTotal="10" maxIdle="3" maxWaitMillis="3000"/>
 </Context>
 ```
 
-Il DB `WERA_TEST` va creato da restore di produzione. Con un datasource che punta al DB reale,
-tutto il resto della protezione non serve a niente.
+Il DB `wera_test` (PostgreSQL) va creato da restore di produzione. Con un datasource che punta
+al DB reale, tutto il resto della protezione non serve a niente.
+
+**Email anonimizzate** sulla copia, con `anonimizza-email-test.sql` (istruzioni in testa al
+file). Lo script gira solo su un DB marcato come copia di test, da fare UNA volta a mano:
+`COMMENT ON DATABASE wera_test IS 'WERA-TEST: copia di prova, dati sacrificabili';`.
+Sul DB di produzione quel commento non deve mai esistere: è ciò che lo protegge.
+
+**Cartelle** scrivibili dall'utente di Tomcat: `/usr/share/webapps/wera-test/`
+(`import`, `upload`, `output`, `ACS26V3`, `ANLCONFIG`) e `/usr/share/logs/wera-test/crash`.
+`patch-config-test.sh` le crea; `make_test_war.bat` le crea solo sulla macchina dove gira.
 
 **Mailcatcher** su `127.0.0.1:1025` (MailHog, smtp4dev, o `python -m aiosmtpd -n -l 127.0.0.1:1025`).
 Serve perché `mail.SMTPHost.user` non può essere svuotato: `SendSMTPMail` ha un
