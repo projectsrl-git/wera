@@ -28,7 +28,7 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   Esclusi di proposito: mail.html (template EMAIL con hack MSO: non riskinnare);
   recolor intestazioni Riscaldamento/ACS in inserimentoripartizioniuni2018 (color coding
   funzionale applicato anche via JS in rowCallback).
-- **Fase 2 r2** (branch `restyle/ui-2026-r2`, da main, NON pushato): allineamento al mockup
+- **Fase 2 r2** (branch `restyle/ui-2026-r2`, da main, pushato il 2026-10-22, PR verso main): allineamento al mockup
   giro 12 in `D:\SVILUPPO\wera_demo` (fuori repo; la copia in `src/resources/wera_demo` e
   ferma a luglio). Il tema di riferimento del mockup e INVARIATO rispetto a fase 1: le
   novita sono nelle pagine. Commit:
