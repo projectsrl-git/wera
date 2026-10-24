@@ -159,7 +159,9 @@ patchato NEL SOLO ARTEFATTO, mai nel repo.
   `/usr/share/logs/wera2026` e `/usr/share/webapps/wera`, `RequiresMountsFor`), mailcatcher perl
   come servizio su 127.0.0.1:1025 (mail in `/usr/share/logs/wera2026/mailcatcher/`).
   **Deploy**: job Jenkins (192.168.0.115) "wera2026 PROD", parametro BRANCH (default
-  `restyle/ui-2026-r2`), build con JDK 8 (tool "JDK8", pom intatto), patch
+  `restyle/ui-2026-r2`), build con la JDK di sistema Temurin 25 e Maven 3.9.16 (dal
+  2026-10-24 nessun tool JDK: tolti `<jdk>JDK8</jdk>` dal job e il tool JDK8 dal config
+  globale, `temurin-8-jdk` disinstallato; backup `config.xml.bak-20261024-*`), patch
   `deploy/patch-config-test.sh ... wera2026 prod`, DEPLOY=true copia il WAR patchato in
   `/var/lib/tomcat9/webapps/` (deploy a caldo, gestit non si ferma). Lasciare DEPLOY=false di
   default: il 2026-10-24 un lancio con DEPLOY ha messo in esercizio una versione con SMTP reale.

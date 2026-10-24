@@ -1,22 +1,9 @@
-build: compilazione con JDK 25 (release 8), JAXB e fix xerces
+docs(jenkins): job wera2026 PROD sulla JDK di sistema, Temurin 8 rimosso
 
-Su richiesta dell'operatore (deroga a "DA NON TOCCARE" per pom.xml e
-hash.java):
-
-- maven-compiler-plugin 3.1 -> 3.13.0, source/target 1.7 (rifiutati da
-  javac 25) -> release 8: bytecode Java 8, gira su Java 8 e su Java 25;
-  encoding Cp1252 (sorgenti ISO-8859-1/Cp1252, da Java 18 javac usa UTF-8).
-- JAXB 2.3.x (jaxb-api 2.3.1 + jaxb-runtime 2.3.9, namespace javax): rimosso
-  dal JDK da Java 11, serve a importbo, upload dati rilevatori e import.
-- una sola javax.activation (jakarta.activation 1.2.2), escluse le copie
-  portate da javax.mail e jaxb-api.
-- xercesImpl 2.2.1 escluso da fop: non supporta secure-processing e faceva
-  fallire l'unmarshal JAXB anche su Java 8; FOP genera ancora PDF.
-- hash.java: sun.misc.BASE64Encoder -> java.util.Base64 (output identico).
-- Maven >= 3.6.3 richiesto (3.3.9 non piu supportato).
-
-Verificato: build con Zulu 25 e con JDK 8, JAXB marshal/unmarshal, FOP,
-app sul laptop su Zulu 25 (login, home, ricerca, salvataggio, reset con
-mail) e su Zulu 8.
+Su .115 il job "wera2026 PROD" compila ora con la JDK di sistema
+(Temurin 25) e Maven 3.9.16: tolti <jdk>JDK8</jdk> dal job e il tool JDK8
+dal config globale (con backup), temurin-8-jdk disinstallato. Build #3 da
+fc8da71 verificata: release 8, JAXB, una sola activation, niente xerces,
+config prod corretto. Aggiornati CLAUDE.md e QA.md.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

@@ -37,8 +37,14 @@ Checklist:
       ricerca utenti, salvataggio condominio con Swal, inserimento ripartizioni (5 tab, nessun
       errore FTL), reset password con mail multipart catturata dal mailcatcher.
 - [x] stesso WAR su Zulu 8: login e pagine principali 200, nessun errore.
-- [ ] Jenkins: riportare il job "wera2026 PROD" alla JDK di sistema (togliere il tool JDK8) dopo
-      il push, poi build + deploy su .106 e giro manuale (incluso un upload dati rilevatori XML).
+- [x] Jenkins (.115): job "wera2026 PROD" sulla JDK di sistema (tolto `<jdk>JDK8</jdk>`,
+      backup `config.xml.bak-20261024-172546`); build #3 da fc8da71 SUCCESS con Temurin 25 +
+      Maven 3.9.16: release 8, bytecode 52, jaxb + una sola activation, niente xerces, config
+      prod corretto (SMTP 127.0.0.1, Quartz vuoto, jdbc/wera). Poi tool JDK8 tolto dal config
+      globale (backup `/var/lib/jenkins/config.xml.bak-20261024-204548`), Jenkins riavviato,
+      `temurin-8-jdk` disinstallato (senza autoremove); resta solo temurin-25-jdk.
+- [ ] deploy di fc8da71 su .106 (job con DEPLOY) e giro manuale, incluso un upload dati
+      rilevatori XML.
 
 ## wera2026 prod senza mail (2026-10-24)
 - [x] profilo prod: `mail.SMTPHost=127.0.0.1:1025`, mittente `noreply@test.invalid`; DB e
