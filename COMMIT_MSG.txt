@@ -1,23 +1,19 @@
-feat(deploy): WAR wera2026 in due profili (test e prod) accanto a wera
+feat(deploy): profilo prod di wera2026 senza mail reali
 
-La nuova interfaccia si affianca a /wera come contesto /wera2026 (prima
-/wera-test), sia sul server di test sia in produzione:
+Requisito dell'operatore per /wera2026 in produzione: dati e upload reali,
+ma nessuna schedulazione e nessuna mail. Il profilo prod usava ancora
+l'SMTP reale: ora, come il profilo test, dirotta SMTP su 127.0.0.1:1025
+(mailcatcher) con mittente noreply@test.invalid. DB e cartelle di wera
+restano invariati, Quartz spento, log separati.
 
-- profilo test: istanza isolata come il vecchio wera-test (Quartz spento,
-  I/O e AnlConfig in /usr/share/webapps/wera2026/, mailcatcher, datasource
-  jdbc/wera2026, log /usr/share/logs/wera2026/);
-- profilo prod: dati veri (stesso DB jdbc/wera, SMTP reale, cartelle di
-  wera) con Quartz spento, cosi job e mail automatiche restano solo su
-  wera, e log separati.
+- patch_config_test.ps1 / patch-config-test.sh: override SMTP comuni ai due
+  profili; il controllo finale blocca il build se mail.SMTPHost non e
+  127.0.0.1 (anche con fine riga CRLF).
+- make_test_war.bat, README: prerequisito mailcatcher anche in prod.
+- CLAUDE.md: 192.168.0.67 e il DB di PRODUZIONE (era indicato per errore
+  come DB di prova); vincoli del server 192.168.0.106.
 
-Strumenti:
-- make_wera2026.bat (nuovo): target\test\wera2026.war e target\prod\wera2026.war;
-- make_test_war.bat: argomenti [war] [contesto] [test|prod];
-- patch_config_test.ps1 / patch-config-test.sh: parametri contesto e profilo,
-  rifiutano il contesto wera, controllo finale per profilo, fine riga CRLF
-  del config conservati (prima il ps1 riscriveva tutto in LF).
-
-Verificato: config dei due profili vs produzione (30 e 17 righe), script
-Linux equivalente in sandbox, /wera2026 profilo test attivo sul laptop.
+Verificato: WAR test/prod rigenerati, script Linux equivalente in sandbox,
+controllo SMTP provato con valori validi e non validi.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

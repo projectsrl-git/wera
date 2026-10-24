@@ -19,7 +19,8 @@ REM  Profilo prod (nuova interfaccia sui dati veri, accanto a wera):
 REM    - schedulazioni Quartz  -> tasklist azzerata: job e mail automatiche
 REM                               restano SOLO su wera, niente doppioni
 REM    - log applicativi       -> cartella log separata
-REM    - DB, SMTP e cartelle   -> INVARIATI (quelli di wera)
+REM    - invio mail reali      -> SMTP dirottato su mailcatcher locale
+REM    - DB e cartelle         -> INVARIATI (quelli di wera)
 REM
 REM  NON tocca il repo: lavora su una copia esplosa del WAR.
 REM  NON deploya: produce solo l'artefatto.
@@ -137,6 +138,7 @@ if /i "%PROFILO%"=="test" (
   echo    - %EXT_DIR% e %LOG_DIR%crash scrivibili da Tomcat
 ) else (
   echo    - %LOG_DIR%crash scrivibile da Tomcat
+  echo    - un mailcatcher in ascolto su 127.0.0.1:1025
   echo    - NESSUN descrittore conf\Catalina\localhost\%CTX%.xml: usa jdbc/wera
   echo      dal META-INF\context.xml del WAR, cioe' il DB di produzione
 )

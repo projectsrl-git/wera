@@ -25,6 +25,14 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## wera2026 prod senza mail (2026-10-24)
+- [x] profilo prod: `mail.SMTPHost=127.0.0.1:1025`, mittente `noreply@test.invalid`; DB e
+      cartelle di wera invariati; Quartz spento; log in `/usr/share/logs/wera2026/`.
+- [x] controllo finale degli script: build bloccato se `mail.SMTPHost` non e `127.0.0.1`
+      (provato con LF e CRLF).
+- [x] script Linux in sandbox: contenuto identico al motore PowerShell per test e prod.
+- [ ] deploy su 192.168.0.106: dopo il setup del server (sessione separata) e con ok operatore.
+
 ## wera2026: WAR in due profili, test e prod (2026-10-23)
 - [x] `make_wera2026.bat` -> `target\test\wera2026.war` e `target\prod\wera2026.war`.
 - [x] config test vs produzione: 30 righe diverse (Quartz, I/O, SMTP, `jdbc/wera2026`, log);

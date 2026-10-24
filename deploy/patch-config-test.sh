@@ -9,9 +9,9 @@
 #   test  istanza isolata su una COPIA del DB: Quartz spento, cartelle di I/O e
 #         AnlConfig separati, SMTP su mailcatcher, datasource jdbc/<contesto>,
 #         log separati.
-#   prod  nuova interfaccia sui dati veri accanto a wera: stesso DB, SMTP e
-#         cartelle; Quartz SPENTO (job e mail automatiche solo su wera) e log
-#         separati.
+#   prod  nuova interfaccia sui dati veri accanto a wera: stesso DB e cartelle
+#         (modifiche e upload reali); Quartz SPENTO (job solo su wera), NESSUNA
+#         mail reale (SMTP sul mailcatcher locale) e log separati.
 #
 # NON modifica il repo: agisce solo sull'artefatto di deploy.
 #
@@ -65,22 +65,22 @@ set_key Logger.CrashDir "${LOG_DIR}crash/wera_crash"
 set_key Logger.DebugFile "${LOG_DIR}wera_debug"
 set_key Logger.ApplicationLog "${LOG_DIR}wera_application.log"
 
+echo ">> Dirotto SMTP su mailcatcher locale (nessuna mail reale)"
+# mail.SMTPHost.user DEVE restare non vuoto: SendSMTPMail ha un invariant.
+set_key mail.SMTPHost 127.0.0.1
+set_key mail.SMTPHost.port 1025
+set_key mail.SMTPHost.user test
+set_key mail.SMTPHost.password test
+set_key mail.SMTPHost.starttls.enable false
+set_key mail.from noreply@test.invalid
+set_key mail.from.service noreply@test.invalid
+
 if [ "$PROFILO" = "test" ]; then
     echo ">> Isolo le directory di I/O condivise"
     set_key directory.external_files "${EXT_DIR}"
     set_key cartella.scarico.ACS "${EXT_DIR}ACS26V3/"
     set_key cartella.scarico.ACS.webapp "C:/ACS26V3-TEST/"
     set_key xmlconfig.ACS "${EXT_DIR}ANLCONFIG/AnlConfig.xml"
-
-    echo ">> Dirotto SMTP su mailcatcher locale"
-    # mail.SMTPHost.user DEVE restare non vuoto: SendSMTPMail ha un invariant.
-    set_key mail.SMTPHost 127.0.0.1
-    set_key mail.SMTPHost.port 1025
-    set_key mail.SMTPHost.user test
-    set_key mail.SMTPHost.password test
-    set_key mail.SMTPHost.starttls.enable false
-    set_key mail.from noreply@test.invalid
-    set_key mail.from.service noreply@test.invalid
 
     echo ">> Datasource JNDI separato ($DS_NAME)"
     set_key DB.ConnectionURL "java:comp/env/${DS_NAME}"
@@ -101,8 +101,9 @@ grep -n -E "^Logger\.(CrashDir|DebugFile|ApplicationLog)=" "$CFG"
 echo "==============================================================="
 
 echo
-echo ">> Controllo: Quartz spento e nessun riferimento attivo a $VIETATI"
+echo ">> Controllo: Quartz spento, SMTP su 127.0.0.1, nessun riferimento attivo a $VIETATI"
 if grep -n -E "^Quartz-scheduler\.tasklist=[[:space:]]*[^[:space:]]" "$CFG" \
+   || grep -n -E "^mail\.SMTPHost=" "$CFG" | grep -v -E ":mail\.SMTPHost=127\.0\.0\.1${CR}?\$" \
    || grep -n -E "$VIETATI" "$CFG" | grep -v "^[0-9]*:#"; then
     echo "!! ATTENZIONE: riferimenti attivi che dovevano essere isolati (sopra)"
     exit 3

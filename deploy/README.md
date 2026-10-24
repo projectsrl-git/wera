@@ -14,7 +14,7 @@ Analisi completa delle interferenze e verifiche post-deploy:
 | `patch_config_test.ps1` | Windows | Motore di patch del `config.cfg` (invocato dal `.bat`, usabile a mano) |
 | `patch-config-test.sh` | Linux | Equivalente: `./patch-config-test.sh target/wera.war wera2026 prod` -> `/tmp/prod/wera2026.war` |
 | `anonimizza-email-test.sql` | PostgreSQL | Riscrive gli indirizzi email di una COPIA del DB (solo profilo test) |
-| `mailcatcher.pl` | perl | SMTP locale su 127.0.0.1:1025 che salva le mail come `.eml` (solo profilo test) |
+| `mailcatcher.pl` | perl | SMTP locale su 127.0.0.1:1025 che salva le mail come `.eml` (entrambi i profili) |
 
 Nessuno strumento tocca il repo: lavorano su una copia esplosa del WAR.
 `config.cfg`, codice Java, SQL e template FreeMarker restano invariati.
@@ -25,8 +25,9 @@ Nessuno strumento tocca il repo: lavorano su una copia esplosa del WAR.
 
 **test** — server di test, istanza isolata su una **copia** del DB.
 **prod** — server di produzione, nuova interfaccia **sui dati veri** accanto a `wera`:
-stesso DB, SMTP reale e cartelle condivise, così gli utenti lavorano davvero; i job pianificati
-restano solo su `wera`.
+stesso DB e cartelle condivise, così gli utenti modificano dati e caricano file davvero; i job
+pianificati restano solo su `wera` e **nessuna mail reale** parte da `wera2026` (SMTP sul
+mailcatcher locale, decisione dell'operatore del 2026-10-24).
 
 | Property | `wera` (produzione) | `wera2026` profilo **test** | `wera2026` profilo **prod** |
 |---|---|---|---|
@@ -37,8 +38,8 @@ restano solo su `wera`.
 | `cartella.scarico.ACS` | `.../wera/ACS26V3/` | `.../wera2026/ACS26V3/` | invariato (condiviso) |
 | `cartella.scarico.ACS.webapp` | `C:/ACS26V3/` | `C:/ACS26V3-TEST/` | invariato |
 | `xmlconfig.ACS` | `.../wera/ANLCONFIG/AnlConfig.xml` | `.../wera2026/ANLCONFIG/AnlConfig.xml` | invariato (condiviso) |
-| `mail.SMTPHost` (+ porta, TLS) | `smtps.aruba.it:587` STARTTLS | `127.0.0.1:1025`, TLS off | invariato (SMTP reale) |
-| `mail.from`, `mail.from.service` | dominio reale | `noreply@test.invalid` | invariato |
+| `mail.SMTPHost` (+ porta, TLS) | `smtps.aruba.it:587` STARTTLS | `127.0.0.1:1025`, TLS off | `127.0.0.1:1025`, TLS off |
+| `mail.from`, `mail.from.service` | dominio reale | `noreply@test.invalid` | `noreply@test.invalid` |
 | `DB.ConnectionURL[.generic]` | `jdbc/wera` | `jdbc/wera2026` | invariato (`jdbc/wera`) |
 
 Perché Quartz è spento anche in prod: i job (import automatico ogni 5 minuti, mail errori,
@@ -131,9 +132,15 @@ comunque, ma si riempiono i log di eccezioni di connessione.
 - Cartella `/usr/share/logs/wera2026/crash` scrivibile dall'utente di Tomcat.
 - Le cartelle `/usr/share/webapps/wera/...` sono **condivise** di proposito: un file caricato
   da `wera2026` è visibile a `wera` e viceversa, come se fosse la stessa applicazione.
-- Le azioni dalla GUI (registrazione, reset password, mail di workflow, "scarico dati" che
-  riscrive `AnlConfig.xml`) hanno effetti **reali**, esattamente come da `wera`.
-- **Non** usare `anonimizza-email-test.sql` né il mailcatcher: sono strumenti del profilo test.
+- Le modifiche ai dati e "scarico dati" (che riscrive `AnlConfig.xml`) hanno effetti
+  **reali**, esattamente come da `wera`.
+- **Mailcatcher** in ascolto su `127.0.0.1:1025` (meglio come servizio di sistema): ogni mail
+  di `wera2026` finisce lì e nessuna arriva al destinatario. Senza mailcatcher l'invio
+  fallisce DOPO le scritture sul DB: un reset password da `wera2026` cambierebbe la password
+  reale dell'utente senza fargliela ricevere. Per gli utenti reali reset e registrazione
+  vanno fatti da `wera`.
+- Il controllo finale degli script blocca il build se `mail.SMTPHost` non è `127.0.0.1`.
+- **Non** usare `anonimizza-email-test.sql`: è per le copie del DB, non per la produzione.
 
 ---
 

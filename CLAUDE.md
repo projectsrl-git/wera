@@ -131,8 +131,15 @@ patchato NEL SOLO ARTEFATTO, mai nel repo.
   `/usr/share/logs/wera2026/`. Isolare i path e' obbligatorio anche a Quartz spento:
   `FunctionScaricoDatiManuale` riscrive `AnlConfig.xml` da GUI.
 - **prod** (server di produzione, dati veri): stesso DB (`jdbc/wera` dal META-INF/context.xml,
-  NESSUN descrittore), SMTP reale, cartelle di wera condivise; Quartz SPENTO (job e mail
-  automatiche solo su wera, niente doppioni) e log in `/usr/share/logs/wera2026/`. Sul SERVER di produzione MAI `-clean` (rimuoverebbe la webapp `wera`)
+  NESSUN descrittore), cartelle di wera condivise (modifiche e upload reali); Quartz SPENTO
+  (job solo su wera), NESSUNA mail reale (SMTP su mailcatcher `127.0.0.1:1025`, decisione
+  operatore 2026-10-24) e log in `/usr/share/logs/wera2026/`.
+- **Server di produzione di wera2026: 192.168.0.106 (`webcont92`)**, Debian 11, Tomcat 9
+  Debian (CATALINA_BASE `/var/lib/tomcat9`, sandbox systemd `ProtectSystem=strict`, connettori
+  80/443) condiviso con `gestit` (compilato per Java 25: la JVM del Tomcat non puo scendere a
+  Java 8). Accesso root con il client OpenSSH di Windows (chiave nell'ssh-agent). Il setup
+  (hosts, mount CIFS di `/usr/share/logs` e `/usr/share/webapps`, override systemd, JVM,
+  mailcatcher) e stato delegato a una sessione separata il 2026-10-24. Sul SERVER di produzione MAI `-clean` (rimuoverebbe la webapp `wera`)
 ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` e nella nota
 `.claude/2026-09-07-deploy-parallelo-test-gui.md`.
 
@@ -182,10 +189,11 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
   `D:\usr\share\logs\wera2026`, stack trace in `D:\usr\share\logs\wera2026\crash\`
   (creata da make_test_war.bat: se manca, i crash si perdono e si vede solo la 500).
   `D:\usr\share\logs\wera` resta la cartella dei log di produzione.
-- Il vecchio DB di prova `192.168.0.67` e raggiungibile SOLO dalla LAN 192.168.0.x: da
-  un'altra rete le pagine che leggono dal DB vanno in timeout (~21 s) e danno 500, con
-  `Connection to db-wera-etc-host:5432 refused` nel crash log.
-- Sul DB di prova/locale l'amministratore di test NON ha lo username di produzione
+- **ATTENZIONE: `192.168.0.67` e il DB di PRODUZIONE di wera** (correzione dell'operatore del
+  2026-10-24; prima qui era indicato per errore come "DB di prova"). Mai puntarci il laptop
+  per collaudi che scrivono. E raggiungibile solo dalla LAN 192.168.0.x (o VPN): da un'altra
+  rete le pagine vanno in timeout (~21 s) e danno 500.
+- Sul DB locale l'amministratore di test NON ha lo username dell'ambiente vecchio
   (verificare in Configurazione > Utenti). La scheda utente non ha campo password: per
   entrare con un utente di test si copia sul DB l'hash di una password nota (tabella
   `password`, SHA-1 hex senza sale, `dt_scadenza` 'AAAA/MM/GG'). Credenziali solo in chat.

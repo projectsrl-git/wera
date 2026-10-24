@@ -9,10 +9,11 @@
    test  istanza isolata: Quartz spento, cartelle di I/O e AnlConfig
          separati, SMTP su mailcatcher locale, datasource separato,
          log separati. Per collaudare su una COPIA del DB.
-   prod  stessa produzione, nuova interfaccia: stesso DB, SMTP reale
-         e cartelle di wera (gli utenti lavorano sui dati veri), ma
-         Quartz SPENTO (job e mail automatiche restano solo su wera,
-         niente doppioni) e log separati.
+   prod  stessa produzione, nuova interfaccia: stesso DB e cartelle di
+         wera (gli utenti modificano dati e caricano file veri), ma
+         Quartz SPENTO (job restano solo su wera), NESSUNA mail reale
+         (SMTP sul mailcatcher locale, come nel profilo test) e log
+         separati.
 
  Invocato da make_test_war.bat. Utilizzabile anche a mano:
    powershell -File patch_config_test.ps1 -ConfigPath "...\config.cfg" -Context wera2026 -Profilo test
@@ -67,25 +68,26 @@ $overrides = [ordered]@{
     'Logger.CrashDir'                = "${LogDir}crash/wera_crash"
     'Logger.DebugFile'               = "${LogDir}wera_debug"
     'Logger.ApplicationLog'          = "${LogDir}wera_application.log"
+
+    # [3] SMTP su mailcatcher locale (entrambi i profili): nessuna mail
+    #     reale parte da un'istanza parallela.
+    #     mail.SMTPHost.user DEVE restare non vuoto: SendSMTPMail ha un
+    #     ErrDetector.invariant(Util.IsNotEmpty(smtpUser)).
+    'mail.SMTPHost'                  = '127.0.0.1'
+    'mail.SMTPHost.port'             = '1025'
+    'mail.SMTPHost.user'             = 'test'
+    'mail.SMTPHost.password'         = 'test'
+    'mail.SMTPHost.starttls.enable'  = 'false'
+    'mail.from'                      = 'noreply@test.invalid'
+    'mail.from.service'              = 'noreply@test.invalid'
 }
 
 if ($Profilo -eq 'test') {
-    # [3] Directory di I/O isolate (path assoluti, altrimenti condivisi).
+    # [4] Directory di I/O isolate (path assoluti, altrimenti condivisi).
     $overrides['directory.external_files']      = $ExtDir
     $overrides['cartella.scarico.ACS']          = "${ExtDir}ACS26V3/"
     $overrides['cartella.scarico.ACS.webapp']   = 'C:/ACS26V3-TEST/'
     $overrides['xmlconfig.ACS']                 = "${ExtDir}ANLCONFIG/AnlConfig.xml"
-
-    # [4] SMTP su mailcatcher locale.
-    #     mail.SMTPHost.user DEVE restare non vuoto: SendSMTPMail ha un
-    #     ErrDetector.invariant(Util.IsNotEmpty(smtpUser)).
-    $overrides['mail.SMTPHost']                 = '127.0.0.1'
-    $overrides['mail.SMTPHost.port']            = '1025'
-    $overrides['mail.SMTPHost.user']            = 'test'
-    $overrides['mail.SMTPHost.password']        = 'test'
-    $overrides['mail.SMTPHost.starttls.enable'] = 'false'
-    $overrides['mail.from']                     = 'noreply@test.invalid'
-    $overrides['mail.from.service']             = 'noreply@test.invalid'
 
     # [5] Datasource separato (descrittore conf\Catalina\localhost\<contesto>.xml).
     $overrides['DB.ConnectionURL']              = "java:comp/env/$DsName"
@@ -138,10 +140,11 @@ $vietati = if ($Profilo -eq 'test') { '/usr/share/(webapps|logs)/wera/' } else {
 $result  = [System.IO.File]::ReadAllLines($ConfigPath, $enc)
 $leftovers = @($result | Where-Object { $_ -match $vietati -and $_ -notmatch '^\s*#' })
 $tasklist  = @($result | Where-Object { $_ -match '^Quartz-scheduler\.tasklist=\s*\S' })
-if ($leftovers.Count -gt 0 -or $tasklist.Count -gt 0) {
+$smtp      = @($result | Where-Object { $_ -match '^mail\.SMTPHost=' -and $_ -ne 'mail.SMTPHost=127.0.0.1' })
+if ($leftovers.Count -gt 0 -or $tasklist.Count -gt 0 -or $smtp.Count -gt 0) {
     Write-Host ''
     Write-Host '!! Riferimenti ATTIVI che dovevano essere isolati:' -ForegroundColor Red
-    ($leftovers + $tasklist) | ForEach-Object { Write-Host "   $_" }
+    ($leftovers + $tasklist + $smtp) | ForEach-Object { Write-Host "   $_" }
     exit 3
 }
 
@@ -152,7 +155,7 @@ $result |
     Where-Object { $_ -match '^(Quartz-scheduler\.tasklist=|#(TEST|PROD)-OFF#|directory\.external_files=|cartella\.scarico|xmlconfig\.ACS=|mail\.SMTPHost=|mail\.SMTPHost\.port=|mail\.from|DB\.ConnectionURL|Logger\.(CrashDir|DebugFile|ApplicationLog)=)' } |
     ForEach-Object { Write-Host "  $_" }
 Write-Host '======================================================================'
-Write-Host "  OK - Quartz spento, nessun riferimento attivo a $vietati" -ForegroundColor Green
+Write-Host "  OK - Quartz spento, SMTP su 127.0.0.1, nessun riferimento attivo a $vietati" -ForegroundColor Green
 Write-Host ''
 
 exit 0
