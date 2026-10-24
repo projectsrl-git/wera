@@ -3,7 +3,8 @@
 ## Cos'e
 WERA / WebCredit WERA: web app Java per contabilizzazione calore e ripartizione spese in condominio.
 Framework proprietario ALI BOW/astro (config-driven), template FreeMarker, UI Bootstrap 3 + tema INSPINIA.
-Stack: Java 7 (build ok con JDK8), servlet, FreeMarker, Maven -> WAR, Tomcat 9.
+Stack: bytecode Java 8 (`<release>8</release>`, build con JDK 25 o 8, gira su Java 8 e su
+Java 25), servlet, FreeMarker, Maven (>= 3.6.3) -> WAR, Tomcat 9.
 DB: **PostgreSQL** (datasource JNDI definito in `src/main/webapp/META-INF/context.xml`,
 host placeholder `db-wera-etc-host` risolto via file hosts; le query in config.cfg sono
 sintassi Postgres. I vecchi documenti citano SQL Server/jTDS: il driver jtds e nel WAR
@@ -71,6 +72,8 @@ e `demo_riferimento_landing.html` (riferimento visivo).
 
 ## Regole "DA NON TOCCARE"
 - Codice Java, `pom.xml`, `config.cfg`, SQL/`DBDataSet`, logica di business.
+  (Eccezione autorizzata dall'operatore il 2026-10-24: `pom.xml` e `net/project/misc/hash.java`
+  per la build con JDK 25, vedi `.claude/2026-10-24-build-jdk25.md`.)
 - Direttive/variabili FreeMarker: `${...}`, `<#...>` — preservate identiche.
 - Cablaggio form: `name`, `id`, `action`, `method`, `FUNCTIONID`, `OPERATION_TYPE`, handler `onclick`,
   id/classi usati da jQuery e plugin (datatables, select2, datepicker, amcharts, jstree, metisMenu).
@@ -89,9 +92,16 @@ in history, SQL injection, hashing SHA-1. Rendere privato + ruotare credenziali 
 (`git filter-repo`). Non committare segreti; se emergono segreti o dati personali, segnalarli e non riprodurli.
 
 ## Build & QA (riferimento: laptop, D:\SVILUPPO\wera_git)
-Build verificata anche da Claude Code: `mvn clean package` (dalla shell dell'operatore mvn e
-nel PATH; dal Bash tool usare `D:\SVILUPPO\apache-maven-3.3.9\bin\mvn.cmd` con
-`JAVA_HOME=D:\Programmi\Java\openjdk8` — target 1.7 compila con JDK8). WAR in `target\wera.war`.
+Build (dal 2026-10-24): `mvn clean package` con **Maven >= 3.6.3** (il compiler plugin 3.13.0
+rifiuta Maven 3.3.9) e JDK 25 o 8. Dal Bash tool:
+`JAVA_HOME='D:\Programmi\Java\zulu25.36.205-ca-jdk25.0.4.1-win_x64' D:\SVILUPPO\apache-maven-3.9.12\bin\mvn.cmd clean package -DskipTests`
+(funziona anche con `JAVA_HOME=D:\Programmi\Java\openjdk8`). WAR in `target\wera.war`.
+Nel pom: `<release>8</release>` (bytecode 52, gira su Java 8 e 25), `<encoding>Cp1252</encoding>`
+(sorgenti ISO-8859-1/Cp1252: da Java 18 javac leggerebbe UTF-8 e fallirebbe), JAXB 2.3.x
+(`jaxb-api` + `jaxb-runtime`, namespace javax), un'unica `javax.activation`
+(`com.sun.activation:jakarta.activation` 1.2.2) e `xercesImpl` 2.2.1 ESCLUSO da fop (rompeva
+l'unmarshal JAXB, cioe l'upload dati rilevatori XML, anche su Java 8). Avvisi attesi:
+"source/target value 8 is obsolete".
 Smoke test per ondata: login, home, una ricerca*, una inserimento*, inserimentoripartizioni
 (tab Costi per unita), configurazione guidata, profilo. Checklist complete in `QA.md`.
 Per il collaudo visuale senza Tomcat: servire una copia statica (template + css/img) con un

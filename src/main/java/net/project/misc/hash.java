@@ -19,7 +19,7 @@ package net.project.misc;
 import java.security.MessageDigest;
 
 import net.project.errors.AppCrash;
-import sun.misc.BASE64Encoder;
+import java.util.Base64;
 
 /**
  * La classe esporta un metodo statico per il calcolo dell'hash MD5 su una stringa. Il risultato e' convertito in base
@@ -49,8 +49,7 @@ public class hash {
             byte[] raw = md.digest();
 
             // Trasforma il digest in base64.
-            BASE64Encoder encoder = new BASE64Encoder();
-            String base64 = encoder.encode(raw);
+            String base64 = Base64.getEncoder().encodeToString(raw);
             return base64;
         } catch (Throwable e) {
             AppCrash ex = new AppCrash(e);
@@ -112,8 +111,7 @@ public class hash {
             byte[] raw = md.digest();
 
             // Trasforma il digest in base64.
-            BASE64Encoder encoder = new BASE64Encoder();
-            String base64 = encoder.encode(raw);
+            String base64 = Base64.getEncoder().encodeToString(raw);
             return base64;
         } catch (Throwable e) {
             AppCrash ex = new AppCrash(e);

@@ -25,6 +25,21 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Build con JDK 25 (2026-10-24)
+- [x] `mvn clean package` con Zulu 25 + Maven 3.9.12: BUILD SUCCESS, 621 sorgenti, bytecode 52
+      (release 8); anche con JDK 8 + Maven 3.9.12. Maven 3.3.9 non e piu supportato.
+- [x] WAR: 41 jar, `jaxb-api` 2.3.1, `jaxb-runtime` 2.3.9, una sola `jakarta.activation` 1.2.2,
+      nessun `xercesImpl`.
+- [x] JAXB: marshal + unmarshal di `Siemeca` riusciti su Zulu 25 e Zulu 8 (prima l'unmarshal
+      falliva per xercesImpl 2.2.1 anche con il WAR in esercizio su Java 8).
+- [x] FOP 0.20.5 senza xercesImpl: PDF generato da un FO minimo.
+- [x] laptop, profilo test, Tomcat su Zulu 25: login, home (donut, richieste, crediti nascosti),
+      ricerca utenti, salvataggio condominio con Swal, inserimento ripartizioni (5 tab, nessun
+      errore FTL), reset password con mail multipart catturata dal mailcatcher.
+- [x] stesso WAR su Zulu 8: login e pagine principali 200, nessun errore.
+- [ ] Jenkins: riportare il job "wera2026 PROD" alla JDK di sistema (togliere il tool JDK8) dopo
+      il push, poi build + deploy su .106 e giro manuale (incluso un upload dati rilevatori XML).
+
 ## wera2026 prod senza mail (2026-10-24)
 - [x] profilo prod: `mail.SMTPHost=127.0.0.1:1025`, mittente `noreply@test.invalid`; DB e
       cartelle di wera invariati; Quartz spento; log in `/usr/share/logs/wera2026/`.
