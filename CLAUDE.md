@@ -137,9 +137,23 @@ patchato NEL SOLO ARTEFATTO, mai nel repo.
 - **Server di produzione di wera2026: 192.168.0.106 (`webcont92`)**, Debian 11, Tomcat 9
   Debian (CATALINA_BASE `/var/lib/tomcat9`, sandbox systemd `ProtectSystem=strict`, connettori
   80/443) condiviso con `gestit` (compilato per Java 25: la JVM del Tomcat non puo scendere a
-  Java 8). Accesso root con il client OpenSSH di Windows (chiave nell'ssh-agent). Il setup
-  (hosts, mount CIFS di `/usr/share/logs` e `/usr/share/webapps`, override systemd, JVM,
-  mailcatcher) e stato delegato a una sessione separata il 2026-10-24. Sul SERVER di produzione MAI `-clean` (rimuoverebbe la webapp `wera`)
+  Java 8). Accesso root con il client OpenSSH di Windows (chiave nell'ssh-agent; l'ssh di
+  Git Bash non puo sbloccare `id_ed25519`, che ha passphrase).
+  **STATO (2026-10-24): `/wera2026` IN ESERCIZIO su .106, versione `213a552`** (profilo prod
+  senza mail), verificato: SMTP `127.0.0.1:1025`, Quartz vuoto, `jdbc/wera` -> .67, cartelle di
+  wera e log `/usr/share/logs/wera2026/` sulle share CIFS, HTTP 200, nessun errore all'avvio su
+  JVM **Zulu 25** (`/usr/lib/jvm/zulu25`). Setup del server fatto da una sessione separata:
+  `/etc/hosts` (`db-wera-etc-host`=.67, `fileserver_logs`=.185, `fileserver_docs`=.186), mount
+  CIFS `//fileserver_logs/storage/logs` -> `/usr/share/logs` e `//fileserver_docs/storage/webapps`
+  -> `/usr/share/webapps`, override systemd di tomcat9 (`ReadWritePaths` su
+  `/usr/share/logs/wera2026` e `/usr/share/webapps/wera`, `RequiresMountsFor`), mailcatcher perl
+  come servizio su 127.0.0.1:1025 (mail in `/usr/share/logs/wera2026/mailcatcher/`).
+  **Deploy**: job Jenkins (192.168.0.115) "wera2026 PROD", parametro BRANCH (default
+  `restyle/ui-2026-r2`), build con JDK 8 (tool "JDK8", pom intatto), patch
+  `deploy/patch-config-test.sh ... wera2026 prod`, DEPLOY=true copia il WAR patchato in
+  `/var/lib/tomcat9/webapps/` (deploy a caldo, gestit non si ferma). Lasciare DEPLOY=false di
+  default: il 2026-10-24 un lancio con DEPLOY ha messo in esercizio una versione con SMTP reale.
+  Sui SERVER condivisi MAI `-clean` (rimuoverebbe `wera` o, su .106, `gestit`)
 ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` e nella nota
 `.claude/2026-09-07-deploy-parallelo-test-gui.md`.
 

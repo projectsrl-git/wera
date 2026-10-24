@@ -1,19 +1,16 @@
-feat(deploy): profilo prod di wera2026 senza mail reali
+docs(deploy): wera2026 in esercizio su 192.168.0.106 (versione 213a552)
 
-Requisito dell'operatore per /wera2026 in produzione: dati e upload reali,
-ma nessuna schedulazione e nessuna mail. Il profilo prod usava ancora
-l'SMTP reale: ora, come il profilo test, dirotta SMTP su 127.0.0.1:1025
-(mailcatcher) con mittente noreply@test.invalid. DB e cartelle di wera
-restano invariati, Quartz spento, log separati.
+Esito del deploy in produzione di /wera2026 su webcont92 tramite il job
+Jenkins "wera2026 PROD", con le verifiche fatte sul server: SMTP su
+127.0.0.1:1025 (mailcatcher), Quartz vuoto, DB jdbc/wera -> 192.168.0.67,
+cartelle di wera e log su share CIFS, HTTP 200, nessun errore all'avvio
+su Zulu 25. Il primo deploy delle 16:01 (2ee7a2d, SMTP reale) e stato
+sostituito senza che partisse alcuna mail.
 
-- patch_config_test.ps1 / patch-config-test.sh: override SMTP comuni ai due
-  profili; il controllo finale blocca il build se mail.SMTPHost non e
-  127.0.0.1 (anche con fine riga CRLF).
-- make_test_war.bat, README: prerequisito mailcatcher anche in prod.
-- CLAUDE.md: 192.168.0.67 e il DB di PRODUZIONE (era indicato per errore
-  come DB di prova); vincoli del server 192.168.0.106.
-
-Verificato: WAR test/prod rigenerati, script Linux equivalente in sandbox,
-controllo SMTP provato con valori validi e non validi.
+- QA.md: sezione verifiche del deploy, punti aperti (giro manuale su
+  Java 25, reset/registrazione da fare da wera).
+- CLAUDE.md: stato in esercizio, setup del server, procedura Jenkins,
+  DEPLOY=false di default, -clean vietato anche per gestit.
+- Nota .claude/2026-10-24-deploy-wera2026-prod-106.md.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

@@ -31,7 +31,25 @@ Checklist:
 - [x] controllo finale degli script: build bloccato se `mail.SMTPHost` non e `127.0.0.1`
       (provato con LF e CRLF).
 - [x] script Linux in sandbox: contenuto identico al motore PowerShell per test e prod.
-- [ ] deploy su 192.168.0.106: dopo il setup del server (sessione separata) e con ok operatore.
+- [x] deploy su 192.168.0.106 (webcont92) dal job Jenkins "wera2026 PROD", versione 213a552,
+      2026-10-24 16:42 (il primo deploy delle 16:01 era 2ee7a2d con SMTP reale: sostituito,
+      nessuna mail partita, solo 2 richieste da 127.0.0.1).
+
+## Deploy wera2026 PROD su 192.168.0.106 — verifiche (2026-10-24)
+- [x] config deployato: `mail.SMTPHost=127.0.0.1:1025`, TLS off, mittente `noreply@test.invalid`;
+      tasklist Quartz vuota e 0 job attivi; `jdbc/wera` -> `db-wera-etc-host` = 192.168.0.67
+      (DB di produzione); cartelle e `AnlConfig.xml` di wera sulla share CIFS
+      `//fileserver_docs/storage/webapps`; log in `/usr/share/logs/wera2026/` sulla share
+      `//fileserver_logs/storage/logs`.
+- [x] Tomcat: deploy a caldo in ~5 s su Zulu 25, nessun GRAVE/SEVERE/Exception dopo l'avvio
+      (allo spegnimento della versione precedente solo il noto avviso ThreadLocal e l'NPE attesa).
+- [x] HTTP 200 su `/wera2026/astro?FUNCTIONID=Login` e su `/gestit/`.
+- [x] log applicativo scritto (`wera_debug__2026-10-24.log` sulla share), cartella crash vuota.
+- [x] mailcatcher (perl) in ascolto su 127.0.0.1:1025: mail di prova salvata in
+      `/usr/share/logs/wera2026/mailcatcher/`; nessuna connessione SMTP in uscita.
+- [ ] giro manuale con login reale (home, una ricerca, un inserimento, profilo) su Java 25.
+- [ ] reset password e registrazione degli utenti reali: farli da `wera`, non da `wera2026`
+      (da wera2026 la mail finisce nel mailcatcher e l'utente non la riceve).
 
 ## wera2026: WAR in due profili, test e prod (2026-10-23)
 - [x] `make_wera2026.bat` -> `target\test\wera2026.war` e `target\prod\wera2026.war`.
