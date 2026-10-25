@@ -59,6 +59,12 @@ e `demo_riferimento_landing.html` (riferimento visivo).
 - **ESCLUSO su decisione (fase 2)**: slide 5 "reward"/promo coupon della landing — il LEGGIMI
   del mockup la dichiara testo promozionale senza logica; riaggiungerla SOLO su indicazione
   esplicita dell'operatore (markup pronto nel mockup).
+- **Centrale termica wera2026 (in corso dal 2026-10-25)**: gestione documentale NUOVA e parallela a
+  quella di /wera, nello schema PostgreSQL dedicato **`centrale_termica`** (tabelle `sezioni`,
+  `sezioni_profili`, `documenti`, `versioni`, `tipi_scadenza`, `scadenze`, `parametri`, `categorie_wera`,
+  `eventi`; viste `v_documenti_wera`, `v_documenti`). DDL `src/resources/sql/wera2026/001-centrale_termica-ddl.sql`
+  (idempotente, 9.4), creato SOLO sul DB locale; su .75 solo con ok a parte. Disegno approvato in
+  `.claude/2026-10-25-disegno-db-centrale-termica.md`. Mai nomi `ct26_`, mai `PARAMETRI` di /wera.
 - **In attesa di backend/dataset** (non fattibili senza toccare config.cfg/Java):
   "Andamento letture mensili (HCA)" in home (serve un DS MESE/VALORE in config.cfg),
   "Consumi per condominio", "Previsione consumi", "Scadenziario Centrale termica",

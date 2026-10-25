@@ -17,6 +17,9 @@ NUOVA, parallela a quella attuale, cosi /wera non e toccato e wera2026 e libero.
   WHERECONDITION ricevuta dal browser per i dataset nuovi (oggi il pattern JSONDataSet la accetta: qui no).
 
 ## Modello dati (DDL nuovo, script in `src/resources/sql/wera2026/`)
+> SUPERATO il 2026-10-25: il modello approvato (schema `centrale_termica`, niente prefisso `ct26_`)
+> e in `2026-10-25-disegno-db-centrale-termica.md`. Il testo qui sotto resta come storia.
+
 - `ct26_sezione` — le sezioni, configurabili: codice, titolo, sottotitolo, icona, ordine, attiva,
   tipo (`DOCUMENTI` | `FOTO` | `RISERVATA`), profili che la vedono, scadenza richiesta s/n,
   periodicita di default in mesi. Valori iniziali: le 6 sezioni di Andrea (Libretto impianto ·
