@@ -163,13 +163,20 @@ patchato NEL SOLO ARTEFATTO, mai nel repo.
   che scaricano da GitHub/Maven vanno lanciate in quella fascia. Proposta di policy H24 per
   .115 (NON applicata) nelle note della sessione di diagnosi. Profilo prod
   senza mail), verificato: SMTP `127.0.0.1:1025`, Quartz vuoto, `jdbc/wera` -> .75 (dal 2026-10-25; prima .67, che e weralegacy), cartelle
-  `/usr/share/webapps/wera` (share .186, NON quella di wera: vedi sotto) e log `/usr/share/logs/wera2026/` sulle share CIFS, HTTP 200, nessun errore all'avvio su
+  `/usr/share/webapps/wera` (dal 2026-10-25 la share di wera su .81, mount annidato) e log `/usr/share/logs/wera2026/` sulle share CIFS, HTTP 200, nessun errore all'avvio su
   JVM **Zulu 25** (`/usr/lib/jvm/zulu25`). Setup del server fatto da una sessione separata:
   `/etc/hosts` (`db-wera-etc-host`=.75 dal 2026-10-25, prima .67; `fileserver_logs`=.185, `fileserver_docs`=.186), mount
   CIFS `//fileserver_logs/storage/logs` -> `/usr/share/logs` e `//fileserver_docs/storage/webapps`
   -> `/usr/share/webapps`, override systemd di tomcat9 (`ReadWritePaths` su
   `/usr/share/logs/wera2026` e `/usr/share/webapps/wera`, `RequiresMountsFor`), mailcatcher perl
   come servizio su 127.0.0.1:1025 (mail in `/usr/share/logs/wera2026/mailcatcher/`).
+  Dal 2026-10-25 `/usr/share/webapps/wera` e un mount CIFS annidato
+  `//fileserver_wera_docs/storage/webapps/wera` (hosts: `fileserver_wera_docs`=192.168.0.81, la
+  share di /wera su .70; credenziali uguali, `vers=3.0`) e tomcat9 lo richiede
+  (`RequiresMountsFor`, scelta operatore: gestit su .106 e un ambiente di test, wera2026 la
+  produzione pilota): senza .81 Tomcat non parte. Rollback: togliere PRIMA la dipendenza
+  dall'override (daemon-reload) e POI smontare, altrimenti si ferma Tomcat. Dettagli in
+  `.claude/2026-10-25-piano-mount-share-wera-81.md`.
   **Deploy**: job Jenkins (192.168.0.115) "wera2026 PROD", parametro BRANCH (default
   `restyle/ui-2026-r2`), build con la JDK di sistema Temurin 25 e Maven 3.9.16 (dal
   2026-10-24 nessun tool JDK: tolti `<jdk>JDK8</jdk>` dal job e il tool JDK8 dal config
@@ -232,7 +239,7 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
   `/weralegacy` (PROD legacy tenuta per lo storico, .61) usa **192.168.0.67**; `/wera2026` su
   .106 usa .75 dal 2026-10-25 (prima, per errore, .67). Mai puntare il laptop su .75 o .67 per
   collaudi che scrivono. Le cartelle di /wera (`ACS26V3`, `ANLCONFIG`, `import`, `upload`) stanno
-  sulla share di 192.168.0.81 (`fileserver_docs` di .70); .106 monta invece la share di .186.
+  sulla share di 192.168.0.81 (`fileserver_docs` di .70), montata anche su .106 (vedi sopra).
   I DB sono raggiungibili solo dalla LAN 192.168.0.x (o VPN): da un'altra
   rete le pagine vanno in timeout (~21 s) e danno 500.
 - Sul DB locale l'amministratore di test NON ha lo username dell'ambiente vecchio

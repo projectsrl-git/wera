@@ -53,6 +53,11 @@ Istanza: https://weraweb.it/wera2026/ (versione `fc8da71`, profilo prod: DB di p
   **Da adesso ogni scrittura da /wera2026 va sul DB di produzione di /wera.**
   B2 (share documenti .186 contro .81) resta APERTO: finche non e deciso, E1/E6 e il file manager
   scrivono su una share che /wera non legge (l'import delle letture nel DB invece e reale).
+- **AGGIORNAMENTO 2026-10-25 11:23 — B2 risolto.** `/usr/share/webapps/wera` su .106 e montata
+  dalla share di .81, la stessa di /wera (piano ed esito in
+  `.claude/2026-10-25-piano-mount-share-wera-81.md`). **Da adesso anche file manager, upload e
+  "Scarico dati manuale" agiscono sulle cartelle di produzione di /wera** (E6 resta escluso salvo
+  tuo ok: `AnlConfig.xml` e lo stesso dell'import automatico di /wera).
 
 ## A. Accesso e pagine pubbliche (nessun dato toccato)
 | # | Caso | Rischio | Note |

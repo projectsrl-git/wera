@@ -35,7 +35,13 @@ Checklist (bozza da concordare): `.claude/2026-10-25-checklist-collaudo-prod.md`
       wera2026 (touch `WEB-INF/web.xml`, 3 s): login 200, 1 connessione stabilita verso .75 e
       nessuna verso .67, gestit 200, nessun nuovo crash. Avviso atteso al reload:
       `ClassCastException ObjectStreamClass$Caches` (Tomcat 9.0.43 + Java 25, innocuo).
-- [ ] share documenti: /wera2026 scrive ancora sulla share di .186, /wera su .81: da decidere.
+- [x] share documenti allineata (11:21, opzione B dell'operatore): `/usr/share/webapps/wera` su .106
+      montata da `//192.168.0.81/storage/webapps/wera` (SMB 3.0, stesse credenziali di .186),
+      etckeeper `b630b24`; tomcat9 `RequiresMountsFor` anche su quel mount (`f6a2800`). Dalla
+      sandbox di Tomcat il mount e visibile e scrivibile come `tomcat`: nessun riavvio. gestit 200,
+      wera2026 200, nessun nuovo crash.
+- [ ] con login: file manager e archivio file importati mostrano i file di /wera.
+- [ ] al prossimo riavvio di .106: tomcat9 parte dopo il mount di .81 (`findmnt /usr/share/webapps/wera`).
 - [x] (superato: .67 e weralegacy) su .67 manca la vista materializzata `vista_scarico_data_massima`: 5 crash del 2026-10-25
       09:30 (`DSLettureConsumiCondomini`, `...Dettaglio`, `...Condomino`); letture consumi,
       storico e grafici del condomino in 500; l'upload rilevatori fallirebbe sul REFRESH della

@@ -1,9 +1,10 @@
-docs(deploy): wera2026 raggiungibile su https://weraweb.it/wera2026
+docs(deploy): wera2026 sulle cartelle di wera (share di 192.168.0.81)
 
-Annotata in CLAUDE.md la configurazione del frontend Apache 192.168.0.50
-(vhost ssl.weraweb.it.conf): ProxyPass /wera2026 verso .106 in testa, poi
-/weralegacy e /wera invariate; la vecchia ProxyPass "/" sostituita da un
-RedirectMatch della sola radice verso /wera/; rimossa /newgen. Verificati
-tutti i percorsi e gli altri vhost dopo il reload.
+- su .106 /usr/share/webapps/wera ora e un mount CIFS annidato dalla share
+  di .81, la stessa di /wera su .70 (SMB 3.0, stesse credenziali)
+- tomcat9 richiede il mount (RequiresMountsFor, scelta dell'operatore:
+  gestit e un ambiente di test, wera2026 la produzione pilota)
+- piano, esito e rollback in .claude/2026-10-25-piano-mount-share-wera-81.md;
+  CLAUDE.md, QA.md e checklist di collaudo aggiornati
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
