@@ -1,10 +1,9 @@
-docs(deploy): wera2026 sulle cartelle di wera (share di 192.168.0.81)
+docs(qa): collaudo PROD wera2026 superuser in sola lettura
 
-- su .106 /usr/share/webapps/wera ora e un mount CIFS annidato dalla share
-  di .81, la stessa di /wera su .70 (SMB 3.0, stesse credenziali)
-- tomcat9 richiede il mount (RequiresMountsFor, scelta dell'operatore:
-  gestit e un ambiente di test, wera2026 la produzione pilota)
-- piano, esito e rollback in .claude/2026-10-25-piano-mount-share-wera-81.md;
-  CLAUDE.md, QA.md e checklist di collaudo aggiornati
+- casi A e B della checklist sulla produzione pilota (DB .75, share .81):
+  54 voci di menu ok, letture consumi e storico ok, file manager sulla share
+  di wera, ripartizione aperta in sola lettura
+- difetti: numeri fissi nella landing (r2), URL di download senza codifica
+  del nome file (preesistente), separatore migliaia nel donut
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

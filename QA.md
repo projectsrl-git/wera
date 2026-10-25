@@ -49,6 +49,44 @@ Checklist (bozza da concordare): `.claude/2026-10-25-checklist-collaudo-prod.md`
 - [x] da .106 raggiungibili 192.168.0.67 e .75 (5432) e i file server .81, .186, .55, .185 (445).
 - [x] crash di /wera2026 al 2026-10-25: solo i 5 della vista; mailcatcher: 2 file presenti (contenuto non controllato).
 
+## Collaudo PROD /wera2026 — superuser, sola lettura (2026-10-25, DB .75, share .81)
+Login fatto dall'operatore nel browser integrato; navigazione e verifiche dell'agente (DOM,
+rete, console) a 1366x768; crash e log letti su .106. Nessun salvataggio, nessun upload.
+- [x] A1 landing: carosello e dialog ok; 404 noti di `js/jquery-3.1.1.min.js`/`js/popper.min.js`
+      ("Bootstrap's JavaScript requires jQuery") confermati anche in PROD.
+- [x] A4 `FUNCTIONID=Login` con sessione attiva: pagina "500 Error" (bug noto) servita con HTTP 200.
+- [x] A5 registrazione e reset password: pagine 200, nessun invio.
+- [x] B1 home: 927 utenze, 54 condomini, 4.838 ripartitori, 50 antenne, Richieste 4 righe, donut.
+- [x] B2 giro HTTP delle 54 voci di menu (escluso Esci): tutte 200, tema caricato, nessun errore
+      FreeMarker, nessuna risposta oltre 5 s.
+- [x] B3 ricerca condomini: 54 righe, ricerca in linea, 6 filtri di colonna, export, icone di riga.
+- [x] B4 condominio aperto in modifica (8/8 select2, 7/7 campi, datepicker); NON salvato.
+- [x] B6 ripartizioni: 87 standard, 7 UNI, 427 letture, **0 UNI2018** (intestazioni UNI2018 non
+      verificabili nemmeno in PROD); ripartizione standard aperta con la lente (READONLY=Y): 60/60
+      campi disabilitati, Conferma disabilitato, 5 tab, Costi per unita 13 righe, grafico disegnato.
+- [x] B9 letture consumi e storico (vista presente su .75, nessun 500): BELTRAMI 1 condominio,
+      6 condomini, grafico; storico con 6 date. Ultima lettura dei condomini provati: 27/07/2025
+      (da confrontare con /wera).
+- [x] B10 gestione rilevatori: censiti 4.894, non censiti 11.169, in errore (riepilogo) 77, senza
+      lettura 10, non scaricati 175 (query ~13 s).
+- [x] B11 file manager (share .81): 20 card, 5 file, anteprima immagine caricata; ricerca file 5;
+      calendario ottobre 2026 ok; archivio file importati 18 righe, ultimo import 19/10/2026 18:10.
+- [x] B12 configurazione guidata: select tipo (3) e Inizia presenti; non avviata.
+- [x] B14 profilo: tab Profilo, Crediti, Documentazione, Assistenza, Software release.
+- [x] .106: un solo crash nuovo (vedi difetto D2), 0 SEVERE, mailcatcher invariato (2 file),
+      7 connessioni verso .75 e nessuna verso .67.
+Difetti trovati:
+- [ ] **D1 (restyle r2)** landing `login.html` r.39-40: "4.596 ripartitori gestiti" e "49
+      condomini attivi" sono testo fisso copiato dal mockup; la home reale ne mostra altri
+      (segnalato dall'operatore).
+- [ ] **D2 (preesistente, dal commit iniziale)** file manager / ricerca file / archivio: il nome
+      del file e concatenato nell'URL di download senza `encodeURIComponent`; un file con "+" nel
+      nome ("Dic Installatore + Mod RD Firmati.PDF") arriva al server con uno spazio ->
+      `FileNotFoundException` nel crash log (11:27:16) e download vuoto. Template:
+      `filemanager.html` r.67-123, `ricercafilemanager.html` r.50, `archiviofileimportati.html` r.55.
+- [ ] D3 (cosmetico) legenda del donut in home con separatore inglese ("4,817").
+Non eseguiti: A2 (login errato: richiede logout, gia verificato sul laptop), B5/B7/B8 e casi E.
+
 ## Build con JDK 25 (2026-10-24)
 - [x] `mvn clean package` con Zulu 25 + Maven 3.9.12: BUILD SUCCESS, 621 sorgenti, bytecode 52
       (release 8); anche con JDK 8 + Maven 3.9.12. Maven 3.3.9 non e piu supportato.
