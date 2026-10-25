@@ -49,7 +49,7 @@ e `demo_riferimento_landing.html` (riferimento visivo).
      `.claude/2026-10-22-fix-bug-preesistenti-template.md`.
   7. home: card "I tuoi crediti" NASCOSTA su decisione dell'operatore (2026-10-23): classe
      `wera-crediti-off` sulla riga Richieste in home.html + regole in fondo alla sez. 29 del
-     tema; markup/JS intatti. Per riattivarla togliere la classe. Cache-buster tema `?20261023`.
+     tema; markup/JS intatti. Per riattivarla togliere la classe. Cache-buster tema `?20261025` (dal 2026-10-25).
   8. landing: le statistiche dello slide 1 di `login.html` ("Ripartitori gestiti",
      "Condomini attivi") sono TESTO FISSO, allineato a mano il 2026-10-25 ai valori della home del
      superuser in PROD (4.838 / 54; prima c'erano i numeri del mockup). Vanno riaggiornate a mano:
@@ -68,7 +68,10 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   Backend (ondata 1b, 2026-10-25, solo laptop): pacchetto `net.projectsrl.wera.centraletermica`, FUNCTIONID
   `CentraleTermicaDati` (JSON), `CentraleTermicaUpload` (POST multipart, FUNCTIONID NELLA URL),
   `CentraleTermicaDownload`; dataset `DS.DSCentraleTermica*` in fondo a config.cfg. Interfaccia e QA in
-  `.claude/2026-10-25-centrale-termica-java-upload-download.md`. Pagine: ondata 2 (da fare).
+  `.claude/2026-10-25-centrale-termica-java-upload-download.md`. Pagina (ondata 2, 2026-10-25, solo laptop):
+  `FUNCTIONID=CentraleTermica` (centraletermica.html ASCII, js/wera-centrale-termica.js, tema sez. 30) e
+  `CentraleTermicaStato`; voce di menu da campi di sessione CT_* (included_menu.include). Nota
+  `.claude/2026-10-25-centrale-termica-pagina.md`. Da fare: gestione scadenze e configurazione.
 - **In attesa di backend/dataset** (non fattibili senza toccare config.cfg/Java):
   "Andamento letture mensili (HCA)" in home (serve un DS MESE/VALORE in config.cfg),
   "Consumi per condominio", "Previsione consumi", "Scadenziario Centrale termica",

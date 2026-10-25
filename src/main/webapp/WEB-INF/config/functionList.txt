@@ -135,9 +135,11 @@ InserimentoFileManager					net.projectsrl.wera.filemanager.core.FunctionInserime
 CalendarioFileManager					net.projectsrl.wera.filemanager.core.FunctionCalendarioFileManager							00
 
 # Centrale termica wera2026 (schema centrale_termica)
+CentraleTermica						net.projectsrl.wera.centraletermica.core.FunctionCentraleTermica							00
 CentraleTermicaDati					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaDati						00
 CentraleTermicaUpload					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaUpload						00
 CentraleTermicaDownload				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaDownload					00
+CentraleTermicaStato					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaStato						00
 
 ConfigurazioneErrori					net.projectsrl.wera.utility.core.FunctionConfigurazioneErrori								00
 InserimentoConfigurazioneErrori			net.projectsrl.wera.utility.core.FunctionInserimentoConfigurazioneErrori					00

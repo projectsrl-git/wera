@@ -24,6 +24,17 @@
 					</li>
 
 
+					<#-- 2026-10-25 Centrale termica wera2026: voce NON presente nel menu del DB (condiviso con /wera).
+					     CT_ACCESSO (S/N), CT_TITOLO_MENU e CT_NASCONDI_VOCE_WERA sono campi di sessione scritti dal
+					     pacchetto net.projectsrl.wera.centraletermica (parametri ACCESSO.PROFILI, ETICHETTA.TITOLO,
+					     MENU.VOCE_WERA.PROFILI). Alla prima pagina dopo il login non esistono ancora: la voce resta
+					     nascosta e lo script in fondo al menu chiede l'accesso al server. -->
+					<#if !(CT_ACCESSO?? && CT_ACCESSO == 'N')>
+					<li id="ct-voce-menu"<#if CT_PAGINA??> class="active"</#if><#if !CT_ACCESSO??> style="display:none"</#if>>
+						<a href="astro?FUNCTIONID=CentraleTermica"><i class="fa fa-fire"></i> <span class="nav-label" id="ct-voce-menu-testo"><#if CT_TITOLO_MENU??>${CT_TITOLO_MENU?html}<#else>Centrale termica</#if></span></a>
+					</li>
+					</#if>
+
 					<#list menu_list as menuItem>
 					<#if menuItem.getItemLevel()=1>
 					<li<#if SELECTED_PATH?starts_with(menuItem.getPath())> class="active"</#if>>
@@ -60,5 +71,43 @@
 					
 					
 					
+				<#-- 2026-10-25 Centrale termica: accesso alla voce (prima pagina dopo il login) e vecchia voce
+				     "Centrali termiche" nascosta ai profili fuori da MENU.VOCE_WERA.PROFILI. -->
+				<#if !CT_ACCESSO?? || (CT_NASCONDI_VOCE_WERA?? && CT_NASCONDI_VOCE_WERA == 'S')>
+				<script>
+				(function ($) {
+					if (!$) { return; }
+					function nascondiVoceWera() {
+						$('#side-menu > li').each(function () {
+							var $li = $(this), $link = $li.find('a[href*="FUNCTIONID="]'), tutti = $link.length > 0;
+							if ($li.attr('id') === 'ct-voce-menu') { return; }
+							$link.each(function () {
+								if (!/FUNCTIONID=[A-Za-z]*FileManager($|[^A-Za-z])/.test(this.getAttribute('href') || '')) { tutti = false; }
+							});
+							if (tutti) { $li.hide(); }
+						});
+					}
+					$(function () {
+						<#if CT_ACCESSO??>
+						nascondiVoceWera();
+						<#else>
+						$.ajax({ url: 'astro', data: { FUNCTIONID: 'CentraleTermicaDati', OPERAZIONE: 'accesso' }, dataType: 'json', cache: false })
+							.done(function (j) {
+								var a = j && j.accesso;
+								if (!a) { return; }
+								if (a.abilitato) {
+									if (a.titolo) { $('#ct-voce-menu-testo').text(a.titolo); }
+									$('#ct-voce-menu').show();
+								} else {
+									$('#ct-voce-menu').remove();
+								}
+								if (a.nascondi_voce_wera) { nascondiVoceWera(); }
+							});
+						</#if>
+					});
+				}(window.jQuery));
+				</script>
+				</#if>
+
 			</div>
 		</nav>

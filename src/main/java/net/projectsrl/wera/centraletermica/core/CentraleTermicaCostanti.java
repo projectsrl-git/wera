@@ -16,6 +16,8 @@ public final class CentraleTermicaCostanti {
 
     // chiavi dei parametri
     public static final String   PAR_ACCESSO_PROFILI         = "ACCESSO.PROFILI";
+    public static final String   PAR_MENU_VOCE_WERA_PROFILI  = "MENU.VOCE_WERA.PROFILI";
+    public static final String   PAR_ETICHETTA_TITOLO        = "ETICHETTA.TITOLO";
     public static final String   PAR_FILE_CARTELLA           = "FILE.CARTELLA";
     public static final String   PAR_FILE_ESTENSIONI         = "FILE.ESTENSIONI";
     public static final String   PAR_FILE_DIMENSIONE_MAX_MB  = "FILE.DIMENSIONE_MAX_MB";
@@ -30,7 +32,8 @@ public final class CentraleTermicaCostanti {
     static final String[]        PARAMETRI_PAGINA            = { "ETICHETTA.TITOLO", "ETICHETTA.GESTIONE",
             "ASSISTENZA.TITOLO", "ASSISTENZA.UFFICIO", "ASSISTENZA.EMAIL", "ASSISTENZA.TELEFONO", "ASSISTENZA.ORARI",
             "ASSISTENZA.LINK_SEGNALAZIONE", "SCADENZE.GIORNI_PREAVVISO", "ULTIMI_DOCUMENTI.NUMERO",
-            "FILE.ESTENSIONI", "FILE.DIMENSIONE_MAX_MB", "DOWNLOAD.ZIP_MAX_FILE", "DOCUMENTI_WERA.VISIBILI",
+            "FILE.ESTENSIONI", "FILE.DIMENSIONE_MAX_MB", "FILE.MAX_PER_CARICAMENTO", "DOWNLOAD.ZIP_MAX_FILE",
+            "DOCUMENTI_WERA.VISIBILI",
             "DOCUMENTI_WERA.ETICHETTA" };
 
     // stati di CENTRALE_TERMICA.DOCUMENTI
@@ -41,6 +44,9 @@ public final class CentraleTermicaCostanti {
     // tipi di CENTRALE_TERMICA.EVENTI
     public static final String   EVENTO_CARICAMENTO          = "CARICAMENTO";
     public static final String   EVENTO_NUOVA_VERSIONE       = "NUOVA_VERSIONE";
+    public static final String   EVENTO_ARCHIVIAZIONE        = "ARCHIVIAZIONE";
+    public static final String   EVENTO_RIPRISTINO           = "RIPRISTINO";
+    public static final String   EVENTO_ANNULLAMENTO         = "ANNULLAMENTO";
     public static final String   EVENTO_DOWNLOAD             = "DOWNLOAD";
     public static final String   EVENTO_DOWNLOAD_ZIP         = "DOWNLOAD_ZIP";
     public static final String   EVENTO_ACCESSO_NEGATO       = "ACCESSO_NEGATO";

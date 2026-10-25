@@ -13,6 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import net.project.errors.AppCrash;
 import net.project.servlet.frame.ApplicationServices_itf;
+import net.project.servlet.frame.SsbServletRequest;
 import net.project.servlet.frame.SsbServletResponse;
 import net.project.servlet.security.UserSecurityInfo;
 import net.projectsrl.webapp.core.FunctionProjectWebApp_base;
@@ -25,7 +26,11 @@ import net.projectsrl.wera.centraletermica.db.EventiDAO;
  */
 public abstract class FunctionCentraleTermica_base extends FunctionProjectWebApp_base {
 
-    private static final ObjectMapper JSON = new ObjectMapper();
+    private static final ObjectMapper JSON                        = new ObjectMapper();
+
+    static final String               CAMPO_SESSIONE_ACCESSO      = "CT_ACCESSO";
+    static final String               CAMPO_SESSIONE_TITOLO       = "CT_TITOLO_MENU";
+    static final String               CAMPO_SESSIONE_NASCONDI_WERA = "CT_NASCONDI_VOCE_WERA";
 
     public FunctionCentraleTermica_base() {
 
@@ -46,6 +51,23 @@ public abstract class FunctionCentraleTermica_base extends FunctionProjectWebApp
             return null;
         }
         return ctx;
+    }
+
+    /**
+     * Salva in sessione cio' che serve al menu di wera2026 (included_menu.include), che legge i campi di
+     * sessione su ogni pagina senza interrogare il DB: CT_ACCESSO (S/N), CT_TITOLO_MENU e
+     * CT_NASCONDI_VOCE_WERA (S se il profilo e' abilitato alla Centrale termica nuova e non e' in
+     * MENU.VOCE_WERA.PROFILI).
+     */
+    protected void memorizzaAccesso(SsbServletRequest req, ContestoUtente ctx, boolean abilitato) throws AppCrash {
+
+        setSessionField(req, CAMPO_SESSIONE_ACCESSO, abilitato ? "S" : "N");
+        String titolo = ctx.parametro(CentraleTermicaCostanti.PAR_ETICHETTA_TITOLO, ctx.getIdAzienda());
+        setSessionField(req, CAMPO_SESSIONE_TITOLO, titolo.length() > 0 ? titolo : "Centrale termica");
+        boolean voceWera = ctx.getProfilo() != null && ContestoUtente.elenco(ctx.parametro(
+                CentraleTermicaCostanti.PAR_MENU_VOCE_WERA_PROFILI, ctx.getIdAzienda())).contains(ctx.getProfilo());
+        // la vecchia voce si nasconde solo a chi ha la nuova (per gli altri, es. CON, resta com'e')
+        setSessionField(req, CAMPO_SESSIONE_NASCONDI_WERA, abilitato && !voceWera ? "S" : "N");
     }
 
     /** Intero positivo da un parametro della richiesta, null se assente o non valido. */

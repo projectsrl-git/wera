@@ -144,3 +144,7 @@ Documenti di /wera: 38 righe, 36 smistate (1 con file sovrascritto, quindi 35 in
 DAO nel pacchetto nuovo, upload con nome univoco e SHA-256, download con controllo permessi e zip,
 dataset `DS.CentraleTermica*` (senza WHERECONDITION dal browser), pagine, configurazione, voce di menu
 in `included_menu.include`. DDL su .75 solo con un ok a parte, poco prima del deploy.
+
+## Ondata 2 (pagina)
+Pagina, menu e tema: `2026-10-25-centrale-termica-pagina.md`. Aggiunta la funzione `CentraleTermicaStato`
+(archivia / ripristina / annulla) e i campi di sessione `CT_*` per la voce di menu.

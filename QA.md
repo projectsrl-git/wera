@@ -304,5 +304,14 @@ Mailcatcher `deploy/mailcatcher.pl` su 127.0.0.1:1025 (vedi CLAUDE.md).
 - [ ] errore.html / errorpage.html: pagina 500 con card e Bricolage; bottone Home.
 - [ ] mail (invio email): NON toccata — verificare solo che le mail arrivino come prima.
 
+## Centrale termica wera2026 (2026-10-25, solo laptop)
+Nota: `.claude/2026-10-25-centrale-termica-pagina.md` (backend: `...-java-upload-download.md`).
+- [ ] ADM / INS / AMM: voce "Centrale termica" nel menu; CON: nessuna voce e pagina -> Home
+- [ ] vecchia voce "Centrali termiche": visibile ad ADM/INS, nascosta ad AMM, intatta per CON
+- [ ] scelta condominio (solo quelli del profilo), riquadri, cartelle, ultimi documenti, scadenze
+- [ ] carica documento + nuova versione; Apri / Scarica / Scarica selezionati (zip); Versioni
+- [ ] Archivia / Ripristina (ADM, INS); AMM in sola lettura, niente Stato pagamenti
+- [ ] telefono: una colonna, nessuno scorrimento orizzontale
+
 ## Rollback rapido
 Rimuovere (o commentare) le 5 righe aggiunte in fondo al blocco CSS di `included_head.include`: l'app torna esattamente all'aspetto precedente. Per le sole pagine standalone (errore/errorpage/message) rimuovere i 4 `<link>` aggiunti nell'head.

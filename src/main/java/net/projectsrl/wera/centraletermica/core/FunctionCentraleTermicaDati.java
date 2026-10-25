@@ -58,12 +58,26 @@ public class FunctionCentraleTermicaDati extends FunctionCentraleTermica_base {
     @Override
     public void mostra(SsbServletRequest req, SsbServletResponse res, UserSecurityInfo userInfo) throws AppCrash {
 
+        String operazione = req.getParameter("OPERAZIONE");
+
+        // usata dal menu di ogni pagina la prima volta: non registra accessi negati
+        if ("accesso".equals(operazione)) {
+            ContestoUtente ctx = new ContestoUtente(getSpecificUserInfo(userInfo));
+            boolean abilitato = ctx.isAbilitato();
+            memorizzaAccesso(req, ctx, abilitato);
+            Map<String, Object> accesso = new LinkedHashMap<String, Object>();
+            accesso.put("abilitato", Boolean.valueOf(abilitato));
+            accesso.put("titolo", getSessionField(userInfo, CAMPO_SESSIONE_TITOLO));
+            accesso.put("nascondi_voce_wera", Boolean.valueOf("S".equals(getSessionField(userInfo,
+                    CAMPO_SESSIONE_NASCONDI_WERA))));
+            rispondi(res, "accesso", accesso);
+            return;
+        }
+
         ContestoUtente ctx = contesto(userInfo, res);
         if (ctx == null) {
             return;
         }
-
-        String operazione = req.getParameter("OPERAZIONE");
         if ("condomini".equals(operazione)) {
             rispondi(res, "condomini", LetturaDataset.leggi(CentraleTermicaCostanti.DS_CONDOMINI, ctx.parametriBase(),
                     COLONNE_CONDOMINIO));

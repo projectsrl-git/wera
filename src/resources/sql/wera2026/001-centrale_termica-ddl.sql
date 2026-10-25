@@ -707,7 +707,7 @@ INSERT INTO centrale_termica.parametri (chiave, valore, tipo_valore, descrizione
 SELECT v.chiave, v.valore, v.tipo_valore, v.descrizione, 0
   FROM (VALUES
        ('ACCESSO.PROFILI',           'ADM,INS,AMM', 'ELENCO',   'Profili che vedono la Centrale termica (menu e pagine).'),
-       ('MENU.VOCE_WERA.PROFILI',    'ADM,INS',     'ELENCO',   'Profili che in wera2026 vedono ancora la vecchia voce "Centrali termiche".'),
+       ('MENU.VOCE_WERA.PROFILI',    'ADM,INS',     'ELENCO',   'Profili abilitati che in wera2026 vedono ancora la vecchia voce "Centrali termiche" (agli altri profili resta sempre).'),
        ('ETICHETTA.TITOLO',          'Centrale termica', 'TESTO', 'Titolo della pagina e della voce di menu.'),
        ('ETICHETTA.GESTIONE',        '',            'TESTO',    'Testo dopo "Gestione:" nella testata. Vuoto = riga nascosta.'),
        ('ASSISTENZA.TITOLO',         'Assistenza',  'TESTO',    'Titolo del riquadro assistenza.'),
