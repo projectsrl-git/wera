@@ -1,7 +1,7 @@
-fix(landing): statistiche con i numeri reali al posto di quelli del mockup
+docs(centrale-termica): proposta documenti in 6 sezioni (richiesta cliente)
 
-- login.html: 4.838 ripartitori gestiti e 54 condomini attivi (valori della
-  home in produzione al 2026-10-25) invece di 4.596 / 49 copiati dal mockup
-- CLAUDE.md: i numeri sono testo fisso da riaggiornare a mano; QA.md: D1 chiuso
+- analisi di categorie (PARAMETRI DOC), tabella file e pagina Visualizzazione
+- proposta fase 1 solo template (raggruppa i 16 codici esistenti senza
+  toccare il DB condiviso con /wera), fase 2 con config/Java, domande aperte
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
