@@ -1,9 +1,9 @@
-docs(deploy): wera2026 su .106 aggiornato a fc8da71 (build JDK 25)
+docs(deploy): wera2026 raggiungibile su https://weraweb.it/wera2026
 
-Deploy Jenkins #6 verificato su 192.168.0.106: WAR con JAXB e senza
-xercesImpl, bytecode Java 8, config prod corretto, avvio su Zulu 25 senza
-errori, HTTP 200, log e mailcatcher ok. Annotato in CLAUDE.md anche il
-blocco notturno dell'uscita Internet sul FortiGate (06:00-23:00, policy 39)
-che aveva fatto fallire la build #5.
+Annotata in CLAUDE.md la configurazione del frontend Apache 192.168.0.50
+(vhost ssl.weraweb.it.conf): ProxyPass /wera2026 verso .106 in testa, poi
+/weralegacy e /wera invariate; la vecchia ProxyPass "/" sostituita da un
+RedirectMatch della sola radice verso /wera/; rimossa /newgen. Verificati
+tutti i percorsi e gli altri vhost dopo il reload.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
