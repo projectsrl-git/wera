@@ -1,9 +1,7 @@
-docs(qa): collaudo PROD wera2026 superuser in sola lettura
+fix(landing): statistiche con i numeri reali al posto di quelli del mockup
 
-- casi A e B della checklist sulla produzione pilota (DB .75, share .81):
-  54 voci di menu ok, letture consumi e storico ok, file manager sulla share
-  di wera, ripartizione aperta in sola lettura
-- difetti: numeri fissi nella landing (r2), URL di download senza codifica
-  del nome file (preesistente), separatore migliaia nel donut
+- login.html: 4.838 ripartitori gestiti e 54 condomini attivi (valori della
+  home in produzione al 2026-10-25) invece di 4.596 / 49 copiati dal mockup
+- CLAUDE.md: i numeri sono testo fisso da riaggiornare a mano; QA.md: D1 chiuso
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

@@ -50,6 +50,10 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   7. home: card "I tuoi crediti" NASCOSTA su decisione dell'operatore (2026-10-23): classe
      `wera-crediti-off` sulla riga Richieste in home.html + regole in fondo alla sez. 29 del
      tema; markup/JS intatti. Per riattivarla togliere la classe. Cache-buster tema `?20261023`.
+  8. landing: le statistiche dello slide 1 di `login.html` ("Ripartitori gestiti",
+     "Condomini attivi") sono TESTO FISSO, allineato a mano il 2026-10-25 ai valori della home del
+     superuser in PROD (4.838 / 54; prima c'erano i numeri del mockup). Vanno riaggiornate a mano:
+     renderle dinamiche richiede un dataset pubblico o un dato passato dal Java (DA NON TOCCARE).
   TUTTO il percorso pubblico (login/registrazione/reset/newpassword) usa `wera-landing.css`;
   `wera-theme.css` (sez. 1-29) resta per l'app interna.
 - **ESCLUSO su decisione (fase 2)**: slide 5 "reward"/promo coupon della landing — il LEGGIMI

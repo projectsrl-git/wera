@@ -76,7 +76,8 @@ rete, console) a 1366x768; crash e log letti su .106. Nessun salvataggio, nessun
 - [x] .106: un solo crash nuovo (vedi difetto D2), 0 SEVERE, mailcatcher invariato (2 file),
       7 connessioni verso .75 e nessuna verso .67.
 Difetti trovati:
-- [ ] **D1 (restyle r2)** landing `login.html` r.39-40: "4.596 ripartitori gestiti" e "49
+- [x] **D1 (restyle r2) CORRETTO nel repo** (4.838 / 54, verificato sul laptop; in PROD dopo il
+      prossimo deploy Jenkins). Landing `login.html` r.39-40: "4.596 ripartitori gestiti" e "49
       condomini attivi" sono testo fisso copiato dal mockup; la home reale ne mostra altri
       (segnalato dall'operatore).
 - [ ] **D2 (preesistente, dal commit iniziale)** file manager / ricerca file / archivio: il nome
