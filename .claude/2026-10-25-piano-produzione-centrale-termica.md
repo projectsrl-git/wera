@@ -178,3 +178,16 @@ Configurazione iniziale (superuser, dalla pagina Configurazione):
   viene da CLAUDE.md (il WAR non riporta il commit).
 - Spazio: `/` 13 GB liberi.
 - Resta: Apache .50 (limiti upload, sola lettura) e la Fase 4 (Jenkins, DEPLOY=false poi true).
+
+### 2026-10-25 23:39 — Fase 4 ESEGUITA dall'operatore (Jenkins DEPLOY=true); verifiche tecniche 23:40
+- WAR in esercizio: 2026-10-25 23:39, 100208109 byte, SHA-256 `baa96d2c...6745943`. Config patchata:
+  `Quartz-scheduler.tasklist=` vuota, `mail.SMTPHost=127.0.0.1:1025`, `directory.external_files=/usr/share/webapps/wera/`;
+  8 funzioni `CentraleTermica*` in functionList, 22 dataset `DSCentraleTermica*`, template/JS nuovi, tema `?20261025c`.
+- Log Tomcat: undeploy/deploy di `/wera2026` 23:39:21 -> 23:39:25 (4 s), nessuna eccezione (solo l'avvertenza
+  attesa sulle cache ObjectStreamClass); nessun file in `/usr/share/logs/wera2026/crash` dopo le 23:38; tomcat9
+  mai riavviato (attivo dal 24/10, gestit non toccato). Nel log anche un deploy alle 23:24 (dopo il DDL).
+- HTTP dal server: login wera2026 200, tema (con sezione 30b) e JS 200, gestit 200, wera2026 tramite Apache
+  .50 200, /wera su .70 200. (Dal laptop dopo le 23:00 il FortiGate non lascia uscire verso weraweb.it.)
+- DB: 0 eventi, 0 documenti (funzione non ancora usata).
+- Da fare: verifiche funzionali per profilo (Fase 5) con account reali, dal browser dell'operatore; poi
+  controllo di eventi e log lato server; configurazione iniziale; primi contratti.

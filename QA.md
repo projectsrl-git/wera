@@ -316,6 +316,7 @@ Nota: `.claude/2026-10-25-centrale-termica-pagina.md` (backend: `...-java-upload
 - [ ] configurazione (solo ADM): sezioni e permessi, tipi di scadenza, parametri con eccezioni, categorie WERA
 - [x] DDL su .75 PROD (2026-10-25 22:55): oggetti e dati iniziali verificati, struttura di public identica
 - [x] .106 (2026-10-25 22:59): share /usr/share/webapps/wera scrivibile da Tomcat anche nella sandbox; backup WAR in /root
+- [x] PROD deploy 2026-10-25 23:39 (Jenkins): config patchata, log puliti, HTTP 200 su wera2026, /wera, gestit
 - [ ] PROD dopo il deploy: verifiche per profilo della Fase 5 del piano di produzione
 
 ## Rollback rapido
