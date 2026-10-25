@@ -129,7 +129,8 @@ Configurazione iniziale (superuser, dalla pagina Configurazione):
    `UPDATE centrale_termica.parametri SET valore='' WHERE id_azienda IS NULL AND chiave='ACCESSO.PROFILI';`
    La pagina rifiuta subito tutti; la voce di menu sparisce al login successivo. Ripristino: `'ADM,INS,AMM'`.
 2. **WAR precedente** (wera2026 torna a `fc8da71`, ~5 s, gestit non si ferma):
-   `cp -p /root/wera2026.war.bak-AAAAMMGG-fc8da71 /var/lib/tomcat9/webapps/wera2026.war`
+   `cp -p /root/wera2026.war.bak-20261025-0900-fc8da71 /var/lib/tomcat9/webapps/wera2026.war`
+   (copia fatta il 2026-10-25 22:59, SHA-256 `5af7e31034d8...20b7cf`, uguale al WAR in esercizio)
    Lo schema `centrale_termica` resta: non lo usa nessun altro ed e' innocuo per /wera.
 3. **Schema** (SOLO se non e' stato caricato nessun documento reale, altrimenti si perde lo storico):
    `SELECT count(*) FROM centrale_termica.documenti;` = 0, poi
@@ -161,3 +162,19 @@ Configurazione iniziale (superuser, dalla pagina Configurazione):
   `parametri`): nessuna riga aggiunta o tolta.
 - Restano prima del deploy: verifica della share su .106 scrivibile da tomcat, Apache .50, backup del
   WAR in esercizio, poi Fase 4 (Jenkins).
+
+### 2026-10-25 22:59 — Fase 1 (server .106) e backup del WAR ESEGUITI (ok dell'operatore), deploy NON eseguito
+- tomcat9: utente `tomcat` (uid/gid 997), `ProtectSystem=strict`, `ReadWritePaths` comprende
+  `-/usr/share/webapps/wera`; mount CIFS `//fileserver_wera_docs/storage/webapps/wera` (.81) `rw`,
+  `uid=997,gid=997,file_mode=0664,dir_mode=0775`. Sottocartella `centrale_termica/` non ancora presente
+  (la crea l'applicazione al primo caricamento).
+- Prova di scrittura come tomcat da shell: file creato e cancellato (OK).
+- Prova DENTRO il namespace di mount del processo Tomcat (`nsenter -t <MainPID> -m`): `/etc` e `/usr`
+  in sola lettura (sandbox attiva), in `/usr/share/webapps/wera` cartella + file creati e cancellati
+  come tomcat (OK). Nessun file di prova rimasto. (`systemd-run` non usabile: niente D-Bus sul server.)
+- Backup: `/root/wera2026.war.bak-20261025-0900-fc8da71` (cp -p, 100100291 byte, SHA-256
+  `5af7e31034d859aa79a8c3492e1ef9b75a0de9c3b569e0b1d5cf38bc4f20b7cf`, identico al WAR in esercizio del
+  2026-10-25 09:00; il WAR attuale non contiene funzioni CentraleTermica). Il commit `fc8da71` nel nome
+  viene da CLAUDE.md (il WAR non riporta il commit).
+- Spazio: `/` 13 GB liberi.
+- Resta: Apache .50 (limiti upload, sola lettura) e la Fase 4 (Jenkins, DEPLOY=false poi true).
