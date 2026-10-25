@@ -27,6 +27,7 @@ public final class CentraleTermicaCostanti {
     public static final String   PAR_GIORNI_PREAVVISO        = "SCADENZE.GIORNI_PREAVVISO";
     public static final String   PAR_ULTIMI_DOCUMENTI        = "ULTIMI_DOCUMENTI.NUMERO";
     public static final String   PAR_SEZIONE_INTERVENTI      = "RIEPILOGO.SEZIONE_INTERVENTI";
+    public static final String   PAR_CONFIGURAZIONE_PROFILI  = "CONFIGURAZIONE.PROFILI";
 
     // parametri che la pagina puo' leggere (nessun dato tecnico: cartelle, estensioni... restano lato server)
     static final String[]        PARAMETRI_PAGINA            = { "ETICHETTA.TITOLO", "ETICHETTA.GESTIONE",
@@ -50,6 +51,10 @@ public final class CentraleTermicaCostanti {
     public static final String   EVENTO_DOWNLOAD             = "DOWNLOAD";
     public static final String   EVENTO_DOWNLOAD_ZIP         = "DOWNLOAD_ZIP";
     public static final String   EVENTO_ACCESSO_NEGATO       = "ACCESSO_NEGATO";
+    public static final String   EVENTO_SCADENZA_CREATA      = "SCADENZA_CREATA";
+    public static final String   EVENTO_SCADENZA_CHIUSA      = "SCADENZA_CHIUSA";
+    public static final String   EVENTO_SCADENZA_ANNULLATA   = "SCADENZA_ANNULLATA";
+    public static final String   EVENTO_CONFIGURAZIONE       = "CONFIGURAZIONE";
 
     // dataset di config.cfg
     static final String          DS_PARAMETRO                = "DSCentraleTermicaParametro";
@@ -64,6 +69,16 @@ public final class CentraleTermicaCostanti {
     static final String          DS_FILE_WERA                = "DSCentraleTermicaFileWera";
     static final String          DS_SCADENZE                 = "DSCentraleTermicaScadenze";
     static final String          DS_RIEPILOGO                = "DSCentraleTermicaRiepilogo";
+    static final String          DS_TIPI_SCADENZA            = "DSCentraleTermicaTipiScadenza";
+    static final String          DS_SCADENZA                 = "DSCentraleTermicaScadenza";
+    static final String          DS_STORICO_SCADENZE         = "DSCentraleTermicaStoricoScadenze";
+    static final String          DS_CONFIG_SEZIONI           = "DSCentraleTermicaConfigSezioni";
+    static final String          DS_CONFIG_PERMESSI          = "DSCentraleTermicaConfigPermessi";
+    static final String          DS_CONFIG_PROFILI           = "DSCentraleTermicaConfigProfili";
+    static final String          DS_CONFIG_TIPI              = "DSCentraleTermicaConfigTipi";
+    static final String          DS_CONFIG_PARAMETRI         = "DSCentraleTermicaConfigParametri";
+    static final String          DS_CONFIG_CATEGORIE         = "DSCentraleTermicaConfigCategorie";
+    static final String          DS_CONFIG_AZIENDE           = "DSCentraleTermicaConfigAziende";
 
     private CentraleTermicaCostanti() {
 

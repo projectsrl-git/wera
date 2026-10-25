@@ -37,6 +37,9 @@
 						<button type="button" class="btn btn-primary ct-btn-carica hidden" id="ct-btn-carica">
 							<i class="fa fa-cloud-upload" aria-hidden="true"></i> Carica documenti
 						</button>
+						<a href="astro?FUNCTIONID=CentraleTermicaConfigurazione" class="btn btn-white btn-sm ct-btn-config hidden" id="ct-btn-config">
+							<i class="fa fa-sliders" aria-hidden="true"></i> Configurazione
+						</a>
 					</div>
 				</section>
 
@@ -112,7 +115,13 @@
 					<!-- scadenze e assistenza -->
 					<div class="col-lg-4">
 						<section class="ct-card" aria-labelledby="ct-titolo-scadenze">
-							<div class="ct-card-testa"><h3 id="ct-titolo-scadenze">Scadenze</h3></div>
+							<div class="ct-card-testa">
+								<h3 id="ct-titolo-scadenze">Scadenze</h3>
+								<div class="ct-card-azioni">
+									<button type="button" class="btn btn-white btn-xs" id="ct-btn-storico-scad"><i class="fa fa-history" aria-hidden="true"></i> Storico</button>
+									<button type="button" class="btn btn-primary btn-xs hidden" id="ct-btn-nuova-scad"><i class="fa fa-plus" aria-hidden="true"></i> Nuova</button>
+								</div>
+							</div>
 							<ul class="ct-scadenze" id="ct-scadenze"></ul>
 						</section>
 
@@ -195,13 +204,81 @@
 				</div>
 			</div>
 
+			<!-- scadenza: registra / chiudi / annulla -->
+			<div class="modal inmodal fade" id="ct-modale-scadenza" tabindex="-1" role="dialog" aria-labelledby="ct-scad-titolo" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content ct-modale">
+						<form id="ct-form-scadenza" novalidate>
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">&times;</button>
+								<h4 class="modal-title" id="ct-scad-titolo">Scadenza</h4>
+								<p class="ct-carica-sotto" id="ct-scad-sotto"></p>
+							</div>
+							<div class="modal-body">
+								<input type="hidden" id="ct-scad-azione" value="">
+								<input type="hidden" id="ct-scad-id" value="">
+								<div class="ct-solo-crea">
+									<div class="form-group">
+										<label for="ct-scad-tipo">Tipo di scadenza</label>
+										<select id="ct-scad-tipo" class="form-control"></select>
+										<p class="ct-aiuto" id="ct-scad-tipo-info"></p>
+									</div>
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<label for="ct-scad-data">Data di scadenza</label>
+											<input type="date" id="ct-scad-data" class="form-control" required>
+										</div>
+										<div class="col-sm-6 form-group">
+											<label for="ct-scad-periodicita">Rinnovo ogni (mesi) <span class="ct-facoltativo">(vuoto: dal tipo)</span></label>
+											<input type="number" id="ct-scad-periodicita" class="form-control" min="1" max="240">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-8 form-group">
+											<label for="ct-scad-descrizione">Descrizione <span class="ct-facoltativo">(es. secondo generatore)</span></label>
+											<input type="text" id="ct-scad-descrizione" class="form-control" maxlength="200">
+										</div>
+										<div class="col-sm-4 form-group">
+											<label for="ct-scad-preavviso">Preavviso (giorni)</label>
+											<input type="number" id="ct-scad-preavviso" class="form-control" min="0" max="365">
+										</div>
+									</div>
+								</div>
+								<div class="ct-solo-chiudi">
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<label for="ct-scad-esecuzione">Eseguita il</label>
+											<input type="date" id="ct-scad-esecuzione" class="form-control">
+										</div>
+										<div class="col-sm-6 form-group">
+											<label for="ct-scad-documento">Documento <span class="ct-facoltativo">(facoltativo)</span></label>
+											<select id="ct-scad-documento" class="form-control"></select>
+										</div>
+									</div>
+									<p class="ct-aiuto" id="ct-scad-rinnovo"></p>
+								</div>
+								<div class="form-group">
+									<label for="ct-scad-nota">Nota</label>
+									<textarea id="ct-scad-nota" class="form-control" rows="2" maxlength="2000"></textarea>
+								</div>
+								<div class="ct-esito hidden" id="ct-scad-esito" role="status"></div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-white" data-dismiss="modal">Chiudi</button>
+								<button type="submit" class="btn btn-primary" id="ct-scad-invia">Salva</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
 			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
 
 		</div>
 
 	</div>
 
-	<script src="js/wera-centrale-termica.js?20261025"></script>
+	<script src="js/wera-centrale-termica.js?20261025b"></script>
 
 </body>
 

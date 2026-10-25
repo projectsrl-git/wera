@@ -148,3 +148,7 @@ in `included_menu.include`. DDL su .75 solo con un ok a parte, poco prima del de
 ## Ondata 2 (pagina)
 Pagina, menu e tema: `2026-10-25-centrale-termica-pagina.md`. Aggiunta la funzione `CentraleTermicaStato`
 (archivia / ripristina / annulla) e i campi di sessione `CT_*` per la voce di menu.
+
+## Ondata 3 (scadenze e configurazione)
+Nota: `2026-10-25-centrale-termica-scadenze-configurazione.md`. Vista `v_scadenze` usata dai dataset;
+parametro `CONFIGURAZIONE.PROFILI` (ADM). Le eccezioni per azienda dei parametri si gestiscono dalla pagina.

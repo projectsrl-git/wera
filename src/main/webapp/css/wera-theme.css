@@ -1423,7 +1423,9 @@ form#my-awesome-dropzone.dropzone.dz-drag-hover{
 .ct-scadenze{list-style:none;margin:0;padding:0}
 .ct-scad{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-top:1px solid var(--line)}
 .ct-scad:first-child{border-top:0}
-.ct-scad > div{flex:1;min-width:0}
+.ct-scad{flex-wrap:wrap}
+.ct-scad > div{flex:1 1 150px;min-width:0}
+.ct-scad > .ct-chip{margin-left:auto}
 .ct-scad-punto{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:0 0 10px;background:var(--muted-2)}
 .ct-scad-regolare .ct-scad-punto{background:var(--teal)}
 .ct-scad-in_scadenza .ct-scad-punto{background:#e8821e}
@@ -1480,6 +1482,8 @@ body.ct-pannello-aperto{overflow:hidden}
 
 /* --- caricamento --- */
 .ct-modale .modal-header{border-bottom:1px solid var(--line)}
+.ct-modale .modal-footer{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+.ct-modale .modal-footer .btn{margin:0}
 .ct-carica-sotto{margin:4px 0 0;color:var(--muted);font-weight:600}
 .ct-facoltativo{font-weight:500;text-transform:none;letter-spacing:0;color:var(--muted-2)}
 .ct-drop{
@@ -1514,7 +1518,7 @@ body.ct-pannello-aperto{overflow:hidden}
 @media (max-width:767px){
   .ct-hero{padding:20px 18px}
   .ct-hero h1{font-size:24px}
-  .ct-hero-azioni{flex-basis:100%}
+  .ct-hero-azioni{flex-basis:100%;min-width:0}
   .ct-kpi{gap:10px}
   .ct-kpi-val{font-size:21px}
   .ct-cartelle,.ct-cartelle-piccole{grid-template-columns:minmax(0,1fr)}
@@ -1523,4 +1527,55 @@ body.ct-pannello-aperto{overflow:hidden}
 }
 @media (prefers-reduced-motion:reduce){
   .ct-cartella,.ct-pannello,.ct-barra i{transition:none}
+}
+
+/* --- 30b. scadenze gestite dalla pagina e configurazione (ondata 3, 2026-10-25) --- */
+.ct-card-azioni{display:flex;gap:6px;flex-wrap:wrap}
+.ct-scad-azioni{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.ct-aiuto{font-size:12.5px;color:var(--muted);margin:4px 0 10px}
+.ct-muto{color:var(--muted-2);font-style:italic}
+.ct-ico-ok{color:var(--teal)}
+.ct-ico-ko{color:var(--muted-2)}
+.ct-btn-config{align-self:flex-start}
+
+/* configurazione */
+.ctc-schede > .nav-tabs{margin-bottom:4px}
+.ctc-schede .tab-content .ct-card{margin-bottom:0}
+.ctc-filtro{max-width:220px}
+.ctc-spenta td{opacity:.55}
+.ctc-schede .ct-tabella > tbody > tr > td:first-child{min-width:210px}
+.ctc-chiave{font-family:Consolas,"Liberation Mono",monospace;font-size:12.5px}
+.ctc-valore{max-width:260px;overflow-wrap:anywhere;font-weight:600}
+.ctc-perm{
+  display:inline-block;min-width:30px;padding:3px 6px;border-radius:7px;font-size:11.5px;font-weight:800;
+  background:var(--surface-2);color:var(--muted-2);border:1px solid var(--line);
+}
+.ctc-perm-r{background:var(--amber-bg);border-color:#f3dcab;color:var(--amber-ink)}
+.ctc-perm-rw{background:var(--teal-bg);border-color:#bfe6d7;color:var(--teal-ink)}
+.ctc-sotto{font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin:18px 0 8px}
+.ctc-permessi{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}
+.ctc-permesso{display:flex;flex-direction:column;gap:4px;font-weight:700;margin:0}
+.ctc-permesso small{font-weight:500;color:var(--muted)}
+.ctc-spunte{display:flex;flex-direction:column;gap:6px;padding-top:24px}
+.ctc-spunte label{font-weight:600;margin:0}
+.ctc-eccezioni{list-style:none;margin:0;padding:0}
+.ctc-eccezioni li,.ctc-nuova-ecc{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--line)}
+.ctc-eccezioni .form-control,.ctc-nuova-ecc .form-control{flex:1;min-width:0}
+.ctc-ecc-az{flex:0 0 38%;font-weight:700;overflow-wrap:anywhere}
+.ctc-nuova-ecc{border-bottom:0;padding-top:10px}
+.ctc-nuova-ecc select{flex:0 0 38%}
+@media (max-width:767px){
+  .ctc-permessi{grid-template-columns:minmax(0,1fr)}
+  .ctc-spunte{padding-top:0}
+  .ctc-eccezioni li,.ctc-nuova-ecc{flex-wrap:wrap}
+  .ctc-ecc-az,.ctc-nuova-ecc select{flex-basis:100%}
+}
+@media (max-width:479px){
+  .ct-kpi-box{padding:12px 12px}
+  .ct-kpi-val{font-size:17px}
+  .ct-kpi-ico{width:28px;height:28px;font-size:14px;margin-bottom:8px}
+  .ct-hero h1{font-size:21px}
+}
+@media (max-width:359px){
+  .ct-kpi{grid-template-columns:minmax(0,1fr)}
 }

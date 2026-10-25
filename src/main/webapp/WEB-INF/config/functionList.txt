@@ -140,6 +140,9 @@ CentraleTermicaDati					net.projectsrl.wera.centraletermica.core.FunctionCentral
 CentraleTermicaUpload					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaUpload						00
 CentraleTermicaDownload				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaDownload					00
 CentraleTermicaStato					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaStato						00
+CentraleTermicaScadenza				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaScadenza					00
+CentraleTermicaConfigurazione			net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaConfigurazione				00
+CentraleTermicaConfigurazioneSalva		net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaConfigurazioneSalva			00
 
 ConfigurazioneErrori					net.projectsrl.wera.utility.core.FunctionConfigurazioneErrori								00
 InserimentoConfigurazioneErrori			net.projectsrl.wera.utility.core.FunctionInserimentoConfigurazioneErrori					00

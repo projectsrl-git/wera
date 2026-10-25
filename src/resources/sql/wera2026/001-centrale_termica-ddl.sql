@@ -723,6 +723,7 @@ SELECT v.chiave, v.valore, v.tipo_valore, v.descrizione, 0
        ('FILE.DIMENSIONE_MAX_MB',    '25',          'NUMERO',   'Dimensione massima di un file caricato, in MB.'),
        ('FILE.MAX_PER_CARICAMENTO',  '20',          'NUMERO',   'Numero massimo di file in un solo caricamento.'),
        ('RIEPILOGO.SEZIONE_INTERVENTI', 'MANUTENZIONI', 'TESTO', 'Codice della sezione da cui si ricava "Ultimo intervento".'),
+       ('CONFIGURAZIONE.PROFILI',    'ADM',         'ELENCO',   'Profili che possono configurare sezioni, permessi, tipi di scadenza e parametri.'),
        ('DOWNLOAD.ZIP_MAX_FILE',     '50',          'NUMERO',   'Numero massimo di file in "Scarica selezionati".'),
        ('DOCUMENTI_WERA.VISIBILI',   'S',           'BOOLEANO', 'Mostra i documenti caricati da /wera (sola lettura).'),
        ('DOCUMENTI_WERA.ETICHETTA',  'da WERA',     'TESTO',    'Etichetta dei documenti caricati da /wera.')

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+
+	<#-- Configurazione Centrale termica wera2026 (2026-10-25), solo profili di CONFIGURAZIONE.PROFILI.
+	     Template ASCII con entita' HTML. Dati: CentraleTermicaDati&OPERAZIONE=config; salvataggi:
+	     CentraleTermicaConfigurazioneSalva. Logica in js/wera-centrale-termica-config.js. -->
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="wrapper wrapper-content ct-page" id="ctc-page">
+
+				<section class="ct-hero">
+					<div class="ct-hero-testo">
+						<div class="ct-eyebrow"><i class="fa fa-sliders" aria-hidden="true"></i> <#if CT_TITOLO?exists>${CT_TITOLO?html}</#if></div>
+						<h1>Configurazione</h1>
+						<p class="ct-indirizzo">Sezioni e permessi, tipi di scadenza, parametri e corrispondenza con le categorie di WERA.
+						Le modifiche valgono per tutti i condomini; menu e titolo si aggiornano al prossimo accesso degli utenti.</p>
+					</div>
+					<div class="ct-hero-azioni">
+						<a href="astro?FUNCTIONID=CentraleTermica" class="btn btn-white"><i class="fa fa-arrow-left" aria-hidden="true"></i> Torna alla Centrale termica</a>
+					</div>
+				</section>
+
+				<div class="ct-avviso hidden" id="ct-avviso" role="alert"></div>
+
+				<div class="tabs-container ctc-schede">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="active"><a data-toggle="tab" href="#ctc-sezioni" role="tab">Sezioni e permessi</a></li>
+						<li><a data-toggle="tab" href="#ctc-tipi" role="tab">Tipi di scadenza</a></li>
+						<li><a data-toggle="tab" href="#ctc-parametri" role="tab">Parametri</a></li>
+						<li><a data-toggle="tab" href="#ctc-categorie" role="tab">Categorie WERA</a></li>
+					</ul>
+					<div class="tab-content">
+
+						<div id="ctc-sezioni" class="tab-pane active" role="tabpanel">
+							<div class="panel-body">
+								<section class="ct-card">
+									<div class="ct-card-testa">
+										<h3>Sezioni</h3>
+										<button type="button" class="btn btn-primary btn-sm" id="ctc-nuova-sezione"><i class="fa fa-plus" aria-hidden="true"></i> Nuova sezione</button>
+									</div>
+									<p class="ct-aiuto">Le sezioni non si cancellano (ci sono documenti collegati): si disattivano. Permessi:
+									<b>L</b> = vede, <b>LS</b> = vede e carica; un profilo senza permesso non vede la sezione.</p>
+									<div class="table-responsive"><table class="table ct-tabella" id="ctc-tab-sezioni"></table></div>
+								</section>
+							</div>
+						</div>
+
+						<div id="ctc-tipi" class="tab-pane" role="tabpanel">
+							<div class="panel-body">
+								<section class="ct-card">
+									<div class="ct-card-testa">
+										<h3>Tipi di scadenza</h3>
+										<button type="button" class="btn btn-primary btn-sm" id="ctc-nuovo-tipo"><i class="fa fa-plus" aria-hidden="true"></i> Nuovo tipo</button>
+									</div>
+									<p class="ct-aiuto">La periodicit&agrave; serve al rinnovo automatico quando una scadenza viene segnata come eseguita
+									(vuota = una tantum). Preavviso vuoto = parametro SCADENZE.GIORNI_PREAVVISO. I valori iniziali vanno verificati.</p>
+									<div class="table-responsive"><table class="table ct-tabella" id="ctc-tab-tipi"></table></div>
+								</section>
+							</div>
+						</div>
+
+						<div id="ctc-parametri" class="tab-pane" role="tabpanel">
+							<div class="panel-body">
+								<section class="ct-card">
+									<div class="ct-card-testa"><h3>Parametri</h3>
+										<input type="search" class="form-control input-sm ct-filtro ctc-filtro" id="ctc-filtro-parametri" placeholder="Filtra" aria-label="Filtra parametri">
+									</div>
+									<p class="ct-aiuto">Il valore predefinito vale per tutte le aziende; un'eccezione vale solo per un'azienda
+									(anche vuota). Un campo vuoto nasconde la voce corrispondente nella pagina.</p>
+									<div class="table-responsive"><table class="table ct-tabella" id="ctc-tab-parametri"></table></div>
+								</section>
+							</div>
+						</div>
+
+						<div id="ctc-categorie" class="tab-pane" role="tabpanel">
+							<div class="panel-body">
+								<section class="ct-card">
+									<div class="ct-card-testa"><h3>Categorie dei documenti di WERA</h3></div>
+									<p class="ct-aiuto">In quale sezione compaiono, in sola lettura, i documenti caricati da /wera di ogni vecchia
+									categoria. "Non mostrare" li esclude. Il salvataggio &egrave; immediato.</p>
+									<div class="table-responsive"><table class="table ct-tabella" id="ctc-tab-categorie"></table></div>
+								</section>
+							</div>
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+
+			<!-- modifica generica -->
+			<div class="modal inmodal fade" id="ctc-modale" tabindex="-1" role="dialog" aria-labelledby="ctc-modale-titolo" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content ct-modale">
+						<form id="ctc-form" novalidate>
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">&times;</button>
+								<h4 class="modal-title" id="ctc-modale-titolo"></h4>
+								<p class="ct-carica-sotto" id="ctc-modale-sotto"></p>
+							</div>
+							<div class="modal-body" id="ctc-modale-corpo"></div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-white" data-dismiss="modal">Chiudi</button>
+								<button type="submit" class="btn btn-primary" id="ctc-salva">Salva</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+
+		</div>
+
+	</div>
+
+	<script src="js/wera-centrale-termica-config.js?20261025"></script>
+
+</body>
+
+</html>

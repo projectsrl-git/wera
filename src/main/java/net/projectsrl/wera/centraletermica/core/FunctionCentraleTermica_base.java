@@ -70,6 +70,37 @@ public abstract class FunctionCentraleTermica_base extends FunctionProjectWebApp
         setSessionField(req, CAMPO_SESSIONE_NASCONDI_WERA, abilitato && !voceWera ? "S" : "N");
     }
 
+    /** Testo ripulito da un campo della richiesta: null se assente o vuoto, troncato a max caratteri. */
+    protected static String campo(SsbServletRequest req, String nome, int max) {
+
+        String v = req.getParameter(nome);
+        if (v == null) {
+            return null;
+        }
+        v = v.replaceAll("[\\p{Cntrl}&&[^\\r\\n\\t]]", "").trim();
+        if (v.length() == 0) {
+            return null;
+        }
+        return v.length() > max ? v.substring(0, max) : v;
+    }
+
+    /** Intero (anche 0) da un campo, null se assente; -1 se presente ma non valido. */
+    protected static Integer interoOpzionale(SsbServletRequest req, String nome) {
+
+        String v = req.getParameter(nome);
+        if (v == null || v.trim().length() == 0) {
+            return null;
+        }
+        return v.trim().matches("[0-9]{1,6}") ? Integer.valueOf(v.trim()) : Integer.valueOf(-1);
+    }
+
+    /** Data gg/mm/aaaa o aaaa-mm-gg come java.sql.Date; null se vuota; eccezione se non valida. */
+    protected static java.sql.Date dataSql(String valore) throws java.text.ParseException {
+
+        java.sql.Timestamp ts = FunctionCentraleTermicaUpload.data(valore);
+        return ts == null ? null : new java.sql.Date(ts.getTime());
+    }
+
     /** Intero positivo da un parametro della richiesta, null se assente o non valido. */
     protected static Integer intero(String valore) {
 
@@ -156,6 +187,12 @@ public abstract class FunctionCentraleTermica_base extends FunctionProjectWebApp
     protected void registraEvento(ContestoUtente ctx, String tipo, Integer idCondominio, Integer idDocumento,
             Integer idVersione, Integer idFileWera, String dettaglio) {
 
+        registraEvento(ctx, tipo, idCondominio, idDocumento, idVersione, idFileWera, dettaglio, null);
+    }
+
+    protected void registraEvento(ContestoUtente ctx, String tipo, Integer idCondominio, Integer idDocumento,
+            Integer idVersione, Integer idFileWera, String dettaglio, Integer idScadenza) {
+
         try {
             EventiDAO evento = new EventiDAO();
             evento.setAttribute(EventiDAO.TIPO_EVENTO, tipo);
@@ -179,6 +216,9 @@ public abstract class FunctionCentraleTermica_base extends FunctionProjectWebApp
             }
             if (idFileWera != null) {
                 evento.setAttribute(EventiDAO.ID_FILE_WERA, idFileWera);
+            }
+            if (idScadenza != null) {
+                evento.setAttribute(EventiDAO.ID_SCADENZA, idScadenza);
             }
             if (dettaglio != null) {
                 evento.setAttribute(EventiDAO.DETTAGLIO, dettaglio.length() > 4000 ? dettaglio.substring(0, 4000)

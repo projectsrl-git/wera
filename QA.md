@@ -312,6 +312,8 @@ Nota: `.claude/2026-10-25-centrale-termica-pagina.md` (backend: `...-java-upload
 - [ ] carica documento + nuova versione; Apri / Scarica / Scarica selezionati (zip); Versioni
 - [ ] Archivia / Ripristina (ADM, INS); AMM in sola lettura, niente Stato pagamenti
 - [ ] telefono: una colonna, nessuno scorrimento orizzontale
+- [ ] scadenze: Nuova (solo ADM/INS), Eseguita con rinnovo automatico, Annulla, Storico
+- [ ] configurazione (solo ADM): sezioni e permessi, tipi di scadenza, parametri con eccezioni, categorie WERA
 
 ## Rollback rapido
 Rimuovere (o commentare) le 5 righe aggiunte in fondo al blocco CSS di `included_head.include`: l'app torna esattamente all'aspetto precedente. Per le sole pagine standalone (errore/errorpage/message) rimuovere i 4 `<link>` aggiunti nell'head.

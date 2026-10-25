@@ -74,6 +74,13 @@ public class ContestoUtente {
         return elenco(parametro(CentraleTermicaCostanti.PAR_ACCESSO_PROFILI, _idAzienda)).contains(_profilo);
     }
 
+    /** Vero se il profilo e' fra quelli del parametro CONFIGURAZIONE.PROFILI (default: solo superuser). */
+    public boolean puoConfigurare() throws AppCrash {
+
+        return isAbilitato()
+                && elenco(parametro(CentraleTermicaCostanti.PAR_CONFIGURAZIONE_PROFILI, _idAzienda)).contains(_profilo);
+    }
+
     /** Parametri comuni a tutti i dataset nuovi: perimetro e profilo, mai dal browser. */
     Map<String, String> parametriBase() {
 

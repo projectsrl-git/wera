@@ -179,7 +179,9 @@
             st.par = p.parametri || {};
             st.profilo = st.par.PROFILO || '';
             st.condomini = c.condomini || [];
+            $('#ct-btn-config').toggleClass('hidden', st.par.PUO_CONFIGURARE !== true);
             preparaCaricamento();
+            preparaScadenze();
             riempiCondomini();
         }).fail(function (m) {
             if (m !== 'sessione') { avviso(m); }
@@ -247,13 +249,16 @@
         avviso('');
         $('#ct-page').addClass('ct-carica-in-corso');
         $.when(dati('riepilogo', { ID_CONDOMINIO: id }), dati('sezioni', { ID_CONDOMINIO: id }),
-            dati('documenti', { ID_CONDOMINIO: id, ULTIMI: 'S' }), dati('scadenze', { ID_CONDOMINIO: id }))
-            .done(function (r, s, d, sc) {
+            dati('documenti', { ID_CONDOMINIO: id, ULTIMI: 'S' }), dati('scadenze', { ID_CONDOMINIO: id }),
+            dati('tipi_scadenza', { ID_CONDOMINIO: id }))
+            .done(function (r, s, d, sc, t) {
                 if (id !== st.id) { return; } // l'utente ha gia' cambiato condominio
                 st.condominio = r.dati.condominio;
                 st.sezioni = s.sezioni || [];
                 st.ultimi = d.documenti || [];
                 st.scadenze = sc.scadenze || [];
+                st.tipi = $.grep(t.tipi || [], function (x) { return x.FL_SCRITTURA === true; });
+                $('#ct-btn-nuova-scad').toggleClass('hidden', st.tipi.length === 0);
                 disegnaTestata(r.dati.condominio);
                 disegnaSintesi(r.dati.riepilogo || {});
                 disegnaCartelle();
@@ -377,17 +382,25 @@
             var g = numero(s.GIORNI_MANCANTI, 0);
             var quando = g < 0 ? 'scaduta da ' + (-g) + (g === -1 ? ' giorno' : ' giorni')
                 : (g === 0 ? 'oggi' : 'tra ' + g + (g === 1 ? ' giorno' : ' giorni'));
+            var azioni = s.FL_SCRITTURA === true ? '<div class="ct-scad-azioni">' +
+                '<button type="button" class="btn btn-white btn-xs" data-scad="chiudi" data-id="' + esc(s.ID_SCADENZA) +
+                '"><i class="fa fa-check" aria-hidden="true"></i> Eseguita</button> ' +
+                '<button type="button" class="btn btn-white btn-xs" data-scad="annulla" data-id="' + esc(s.ID_SCADENZA) +
+                '"><i class="fa fa-ban" aria-hidden="true"></i> Annulla</button></div>' : '';
             h += '<li class="ct-scad ct-scad-' + esc(String(s.SEMAFORO || '').toLowerCase()) + '">' +
                 '<span class="ct-scad-punto" aria-hidden="true"></span><div>' +
                 '<div class="ct-scad-titolo">' + esc(s.DESCRIZIONE) + '</div>' +
                 '<div class="ct-scad-meta">' + esc(data(s.DATA_SCADENZA)) + ' &middot; ' + esc(quando) +
-                ' &middot; ' + esc(s.TITOLO_SEZIONE) + '</div></div>' + chip(s.SEMAFORO) + '</li>';
+                ' &middot; ' + esc(s.TITOLO_SEZIONE) + '</div>' + azioni + '</div>' + chip(s.SEMAFORO) + '</li>';
         });
         $.each(st.sezioni, function (i, s) {
             if (s.SEMAFORO === 'DA_REGISTRARE') {
+                var registra = tipiDiSezione(s.ID_SEZIONE).length ? '<div class="ct-scad-azioni"><button type="button" ' +
+                    'class="btn btn-white btn-xs" data-scad="crea" data-sezione="' + esc(s.ID_SEZIONE) +
+                    '"><i class="fa fa-plus" aria-hidden="true"></i> Registra</button></div>' : '';
                 h += '<li class="ct-scad ct-scad-da_registrare"><span class="ct-scad-punto" aria-hidden="true"></span><div>' +
                     '<div class="ct-scad-titolo">' + esc(s.TITOLO) + '</div>' +
-                    '<div class="ct-scad-meta">Nessuna scadenza registrata per questa sezione</div></div>' +
+                    '<div class="ct-scad-meta">Nessuna scadenza registrata per questa sezione</div>' + registra + '</div>' +
                     chip('DA_REGISTRARE') + '</li>';
             }
         });
@@ -704,6 +717,150 @@
             h += '</ul>';
         }
         $('#ct-esito').removeClass('hidden ct-esito-ok ct-esito-ko').addClass(j.esito === 'OK' ? 'ct-esito-ok' : 'ct-esito-ko').html(h);
+    }
+
+    // ------------------------------------------------------------------ scadenze
+
+    function tipiDiSezione(idSezione) {
+        return $.grep(st.tipi || [], function (t) { return t.ID_SEZIONE === idSezione; });
+    }
+
+    function scadenzaPerId(id) {
+        for (var i = 0; i < st.scadenze.length; i++) {
+            if (st.scadenze[i].ID_SCADENZA === id) { return st.scadenze[i]; }
+        }
+        return null;
+    }
+
+    function oggiIso() {
+        var d = new Date(), m = d.getMonth() + 1, g = d.getDate();
+        return d.getFullYear() + '-' + (m < 10 ? '0' : '') + m + '-' + (g < 10 ? '0' : '') + g;
+    }
+
+    function preparaScadenze() {
+        $('#ct-btn-nuova-scad').on('click', function () { apriScadenza('crea', null, null); });
+        $('#ct-btn-storico-scad').on('click', apriStoricoScadenze);
+        $('#ct-scadenze').on('click', '[data-scad]', function () {
+            var $b = $(this);
+            apriScadenza($b.attr('data-scad'), numero($b.attr('data-id'), null), numero($b.attr('data-sezione'), null));
+        });
+        $('#ct-scad-tipo').on('change', infoTipo);
+        $('#ct-form-scadenza').on('submit', function (e) { e.preventDefault(); inviaScadenza(); });
+    }
+
+    function infoTipo() {
+        var id = numero($('#ct-scad-tipo').val(), null), t = null;
+        $.each(st.tipi || [], function (i, x) { if (x.ID_TIPO_SCADENZA === id) { t = x; } });
+        if (!t) { $('#ct-scad-tipo-info').text(''); return; }
+        $('#ct-scad-tipo-info').text('Sezione: ' + t.TITOLO_SEZIONE +
+            (t.PERIODICITA_MESI ? ' \u00b7 rinnovo ogni ' + t.PERIODICITA_MESI + ' mesi' : ' \u00b7 una tantum') +
+            (t.RIFERIMENTO_NORMATIVO ? ' \u00b7 ' + t.RIFERIMENTO_NORMATIVO : ''));
+    }
+
+    function apriScadenza(azione, idScadenza, idSezione) {
+        var s = idScadenza ? scadenzaPerId(idScadenza) : null;
+        if (azione !== 'crea' && !s) { return; }
+        $('#ct-scad-azione').val(azione);
+        $('#ct-scad-id').val(idScadenza || '');
+        $('#ct-scad-esito').addClass('hidden').empty();
+        $('#ct-scad-nota, #ct-scad-descrizione, #ct-scad-periodicita, #ct-scad-preavviso, #ct-scad-data').val('');
+        $('#ct-form-scadenza .ct-solo-crea').toggle(azione === 'crea');
+        $('#ct-form-scadenza .ct-solo-chiudi').toggle(azione === 'chiudi');
+        $('#ct-scad-invia').prop('disabled', false).toggleClass('btn-danger', azione === 'annulla')
+            .toggleClass('btn-primary', azione !== 'annulla')
+            .text(azione === 'crea' ? 'Registra' : (azione === 'chiudi' ? 'Segna come eseguita' : 'Annulla scadenza'));
+        $('#ct-scad-sotto').text((st.condominio ? st.condominio.DENOMINAZIONE : '') + (s ? ' \u00b7 ' + s.DESCRIZIONE : ''));
+
+        if (azione === 'crea') {
+            $('#ct-scad-titolo').text('Nuova scadenza');
+            var tipi = idSezione ? tipiDiSezione(idSezione) : st.tipi, $t = $('#ct-scad-tipo').empty();
+            $.each(tipi, function (i, t) {
+                $t.append($('<option>').val(t.ID_TIPO_SCADENZA).text(t.DESCRIZIONE + ' (' + t.TITOLO_SEZIONE + ')'));
+            });
+            infoTipo();
+        } else if (azione === 'chiudi') {
+            $('#ct-scad-titolo').text('Scadenza eseguita');
+            $('#ct-scad-esecuzione').val(oggiIso());
+            $('#ct-scad-rinnovo').text(s.PERIODICITA_MESI ? 'Verr\u00e0 registrata la prossima scadenza fra ' +
+                s.PERIODICITA_MESI + ' mesi dalla data di esecuzione.' : 'Scadenza una tantum: non verr\u00e0 rinnovata.');
+            var $d = $('#ct-scad-documento').empty().append($('<option>').val('').text('Nessuno'));
+            dati('documenti', { ID_CONDOMINIO: st.id, ID_SEZIONE: s.ID_SEZIONE }).done(function (j) {
+                $.each(j.documenti || [], function (i, doc) {
+                    if (doc.ORIGINE === 'WERA2026') {
+                        $d.append($('<option>').val(doc.ID_DOCUMENTO).text(doc.TITOLO + ' (' +
+                            data(doc.DATA_DOCUMENTO || doc.TS_CARICAMENTO) + ')'));
+                    }
+                });
+            });
+        } else {
+            $('#ct-scad-titolo').text('Annulla scadenza');
+        }
+        $('#ct-modale-scadenza').modal('show');
+    }
+
+    function inviaScadenza() {
+        var azione = $('#ct-scad-azione').val(), param = { ID_CONDOMINIO: st.id, AZIONE: azione, NOTA: $('#ct-scad-nota').val() };
+        if (azione === 'crea') {
+            $.extend(param, {
+                ID_TIPO_SCADENZA: $('#ct-scad-tipo').val(), DATA_SCADENZA: $('#ct-scad-data').val(),
+                DESCRIZIONE: $('#ct-scad-descrizione').val(), PERIODICITA_MESI: $('#ct-scad-periodicita').val(),
+                GIORNI_PREAVVISO: $('#ct-scad-preavviso').val()
+            });
+            if (!param.DATA_SCADENZA) { esitoScadenza('Indica la data di scadenza.', false); return; }
+        } else {
+            param.ID_SCADENZA = $('#ct-scad-id').val();
+            if (azione === 'chiudi') {
+                param.DATA_ESECUZIONE = $('#ct-scad-esecuzione').val();
+                param.ID_DOCUMENTO = $('#ct-scad-documento').val();
+            }
+        }
+        $('#ct-scad-invia').prop('disabled', true);
+        $.ajax({ url: API + '?FUNCTIONID=CentraleTermicaScadenza', type: 'POST', data: param, dataType: 'text' })
+            .done(function (t) {
+                var j;
+                try { j = JSON.parse(t); } catch (e) { sessioneScaduta(); return; }
+                if (j.esito !== 'OK') { esitoScadenza(j.messaggio, false); return; }
+                esitoScadenza(j.data_scadenza_successiva ? 'Fatto. Prossima scadenza: ' + data(j.data_scadenza_successiva) : 'Fatto.', true);
+                ricarica();
+                window.setTimeout(function () { $('#ct-modale-scadenza').modal('hide'); }, 1200);
+            })
+            .fail(function (xhr) {
+                var m = 'Operazione non riuscita';
+                try { m = JSON.parse(xhr.responseText).messaggio || m; } catch (e) { /* non JSON */ }
+                esitoScadenza(m, false);
+            });
+    }
+
+    function esitoScadenza(testo, ok) {
+        $('#ct-scad-esito').removeClass('hidden ct-esito-ok ct-esito-ko').addClass(ok ? 'ct-esito-ok' : 'ct-esito-ko').text(testo);
+        if (!ok) { $('#ct-scad-invia').prop('disabled', false); }
+    }
+
+    function apriStoricoScadenze() {
+        apriPannello({
+            sopra: st.condominio ? st.condominio.DENOMINAZIONE : '',
+            titolo: 'Storico scadenze',
+            sotto: 'Scadenze eseguite e annullate, la pi\u00f9 recente in cima.',
+            ritorno: $('#ct-btn-storico-scad')[0],
+            ricarica: function () {
+                dati('storico_scadenze', { ID_CONDOMINIO: st.id }).done(function (j) {
+                    var h = '';
+                    $.each(j.scadenze || [], function (i, s) {
+                        var chiusa = s.STATO === 'CHIUSA';
+                        h += '<li class="ct-voce"><i class="fa ' + (chiusa ? 'fa-check-circle ct-ico-ok' : 'fa-ban ct-ico-ko') +
+                            ' ct-doc-ico" aria-hidden="true"></i><div class="ct-voce-corpo"><div class="ct-doc-titolo">' +
+                            esc(s.DESCRIZIONE) + ' <span class="ct-chip ' + (chiusa ? 'ct-chip-ok">Eseguita' : 'ct-chip-neutro">Annullata') +
+                            '</span></div><div class="ct-voce-meta">' + esc(s.TITOLO_SEZIONE) + ' \u00b7 scadenza ' + esc(data(s.DATA_SCADENZA)) +
+                            (s.DATA_ESECUZIONE ? ' \u00b7 eseguita il ' + esc(data(s.DATA_ESECUZIONE)) : '') + '</div>' +
+                            (s.TITOLO_DOCUMENTO ? '<div class="ct-voce-meta"><i class="fa fa-paperclip" aria-hidden="true"></i> ' +
+                                esc(s.TITOLO_DOCUMENTO) + '</div><div class="ct-voce-azioni">' +
+                                azioniFile({ ID_DOCUMENTO: s.ID_DOCUMENTO_CHIUSURA }, '') + '</div>' : '') +
+                            (s.NOTA ? '<div class="ct-voce-descr">' + esc(s.NOTA) + '</div>' : '') + '</div></li>';
+                    });
+                    $('#ct-pannello-corpo').html('<ul class="ct-voci">' + (h || '<li class="ct-vuoto">Nessuna scadenza nello storico.</li>') + '</ul>');
+                }).fail(function (m) { if (m !== 'sessione') { $('#ct-pannello-corpo').html('<p class="ct-vuoto">' + esc(m) + '</p>'); } });
+            }
+        });
     }
 
     $(avvia);

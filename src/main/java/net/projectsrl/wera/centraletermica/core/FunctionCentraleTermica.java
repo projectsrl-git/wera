@@ -26,7 +26,7 @@ public class FunctionCentraleTermica extends FunctionCentraleTermica_base {
 
     static final String PATH_CENTRALE_TERMICA = "CT";
 
-    private String      _titolo               = "Centrale termica";
+    protected String    _titolo               = "Centrale termica";
 
     public FunctionCentraleTermica() {
 
@@ -71,6 +71,24 @@ public class FunctionCentraleTermica extends FunctionCentraleTermica_base {
         _applicationSrv.displayPage(getPageName(), templateData, res);
     }
 
+    /** Percorso nella topbar (le voci sono separate da "/"). */
+    protected String percorso() {
+
+        return "Home / " + _titolo;
+    }
+
+    /** Link delle voci del percorso, separati da ";" (l'ultima voce non e' un link). */
+    protected String catenaLink() {
+
+        return "astro?FUNCTIONID=Home;astro?FUNCTIONID=" + getMenuID();
+    }
+
+    /** Numero di voci del percorso con link. */
+    protected int livelloPercorso() {
+
+        return 1;
+    }
+
     /**
      * Percorso "Home / Centrale termica" e menu della pagina, costruiti come FunctionProjectWebApp_base.addMenu
      * farebbe per una voce del DB.
@@ -78,7 +96,7 @@ public class FunctionCentraleTermica extends FunctionCentraleTermica_base {
     @Override
     protected String getPathDescription(Map<String, Object> map) {
 
-        String pathDescri = "Home / " + _titolo;
+        String pathDescri = percorso();
         Object selezionato = map.get(WebAppConstants_itf.SELECTED_MENU_ITEM);
         if (selezionato instanceof MenuItem) {
             return pathDescri;
@@ -88,9 +106,8 @@ public class FunctionCentraleTermica extends FunctionCentraleTermica_base {
         if (lingua == null) {
             lingua = "it";
         }
-        MenuItem voce = new MenuItem("CT", "0", lingua, _titolo, getMenuID(), "astro?FUNCTIONID=" + getMenuID(), 1,
-                PATH_CENTRALE_TERMICA, pathDescri, "astro?FUNCTIONID=Home;astro?FUNCTIONID=" + getMenuID(), false, 0,
-                "fa fa-fire");
+        MenuItem voce = new MenuItem("CT", "0", lingua, _titolo, getMenuID(), "astro?FUNCTIONID=" + getMenuID(),
+                livelloPercorso(), PATH_CENTRALE_TERMICA, pathDescri, catenaLink(), false, 0, "fa fa-fire");
         map.put(WebAppConstants_itf.SELECTED_MENU_ITEM, voce);
         map.put(WebAppConstants_itf.PAGE_TITLE, pathDescri);
         map.put(WebAppConstants_itf.SELECTED_PATH, PATH_CENTRALE_TERMICA);

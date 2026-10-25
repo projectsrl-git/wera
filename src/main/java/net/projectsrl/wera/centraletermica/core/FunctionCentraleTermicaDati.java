@@ -34,7 +34,12 @@ public class FunctionCentraleTermicaDati extends FunctionCentraleTermica_base {
             "TIPO_MIME", "DIMENSIONE_BYTE", "NOTA", "TS_INS", "CARICATO_DA", "FL_CORRENTE" };
     private static final String[] COLONNE_SCADENZA   = { "ID_SCADENZA", "CODICE_TIPO", "DESCRIZIONE", "ID_SEZIONE",
             "TITOLO_SEZIONE", "DATA_SCADENZA", "GIORNI_MANCANTI", "GIORNI_PREAVVISO", "SEMAFORO",
-            "RIFERIMENTO_NORMATIVO" };
+            "RIFERIMENTO_NORMATIVO", "ID_TIPO_SCADENZA", "PERIODICITA_MESI", "FL_SCRITTURA" };
+    private static final String[] COLONNE_TIPO       = { "ID_TIPO_SCADENZA", "CODICE", "DESCRIZIONE", "ID_SEZIONE",
+            "TITOLO_SEZIONE", "PERIODICITA_MESI", "GIORNI_PREAVVISO", "RIFERIMENTO_NORMATIVO", "FL_SCRITTURA" };
+    private static final String[] COLONNE_STORICO    = { "ID_SCADENZA", "CODICE_TIPO", "DESCRIZIONE", "TITOLO_SEZIONE",
+            "DATA_SCADENZA", "STATO", "DATA_ESECUZIONE", "ID_DOCUMENTO_CHIUSURA", "TITOLO_DOCUMENTO", "NOTA",
+            "ID_SCADENZA_PRECEDENTE" };
     private static final String[] COLONNE_RIEPILOGO  = { "NR_DOCUMENTI", "PROSSIMA_SCADENZA",
             "DESCR_PROSSIMA_SCADENZA", "SEMAFORO_PROSSIMA_SCADENZA", "ULTIMO_INTERVENTO", "NR_SEZIONI",
             "NR_SEZIONI_CON_DOCUMENTI", "NR_SCADUTE", "NR_IN_SCADENZA" };
@@ -89,7 +94,17 @@ public class FunctionCentraleTermicaDati extends FunctionCentraleTermica_base {
                 parametri.put(chiave, ctx.parametro(chiave, ctx.getIdAzienda()));
             }
             parametri.put("PROFILO", ctx.getProfilo());
+            parametri.put("PUO_CONFIGURARE", Boolean.valueOf(ctx.puoConfigurare()));
             rispondi(res, "parametri", parametri);
+            return;
+        }
+
+        if ("config".equals(operazione)) {
+            if (!ctx.puoConfigurare()) {
+                negato(ctx, res, "Profilo non abilitato alla configurazione", null, "dati config");
+                return;
+            }
+            rispondi(res, "config", DatiConfigurazione.leggi(ctx));
             return;
         }
 
@@ -132,6 +147,11 @@ public class FunctionCentraleTermicaDati extends FunctionCentraleTermica_base {
         } else if ("scadenze".equals(operazione)) {
             rispondi(res, "scadenze", LetturaDataset.leggi(CentraleTermicaCostanti.DS_SCADENZE, param,
                     COLONNE_SCADENZA));
+        } else if ("tipi_scadenza".equals(operazione)) {
+            rispondi(res, "tipi", LetturaDataset.leggi(CentraleTermicaCostanti.DS_TIPI_SCADENZA, param, COLONNE_TIPO));
+        } else if ("storico_scadenze".equals(operazione)) {
+            rispondi(res, "scadenze", LetturaDataset.leggi(CentraleTermicaCostanti.DS_STORICO_SCADENZE, param,
+                    COLONNE_STORICO));
         } else {
             rispondiErrore(res, HttpServletResponse.SC_BAD_REQUEST, "OPERAZIONE non valida");
         }
