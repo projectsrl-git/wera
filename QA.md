@@ -25,6 +25,24 @@ Checklist:
 - [ ] home: i 4 numeri e le voci di dettaglio si popolano; card a pari altezza (2 col <1200px, 1 col mobile); grafici amcharts e DataTable "Richieste di ripartizione" ok.
 - [ ] profilo: tab Profilo/Crediti, salvataggio.
 
+## Collaudo PROD parallela /wera2026 su .106 — ricognizione (2026-10-25)
+Checklist (bozza da concordare): `.claude/2026-10-25-checklist-collaudo-prod.md`.
+- [x] **RISOLTO (DB)**: /wera2026 su .106 NON usava il DB di /wera. Su .70 (`webcont06`) il file hosts
+      mappa `db-wera-etc-host` -> 192.168.0.75 e le share su .81/.55; su .106 -> 192.168.0.67 e
+      share su .186/.185. Le cartelle di /wera (`ACS26V3`, `ANLCONFIG`, `import` recenti) sono solo
+      sulla share di .81. Operatore: /wera = .75, /weralegacy = .67. 10:57 su .106 `db-wera-etc-host` -> .75
+      (backup `/etc/hosts.bak-20261025-105745`, etckeeper `0134dbd`), reload del solo contesto
+      wera2026 (touch `WEB-INF/web.xml`, 3 s): login 200, 1 connessione stabilita verso .75 e
+      nessuna verso .67, gestit 200, nessun nuovo crash. Avviso atteso al reload:
+      `ClassCastException ObjectStreamClass$Caches` (Tomcat 9.0.43 + Java 25, innocuo).
+- [ ] share documenti: /wera2026 scrive ancora sulla share di .186, /wera su .81: da decidere.
+- [x] (superato: .67 e weralegacy) su .67 manca la vista materializzata `vista_scarico_data_massima`: 5 crash del 2026-10-25
+      09:30 (`DSLettureConsumiCondomini`, `...Dettaglio`, `...Condomino`); letture consumi,
+      storico e grafici del condomino in 500; l'upload rilevatori fallirebbe sul REFRESH della
+      vista dopo aver inserito le letture.
+- [x] da .106 raggiungibili 192.168.0.67 e .75 (5432) e i file server .81, .186, .55, .185 (445).
+- [x] crash di /wera2026 al 2026-10-25: solo i 5 della vista; mailcatcher: 2 file presenti (contenuto non controllato).
+
 ## Build con JDK 25 (2026-10-24)
 - [x] `mvn clean package` con Zulu 25 + Maven 3.9.12: BUILD SUCCESS, 621 sorgenti, bytecode 52
       (release 8); anche con JDK 8 + Maven 3.9.12. Maven 3.3.9 non e piu supportato.
