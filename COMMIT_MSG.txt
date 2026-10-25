@@ -1,7 +1,9 @@
-docs(centrale-termica): proposta documenti in 6 sezioni (richiesta cliente)
+docs(centrale-termica): disegno della gestione documentale parallela wera2026
 
-- analisi di categorie (PARAMETRI DOC), tabella file e pagina Visualizzazione
-- proposta fase 1 solo template (raggruppa i 16 codici esistenti senza
-  toccare il DB condiviso con /wera), fase 2 con config/Java, domande aperte
+- funzione nuova "Centrale termica 2026" (tabelle ct26_, cartella ct2026/,
+  FUNCTIONID Ct26*): /wera e il DB condiviso non cambiano comportamento
+- sezioni, contatti, soglie e profili come parametri; versioni e storico;
+  documenti di /wera mostrati in sola lettura
+- la proposta precedente (raggruppare le 16 categorie) e marcata superata
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

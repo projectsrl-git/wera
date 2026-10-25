@@ -1,6 +1,8 @@
 # 2026-10-25 — PROPOSTA: documenti della Centrale termica in 6 sezioni (richiesta di Andrea Speroni)
 
-STATO: proposta da approvare. Nessuna modifica fatta.
+STATO: SUPERATA (2026-10-25) da `2026-10-25-disegno-centrale-termica-2026.md`: l'operatore ha scelto
+una funzione nuova e parallela, solo per wera2026, invece di raggruppare le categorie nella pagina attuale.
+L'analisi dello stato attuale qui sotto resta valida.
 
 ## Richiesta (sintesi)
 Nella sezione Centrale termica, lato amministratore (e condomino), sostituire la lista di ~15 voci con
