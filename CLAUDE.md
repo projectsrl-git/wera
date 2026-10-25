@@ -65,6 +65,10 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   `eventi`; viste `v_documenti_wera`, `v_documenti`). DDL `src/resources/sql/wera2026/001-centrale_termica-ddl.sql`
   (idempotente, 9.4), creato SOLO sul DB locale; su .75 solo con ok a parte. Disegno approvato in
   `.claude/2026-10-25-disegno-db-centrale-termica.md`. Mai nomi `ct26_`, mai `PARAMETRI` di /wera.
+  Backend (ondata 1b, 2026-10-25, solo laptop): pacchetto `net.projectsrl.wera.centraletermica`, FUNCTIONID
+  `CentraleTermicaDati` (JSON), `CentraleTermicaUpload` (POST multipart, FUNCTIONID NELLA URL),
+  `CentraleTermicaDownload`; dataset `DS.DSCentraleTermica*` in fondo a config.cfg. Interfaccia e QA in
+  `.claude/2026-10-25-centrale-termica-java-upload-download.md`. Pagine: ondata 2 (da fare).
 - **In attesa di backend/dataset** (non fattibili senza toccare config.cfg/Java):
   "Andamento letture mensili (HCA)" in home (serve un DS MESE/VALORE in config.cfg),
   "Consumi per condominio", "Previsione consumi", "Scadenziario Centrale termica",
@@ -260,3 +264,6 @@ ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` 
   attiva da 500 (`ClassCastException ... MenuItem` in `getPathDescription`): passare prima
   da `FUNCTIONID=Logout`.
 - Credenziali di test: NON nel repo, le fornisce l'operatore in chat.
+- Hash password (preesistente, non toccare): `WebAppUtils.encryptSHA1` scrive ogni byte con
+  `Integer.toHexString` e PERDE gli zeri iniziali (38-39 caratteri, non lo SHA-1 standard): per un utente
+  di test calcolare l'hash allo stesso modo (es. perl `sprintf("%x")` per byte).

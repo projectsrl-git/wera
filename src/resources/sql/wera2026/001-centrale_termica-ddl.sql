@@ -600,6 +600,50 @@ COMMENT ON VIEW centrale_termica.v_documenti IS
 'Elenco unico dei documenti: origine WERA2026 (nuovi, versione corrente) e WERA (sola lettura, file non sovrascritto). Per i WERA il percorso si costruisce dal Java con cartella.upload.filemanager + nome_file. Nessun filtro di perimetro.';
 
 
+-- ---------------------------------------------------------------------------------------------
+-- v_scadenze: scadenze non annullate con semaforo (preavviso: scadenza, poi tipo, poi parametro)
+-- ---------------------------------------------------------------------------------------------
+
+CREATE OR REPLACE VIEW centrale_termica.v_scadenze AS
+SELECT x.id_scadenza,
+       x.id_azienda,
+       x.id_condominio,
+       x.id_tipo_scadenza,
+       t.codice                                       AS codice_tipo,
+       COALESCE(x.descrizione, t.descrizione)         AS descrizione,
+       t.id_sezione,
+       s.codice                                       AS codice_sezione,
+       s.titolo                                       AS titolo_sezione,
+       x.data_scadenza,
+       x.stato,
+       x.data_esecuzione,
+       x.id_documento_chiusura,
+       (x.data_scadenza - current_date)               AS giorni_mancanti,
+       g.giorni_preavviso,
+       CASE
+           WHEN x.stato <> 'APERTA' THEN NULL
+           WHEN x.data_scadenza < current_date THEN 'SCADUTA'
+           WHEN x.data_scadenza - current_date <= g.giorni_preavviso THEN 'IN_SCADENZA'
+           ELSE 'REGOLARE'
+       END::varchar(12)                               AS semaforo,
+       COALESCE(x.periodicita_mesi, t.periodicita_mesi) AS periodicita_mesi,
+       t.riferimento_normativo
+  FROM centrale_termica.scadenze x
+  JOIN centrale_termica.tipi_scadenza t ON t.id_tipo_scadenza = x.id_tipo_scadenza
+  JOIN centrale_termica.sezioni s ON s.id_sezione = t.id_sezione
+ CROSS JOIN LATERAL (
+       SELECT COALESCE(x.giorni_preavviso, t.giorni_preavviso,
+                       CASE WHEN p.valore ~ '^[0-9]{1,4}$' THEN p.valore::integer END,
+                       30) AS giorni_preavviso
+         FROM (SELECT centrale_termica.valore_parametro('SCADENZE.GIORNI_PREAVVISO', x.id_azienda) AS valore) p
+       ) g
+ WHERE x.stato <> 'ANNULLATA'
+   AND NOT s.fl_disattivo;
+
+COMMENT ON VIEW centrale_termica.v_scadenze IS
+'Scadenze APERTE e CHIUSE (non annullate) con giorni mancanti e semaforo SCADUTA / IN_SCADENZA / REGOLARE (solo aperte). Preavviso: scadenza, tipo, parametro SCADENZE.GIORNI_PREAVVISO dell''azienda, 30. Nessun filtro di perimetro.';
+
+
 -- =============================================================================================
 -- DATI INIZIALI (solo se mancano; id_utente_ins = 0 = script)
 -- =============================================================================================
@@ -677,6 +721,8 @@ SELECT v.chiave, v.valore, v.tipo_valore, v.descrizione, 0
        ('FILE.CARTELLA',             'centrale_termica/', 'TESTO', 'Sottocartella di directory.external_files per i file nuovi (mai upload/ di /wera).'),
        ('FILE.ESTENSIONI',           'pdf,p7m,jpg,jpeg,png,doc,docx,xls,xlsx,odt,ods,txt,zip', 'ELENCO', 'Estensioni ammesse al caricamento.'),
        ('FILE.DIMENSIONE_MAX_MB',    '25',          'NUMERO',   'Dimensione massima di un file caricato, in MB.'),
+       ('FILE.MAX_PER_CARICAMENTO',  '20',          'NUMERO',   'Numero massimo di file in un solo caricamento.'),
+       ('RIEPILOGO.SEZIONE_INTERVENTI', 'MANUTENZIONI', 'TESTO', 'Codice della sezione da cui si ricava "Ultimo intervento".'),
        ('DOWNLOAD.ZIP_MAX_FILE',     '50',          'NUMERO',   'Numero massimo di file in "Scarica selezionati".'),
        ('DOCUMENTI_WERA.VISIBILI',   'S',           'BOOLEANO', 'Mostra i documenti caricati da /wera (sola lettura).'),
        ('DOCUMENTI_WERA.ETICHETTA',  'da WERA',     'TESTO',    'Etichetta dei documenti caricati da /wera.')

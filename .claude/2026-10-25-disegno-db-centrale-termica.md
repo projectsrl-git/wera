@@ -126,7 +126,11 @@ CONFIGURAZIONE, ACCESSO_NEGATO), `id_utente`, `codice_profilo`, `id_azienda`, `i
   valide o vuote -> NULL (sul DB locale sono tutte vuote).
 - `v_documenti`: elenco unico `origine` WERA2026 (versione corrente, esclusi gli annullati) + WERA
   (file non sovrascritti), con le date anche come testo `AAAA/MM/GG` per i template.
-- Nessuna delle due filtra per perimetro: profilo e condomini li applica il Java.
+- `v_scadenze` (aggiunta nell'ondata 1b): scadenze non annullate con giorni mancanti e semaforo
+  SCADUTA / IN_SCADENZA / REGOLARE; preavviso = scadenza, tipo, parametro dell'azienda, 30.
+- Nessuna filtra per perimetro: profilo e condomini li applica il Java.
+- Parametri aggiunti nell'ondata 1b: `FILE.MAX_PER_CARICAMENTO` (20), `RIEPILOGO.SEZIONE_INTERVENTI`
+  (MANUTENZIONI). Backend: `2026-10-25-centrale-termica-java-upload-download.md`.
 
 ## Prova sul DB locale (2026-10-25)
 DB `wera` su 127.0.0.1, marcato `WERA-TEST`, PostgreSQL 9.4.26, UTF8. DDL lanciato due volte
