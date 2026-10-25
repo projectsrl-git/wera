@@ -149,7 +149,12 @@ patchato NEL SOLO ARTEFATTO, mai nel repo.
   80/443) condiviso con `gestit` (compilato per Java 25: la JVM del Tomcat non puo scendere a
   Java 8). Accesso root con il client OpenSSH di Windows (chiave nell'ssh-agent; l'ssh di
   Git Bash non puo sbloccare `id_ed25519`, che ha passphrase).
-  **STATO (2026-10-24): `/wera2026` IN ESERCIZIO su .106, versione `213a552`** (profilo prod
+  **STATO (2026-10-25): `/wera2026` IN ESERCIZIO su .106, versione `fc8da71`** (build JDK 25
+  release 8 con JAXB e senza xerces, deploy Jenkins #6; prima, dal 2026-10-24, `213a552`).
+  **Rete**: il FortiGate 192.168.0.253 (FGT60F-PAVIA) lascia uscire la LAN su Internet solo
+  dalle 06:00 alle 23:00 (policy 39 "Outgoing LAN 0.x", schedule "VPN h6-23"): build Jenkins
+  che scaricano da GitHub/Maven vanno lanciate in quella fascia. Proposta di policy H24 per
+  .115 (NON applicata) nelle note della sessione di diagnosi. Profilo prod
   senza mail), verificato: SMTP `127.0.0.1:1025`, Quartz vuoto, `jdbc/wera` -> .67, cartelle di
   wera e log `/usr/share/logs/wera2026/` sulle share CIFS, HTTP 200, nessun errore all'avvio su
   JVM **Zulu 25** (`/usr/lib/jvm/zulu25`). Setup del server fatto da una sessione separata:

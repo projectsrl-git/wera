@@ -43,8 +43,12 @@ Checklist:
       prod corretto (SMTP 127.0.0.1, Quartz vuoto, jdbc/wera). Poi tool JDK8 tolto dal config
       globale (backup `/var/lib/jenkins/config.xml.bak-20261024-204548`), Jenkins riavviato,
       `temurin-8-jdk` disinstallato (senza autoremove); resta solo temurin-25-jdk.
-- [ ] deploy di fc8da71 su .106 (job con DEPLOY) e giro manuale, incluso un upload dati
-      rilevatori XML.
+- [x] deploy di fc8da71 su .106: build Jenkins #6 (2026-10-25 09:00, Temurin 25), WAR sha256
+      5af7e310..., 41 jar con jaxb-api/jaxb-runtime/jakarta.activation e senza xercesImpl,
+      bytecode 52; config prod corretto (SMTP 127.0.0.1:1025, Quartz vuoto, jdbc/wera); avvio su
+      Zulu 25 senza errori, HTTP 200 su /wera2026 e /gestit, log e mailcatcher ok, crash vuota.
+      (La build #5 della sera prima era fallita per il blocco notturno del FortiGate, vedi CLAUDE.md.)
+- [ ] giro manuale su .106 con utente reale, incluso un upload dati rilevatori XML.
 
 ## wera2026 prod senza mail (2026-10-24)
 - [x] profilo prod: `mail.SMTPHost=127.0.0.1:1025`, mittente `noreply@test.invalid`; DB e

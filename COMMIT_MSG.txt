@@ -1,9 +1,9 @@
-docs(jenkins): job wera2026 PROD sulla JDK di sistema, Temurin 8 rimosso
+docs(deploy): wera2026 su .106 aggiornato a fc8da71 (build JDK 25)
 
-Su .115 il job "wera2026 PROD" compila ora con la JDK di sistema
-(Temurin 25) e Maven 3.9.16: tolti <jdk>JDK8</jdk> dal job e il tool JDK8
-dal config globale (con backup), temurin-8-jdk disinstallato. Build #3 da
-fc8da71 verificata: release 8, JAXB, una sola activation, niente xerces,
-config prod corretto. Aggiornati CLAUDE.md e QA.md.
+Deploy Jenkins #6 verificato su 192.168.0.106: WAR con JAXB e senza
+xercesImpl, bytecode Java 8, config prod corretto, avvio su Zulu 25 senza
+errori, HTTP 200, log e mailcatcher ok. Annotato in CLAUDE.md anche il
+blocco notturno dell'uscita Internet sul FortiGate (06:00-23:00, policy 39)
+che aveva fatto fallire la build #5.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
