@@ -142,3 +142,22 @@ Configurazione iniziale (superuser, dalla pagina Configurazione):
 - `v_documenti` ricalcola la finestra su tutti i file di /wera: tempo da misurare in Fase 3.
 - Nessuna mail di avviso scadenze (Quartz spento in wera2026).
 - Le scadenze e i documenti di prova esistono solo sul DB del laptop; in PROD si parte vuoti.
+
+## Registro di esecuzione
+### 2026-10-25 22:55 — Fase 1 (DB) e Fase 3 ESEGUITE (ok dell'operatore), deploy NON eseguito
+- Verifiche in sola lettura (sessione `default_transaction_read_only`): server 192.168.0.75, DB `wera`,
+  PostgreSQL 9.4.26 UTF8, nessun commento sul DB (non e' la copia di test), schema assente, utente
+  `postgres` superuser, categorie DOC 001-016, profili ADM/AMM/CEN/CON/INS, plpgsql presente.
+  File di /wera in PROD: 5 righe, 4 nomi distinti (categorie 001, 003 x3, 016), nessuna data prima
+  segnalazione valorizzata. Push del branch fatto prima (`585b7fd..703162c`).
+- DDL `001-centrale_termica-ddl.sql` (versione del commit `9bd5168`) eseguito alle 22:55:59, exit 0.
+- Dopo: 9 tabelle, 3 viste, 2 funzioni, 8 trigger; dati iniziali 8 sezioni, 23 permessi, 21 parametri,
+  16 categorie, 6 tipi; documenti/versioni/scadenze/eventi vuoti. `v_documenti_wera`: DOC_TECNICA 3
+  (1 file sovrascritto), FOTO 1, SICUREZZA 1; `v_documenti` 4 righe WERA. EXPLAIN ANALYZE di
+  `v_documenti` per un condominio: 0,6 ms.
+- Struttura di `public` (pg_dump -s -n public): contenuto IDENTICO prima e dopo (impronta delle righe
+  ordinate `0a991ca4...d273` in entrambi i casi). L'impronta del file grezzo cambia solo perche'
+  pg_dump sposta in alto le due tabelle lette dalle viste nuove (`elenco_file_importati_file_manager`,
+  `parametri`): nessuna riga aggiunta o tolta.
+- Restano prima del deploy: verifica della share su .106 scrivibile da tomcat, Apache .50, backup del
+  WAR in esercizio, poi Fase 4 (Jenkins).

@@ -63,7 +63,8 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   quella di /wera, nello schema PostgreSQL dedicato **`centrale_termica`** (tabelle `sezioni`,
   `sezioni_profili`, `documenti`, `versioni`, `tipi_scadenza`, `scadenze`, `parametri`, `categorie_wera`,
   `eventi`; viste `v_documenti_wera`, `v_documenti`). DDL `src/resources/sql/wera2026/001-centrale_termica-ddl.sql`
-  (idempotente, 9.4), creato SOLO sul DB locale; su .75 solo con ok a parte. Disegno approvato in
+  (idempotente, 9.4): sul DB locale e, dal 2026-10-25 22:55 (ok operatore), su .75 PROD (`public` invariato,
+  verificato con pg_dump). Deploy del WAR su .106: vedi `.claude/2026-10-25-piano-produzione-centrale-termica.md`. Disegno approvato in
   `.claude/2026-10-25-disegno-db-centrale-termica.md`. Mai nomi `ct26_`, mai `PARAMETRI` di /wera.
   Backend (ondata 1b, 2026-10-25, solo laptop): pacchetto `net.projectsrl.wera.centraletermica`, FUNCTIONID
   `CentraleTermicaDati` (JSON), `CentraleTermicaUpload` (POST multipart, FUNCTIONID NELLA URL),

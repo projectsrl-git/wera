@@ -314,6 +314,8 @@ Nota: `.claude/2026-10-25-centrale-termica-pagina.md` (backend: `...-java-upload
 - [ ] telefono: una colonna, nessuno scorrimento orizzontale
 - [ ] scadenze: Nuova (solo ADM/INS), Eseguita con rinnovo automatico, Annulla, Storico
 - [ ] configurazione (solo ADM): sezioni e permessi, tipi di scadenza, parametri con eccezioni, categorie WERA
+- [x] DDL su .75 PROD (2026-10-25 22:55): oggetti e dati iniziali verificati, struttura di public identica
+- [ ] PROD dopo il deploy: verifiche per profilo della Fase 5 del piano di produzione
 
 ## Rollback rapido
 Rimuovere (o commentare) le 5 righe aggiunte in fondo al blocco CSS di `included_head.include`: l'app torna esattamente all'aspetto precedente. Per le sole pagine standalone (errore/errorpage/message) rimuovere i 4 `<link>` aggiunti nell'head.
