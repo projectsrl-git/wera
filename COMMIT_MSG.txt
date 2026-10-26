@@ -1,38 +1,6 @@
-chore(deploy): istanza di test in parallelo alla produzione
+docs(registrazioni): registro coerente sulla prova in produzione
 
-Aggiunge gli strumenti per affiancare alla produzione un secondo
-contesto /wera-test su cui collaudare la GUI restylizzata, senza che
-possa interferire con l'esercizio.
+La riga delle 13:59 dava la prova come saltata; l'operatore l'ha poi fatta alle 15:40
+(sezione "prova completa"). Corretta la riga, nessun altro cambiamento.
 
-Interferenze neutralizzate:
-- Quartz: tasklist azzerata. SchedulerServletApplication.init() esce
-  prima di makeScheduler() se la property e' vuota, quindi nella JVM
-  di test non nasce alcun thread di schedulazione. Il job critico e'
-  JobImportAutomatico (ogni 5 min): rinomina in *_A e importa i file
-  della cartella ACS26, sottraendoli alla produzione.
-- Cartelle di I/O: directory.external_files e cartella.scarico.ACS
-  sono path assoluti, quindi condivisi fra istanze. Isolati su
-  /usr/share/webapps/wera-test/.
-- AnlConfig.xml: xmlconfig.ACS isolato. Necessario anche a Quartz
-  spento perche' FunctionScaricoDatiManuale lo riscrive da GUI,
-  azzerando la pianificazione dei modem di produzione.
-- Mail: SMTP dirottato su mailcatcher locale. I quattro job mail sono
-  read-only sul DB, il rischio e' il doppio invio a destinatari reali.
-- DB: datasource JNDI separato (jdbc/wera_test).
-
-File aggiunti:
-- deploy/make_test_war.bat       genera wera-test.war dal WAR buildato
-- deploy/patch_config_test.ps1   motore di patch del config (ISO-8859-1
-                                 e fine-riga LF preservati; fail-fast se
-                                 una chiave attesa non esiste piu')
-- deploy/patch-config-test.sh    equivalente per il server Linux
-- deploy/README.md               procedura, prerequisiti, avvertenze
-- .claude/2026-09-07-deploy-parallelo-test-gui.md  analisi e verifiche
-
-CLAUDE.md: nuova sezione sull'istanza di test.
-
-Nessuna modifica all'applicazione: config.cfg, codice Java, SQL e
-template FreeMarker restano invariati. La patch del config avviene
-solo sull'artefatto di deploy.
-
-Refs: CLAUDE.md (regole DA NON TOCCARE), QA.md (smoke test)
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

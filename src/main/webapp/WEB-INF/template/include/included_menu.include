@@ -24,6 +24,36 @@
 					</li>
 
 
+					<#-- 2026-10-25 Centrale termica wera2026: voce NON presente nel menu del DB (condiviso con /wera).
+					     CT_ACCESSO (S/N), CT_TITOLO_MENU e CT_NASCONDI_VOCE_WERA sono campi di sessione scritti dal
+					     pacchetto net.projectsrl.wera.centraletermica (parametri ACCESSO.PROFILI, ETICHETTA.TITOLO,
+					     MENU.VOCE_WERA.PROFILI). Alla prima pagina dopo il login non esistono ancora: la voce resta
+					     nascosta e lo script in fondo al menu chiede l'accesso al server. -->
+					<#if !(CT_ACCESSO?? && CT_ACCESSO == 'N')>
+					<li id="ct-voce-menu"<#if CT_PAGINA??> class="active"</#if><#if !CT_ACCESSO??> style="display:none"</#if>>
+						<a href="#"><i class="fa fa-fire"></i> <span class="nav-label" id="ct-voce-menu-testo"><#if CT_TITOLO_MENU??>${CT_TITOLO_MENU?html}<#else>Centrale termica</#if></span>&nbsp;<span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li<#if CT_SCHEDA?? && CT_SCHEDA == 'panoramica'> class="active"</#if>><a href="astro?FUNCTIONID=CentraleTermica">Panoramica</a></li>
+							<li<#if CT_SCHEDA?? && CT_SCHEDA == 'scadenze'> class="active"</#if>><a href="astro?FUNCTIONID=CentraleTermicaScadenze">Scadenze e documenti</a></li>
+							<li<#if CT_SCHEDA?? && CT_SCHEDA == 'calendario'> class="active"</#if>><a href="astro?FUNCTIONID=CentraleTermicaCalendario">Calendario</a></li>
+							<li<#if CT_SCHEDA?? && CT_SCHEDA == 'avvisi'> class="active"</#if>><a href="astro?FUNCTIONID=CentraleTermicaAvvisi">Alerting e storico invii</a></li>
+							<#if !CT_ACCESSO?? || (CT_CONFIGURA?? && CT_CONFIGURA == 'S')>
+							<li id="ct-voce-config"<#if CT_SCHEDA?? && CT_SCHEDA == 'configurazione'> class="active"</#if><#if !CT_CONFIGURA??> style="display:none"</#if>><a href="astro?FUNCTIONID=CentraleTermicaConfigurazione">Configurazione</a></li>
+							</#if>
+						</ul>
+					</li>
+					</#if>
+
+					<#-- 2026-10-26 Richieste di registrazione wera2026 (schema registrazioni): voce NON presente nel menu
+					     del DB. REG_ACCESSO (S/N) e REG_IN_ATTESA sono campi di sessione scritti dal pacchetto
+					     net.projectsrl.wera.registrazioni (parametro APPROVAZIONE.PROFILI). Finche' non esistono la voce
+					     resta nascosta e lo script in fondo al menu chiede l'accesso al server. -->
+					<#if !(REG_ACCESSO?? && REG_ACCESSO == 'N')>
+					<li id="reg-voce-menu"<#if REG_PAGINA??> class="active"</#if><#if !REG_ACCESSO??> style="display:none"</#if>>
+						<a href="astro?FUNCTIONID=RegistrazioniRichieste"><i class="fa fa-user-plus"></i> <span class="nav-label">Registrazioni</span> <span class="label label-warning pull-right" id="reg-menu-conta"<#if !(REG_IN_ATTESA?? && REG_IN_ATTESA != '0')> style="display:none"</#if>><#if REG_IN_ATTESA??>${REG_IN_ATTESA?html}</#if></span></a>
+					</li>
+					</#if>
+
 					<#list menu_list as menuItem>
 					<#if menuItem.getItemLevel()=1>
 					<li<#if SELECTED_PATH?starts_with(menuItem.getPath())> class="active"</#if>>
@@ -60,5 +90,64 @@
 					
 					
 					
+				<#-- 2026-10-25 Centrale termica: accesso alla voce (prima pagina dopo il login) e vecchia voce
+				     "Centrali termiche" nascosta ai profili fuori da MENU.VOCE_WERA.PROFILI. -->
+				<#if !CT_ACCESSO?? || (CT_NASCONDI_VOCE_WERA?? && CT_NASCONDI_VOCE_WERA == 'S')>
+				<script>
+				(function ($) {
+					if (!$) { return; }
+					function nascondiVoceWera() {
+						$('#side-menu > li').each(function () {
+							var $li = $(this), $link = $li.find('a[href*="FUNCTIONID="]'), tutti = $link.length > 0;
+							if ($li.attr('id') === 'ct-voce-menu') { return; }
+							$link.each(function () {
+								if (!/FUNCTIONID=[A-Za-z]*FileManager($|[^A-Za-z])/.test(this.getAttribute('href') || '')) { tutti = false; }
+							});
+							if (tutti) { $li.hide(); }
+						});
+					}
+					$(function () {
+						<#if CT_ACCESSO??>
+						nascondiVoceWera();
+						<#else>
+						$.ajax({ url: 'astro', data: { FUNCTIONID: 'CentraleTermicaDati', OPERAZIONE: 'accesso' }, dataType: 'json', cache: false })
+							.done(function (j) {
+								var a = j && j.accesso;
+								if (!a) { return; }
+								if (a.abilitato) {
+									if (a.titolo) { $('#ct-voce-menu-testo').text(a.titolo); }
+									$('#ct-voce-menu').show();
+									if (a.configura) { $('#ct-voce-config').show(); }
+								} else {
+									$('#ct-voce-menu').remove();
+								}
+								if (a.nascondi_voce_wera) { nascondiVoceWera(); }
+							});
+						</#if>
+					});
+				}(window.jQuery));
+				</script>
+				</#if>
+
+				<#-- 2026-10-26 Richieste di registrazione: accesso alla voce e contatore delle richieste in attesa
+				     (aggiornato a ogni pagina per chi e' abilitato; per gli altri una sola chiamata, poi REG_ACCESSO=N). -->
+				<#if !(REG_ACCESSO?? && REG_ACCESSO == 'N')>
+				<script>
+				(function ($) {
+					if (!$) { return; }
+					$(function () {
+						$.ajax({ url: 'astro', data: { FUNCTIONID: 'RegistrazioniDati', OPERAZIONE: 'accesso' }, dataType: 'json', cache: false })
+							.done(function (j) {
+								var a = j && j.accesso;
+								if (!a) { return; }
+								if (!a.abilitato) { $('#reg-voce-menu').remove(); return; }
+								$('#reg-voce-menu').show();
+								$('#reg-menu-conta').text(a.in_attesa || '').toggle(a.in_attesa > 0);
+							});
+					});
+				}(window.jQuery));
+				</script>
+				</#if>
+
 			</div>
 		</nav>

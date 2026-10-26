@@ -2952,7 +2952,7 @@
     
         $(document).ready(function(){
 
-        	<#if SALVATAGGIO_IN_CORSO?exists && SALVATAGGIO_IN_CORSO!=''>
+        	<#if SALVATAGGIO_IN_CORSO?exists && ((SALVATAGGIO_IN_CORSO?is_boolean && SALVATAGGIO_IN_CORSO) || (SALVATAGGIO_IN_CORSO?is_string && SALVATAGGIO_IN_CORSO!=''))>
         	Swal.fire({
 			    title: 'Salvataggio in corso...',
 			    text: 'Attendere il completamento dell’elaborazione.',

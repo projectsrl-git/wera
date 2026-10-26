@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+
+	<#-- Centrale termica wera2026 (2026-10-25). Template ASCII con entita' HTML (Page.Encoding ISO-8859-1).
+	     Dati da FUNCTIONID=CentraleTermicaDati (JSON), logica in js/wera-centrale-termica.js. -->
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="wrapper wrapper-content ct-page" id="ct-page"
+			     data-titolo="<#if CT_TITOLO?exists>${CT_TITOLO?html}</#if>"
+			     data-id-condominio="<#if CT_ID_CONDOMINIO?exists>${CT_ID_CONDOMINIO?html}</#if>">
+
+				<!-- testata (mockup di Andrea): titolo, condominio, gestione; scelta del condominio a destra -->
+				<section class="ctp-testa" aria-labelledby="ct-titolo-h1">
+					<div class="ctp-testa-sx">
+						<h1 id="ct-titolo-h1"><#if CT_TITOLO?exists>${CT_TITOLO?html}<#else>Centrale termica</#if></h1>
+						<p class="ctp-sotto"><span id="ct-nome-condominio">&nbsp;</span><span class="ctp-sep" aria-hidden="true">&middot;</span><span id="ct-indirizzo"></span></p>
+					</div>
+					<div class="ctp-testa-dx">
+						<div class="ctp-scelta">
+							<label for="ct-condominio">Seleziona condominio</label>
+							<select id="ct-condominio" class="form-control" style="width:100%"></select>
+						</div>
+						<div class="ctp-azioni">
+							<button type="button" class="btn btn-primary btn-sm hidden" id="ct-btn-carica">
+								<i class="fa fa-cloud-upload" aria-hidden="true"></i> Carica documenti
+							</button>
+							<a href="astro?FUNCTIONID=CentraleTermicaConfigurazione" class="btn btn-white btn-sm hidden" id="ct-btn-config">
+								<i class="fa fa-sliders" aria-hidden="true"></i> Configurazione
+							</a>
+						</div>
+					</div>
+				</section>
+				<p class="ctp-gestione hidden" id="ct-gestione"></p>
+
+				<div class="ct-avviso hidden" id="ct-avviso" role="alert"></div>
+
+				<!-- riquadri di sintesi -->
+				<section class="ctp-kpi" aria-label="Sintesi">
+					<div class="ctp-kpi-box">
+						<span class="ctp-kpi-ico"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+						<div><div class="ctp-kpi-lbl">Documenti</div><div class="ctp-kpi-val" id="ct-kpi-documenti">&ndash;</div></div>
+					</div>
+					<div class="ctp-kpi-box">
+						<span class="ctp-kpi-ico"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+						<div><div class="ctp-kpi-lbl" id="ct-kpi-scadenza-lbl">Prossima scadenza</div><div class="ctp-kpi-val" id="ct-kpi-scadenza">&ndash;</div></div>
+					</div>
+					<div class="ctp-kpi-box">
+						<span class="ctp-kpi-ico ctp-kpi-ico-grigio"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+						<div><div class="ctp-kpi-lbl">Ultimo intervento</div><div class="ctp-kpi-val" id="ct-kpi-intervento">&ndash;</div></div>
+					</div>
+				</section>
+
+				<div class="row">
+					<div class="col-lg-8">
+						<!-- documenti della centrale: ricerca + cartelle -->
+						<section class="ct-card ctp-docs" aria-labelledby="ct-titolo-sezioni">
+							<div class="ct-card-testa"><h3 id="ct-titolo-sezioni">Documenti della centrale</h3></div>
+							<div class="ctp-barra">
+								<div class="ctp-cerca">
+									<i class="fa fa-search" aria-hidden="true"></i>
+									<input type="search" id="ct-cerca" class="form-control" placeholder="Cerca un documento..." aria-label="Cerca un documento">
+								</div>
+								<button type="button" class="btn btn-primary btn-sm" id="ct-btn-scarica-sel" disabled>
+									<i class="fa fa-download" aria-hidden="true"></i> Scarica selezionati <span class="ct-conta" id="ct-conta-sel"></span>
+								</button>
+							</div>
+							<div class="hidden" id="ct-risultati">
+								<div class="table-responsive">
+									<table class="table ct-tabella"><tbody id="ct-risultati-righe"></tbody></table>
+								</div>
+							</div>
+							<ul class="ctp-cartelle" id="ct-cartelle"></ul>
+							<div class="hidden" id="ct-altre-blocco">
+								<h4 class="ctp-altre-tit">Altre sezioni</h4>
+								<ul class="ctp-cartelle" id="ct-altre"></ul>
+							</div>
+						</section>
+
+						<!-- ultimi documenti -->
+						<section class="ct-card" aria-labelledby="ct-titolo-ultimi">
+							<div class="ct-card-testa"><h3 id="ct-titolo-ultimi">Ultimi documenti aggiornati</h3></div>
+							<div class="table-responsive">
+								<table class="table ct-tabella ctp-ultimi">
+									<thead>
+										<tr>
+											<th class="ct-col-sel"><input type="checkbox" id="ct-sel-tutti" aria-label="Seleziona tutti"></th>
+											<th>Documento</th>
+											<th class="hidden-xs">Data</th>
+											<th class="text-right">Azioni</th>
+										</tr>
+									</thead>
+									<tbody id="ct-ultimi"></tbody>
+								</table>
+							</div>
+							<a href="#" class="ctp-link" id="ct-btn-archivio">Consulta archivio storico <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+						</section>
+					</div>
+
+					<div class="col-lg-4">
+						<!-- scadenze e documenti -->
+						<section class="ct-card" aria-labelledby="ct-titolo-scadenze">
+							<div class="ct-card-testa">
+								<h3 id="ct-titolo-scadenze">Scadenze e documenti</h3>
+								<div class="ct-card-azioni">
+									<button type="button" class="btn btn-white btn-xs" id="ct-btn-storico-scad"><i class="fa fa-history" aria-hidden="true"></i> Storico</button>
+									<button type="button" class="btn btn-primary btn-xs hidden" id="ct-btn-nuova-scad"><i class="fa fa-plus" aria-hidden="true"></i> Nuova</button>
+								</div>
+							</div>
+							<ul class="ct-scadenze" id="ct-scadenze"></ul>
+							<a href="astro?FUNCTIONID=CentraleTermicaScadenze" class="ctp-link" id="ct-link-scadenziario">Apri lo scadenziario <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+						</section>
+
+						<!-- assistenza -->
+						<section class="ct-card ct-assistenza hidden" id="ct-assistenza" aria-labelledby="ct-titolo-assistenza">
+							<div class="ct-card-testa"><h3 id="ct-titolo-assistenza">Assistenza</h3></div>
+							<p class="ctp-assist-sotto">Referenti e contatti dell'impianto</p>
+							<p class="ct-ufficio" id="ct-ufficio"></p>
+							<ul class="ct-contatti" id="ct-contatti"></ul>
+							<div class="ct-assistenza-azioni" id="ct-assistenza-azioni"></div>
+						</section>
+					</div>
+				</div>
+
+			</div>
+
+			<!-- pannello laterale: documenti di una sezione / archivio / versioni -->
+			<div class="ct-velo" id="ct-velo" hidden></div>
+			<aside class="ct-pannello" id="ct-pannello" role="dialog" aria-modal="true" aria-labelledby="ct-pannello-titolo" hidden>
+				<div class="ct-pannello-testa">
+					<div>
+						<div class="ct-eyebrow" id="ct-pannello-sopra"></div>
+						<h2 id="ct-pannello-titolo"></h2>
+						<p class="ct-pannello-sotto" id="ct-pannello-sotto"></p>
+					</div>
+					<button type="button" class="ct-chiudi" id="ct-pannello-chiudi" aria-label="Chiudi">&times;</button>
+				</div>
+				<div class="ct-pannello-azioni" id="ct-pannello-azioni"></div>
+				<div class="ct-pannello-corpo" id="ct-pannello-corpo"></div>
+			</aside>
+
+			<!-- caricamento -->
+			<div class="modal inmodal fade" id="ct-modale-carica" tabindex="-1" role="dialog" aria-labelledby="ct-carica-titolo" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content ct-modale">
+						<form id="ct-form-carica" novalidate>
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">&times;</button>
+								<h4 class="modal-title" id="ct-carica-titolo">Carica documenti</h4>
+								<p class="ct-carica-sotto" id="ct-carica-sotto"></p>
+							</div>
+							<div class="modal-body">
+								<input type="hidden" id="ct-carica-documento" value="">
+								<div class="form-group" id="ct-gruppo-sezione">
+									<label for="ct-carica-sezione">Sezione</label>
+									<select id="ct-carica-sezione" class="form-control"></select>
+								</div>
+								<div class="form-group" id="ct-gruppo-titolo">
+									<label for="ct-carica-titolo-doc">Titolo <span class="ct-facoltativo">(se vuoto: il nome del file)</span></label>
+									<input type="text" id="ct-carica-titolo-doc" class="form-control" maxlength="200">
+								</div>
+								<div class="row">
+									<div class="col-sm-6 form-group" id="ct-gruppo-data">
+										<label for="ct-carica-data">Data del documento</label>
+										<input type="date" id="ct-carica-data" class="form-control">
+									</div>
+									<div class="col-sm-6 form-group hidden" id="ct-gruppo-nota">
+										<label for="ct-carica-nota">Nota sulla versione</label>
+										<input type="text" id="ct-carica-nota" class="form-control" maxlength="500">
+									</div>
+								</div>
+								<div class="form-group" id="ct-gruppo-descrizione">
+									<label for="ct-carica-descrizione">Descrizione <span class="ct-facoltativo">(facoltativa)</span></label>
+									<textarea id="ct-carica-descrizione" class="form-control" rows="2" maxlength="4000"></textarea>
+								</div>
+								<div class="ct-drop" id="ct-drop" tabindex="0" role="button" aria-describedby="ct-drop-regole">
+									<i class="fa fa-cloud-upload" aria-hidden="true"></i>
+									<p><b>Trascina qui i file</b> oppure <span class="ct-link">sfoglia</span></p>
+									<p class="ct-drop-regole" id="ct-drop-regole"></p>
+									<input type="file" id="ct-carica-file" multiple class="ct-file-nascosto">
+								</div>
+								<ul class="ct-file-scelti" id="ct-file-scelti"></ul>
+								<div class="ct-progresso hidden" id="ct-progresso"><i></i></div>
+								<div class="ct-esito hidden" id="ct-esito" role="status"></div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-white" data-dismiss="modal">Chiudi</button>
+								<button type="submit" class="btn btn-primary" id="ct-carica-invia" disabled>Carica</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<!-- scadenza: registra / chiudi / annulla -->
+			<div class="modal inmodal fade" id="ct-modale-scadenza" tabindex="-1" role="dialog" aria-labelledby="ct-scad-titolo" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content ct-modale">
+						<form id="ct-form-scadenza" novalidate>
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">&times;</button>
+								<h4 class="modal-title" id="ct-scad-titolo">Scadenza</h4>
+								<p class="ct-carica-sotto" id="ct-scad-sotto"></p>
+							</div>
+							<div class="modal-body">
+								<input type="hidden" id="ct-scad-azione" value="">
+								<input type="hidden" id="ct-scad-id" value="">
+								<div class="ct-solo-crea">
+									<div class="form-group">
+										<label for="ct-scad-tipo">Tipo di scadenza</label>
+										<select id="ct-scad-tipo" class="form-control"></select>
+										<p class="ct-aiuto" id="ct-scad-tipo-info"></p>
+									</div>
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<label for="ct-scad-data">Data di scadenza</label>
+											<input type="date" id="ct-scad-data" class="form-control" required>
+										</div>
+										<div class="col-sm-6 form-group">
+											<label for="ct-scad-periodicita">Rinnovo ogni (mesi) <span class="ct-facoltativo">(vuoto: dal tipo)</span></label>
+											<input type="number" id="ct-scad-periodicita" class="form-control" min="1" max="240">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-sm-8 form-group">
+											<label for="ct-scad-descrizione">Descrizione <span class="ct-facoltativo">(es. secondo generatore)</span></label>
+											<input type="text" id="ct-scad-descrizione" class="form-control" maxlength="200">
+										</div>
+										<div class="col-sm-4 form-group">
+											<label for="ct-scad-preavviso">Preavviso (giorni)</label>
+											<input type="number" id="ct-scad-preavviso" class="form-control" min="0" max="365">
+										</div>
+									</div>
+								</div>
+								<div class="ct-solo-chiudi">
+									<div class="row">
+										<div class="col-sm-6 form-group">
+											<label for="ct-scad-esecuzione">Eseguita il</label>
+											<input type="date" id="ct-scad-esecuzione" class="form-control">
+										</div>
+										<div class="col-sm-6 form-group">
+											<label for="ct-scad-documento">Documento <span class="ct-facoltativo">(facoltativo)</span></label>
+											<select id="ct-scad-documento" class="form-control"></select>
+										</div>
+									</div>
+									<p class="ct-aiuto" id="ct-scad-rinnovo"></p>
+								</div>
+								<div class="form-group">
+									<label for="ct-scad-nota">Nota</label>
+									<textarea id="ct-scad-nota" class="form-control" rows="2" maxlength="2000"></textarea>
+								</div>
+								<div class="ct-esito hidden" id="ct-scad-esito" role="status"></div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-white" data-dismiss="modal">Chiudi</button>
+								<button type="submit" class="btn btn-primary" id="ct-scad-invia">Salva</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+
+		</div>
+
+	</div>
+
+	<script src="js/wera-centrale-termica.js?20261026c"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+
+	<#-- Richieste di registrazione wera2026 (2026-10-26), solo profili di APPROVAZIONE.PROFILI (schema registrazioni).
+	     Template ASCII con entita' HTML. Dati: RegistrazioniDati (elenco, dettaglio, foto); azioni: RegistrazioniEsito.
+	     Logica in js/wera-registrazioni-richieste.js, stile in css/wera-registrazioni.css (classi reg-). -->
+	<link href="css/wera-registrazioni.css?20261026" rel="stylesheet">
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="wrapper wrapper-content ct-page reg-page" id="reg-page" data-id-richiesta="<#if REG_ID_RICHIESTA?exists>${REG_ID_RICHIESTA?html}</#if>">
+
+				<section class="ct-hero">
+					<div class="ct-hero-testo">
+						<div class="ct-eyebrow"><i class="fa fa-user-plus" aria-hidden="true"></i> Registrazioni</div>
+						<h1>Richieste di registrazione</h1>
+						<p class="ct-indirizzo">Amministratori che chiedono l'accesso a WERA dalla pagina pubblica. Verifica dati e ripartitori,
+						poi approva: l'utente nasce con il profilo amministratore e la password scelta dal richiedente.</p>
+					</div>
+					<div class="ct-hero-azioni">
+						<a href="astro?FUNCTIONID=RegistrazioneAmministratore" target="_blank" rel="noopener" class="btn btn-white"><i class="fa fa-external-link" aria-hidden="true"></i> Apri il modulo pubblico</a>
+					</div>
+				</section>
+
+				<#if REG_MAIL_ATTIVA?exists && REG_MAIL_ATTIVA == 'N'>
+				<div class="ct-avviso ct-avviso-info" role="note"><i class="fa fa-envelope-o" aria-hidden="true"></i>
+					Le mail di questa funzione sono spente (parametro MAIL.ATTIVA = N): ricevute ed esiti non arrivano ai richiedenti.
+					Dopo l'approvazione avvisa il richiedente di persona: entra con la sua email e la password che ha scelto.</div>
+				</#if>
+
+				<div class="ct-avviso hidden" id="reg-avviso" role="alert"></div>
+
+				<div class="reg-stati" id="reg-stati" role="tablist" aria-label="Stato delle richieste">
+					<button type="button" class="reg-stato on" data-stato="IN_ATTESA">In attesa <b data-conta="IN_ATTESA">0</b></button>
+					<button type="button" class="reg-stato" data-stato="APPROVATA">Approvate <b data-conta="APPROVATA">0</b></button>
+					<button type="button" class="reg-stato" data-stato="RIFIUTATA">Rifiutate <b data-conta="RIFIUTATA">0</b></button>
+					<button type="button" class="reg-stato" data-stato="ANNULLATA">Annullate <b data-conta="ANNULLATA">0</b></button>
+					<button type="button" class="reg-stato" data-stato="TUTTE">Tutte <b data-conta="TUTTE">0</b></button>
+				</div>
+
+				<div class="reg-layout">
+					<section class="ct-card reg-elenco" aria-label="Elenco delle richieste">
+						<ul class="reg-voci" id="reg-voci"><li class="ct-vuoto">Caricamento&hellip;</li></ul>
+					</section>
+
+					<section class="ct-card reg-dettaglio" id="reg-dettaglio" aria-live="polite">
+						<div class="reg-vuoto">
+							<i class="fa fa-hand-o-left" aria-hidden="true"></i>
+							<p>Scegli una richiesta dall'elenco per vedere i dati, le foto dei ripartitori e approvarla.</p>
+						</div>
+					</section>
+				</div>
+
+			</div>
+
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+
+		</div>
+
+	</div>
+
+	<script src="js/wera-registrazioni-richieste.js?20261026"></script>
+
+</body>
+
+</html>

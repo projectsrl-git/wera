@@ -54,6 +54,12 @@
 			<groupId>javax.mail</groupId>
 			<artifactId>mail</artifactId>
 			<version>1.4.7</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.activation</groupId>
+					<artifactId>activation</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 <dependency>
@@ -86,6 +92,12 @@
 			<groupId>fop</groupId>
 			<artifactId>fop</artifactId>
 			<version>0.20.5</version>
+			<exclusions>
+				<exclusion>
+					<groupId>xerces</groupId>
+					<artifactId>xercesImpl</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>		
 		
 		<dependency>
@@ -151,16 +163,41 @@
         </dependency>
 		
 
+		<!-- JAXB: rimosso dal JDK da Java 11; namespace javax (Tomcat 9), non jakarta -->
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.activation</groupId>
+					<artifactId>javax.activation-api</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
+			<version>2.3.9</version>
+		</dependency>
+		<!-- unica implementazione di javax.activation (usata da javax.mail e da JAXB) -->
+		<dependency>
+			<groupId>com.sun.activation</groupId>
+			<artifactId>jakarta.activation</artifactId>
+			<version>1.2.2</version>
+		</dependency>
 	</dependencies>
 	
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
+				<version>3.13.0</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<!-- si compila con JDK 25 (anche 8+), bytecode Java 8: gira su Java 8 e su Java 25 -->
+					<release>8</release>
+					<!-- i sorgenti sono ISO-8859-1/Cp1252: da Java 18 javac userebbe UTF-8 -->
+					<encoding>Cp1252</encoding>
 				</configuration>
 			</plugin>
 		</plugins>

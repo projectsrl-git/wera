@@ -134,6 +134,20 @@ FileManager								net.projectsrl.wera.filemanager.core.FunctionFileManager					
 InserimentoFileManager					net.projectsrl.wera.filemanager.core.FunctionInserimentoFileManager							00
 CalendarioFileManager					net.projectsrl.wera.filemanager.core.FunctionCalendarioFileManager							00
 
+# Centrale termica wera2026 (schema centrale_termica)
+CentraleTermica						net.projectsrl.wera.centraletermica.core.FunctionCentraleTermica							00
+CentraleTermicaDati					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaDati						00
+CentraleTermicaUpload					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaUpload						00
+CentraleTermicaDownload				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaDownload					00
+CentraleTermicaStato					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaStato						00
+CentraleTermicaScadenza				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaScadenza					00
+CentraleTermicaConfigurazione			net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaConfigurazione				00
+CentraleTermicaConfigurazioneSalva		net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaConfigurazioneSalva			00
+CentraleTermicaScadenze				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaScadenziario				00
+CentraleTermicaCalendario				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaScadenziario				00
+CentraleTermicaAvvisi					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaScadenziario				00
+CentraleTermicaAvvisiInvio				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaAvvisiInvio				00
+
 ConfigurazioneErrori					net.projectsrl.wera.utility.core.FunctionConfigurazioneErrori								00
 InserimentoConfigurazioneErrori			net.projectsrl.wera.utility.core.FunctionInserimentoConfigurazioneErrori					00
 
@@ -177,3 +191,7 @@ StampaRipartizioniUNI2018 				net.projectsrl.wera.ripartizioniuni2018.core.Funct
 
 InserimentoConfigurazioneCsv       		net.projectsrl.wera.configurazione.core.FunctionInserimentoConfigurazioneCsv				00
 RicercaConfigurazioneCsv				net.projectsrl.wera.configurazione.core.FunctionRicercaConfigurazioneCsv					00
+RegistrazioneAmministratore			net.projectsrl.wera.registrazioni.FunctionRegistrazioneAmministratore			00
+RegistrazioniRichieste				net.projectsrl.wera.registrazioni.FunctionRegistrazioniRichieste				00
+RegistrazioniDati					net.projectsrl.wera.registrazioni.FunctionRegistrazioniDati					00
+RegistrazioniEsito					net.projectsrl.wera.registrazioni.FunctionRegistrazioniEsito					00
