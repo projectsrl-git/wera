@@ -272,3 +272,17 @@ Rollback: WAR precedente; il DDL 002 e' innocuo per /wera (rollback SQL nell'int
   rimandate. Se serve, tenere `ALERT.ATTIVO=N` finche' l'SMTP non e' quello reale (decisione dell'operatore).
   (2) il token compare nell'access log di Tomcat su .106 (`/var/log/tomcat9/localhost_access_log.*`, leggibile
   solo da root/adm).
+
+### 2026-10-26 10:29 — `ALERT.ATTIVO=N` su .75 (ok dell'operatore): avvisi spenti finche' l'SMTP e' il mailcatcher
+- Motivo: con il profilo prod la posta va al mailcatcher, ma il motore registra `INVIATO` in `invii_avvisi`
+  (append-only) e quelle soglie non verrebbero piu' rimandate quando si accendera' l'SMTP vero.
+- Prima: `ALERT.ATTIVO`=S (globale, id_parametro 22, mai modificato, nessuna eccezione per azienda);
+  18 scadenze di cui 9 aperte (contratti caricati oggi), 56 documenti, **0 invii** (nessuna soglia consumata).
+- `UPDATE centrale_termica.parametri SET valore='N', ts_mod=now() WHERE chiave='ALERT.ATTIVO' AND id_azienda IS
+  NULL AND valore='S'` in transazione, con controllo del server (.75) e di 1 sola riga: fatto alle 10:29:29.
+  (Scritto direttamente sul DB, quindi senza evento in `centrale_termica.eventi`.)
+- Prova: la riga del cron eseguita a mano su .106 -> `esaminate 0`, invii ancora 0. Il cron resta installato
+  e gira ogni giorno senza effetti.
+- Per riaccendere (insieme all'SMTP vero del profilo prod): `ALERT.ATTIVO`=S da Configurazione (superuser)
+  o con lo stesso UPDATE a valori invertiti. Alla prima esecuzione partira' un avviso per ogni scadenza
+  aperta entro 90 giorni (o scaduta), una sola volta per soglia.

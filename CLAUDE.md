@@ -81,7 +81,10 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   Ondata 4 (2026-10-26; DDL 002 su .75 alle 07:11, IN ESERCIZIO su .106 dalle 08:55, Jenkins #11 lanciato con
   `deploy/jenkins-wera2026.ps1 -Deploy`, backup del WAR precedente `/root/wera2026.war.bak-20261026-0854-ondata3-baa96d2c`): menu "Centrale termica" con sottovoci (Panoramica sul mockup di
   Andrea, Scadenze e documenti, Calendario, Alerting e storico invii, Configurazione), DDL `002-...`, motore
-  avvisi (`CentraleTermicaAvvisiInvio`, cron con ALERT.TOKEN); nota
+  avvisi (`CentraleTermicaAvvisiInvio`, cron `/etc/cron.d/wera2026-avvisi` su .106 alle 06:15 con ALERT.TOKEN;
+  in PROD `ALERT.ATTIVO=N` dal 2026-10-26 su decisione dell'operatore, FINCHE' l'SMTP del profilo prod resta il
+  mailcatcher: il motore registrerebbe `INVIATO` per mail mai uscite e quelle soglie non verrebbero piu'
+  rimandate; riaccendere con `S` insieme all'SMTP vero); nota
   `.claude/2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`.
   Dati reali (2026-10-26, solo via applicazione): sezione `CONTRATTI` (id 9) + 56 contratti firmati su 31
   condomini + 9 scadenze TR in PROD; 22 file in attesa (condomini assenti in PROD). Gli ID condominio
@@ -214,9 +217,16 @@ patchato NEL SOLO ARTEFATTO, mai nel repo.
   li sopra e si lancia il job senza cambiarlo; default impostato il 2026-10-26, vedi `deploy/README.md`), build con la JDK di sistema Temurin 25 e Maven 3.9.16 (dal
   2026-10-24 nessun tool JDK: tolti `<jdk>JDK8</jdk>` dal job e il tool JDK8 dal config
   globale, `temurin-8-jdk` disinstallato; backup `config.xml.bak-20261024-*`), patch
-  `deploy/patch-config-test.sh ... wera2026 prod`, DEPLOY=true copia il WAR patchato in
-  `/var/lib/tomcat9/webapps/` (deploy a caldo, gestit non si ferma). Lasciare DEPLOY=false di
-  default: il 2026-10-24 un lancio con DEPLOY ha messo in esercizio una versione con SMTP reale.
+  `deploy/patch-config-test.sh ... wera2026 prod`, DEPLOY=true fa il BACKUP della versione in
+  esercizio e poi copia il WAR patchato in `/var/lib/tomcat9/webapps/` (deploy a caldo, gestit
+  non si ferma). **ROLLBACK** (dal 2026-10-26, alternativo a DEPLOY, anche
+  `deploy/jenkins-wera2026.ps1 -Rollback`): nessuna build ne' accesso a Internet, rimette la
+  versione in esercizio prima dell'attuale (ripetuto risale). Backup in
+  `/var/backups/deploy-war/wera2026.war.bak-AAAAMMGG-HHMMSS-<commit>` (ultimi 8, elenco con
+  `ssh deploy@192.168.0.106 "wera2026 list"`): i backup manuali in `/root` non servono piu'. Il
+  checkout Git e' un passo shell del job (niente sezione SCM), cosi il rollback gira a qualsiasi ora.
+  Lasciare DEPLOY=false di default: il 2026-10-24 un lancio con DEPLOY ha messo in esercizio una
+  versione con SMTP reale.
   Sui SERVER condivisi MAI `-clean` (rimuoverebbe `wera` o, su .106, `gestit`)
 ne' `-clean-logs` senza `-app-log-dir` dedicato. Dettagli in `deploy/README.md` e nella nota
 `.claude/2026-09-07-deploy-parallelo-test-gui.md`.
