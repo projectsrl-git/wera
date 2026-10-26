@@ -54,6 +54,25 @@ patchato differisce dall'originale solo nelle righe cambiate.
 
 ---
 
+## Rilascio in produzione di wera2026 (dal 2026-10-26)
+
+Branch di rilascio FISSA: **`release/wera2026`** su GitHub. Il job Jenkins "wera2026 PROD" (192.168.0.115)
+builda sempre quella (parametro `BRANCH`, default `release/wera2026`): per rilasciare non si tocca il job.
+STATO 2026-10-26: branch creata (a `4320eeb`); il default del parametro nel job va impostato dalla UI di
+Jenkins (Configura > BRANCH > `release/wera2026` > Salva, nessun riavvio). Finche' non e' fatto: lanciare con
+`BRANCH=release/wera2026`.
+
+1. Sviluppo e collaudo sul branch di lavoro (oggi `restyle/ui-2026-r2`), DDL eventuali prima in locale.
+2. Rilascio = portare il lavoro su `release/wera2026` e pusharla:
+   - se il branch di lavoro contiene tutta la release (caso normale, fast-forward):
+     `git fetch origin && git push origin restyle/ui-2026-r2:release/wera2026`
+   - altrimenti merge esplicito: `git switch release/wera2026 && git merge --no-ff <branch> && git push`
+   - mai `push --force` su `release/wera2026`; un fix urgente: branch da `release/wera2026`, merge li e poi
+     riporto sul branch di lavoro.
+3. DDL su .75 PRIMA del deploy, quando la release ne ha (vedi il piano di produzione nelle note `.claude`).
+4. Jenkins "wera2026 PROD": `DEPLOY=false` (controllo dell'artefatto), poi `DEPLOY=true`.
+   Il WAR precedente resta su .106 in `/var/backups/deploy-war/wera2026.war.prev` (rollback).
+
 ## Procedura (Windows)
 
 ```bat

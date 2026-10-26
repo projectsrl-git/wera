@@ -204,7 +204,8 @@ Nota: `2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`. Ordine obbl
    `psql -h 192.168.0.75 -U postgres -d wera -v ON_ERROR_STOP=1 -f src/resources/sql/wera2026/002-centrale_termica-scadenziario-avvisi.sql`
    Atteso: colonne `sigla`/`ente`, tipo `VERIFICA_TERRA`, tabella `invii_avvisi`, 8 parametri `ALERT.*`,
    `SCADENZE.GIORNI_PREAVVISO`=90 e `MENU.VOCE_WERA.PROFILI`='' (se mai modificati).
-3. [ ] Backup del WAR in esercizio (`/root/wera2026.war.bak-AAAAMMGG-HHMM-<commit>`), poi Jenkins
+3. [ ] Backup del WAR in esercizio (`/root/wera2026.war.bak-AAAAMMGG-HHMM-<commit>`), poi Jenkins con
+   `BRANCH=release/wera2026` (branch di rilascio fissa dal 26/10, gia' a `4320eeb`)
    (DEPLOY=false, controllo artefatto: 12 funzioni CentraleTermica, 25 dataset, Quartz vuoto, SMTP
    127.0.0.1:1025; poi DEPLOY=true).
 4. [ ] Verifiche: menu con sottovoci, Panoramica, Scadenze/Calendario/Alerting; logout/login per i campi

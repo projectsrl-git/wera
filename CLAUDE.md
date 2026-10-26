@@ -205,7 +205,8 @@ patchato NEL SOLO ARTEFATTO, mai nel repo.
   dall'override (daemon-reload) e POI smontare, altrimenti si ferma Tomcat. Dettagli in
   `.claude/2026-10-25-piano-mount-share-wera-81.md`.
   **Deploy**: job Jenkins (192.168.0.115) "wera2026 PROD", parametro BRANCH (default
-  `restyle/ui-2026-r2`), build con la JDK di sistema Temurin 25 e Maven 3.9.16 (dal
+  `release/wera2026`, branch di rilascio FISSA dal 2026-10-26: si rilascia facendo merge/fast-forward
+  li sopra e si lancia il job senza cambiarlo; default da impostare dalla UI del job, vedi `deploy/README.md`), build con la JDK di sistema Temurin 25 e Maven 3.9.16 (dal
   2026-10-24 nessun tool JDK: tolti `<jdk>JDK8</jdk>` dal job e il tool JDK8 dal config
   globale, `temurin-8-jdk` disinstallato; backup `config.xml.bak-20261024-*`), patch
   `deploy/patch-config-test.sh ... wera2026 prod`, DEPLOY=true copia il WAR patchato in
