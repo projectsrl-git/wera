@@ -1,7 +1,6 @@
-docs(registrazioni): modulo di registrazione amministratore aperto in produzione
+docs(registrazioni): rilascio chiuso senza richiesta di prova
 
-REGISTRAZIONE.ATTIVA=S su .75 alle 13:57 (ok dell'operatore, dopo le sue verifiche con
-superuser e amministratore). Modulo pubblico verificato via weraweb.it: form presente,
-gettone generato. Mail ancora spente (MAIL.ATTIVA=N), tetto di 30 invii al giorno.
+Su decisione dell'operatore niente richiesta di prova in produzione: la prima richiesta vera
+si controlla quando arriva. Registro del piano aggiornato.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

@@ -302,5 +302,6 @@ Su https://weraweb.it/wera2026/ :
   Parametri ora: `REGISTRAZIONE.ATTIVA`=S, `MAIL.ATTIVA`=N, `ANTIABUSO.MAX_RICHIESTE_IP_24H`=30.
 - https://weraweb.it/wera2026/astro?FUNCTIONID=RegistrazioneAmministratore: 200, form presente, nessun testo
   "sospese", gettone anti-abuso generato, fasce dei condomini dai parametri.
-- Restano (Fase 6.2-6.5, facoltative): richiesta di prova dell'operatore dal telefono, controllo di foto, registro
-  (IP atteso 192.168.50.253) e annullamento della prova dalla pagina "Registrazioni".
+- Fase 6.2-6.5 (richiesta di prova) SALTATA per decisione dell'operatore: la prima richiesta vera si controlla
+  quando arriva (foto in `/usr/share/webapps/wera/registrazioni/2026/<n>/`, registro con IP 192.168.50.253,
+  eventi MAIL `NON_INVIATA`). Rilascio chiuso.
