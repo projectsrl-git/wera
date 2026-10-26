@@ -141,7 +141,8 @@ SELECT (SELECT count(*) FROM registrazioni.richieste), (SELECT count(*) FROM reg
 1. [ ] Solo build: `.\deploy\jenkins-wera2026.ps1` -> SUCCESS, controllo dell'artefatto dello script "OK".
 2. [ ] Controllo in piu' sull'artefatto (log della build o WAR scaricato):
    - `Quartz-scheduler.tasklist=` vuota; `mail.SMTPHost=127.0.0.1`, porta 1025; `jdbc/wera`;
-   - `grep -c Registrazion WEB-INF/config/functionList.txt` = 4; presenti
+   - `grep -c -E '^Registrazion(eAmministratore|i)' WEB-INF/config/functionList.txt` = 4 (un semplice
+     `grep -c Registrazion` conta anche la registrazione inquilino esistente: in PROD vale gia' 1); presenti
      `WEB-INF/template/registrazioneamministratore.html`, `WEB-INF/template/registrazionirichieste.html`,
      `WEB-INF/classes/net/projectsrl/wera/registrazioni/FunctionRegistrazioniEsito.class`;
    - commit della build = ultimo di `release/wera2026`.
@@ -214,4 +215,33 @@ Su https://weraweb.it/wera2026/ :
   senza promettere la mail.
 
 ## Registro di esecuzione
-(vuoto: niente eseguito)
+### 2026-10-26 12:55 — Fase 1 ESEGUITA (ok dell'operatore), solo letture; nient'altro eseguito
+- .75 (sessione `default_transaction_read_only=on`, credenziali del `META-INF/context.xml` del WAR, mai
+  stampate): server 192.168.0.75, DB `wera`, PostgreSQL 9.4.26, nessun commento sul DB (non e' la copia di
+  test), utente `postgres` superuser. Schema `registrazioni` assente; schemi presenti `public`,
+  `centrale_termica`. Azienda `SIRBI` = id 1 (unica azienda), profilo `AMM` = id 3 (31 utenti AMM),
+  lingua `it` = id 1, vincolo `k2_utenti` presente, nessun username con maiuscole. Sequenze di utenti,
+  password, utenti_lingue, utenti_profili, utenti_aziende tutte allineate (last_value >= max).
+- Colonne di utenti, utenti_lingue, utenti_profili, utenti_aziende, password, profili, aziende, lingue_iso
+  IDENTICHE al DB locale del collaudo (58 righe, tipi, lunghezze, null, default); vincoli uguali; nessun
+  trigger su quelle tabelle.
+- Impronta ordinata della struttura di `public` (`pg_dump -s -n public | sort | sha256sum`, 6671 righe):
+  `0a991ca4bd9569be3035e3c5cb6e2ad1ba0d03f3250d67d5da5aa3381470d273`, IDENTICA al 25 e 26/10.
+- Backup notturno di .75: NON verificato (non e' visibile da qui), resta all'operatore.
+- .106: `wera2026 list` -> in esercizio `f535152` (sha256 5726a46c3c7b), prossimo rollback
+  `bak-20261026-100300-4320eeb`; mount CIFS di .81 su `/usr/share/webapps/wera` rw, uid/gid 997;
+  `registrazioni/` non esiste; config in esercizio: `directory.external_files=/usr/share/webapps/wera/`,
+  SMTP `127.0.0.1:1025`, `ResetPassword.Mail.Address.From=noreply@weraweb.it`, Quartz vuoto; tomcat9 e
+  wera-mailcatcher attivi; spazio: `/` 12 GB liberi, share 34 GB liberi.
+- .50: nessun `LimitRequestBody` (vhost e apache2.conf), `Timeout 3600`, nessun `ProxyTimeout`: un invio da
+  ~62 MB passa. Nessuna riga che tocchi `X-Forwarded-For`; mod_remoteip non caricato.
+- **SCOPERTA (blocca il parametro del limite per IP cosi' com'e')**: Apache .50 vede TUTTI i client come
+  `192.168.50.253` (28.097 richieste su 28.097 oggi, comprese quelle degli utenti reali di /wera; uguale nel
+  log di ieri): l'IP pubblico si perde prima del frontend (NAT a monte, probabilmente il FortiGate). Su .106
+  Tomcat ha gia' un `RemoteIpValve` (`internalProxies` .50 e .170, `X-Forwarded-For`), per cui
+  `getRemoteAddr()` restituisce gia' `192.168.50.253`: il parametro `ANTIABUSO.PROXY_FIDATI` non serve, ma
+  il limite `ANTIABUSO.MAX_RICHIESTE_IP_24H` diventa un contatore UNICO per tutto Internet (con 5, dopo 5
+  invii in 24 ore il modulo risponderebbe 429 a chiunque). Il registro eventi mostrera' sempre lo stesso IP.
+  Attenzione anche: con il parametro a 0 il codice blocca tutto (conta >= 0), non disattiva il limite.
+  Decisione dell'operatore prima della Fase 3 (vedi riepilogo in chat). Fase 6.4 da rivedere di conseguenza.
+- Correzione al piano: il controllo dell'artefatto in Fase 4 conta solo le 4 funzioni nuove.

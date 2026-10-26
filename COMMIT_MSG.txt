@@ -1,9 +1,9 @@
-docs(registrazioni): piano di produzione della registrazione amministratore
+docs(registrazioni): esito della Fase 1 del piano di produzione
 
-Piano (niente eseguito): verifiche in sola lettura su .75 (azienda SIRBI, profilo AMM,
-colonne e sequenze delle tabelle utenti, impronta di public), .106 e Apache .50; push e
-fast-forward di release/wera2026; DDL 003 con MAIL.ATTIVA=N e modulo chiuso
-(REGISTRAZIONE.ATTIVA=N); Jenkins build poi -Deploy; verifiche; apertura con richiesta di
-prova annullata e controllo dell'IP dietro il proxy; rollback a livelli.
+Verifiche in sola lettura su .75, .106 e .50 (ok dell'operatore): DB e tabelle utenti
+compatibili, sequenze allineate, impronta di public invariata, share e config di .106 ok,
+nessun limite di dimensione su Apache. Scoperto che tutti i client arrivano da 192.168.50.253
+(NAT a monte di .50): il limite di invii per IP va deciso prima del DDL. Corretto il
+controllo dell'artefatto (4 funzioni nuove).
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
