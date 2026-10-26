@@ -71,6 +71,12 @@ STATO 2026-10-26: branch creata (a `4320eeb`); default del job impostato alle 07
 3. DDL su .75 PRIMA del deploy, quando la release ne ha (vedi il piano di produzione nelle note `.claude`).
 4. Jenkins "wera2026 PROD": `DEPLOY=false` (controllo dell'artefatto), poi `DEPLOY=true`.
    Il WAR precedente resta su .106 in `/var/backups/deploy-war/wera2026.war.prev` (rollback).
+5. Da riga di comando (laptop, Windows PowerShell), stesso job e stesso storico in Jenkins:
+   `.deployjenkins-wera2026.ps1` (DEPLOY=false) e poi `.deployjenkins-wera2026.ps1 -Deploy`.
+   Lo script lancia il job via API, segue la console e esce con 0 solo se la build e' SUCCESS.
+   Credenziali: utente Jenkins dedicato (`cli-deploy`, permessi Read/Build sul solo job) con token API,
+   in un file FUORI dal repo, una riga `utente:token`, default `%USERPROFILE%.werajenkins-cli-deploy.txt`
+   (parametro `-Credenziali`). Il token non va mai in comandi, note o commit.
 
 ## Procedura (Windows)
 
