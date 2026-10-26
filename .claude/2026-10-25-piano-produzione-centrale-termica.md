@@ -191,3 +191,7 @@ Configurazione iniziale (superuser, dalla pagina Configurazione):
 - DB: 0 eventi, 0 documenti (funzione non ancora usata).
 - Da fare: verifiche funzionali per profilo (Fase 5) con account reali, dal browser dell'operatore; poi
   controllo di eventi e log lato server; configurazione iniziale; primi contratti.
+- 2026-10-26, dal laptop (rete di nuovo aperta): via https://weraweb.it login wera2026 200, tema `?20261025c`
+  con sezione 30b, JS `wera-centrale-termica[-config].js` 200, `/wera` 200. Nel browser, senza sessione,
+  `FUNCTIONID=CentraleTermica` mostra la landing con il login (atteso). In console solo gli errori
+  preesistenti della landing (2 x 404 e "Bootstrap's JavaScript requires jQuery" da `js/bootstrap.js`).
