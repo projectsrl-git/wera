@@ -1,12 +1,9 @@
-feat(registrazioni): approvazione delle richieste e attivazione dell'amministratore
+docs(registrazioni): piano di produzione della registrazione amministratore
 
-Pagina RegistrazioniRichieste per i profili di APPROVAZIONE.PROFILI (default ADM), con voce
-"Registrazioni" e contatore delle richieste in attesa nel menu di wera2026: elenco per stato,
-dettaglio con foto e controlli (email gia' usata, stessa P.IVA), verifica dei ripartitori.
-Approva crea in una transazione l'utente AMM (utenti, utenti_lingue, utenti_profili,
-utenti_aziende, password con l'hash scelto dal richiedente) e manda la mail di esito; rifiuta
-(motivo obbligatorio, in mail) e annulla (spam/doppioni, senza mail). CSS dedicato collegato
-solo dalla pagina. Collaudo end-to-end sul laptop: il nuovo amministratore entra con la sua
-password. Aggiornati QA.md e CLAUDE.md.
+Piano (niente eseguito): verifiche in sola lettura su .75 (azienda SIRBI, profilo AMM,
+colonne e sequenze delle tabelle utenti, impronta di public), .106 e Apache .50; push e
+fast-forward di release/wera2026; DDL 003 con MAIL.ATTIVA=N e modulo chiuso
+(REGISTRAZIONE.ATTIVA=N); Jenkins build poi -Deploy; verifiche; apertura con richiesta di
+prova annullata e controllo dell'IP dietro il proxy; rollback a livelli.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

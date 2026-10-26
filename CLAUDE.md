@@ -100,7 +100,8 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   (profilo AMM, azienda da `ATTIVAZIONE.AZIENDA_CODICE`). I condomini si collegano dall'anagrafica condominio.
   Mail governate da `MAIL.ATTIVA` (in PROD `N` finche' l'SMTP e' il mailcatcher). Disegno
   `.claude/2026-10-26-disegno-registrazione-amministratore.md`, note ondate 1-3 dello stesso giorno.
-  .75 NON toccato: DDL 003 e deploy solo con ok dell'operatore. CTA amministratore della landing ricollegate.
+  .75 NON toccato: DDL 003 e deploy solo con ok dell'operatore. Piano di produzione:
+  `.claude/2026-10-26-piano-produzione-registrazione-amministratore.md` (niente eseguito). CTA amministratore della landing ricollegate.
 - **In attesa di backend/dataset** (non fattibili senza toccare config.cfg/Java):
   "Andamento letture mensili (HCA)" in home (serve un DS MESE/VALORE in config.cfg),
   "Consumi per condominio", "Previsione consumi", "Scadenziario Centrale termica",
