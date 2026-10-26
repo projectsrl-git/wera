@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link href="css/wera-landing.css?20261022" rel="stylesheet">
+    <link href="css/wera-landing.css?20261026" rel="stylesheet">
 
 </head>
 
@@ -56,7 +56,8 @@
               <li>Report e ripartizioni a portata di click</li>
             </ul>
             <div class="cta">
-              <a class="btn" href="#login" onclick="openLogin();return false">Accedi con user e password</a>
+              <a class="btn" href="astro?FUNCTIONID=RegistrazioneAmministratore">Registrati</a>
+              <a class="btn dark" href="#login" onclick="openLogin();return false">Accedi con user e password</a>
             </div>
           </div>
           <div class="hfig"><img src="img/landing/char-amministratore.png" alt="Amministratore di condominio"></div>
@@ -123,7 +124,8 @@
         <li>Accesso a tutti i tuoi condom&igrave;ni</li>
         <li>Report e ripartizioni a portata di click</li>
       </ul>
-      <a class="btn ghost block" href="#login" onclick="openLogin();return false">Accedi con user e password</a>
+      <a class="btn ghost block" href="astro?FUNCTIONID=RegistrazioneAmministratore">Registrati</a>
+      <p class="muted center" style="margin:10px 0 0;font-size:13px">Hai gi&agrave; le credenziali? <a href="#login" onclick="openLogin();return false" style="color:var(--accent-ink);font-weight:700;text-decoration:none">Accedi</a></p>
     </div>
 
     <div class="card pcard">
@@ -158,7 +160,7 @@
   <h2 style="font-size:28px">Come accedere, in breve</h2>
   <div class="profiles" style="margin-top:34px">
     <div><div class="chip" style="margin-bottom:10px"><span class="dot a"></span> Amministratore</div>
-      <p class="muted" style="font-size:14.5px">Usa lo <b>username e la password</b> che ti ha consegnato l'installatore: bottone <b>Accedi</b> in alto a destra.</p></div>
+      <p class="muted" style="font-size:14.5px"><a href="astro?FUNCTIONID=RegistrazioneAmministratore" style="color:var(--accent-ink);font-weight:700;text-decoration:none">Registra il tuo studio</a>, oppure usa lo <b>username e la password</b> che ti ha consegnato l'installatore: bottone <b>Accedi</b> in alto a destra.</p></div>
     <div><div class="chip" style="margin-bottom:10px"><span class="dot g"></span> Inquilino</div>
       <p class="muted" style="font-size:14.5px">Apri <b>&ldquo;Registrati con il codice&rdquo;</b>, inserisci il codice stampato sul tuo ripartitore, crea email e password. Fatto.</p></div>
     <div><div class="chip" style="margin-bottom:10px"><span class="dot r"></span> Installatore</div>
@@ -190,6 +192,7 @@
       <button class="btn block" type="submit">Accedi</button>
     </form>
     <p class="muted center" style="margin:16px 0 0;font-size:13.5px">Sei un inquilino? <a href="astro?FUNCTIONID=Registrazione" style="color:var(--accent-ink);font-weight:700;text-decoration:none">Registrati con il codice ripartitore</a></p>
+    <p class="muted center" style="margin:6px 0 0;font-size:13.5px">Sei un amministratore? <a href="astro?FUNCTIONID=RegistrazioneAmministratore" style="color:var(--accent-ink);font-weight:700;text-decoration:none">Registra il tuo studio</a></p>
   </div>
   </div>
 </div>

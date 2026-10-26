@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>WERA &middot; Registrazione amministratore</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="css/wera-landing.css?20261026" rel="stylesheet">
+
+</head>
+
+<body>
+
+<div class="topbar">
+  <span class="logoplate"><img src="img/wera-login.png" alt="Webcredit WERA" style="height:34px"></span>
+  <a href="astro?FUNCTIONID=Login">&larr; Torna alla home</a>
+</div>
+
+<div class="wrap">
+  <div class="head">
+    <span class="chip"><span class="dot a"></span> Registrazione amministratore</span>
+    <h1 style="margin-top:14px">${RA_TITOLO?html}</h1>
+    <#if RA_SOTTOTITOLO?has_content><p>${RA_SOTTOTITOLO?html}</p></#if>
+  </div>
+
+<#if RA_ATTIVA != "S">
+  <div class="card formcard ra-chiusa">
+    <div class="alert info" style="margin:0">${RA_CHIUSA_TESTO?html}</div>
+  </div>
+<#else>
+  <div class="cols ra-cols">
+
+    <aside class="card guide ra-side">
+      <h3>Come funziona</h3>
+      <ol class="steps">
+        <li><b>Invia la richiesta</b> con i dati dello studio e dei ripartitori installati.</li>
+        <li><b>Verifichiamo</b> dati e compatibilit&agrave; dei ripartitori<#if RA_TEMPI_RISPOSTA?has_content> ${RA_TEMPI_RISPOSTA?html}</#if>.</li>
+        <li><b>Attiviamo l'account</b>: entri con la tua email e la password che scegli qui.</li>
+        <li><b>Colleghiamo i tuoi condomini</b> e li trovi tutti nella tua area.</li>
+      </ol>
+
+      <div class="ra-need">
+        <div class="ra-need-t">Tieni a portata di mano</div>
+        <ul>
+          <li>Partita IVA e codice fiscale</li>
+          <li>PEC (e codice SDI, se lo usi)</li>
+          <li>Marca e modello dei ripartitori, o una foto</li>
+        </ul>
+      </div>
+
+      <div class="ra-meter" aria-hidden="true">
+        <div class="ra-meter-l"><span>Modulo completato</span><b id="raPerc">0%</b></div>
+        <div class="ra-meter-b"><i id="raBar"></i></div>
+      </div>
+
+      <#if RA_ASSISTENZA_EMAIL?has_content || RA_ASSISTENZA_TELEFONO?has_content>
+      <div class="ra-help">
+        <b>Serve aiuto?</b>
+        <#if RA_ASSISTENZA_TELEFONO?has_content><span>Tel. ${RA_ASSISTENZA_TELEFONO?html}</span></#if>
+        <#if RA_ASSISTENZA_EMAIL?has_content><a href="mailto:${RA_ASSISTENZA_EMAIL?html}">${RA_ASSISTENZA_EMAIL?html}</a></#if>
+      </div>
+      </#if>
+    </aside>
+
+    <div class="card formcard ra-form">
+      <form id="RegAmm" action="astro?FUNCTIONID=RegistrazioneAmministratore" method="post" enctype="multipart/form-data" novalidate
+            data-pwd-min="${RA_PASSWORD_MIN?html}" data-pwd-max="${RA_PASSWORD_MAX?html}"
+            data-pwd-regola="${RA_PASSWORD_REGOLA?html}" data-pwd-regola-testo="${RA_PASSWORD_REGOLA_TESTO?html}"
+            data-file-max="${RA_FILE_MAX_NUMERO?html}" data-file-mb="${RA_FILE_MAX_MB?html}" data-file-ext="${RA_FILE_ESTENSIONI?html}">
+        <input type="hidden" name="T" id="RA_T" value="${RA_GETTONE?html}">
+        <div class="ra-trap" aria-hidden="true"><label for="SITO_WEB">Non compilare</label><input type="text" name="SITO_WEB" id="SITO_WEB" tabindex="-1" autocomplete="off"></div>
+
+        <div class="ra-fsec"><span class="ra-n">1</span> Tipo di soggetto</div>
+        <div class="ra-seg" role="radiogroup" aria-label="Tipo di soggetto">
+          <label class="on"><input type="radio" name="TIPO" value="PROFESSIONISTA" checked> <b>Amministratore singolo</b><span>Professionista con partita IVA</span></label>
+          <label><input type="radio" name="TIPO" value="STUDIO"> <b>Studio o societ&agrave;</b><span>Studio associato, Srl, Snc&hellip;</span></label>
+        </div>
+
+        <div class="ra-fsec mt"><span class="ra-n">2</span> Dati fiscali</div>
+        <div class="grid-2">
+          <div class="field"><label for="DENOMINAZIONE" id="lblDen">Nome e cognome <span class="req">*</span></label>
+            <input name="DENOMINAZIONE" id="DENOMINAZIONE" maxlength="150" autocomplete="organization" placeholder="es. Mario Rossi">
+            <div class="ra-ferr" data-for="DENOMINAZIONE"></div></div>
+          <div class="field"><label for="PIVA">Partita IVA <span class="req">*</span></label>
+            <input name="PIVA" id="PIVA" maxlength="13" inputmode="numeric" placeholder="11 cifre">
+            <div class="ra-ferr" data-for="PIVA"></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label for="CF">Codice fiscale <span class="req">*</span></label>
+            <input name="CF" id="CF" maxlength="16" class="ra-up" autocapitalize="characters" placeholder="16 caratteri">
+            <div class="ra-ferr" data-for="CF"></div></div>
+          <div class="field" id="fldAlbo"><label for="ALBO">N. iscrizione registro amministratori</label>
+            <input name="ALBO" id="ALBO" maxlength="50" placeholder="facoltativo">
+            <div class="ra-ferr" data-for="ALBO"></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label for="PEC">PEC <span class="req">*</span></label>
+            <input type="email" name="PEC" id="PEC" maxlength="100" placeholder="studio@pec.it">
+            <div class="ra-ferr" data-for="PEC"></div></div>
+          <div class="field"><label for="SDI">Codice destinatario SDI</label>
+            <input name="SDI" id="SDI" maxlength="7" class="ra-up" autocapitalize="characters" placeholder="facoltativo, 7 caratteri">
+            <div class="ra-ferr" data-for="SDI"></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label for="INDIRIZZO">Indirizzo <span class="req">*</span></label>
+            <input name="INDIRIZZO" id="INDIRIZZO" maxlength="50" autocomplete="street-address" placeholder="Via e numero civico">
+            <div class="ra-ferr" data-for="INDIRIZZO"></div></div>
+          <div class="field"><label for="CITTA">Citt&agrave; <span class="req">*</span></label>
+            <input name="CITTA" id="CITTA" maxlength="50" autocomplete="address-level2">
+            <div class="ra-ferr" data-for="CITTA"></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label for="PROVINCIA">Provincia <span class="req">*</span></label>
+            <input name="PROVINCIA" id="PROVINCIA" maxlength="2" class="ra-up" autocapitalize="characters" placeholder="es. PV">
+            <div class="ra-ferr" data-for="PROVINCIA"></div></div>
+          <div class="field"><label for="CAP">CAP <span class="req">*</span></label>
+            <input name="CAP" id="CAP" maxlength="5" inputmode="numeric" autocomplete="postal-code" placeholder="es. 27100">
+            <div class="ra-ferr" data-for="CAP"></div></div>
+        </div>
+
+        <div class="ra-fsec mt"><span class="ra-n">3</span> Ripartitori installati &mdash; verifica compatibilit&agrave;</div>
+        <p class="ra-lead">Per capire se i ripartitori dei tuoi condom&igrave;ni sono compatibili con WERA ci serve il <b>modello</b>.
+          Scrivilo qui sotto oppure, se non lo conosci, <b>allega o scatta una foto</b> del dispositivo o della sua etichetta.</p>
+        <div class="field"><label for="MODELLO">Marca e modello ripartitori</label>
+          <input name="MODELLO" id="MODELLO" maxlength="300" placeholder="es. Siemens WHE46, Techem data III, Ista doprimo 3&hellip;">
+          <div class="ra-ferr" data-for="MODELLO"></div></div>
+
+        <div class="ra-upl" id="raDrop">
+          <div class="ra-upl-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.6"/></svg>
+          </div>
+          <p>Foto del ripartitore o della targhetta &mdash; fino a ${RA_FILE_MAX_NUMERO?html} foto da ${RA_FILE_MAX_MB?html} MB<span class="ra-dzhint"> (puoi anche trascinarle qui)</span></p>
+          <div class="ra-uplbtns">
+            <button type="button" class="btn dark sm" id="raGal">Allega foto</button>
+            <button type="button" class="btn dark sm" id="raCam">Scatta una foto</button>
+          </div>
+          <input type="file" id="FILEGAL" accept="image/*,.heic,.heif" multiple hidden>
+          <input type="file" id="FILECAM" accept="image/*" capture="environment" hidden>
+          <div class="ra-thumbs" id="raThumbs"></div>
+          <div class="ra-ferr" data-for="FOTO"></div>
+        </div>
+        <#if RA_INFO_VERIFICA?has_content><div class="alert info ra-note">${RA_INFO_VERIFICA?html}</div></#if>
+
+        <div class="ra-fsec mt"><span class="ra-n">4</span> I tuoi condom&igrave;ni</div>
+        <div class="grid-2">
+          <div class="field"><label for="NCOND">Condom&igrave;ni gestiti (indicativo)</label>
+            <select name="NCOND" id="NCOND">
+              <option value="">Seleziona&hellip;</option>
+              <#list RA_FASCE as f><option value="${f?html}">${f?html}</option></#list>
+            </select>
+            <div class="ra-ferr" data-for="NCOND"></div></div>
+          <div class="field ra-hintbox"><span>I condom&igrave;ni gi&agrave; seguiti da WERA vengono collegati al tuo account dopo l'approvazione.</span></div>
+        </div>
+        <div class="field"><label for="CONDOMINI">Quali condom&igrave;ni amministri? <span class="ra-opt">facoltativo</span></label>
+          <textarea name="CONDOMINI" id="CONDOMINI" rows="3" maxlength="2000" placeholder="Nome o indirizzo, uno per riga: ci aiuta a collegarli subito"></textarea>
+          <div class="ra-ferr" data-for="CONDOMINI"></div></div>
+
+        <div class="ra-fsec mt"><span class="ra-n">5</span> Referente e accesso</div>
+        <div class="grid-2">
+          <div class="field"><label for="REF_NOME">Nome referente <span class="req">*</span></label>
+            <input name="REF_NOME" id="REF_NOME" maxlength="100" autocomplete="given-name">
+            <div class="ra-ferr" data-for="REF_NOME"></div></div>
+          <div class="field"><label for="REF_COGNOME">Cognome referente <span class="req">*</span></label>
+            <input name="REF_COGNOME" id="REF_COGNOME" maxlength="100" autocomplete="family-name">
+            <div class="ra-ferr" data-for="REF_COGNOME"></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label for="EMAIL">Email <span class="req">*</span></label>
+            <input type="email" name="EMAIL" id="EMAIL" maxlength="100" autocomplete="email">
+            <div class="hint">Sar&agrave; il tuo nome utente.</div>
+            <div class="ra-ferr" data-for="EMAIL"></div></div>
+          <div class="field"><label for="TELEFONO">Telefono <span class="req">*</span></label>
+            <input type="tel" name="TELEFONO" id="TELEFONO" maxlength="30" autocomplete="tel">
+            <div class="ra-ferr" data-for="TELEFONO"></div></div>
+        </div>
+        <div class="grid-2">
+          <div class="field"><label for="PASSWORD">Password <span class="req">*</span></label>
+            <div class="ra-pwd"><input type="password" name="PASSWORD" id="PASSWORD" maxlength="${RA_PASSWORD_MAX?html}" autocomplete="new-password">
+              <button type="button" class="ra-eye" data-target="PASSWORD" aria-label="Mostra la password">Mostra</button></div>
+            <div class="hint">Almeno ${RA_PASSWORD_MIN?html} caratteri<#if RA_PASSWORD_REGOLA_TESTO?has_content>, ${RA_PASSWORD_REGOLA_TESTO?html}</#if>.</div>
+            <div class="ra-ferr" data-for="PASSWORD"></div></div>
+          <div class="field"><label for="PASSWORD2">Conferma password <span class="req">*</span></label>
+            <div class="ra-pwd"><input type="password" name="PASSWORD2" id="PASSWORD2" maxlength="${RA_PASSWORD_MAX?html}" autocomplete="new-password">
+              <button type="button" class="ra-eye" data-target="PASSWORD2" aria-label="Mostra la password">Mostra</button></div>
+            <div class="ra-ferr" data-for="PASSWORD2"></div></div>
+        </div>
+
+        <label class="ra-privacy">
+          <input type="checkbox" name="PRIVACY" id="PRIVACY" value="S">
+          <span>${RA_PRIVACY_TESTO?html}<#if RA_PRIVACY_LINK?has_content> <a href="${RA_PRIVACY_LINK?html}" target="_blank" rel="noopener">Leggi l'informativa</a></#if></span>
+        </label>
+        <div class="ra-ferr" data-for="PRIVACY" style="margin:-12px 0 14px"></div>
+
+        <div id="formMsg" class="alert err" role="alert" hidden></div>
+
+        <button class="btn block" type="submit" id="raInvia"><span class="ra-lbl">Invia la richiesta</span></button>
+        <div class="ra-prog" id="raProg" hidden><i></i></div>
+        <p class="muted center" style="margin:16px 0 0;font-size:13.5px">Hai gi&agrave; un account? <a href="astro?FUNCTIONID=Login#login" style="color:var(--accent-ink);font-weight:700;text-decoration:none">Accedi</a></p>
+      </form>
+
+      <div class="ra-ok" id="raOk" hidden tabindex="-1">
+        <div class="ra-ok-ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></svg>
+        </div>
+        <h2>Richiesta inviata</h2>
+        <p class="ra-ok-num" id="raNum"></p>
+        <p>Grazie! Verifichiamo i dati e la compatibilit&agrave; dei ripartitori<#if RA_TEMPI_RISPOSTA?has_content> ${RA_TEMPI_RISPOSTA?html}</#if>.
+          Quando la richiesta &egrave; approvata entri con <b id="raMail"></b> e la password che hai scelto.</p>
+        <p class="muted" id="raMailNota" hidden>Ti abbiamo mandato una mail di conferma: se non la trovi, controlla nella posta indesiderata.</p>
+        <a class="btn" href="astro?FUNCTIONID=Login">Torna alla home</a>
+      </div>
+    </div>
+
+  </div>
+</#if>
+
+  <p class="auth-foot">
+    &copy; 2017-<script>document.write(new Date().getFullYear())</script> Webcredit WERA &ndash; vers 3.0 &middot; Powered by Project srl
+  </p>
+</div>
+
+<script src="js/wera-registrazione-amministratore.js?20261026"></script>
+
+</body>
+
+</html>

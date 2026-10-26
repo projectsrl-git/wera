@@ -191,3 +191,4 @@ StampaRipartizioniUNI2018 				net.projectsrl.wera.ripartizioniuni2018.core.Funct
 
 InserimentoConfigurazioneCsv       		net.projectsrl.wera.configurazione.core.FunctionInserimentoConfigurazioneCsv				00
 RicercaConfigurazioneCsv				net.projectsrl.wera.configurazione.core.FunctionRicercaConfigurazioneCsv					00
+RegistrazioneAmministratore			net.projectsrl.wera.registrazioni.FunctionRegistrazioneAmministratore			00

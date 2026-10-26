@@ -1,9 +1,11 @@
-feat(registrazioni): schema DB per la registrazione amministratore
+feat(registrazioni): pagina di registrazione amministratore e invio della richiesta
 
-Schema PostgreSQL nuovo "registrazioni" (DDL 003, idempotente, 9.4): richieste da approvare,
-allegati (foto dei ripartitori), parametri con override per azienda, eventi append-only e vista
-v_richieste. Nessun oggetto di /wera toccato; provato solo sul DB locale marcato WERA-TEST.
-Disegno approvato dall'operatore: approvazione SIRBI, password scelta nel form, legame ai
-condomini dall'anagrafica esistente.
+FUNCTIONID=RegistrazioneAmministratore (pubblica): pagina sullo stack wera-landing.css dal mockup
+giro 12 (guida laterale, 5 sezioni, foto con anteprima e trascinamento, esito in pagina) e POST
+multipart che salva richiesta e foto nello schema registrazioni, con validazioni lato server
+(P.IVA e CF con carattere di controllo), anti-abuso (trappola, gettone HMAC, limite per IP) e
+mail di ricevuta e notifica governate da MAIL.ATTIVA. Nessun utente creato: nasce
+all'approvazione (ondata 3). CTA amministratore della landing ricollegate, cache-buster
+wera-landing 20261026. Collaudo sul laptop con mailcatcher.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
