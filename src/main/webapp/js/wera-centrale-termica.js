@@ -313,9 +313,10 @@
             : '<span class="ct-kpi-vuoto">Nessuno</span>');
     }
 
-    /** Riga-cartella come nel mockup: icona cartella, titolo, sottotitolo, contatore e freccia. */
+    /** Riga-cartella come nel mockup: icona della sezione (come in Configurazione), titolo, sottotitolo, contatore e freccia. */
     function cartella(s) {
         var n = numero(s.NR_DOCUMENTI, 0), arch = numero(s.NR_ARCHIVIATI, 0);
+        var icona = /^fa-[a-z0-9-]{1,40}$/.test(s.ICONA || '') ? s.ICONA : 'fa-folder-o';
         var meta = '<span class="ctp-conta' + (n ? '' : ' ctp-conta-zero') + '">' + n + '</span>';
         var scad = '';
         if (s.PROSSIMA_SCADENZA) {
@@ -328,7 +329,7 @@
         if (arch) { sotto += ' \u00b7 ' + arch + ' in archivio'; }
         return '<li><button type="button" class="ct-cartella ctp-cartella' + (n === 0 ? ' ct-cartella-vuota' : '') +
             '" data-id="' + esc(s.ID_SEZIONE) + '">' +
-            '<i class="fa fa-folder-o ctp-cartella-ico" aria-hidden="true"></i>' +
+            '<i class="fa fa-fw ' + icona + ' ctp-cartella-ico" aria-hidden="true"></i>' +
             '<span class="ctp-cartella-testo"><span class="ctp-cartella-titolo">' + esc(s.TITOLO) + '</span>' +
             '<span class="ctp-cartella-sotto">' + esc(sotto) + '</span></span>' +
             '<span class="ctp-cartella-meta">' + scad + meta + '</span>' +

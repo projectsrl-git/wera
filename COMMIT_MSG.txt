@@ -1,8 +1,7 @@
-docs(centrale-termica): contratti firmati 2026 caricati in PROD
+feat(centrale-termica): icone delle sezioni nella Panoramica
 
-Via applicazione (nessuna scrittura diretta sul DB): sezione nuova Contratti (id 9),
-56 documenti su 31 condomini, 9 scadenze "Rinnovo nomina Terzo responsabile".
-Verificati conteggi e scadenziario via app e SHA-256 dei 56 file su .106.
-22 file in attesa: condomini assenti nell'anagrafica di PROD.
+Ogni cartella della Panoramica mostra l'icona della sezione scelta in Configurazione
+(fa-fw per l'allineamento) invece dell'icona cartella fissa; icona vuota o non valida ->
+fa-folder-o come prima. Cache-buster del JS 20261026c. Solo JS e template, nessun dato.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
