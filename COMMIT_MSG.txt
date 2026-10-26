@@ -1,8 +1,10 @@
-docs(registrazioni): schema registrazioni creato su .75 (Fasi 2-3 del piano)
+feat(deploy): backup della versione in esercizio e ROLLBACK nel job wera2026
 
-Push del branch e fast-forward di release/wera2026 a fca8d07. DDL 003 su .75 con l'ok
-dell'operatore (exit 0), poi MAIL.ATTIVA=N e REGISTRAZIONE.ATTIVA=N. Verifiche: 4 tabelle,
-1 vista, 42 parametri, limite 30, nessuna richiesta; struttura di public identica.
-Deploy non eseguito. Registro nel piano, stato in CLAUDE.md.
+Il job Jenkins "wera2026 PROD" con DEPLOY ora salva la versione in esercizio su .106
+come passo a se' (/var/backups/deploy-war, ultimi 8, nome con data e commit) e ha
+l'opzione ROLLBACK, alternativa a DEPLOY: nessuna build ne' accesso a Internet, torna
+alla versione attiva prima dell'attuale (ripetuto risale). jenkins-wera2026.ps1 ha lo
+switch -Rollback; README con procedura e comandi di deploy-war. Nota di rilascio in
+.claude/2026-10-26-deploy-backup-e-rollback-wera2026.md.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

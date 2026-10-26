@@ -69,14 +69,40 @@ STATO 2026-10-26: branch creata (a `4320eeb`); default del job impostato alle 07
    - mai `push --force` su `release/wera2026`; un fix urgente: branch da `release/wera2026`, merge li e poi
      riporto sul branch di lavoro.
 3. DDL su .75 PRIMA del deploy, quando la release ne ha (vedi il piano di produzione nelle note `.claude`).
-4. Jenkins "wera2026 PROD": `DEPLOY=false` (controllo dell'artefatto), poi `DEPLOY=true`.
-   Il WAR precedente resta su .106 in `/var/backups/deploy-war/wera2026.war.prev` (rollback).
-5. Da riga di comando (laptop, Windows PowerShell), stesso job e stesso storico in Jenkins:
-   `.\deploy\jenkins-wera2026.ps1` (DEPLOY=false) e poi `.\deploy\jenkins-wera2026.ps1 -Deploy`.
+4. Jenkins "wera2026 PROD": nessuna spunta (controllo dell'artefatto), poi `DEPLOY`.
+   Con `DEPLOY` il job fa, in passi separati: build, patch prod, **backup della versione in esercizio**
+   su .106, deploy (con il commit come etichetta) ed elenco finale dei backup.
+5. Se qualcosa va storto: rilanciare il job con **`ROLLBACK`** (alternativo a `DEPLOY`: spuntati
+   entrambi, la build fallisce subito). Il rollback non compila e non scarica nulla, quindi funziona
+   anche fuori dalla fascia Internet 06-23: rimette la versione in esercizio prima dell'attuale; un
+   secondo `ROLLBACK` risale ancora di una versione. Per tornare avanti si rifà un `DEPLOY`.
+6. Da riga di comando (laptop, Windows PowerShell), stesso job e stesso storico in Jenkins:
+   `.\deploy\jenkins-wera2026.ps1` (solo build), `.\deploy\jenkins-wera2026.ps1 -Deploy`,
+   `.\deploy\jenkins-wera2026.ps1 -Rollback`.
    Lo script lancia il job via API, segue la console e esce con 0 solo se la build e' SUCCESS.
    Credenziali: utente Jenkins dedicato (`cli-deploy`, permessi Read/Build sul solo job) con token API,
    in un file FUORI dal repo, una riga `utente:token`, default `%USERPROFILE%\.wera\jenkins-cli-deploy.txt`
    (parametro `-Credenziali`). Il token non va mai in comandi, note o commit.
+
+### Backup e rollback su .106 (`/usr/local/sbin/deploy-war`)
+
+Il job parla con .106 solo come utente `deploy`, la cui chiave e' vincolata allo script
+`/usr/local/sbin/deploy-war` (fuori repo, copia della versione installata nelle note di sessione):
+
+| Comando (`ssh deploy@192.168.0.106 "..."`) | Effetto |
+|---|---|
+| `wera2026 deploy <commit> < wera2026.war` | verifica lo zip, salva la versione in esercizio, sostituisce il WAR (rename atomico) e attende HTTP 200 |
+| `wera2026 backup` | salva la versione in esercizio (nessun doppione) |
+| `wera2026 rollback` | rimette la versione in esercizio prima dell'attuale |
+| `wera2026 list` | versione in esercizio (`*`), backup, destinazione del prossimo rollback (`>`) |
+
+- Backup in `/var/backups/deploy-war/wera2026.war.bak-AAAAMMGG-HHMMSS-<commit>` (+ `.sha256`), ne restano 8;
+  `wera2026.war.prev` punta al piu' recente. I nomi seguono l'ordine in cui le versioni sono uscite di
+  esercizio, quindi il rollback torna sempre a quella attiva subito prima.
+- Il WAR tolto da un rollback, se non era gia' tra i backup, va in `wera2026.war.scartato-*` (ne restano 2,
+  esclusi dai rollback): resta comunque anche come artefatto della build in Jenkins.
+- Stesso meccanismo per `gestit` (job "TEST - build gestit"), senza opzione di rollback nel job.
+- I backup manuali precedenti (`/root/wera2026.war.bak-*`) sono stati copiati qui il 2026-10-26.
 
 ## Procedura (Windows)
 
