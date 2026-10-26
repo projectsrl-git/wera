@@ -78,7 +78,8 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   `CentraleTermicaScadenza`, `CentraleTermicaConfigurazione[Salva]` (solo CONFIGURAZIONE.PROFILI, default ADM),
   nota `.claude/2026-10-25-centrale-termica-scadenze-configurazione.md`. Scritture con NULL: usare la
   classe `Sql` (il DAO del framework manda i null come varchar).
-  Ondata 4 (2026-10-26, solo laptop): menu "Centrale termica" con sottovoci (Panoramica sul mockup di
+  Ondata 4 (2026-10-26; DDL 002 su .75 alle 07:11, IN ESERCIZIO su .106 dalle 08:55, Jenkins #11 lanciato con
+  `deploy/jenkins-wera2026.ps1 -Deploy`, backup del WAR precedente `/root/wera2026.war.bak-20261026-0854-ondata3-baa96d2c`): menu "Centrale termica" con sottovoci (Panoramica sul mockup di
   Andrea, Scadenze e documenti, Calendario, Alerting e storico invii, Configurazione), DDL `002-...`, motore
   avvisi (`CentraleTermicaAvvisiInvio`, cron con ALERT.TOKEN); nota
   `.claude/2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`.

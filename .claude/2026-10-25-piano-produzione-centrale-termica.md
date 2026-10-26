@@ -204,7 +204,7 @@ Nota: `2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`. Ordine obbl
    `psql -h 192.168.0.75 -U postgres -d wera -v ON_ERROR_STOP=1 -f src/resources/sql/wera2026/002-centrale_termica-scadenziario-avvisi.sql`
    Atteso: colonne `sigla`/`ente`, tipo `VERIFICA_TERRA`, tabella `invii_avvisi`, 8 parametri `ALERT.*`,
    `SCADENZE.GIORNI_PREAVVISO`=90 e `MENU.VOCE_WERA.PROFILI`='' (se mai modificati).
-3. [ ] Backup del WAR in esercizio (`/root/wera2026.war.bak-AAAAMMGG-HHMM-<commit>`), poi Jenkins con
+3. [x] Backup del WAR in esercizio (`/root/wera2026.war.bak-AAAAMMGG-HHMM-<commit>`), poi Jenkins con
    `BRANCH=release/wera2026` (branch di rilascio fissa dal 26/10, gia' a `4320eeb`; e' il default del job)
    (DEPLOY=false, controllo artefatto: 12 funzioni CentraleTermica, 25 dataset, Quartz vuoto, SMTP
    127.0.0.1:1025; poi DEPLOY=true).
@@ -237,3 +237,21 @@ Rollback: WAR precedente; il DDL 002 e' innocuo per /wera (rollback SQL nell'int
   cartelle `/usr/share/webapps/wera/`; controllo dello script "OK". sha256 `99530fe3...6d8a`.
 - Sulla branch di release (git): 12 funzioni CentraleTermica in functionList, 25 dataset `DSCentraleTermica*`.
 - Nessun deploy. Prossimo: backup del WAR in esercizio su .106, poi `-Deploy` (ok dell'operatore).
+
+### 2026-10-26 08:54 — Ondata 4 IN ESERCIZIO su .106 (ok dell'operatore): backup, Jenkins #11 DEPLOY=true, verifiche
+- Backup: `/root/wera2026.war.bak-20261026-0854-ondata3-baa96d2c` (cp -p, SHA-256 identico al WAR in esercizio
+  del 25/10 23:39, `baa96d2c...6745943`, 8 funzioni CentraleTermica). Resta anche `/var/backups/deploy-war/wera2026.war.prev`.
+- `deploy/jenkins-wera2026.ps1 -Deploy`: build #11, `release/wera2026` a `4320eeb`, controllo dell'artefatto "OK",
+  deploy-war: 100232897 byte, sha256 `b27bcc1f...52ec61`, ridistribuito in 10 s, HTTP 200; esito SUCCESS.
+- WAR in esercizio dalle 08:55:24 con lo stesso sha256: 12 funzioni, 25 dataset, 3 template centraletermica*,
+  menu con `CT_SCHEDA`, tema `?20261026` (classi `cts-` presenti); `Quartz-scheduler.tasklist=` vuota, SMTP
+  `127.0.0.1:1025` (servizio `wera-mailcatcher` attivo), `jdbc/wera`.
+- Log Tomcat: deploy di `/wera2026` 08:55:29 -> 08:55:33 (4 s) senza errori. Allo undeploy della versione
+  precedente (che oggi aveva traffico) i soliti avvisi di Tomcat su Java 25: ThreadLocal del framework,
+  thread `DeferredMailSender`, driver JDBC, cache ObjectStreamClass, NPE in `StandardWrapper.unload`; nessuno
+  riguarda la nuova istanza. Nessun crash in `/usr/share/logs/wera2026/crash` dopo le 08:54. tomcat9 mai
+  riavviato (attivo dal 24/10).
+- HTTP dal server: login wera2026, JS Panoramica/scadenziario, tema 200; gestit 200; /wera su .70 200;
+  `CentraleTermicaAvvisiInvio` senza credenziali 403. Dal laptop via https://weraweb.it: wera2026 (login, tema,
+  JS) e /wera 200.
+- Restano: verifiche funzionali dell'operatore dal browser (logout/login per il menu), cron degli avvisi (punto 5).
