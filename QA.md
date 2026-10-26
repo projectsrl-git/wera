@@ -320,5 +320,16 @@ Nota: `.claude/2026-10-25-centrale-termica-pagina.md` (backend: `...-java-upload
 - [ ] PROD dopo il deploy: verifiche per profilo della Fase 5 del piano di produzione
 - [ ] ondata 4 (menu con sottovoci, Panoramica di Andrea, scadenziario, calendario, avvisi): laptop ok il 2026-10-26, PROD dopo DDL 002 + deploy
 
+## Registrazione amministratore wera2026 (2026-10-26, solo laptop)
+Disegno: `.claude/2026-10-26-disegno-registrazione-amministratore.md`; note delle ondate 1-3 dello stesso giorno.
+- [x] DDL 003 (schema `registrazioni`) sul DB locale, idempotente; vincoli provati in transazione annullata
+- [x] pagina pubblica `RegistrazioneAmministratore`: errori per campo (client e server), P.IVA/CF con controllo, foto (trascinamento, file non immagine rifiutato), trappola, gettone, limite per IP, doppioni email/P.IVA
+- [x] ricevuta e notifica nel mailcatcher; con `MAIL.ATTIVA=N` nessuna mail e registro NON_INVIATA
+- [x] ADM: voce "Registrazioni" con contatore, elenco per stato, dettaglio con foto e controlli, verifica, approva (utente AMM su SIRBI con la password scelta, mail), rifiuta (motivo obbligatorio, mail), annulla
+- [x] il nuovo amministratore entra con email e password scelta; AMM senza accesso alla pagina delle richieste (403 / redirect)
+- [ ] a occhio: pagina pubblica desktop e 375px, pagina richieste desktop e tablet (screenshot non fatti: finestra nascosta)
+- [ ] collegamento dei condomini al nuovo AMM dall'anagrafica condominio e verifica del perimetro
+- [ ] PROD: DDL 003 su .75, `MAIL.ATTIVA=N`, `MAIL.NOTIFICA_DESTINATARI`, verifica `ATTIVAZIONE.AZIENDA_CODICE`, deploy (tutto con ok dell'operatore)
+
 ## Rollback rapido
 Rimuovere (o commentare) le 5 righe aggiunte in fondo al blocco CSS di `included_head.include`: l'app torna esattamente all'aspetto precedente. Per le sole pagine standalone (errore/errorpage/message) rimuovere i 4 `<link>` aggiunti nell'head.

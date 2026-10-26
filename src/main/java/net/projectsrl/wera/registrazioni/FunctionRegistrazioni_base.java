@@ -32,6 +32,28 @@ public abstract class FunctionRegistrazioni_base extends FunctionProjectWebApp_b
         super(applServices, functionID, functionName);
     }
 
+    static final String CAMPO_SESSIONE_ACCESSO   = "REG_ACCESSO";
+    static final String CAMPO_SESSIONE_IN_ATTESA = "REG_IN_ATTESA";
+
+    private static final String SQL_IN_ATTESA = "SELECT count(*) FROM registrazioni.richieste WHERE stato = 'IN_ATTESA'";
+
+    /**
+     * Salva in sessione cio' che serve alla voce di menu di wera2026 (included_menu.include): REG_ACCESSO
+     * (S/N) e REG_IN_ATTESA (numero di richieste da esaminare, per il contatore).
+     */
+    protected void memorizzaAccesso(SsbServletRequest req, Approvatore a) throws AppCrash {
+
+        setSessionField(req, CAMPO_SESSIONE_ACCESSO, a.isAbilitato() ? "S" : "N");
+        setSessionField(req, CAMPO_SESSIONE_IN_ATTESA, a.isAbilitato() ? Integer.toString(contaInAttesa()) : "0");
+    }
+
+    static int contaInAttesa() throws AppCrash {
+
+        List<Map<String, Object>> righe = Db.leggi(SQL_IN_ATTESA);
+        Object n = righe.isEmpty() ? null : righe.get(0).get("count");
+        return (n instanceof Number) ? ((Number) n).intValue() : 0;
+    }
+
     /** Testo ripulito: null se assente o vuoto, caratteri di controllo tolti (a capo ammessi), troncato. */
     static String pulito(String v, int max) {
 

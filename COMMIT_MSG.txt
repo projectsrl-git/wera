@@ -1,11 +1,12 @@
-feat(registrazioni): pagina di registrazione amministratore e invio della richiesta
+feat(registrazioni): approvazione delle richieste e attivazione dell'amministratore
 
-FUNCTIONID=RegistrazioneAmministratore (pubblica): pagina sullo stack wera-landing.css dal mockup
-giro 12 (guida laterale, 5 sezioni, foto con anteprima e trascinamento, esito in pagina) e POST
-multipart che salva richiesta e foto nello schema registrazioni, con validazioni lato server
-(P.IVA e CF con carattere di controllo), anti-abuso (trappola, gettone HMAC, limite per IP) e
-mail di ricevuta e notifica governate da MAIL.ATTIVA. Nessun utente creato: nasce
-all'approvazione (ondata 3). CTA amministratore della landing ricollegate, cache-buster
-wera-landing 20261026. Collaudo sul laptop con mailcatcher.
+Pagina RegistrazioniRichieste per i profili di APPROVAZIONE.PROFILI (default ADM), con voce
+"Registrazioni" e contatore delle richieste in attesa nel menu di wera2026: elenco per stato,
+dettaglio con foto e controlli (email gia' usata, stessa P.IVA), verifica dei ripartitori.
+Approva crea in una transazione l'utente AMM (utenti, utenti_lingue, utenti_profili,
+utenti_aziende, password con l'hash scelto dal richiedente) e manda la mail di esito; rifiuta
+(motivo obbligatorio, in mail) e annulla (spam/doppioni, senza mail). CSS dedicato collegato
+solo dalla pagina. Collaudo end-to-end sul laptop: il nuovo amministratore entra con la sua
+password. Aggiornati QA.md e CLAUDE.md.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

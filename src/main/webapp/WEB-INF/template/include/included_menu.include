@@ -44,6 +44,16 @@
 					</li>
 					</#if>
 
+					<#-- 2026-10-26 Richieste di registrazione wera2026 (schema registrazioni): voce NON presente nel menu
+					     del DB. REG_ACCESSO (S/N) e REG_IN_ATTESA sono campi di sessione scritti dal pacchetto
+					     net.projectsrl.wera.registrazioni (parametro APPROVAZIONE.PROFILI). Finche' non esistono la voce
+					     resta nascosta e lo script in fondo al menu chiede l'accesso al server. -->
+					<#if !(REG_ACCESSO?? && REG_ACCESSO == 'N')>
+					<li id="reg-voce-menu"<#if REG_PAGINA??> class="active"</#if><#if !REG_ACCESSO??> style="display:none"</#if>>
+						<a href="astro?FUNCTIONID=RegistrazioniRichieste"><i class="fa fa-user-plus"></i> <span class="nav-label">Registrazioni</span> <span class="label label-warning pull-right" id="reg-menu-conta"<#if !(REG_IN_ATTESA?? && REG_IN_ATTESA != '0')> style="display:none"</#if>><#if REG_IN_ATTESA??>${REG_IN_ATTESA?html}</#if></span></a>
+					</li>
+					</#if>
+
 					<#list menu_list as menuItem>
 					<#if menuItem.getItemLevel()=1>
 					<li<#if SELECTED_PATH?starts_with(menuItem.getPath())> class="active"</#if>>
@@ -114,6 +124,26 @@
 								if (a.nascondi_voce_wera) { nascondiVoceWera(); }
 							});
 						</#if>
+					});
+				}(window.jQuery));
+				</script>
+				</#if>
+
+				<#-- 2026-10-26 Richieste di registrazione: accesso alla voce e contatore delle richieste in attesa
+				     (aggiornato a ogni pagina per chi e' abilitato; per gli altri una sola chiamata, poi REG_ACCESSO=N). -->
+				<#if !(REG_ACCESSO?? && REG_ACCESSO == 'N')>
+				<script>
+				(function ($) {
+					if (!$) { return; }
+					$(function () {
+						$.ajax({ url: 'astro', data: { FUNCTIONID: 'RegistrazioniDati', OPERAZIONE: 'accesso' }, dataType: 'json', cache: false })
+							.done(function (j) {
+								var a = j && j.accesso;
+								if (!a) { return; }
+								if (!a.abilitato) { $('#reg-voce-menu').remove(); return; }
+								$('#reg-voce-menu').show();
+								$('#reg-menu-conta').text(a.in_attesa || '').toggle(a.in_attesa > 0);
+							});
 					});
 				}(window.jQuery));
 				</script>
