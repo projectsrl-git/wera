@@ -1,9 +1,8 @@
-docs(centrale-termica): disegno della gestione documentale parallela wera2026
+docs(centrale-termica): contratti firmati 2026 caricati in PROD
 
-- funzione nuova "Centrale termica 2026" (tabelle ct26_, cartella ct2026/,
-  FUNCTIONID Ct26*): /wera e il DB condiviso non cambiano comportamento
-- sezioni, contatti, soglie e profili come parametri; versioni e storico;
-  documenti di /wera mostrati in sola lettura
-- la proposta precedente (raggruppare le 16 categorie) e marcata superata
+Via applicazione (nessuna scrittura diretta sul DB): sezione nuova Contratti (id 9),
+56 documenti su 31 condomini, 9 scadenze "Rinnovo nomina Terzo responsabile".
+Verificati conteggi e scadenziario via app e SHA-256 dei 56 file su .106.
+22 file in attesa: condomini assenti nell'anagrafica di PROD.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

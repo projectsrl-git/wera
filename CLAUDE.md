@@ -83,6 +83,10 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   Andrea, Scadenze e documenti, Calendario, Alerting e storico invii, Configurazione), DDL `002-...`, motore
   avvisi (`CentraleTermicaAvvisiInvio`, cron con ALERT.TOKEN); nota
   `.claude/2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`.
+  Dati reali (2026-10-26, solo via applicazione): sezione `CONTRATTI` (id 9) + 56 contratti firmati su 31
+  condomini + 9 scadenze TR in PROD; 22 file in attesa (condomini assenti in PROD). Gli ID condominio
+  della copia locale del DB NON coincidono con PROD. Nota
+  `.claude/2026-10-26-centrale-termica-caricamento-documenti-andrea.md`.
 - **In attesa di backend/dataset** (non fattibili senza toccare config.cfg/Java):
   "Andamento letture mensili (HCA)" in home (serve un DS MESE/VALORE in config.cfg),
   "Consumi per condominio", "Previsione consumi", "Scadenziario Centrale termica",
