@@ -205,7 +205,7 @@ Nota: `2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`. Ordine obbl
    Atteso: colonne `sigla`/`ente`, tipo `VERIFICA_TERRA`, tabella `invii_avvisi`, 8 parametri `ALERT.*`,
    `SCADENZE.GIORNI_PREAVVISO`=90 e `MENU.VOCE_WERA.PROFILI`='' (se mai modificati).
 3. [ ] Backup del WAR in esercizio (`/root/wera2026.war.bak-AAAAMMGG-HHMM-<commit>`), poi Jenkins con
-   `BRANCH=release/wera2026` (branch di rilascio fissa dal 26/10, gia' a `4320eeb`)
+   `BRANCH=release/wera2026` (branch di rilascio fissa dal 26/10, gia' a `4320eeb`; e' il default del job)
    (DEPLOY=false, controllo artefatto: 12 funzioni CentraleTermica, 25 dataset, Quartz vuoto, SMTP
    127.0.0.1:1025; poi DEPLOY=true).
 4. [ ] Verifiche: menu con sottovoci, Panoramica, Scadenze/Calendario/Alerting; logout/login per i campi

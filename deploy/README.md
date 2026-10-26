@@ -58,9 +58,8 @@ patchato differisce dall'originale solo nelle righe cambiate.
 
 Branch di rilascio FISSA: **`release/wera2026`** su GitHub. Il job Jenkins "wera2026 PROD" (192.168.0.115)
 builda sempre quella (parametro `BRANCH`, default `release/wera2026`): per rilasciare non si tocca il job.
-STATO 2026-10-26: branch creata (a `4320eeb`); il default del parametro nel job va impostato dalla UI di
-Jenkins (Configura > BRANCH > `release/wera2026` > Salva, nessun riavvio). Finche' non e' fatto: lanciare con
-`BRANCH=release/wera2026`.
+STATO 2026-10-26: branch creata (a `4320eeb`); default del job impostato alle 07:30 (config.xml, backup
+`config.xml.bak-20261026-072959` nella cartella del job, riavvio di Jenkins con l'ok dell'operatore).
 
 1. Sviluppo e collaudo sul branch di lavoro (oggi `restyle/ui-2026-r2`), DDL eventuali prima in locale.
 2. Rilascio = portare il lavoro su `release/wera2026` e pusharla:
