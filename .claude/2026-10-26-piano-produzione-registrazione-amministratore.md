@@ -249,3 +249,25 @@ Su https://weraweb.it/wera2026/ :
   Attenzione anche: con il parametro a 0 il codice blocca tutto (conta >= 0), non disattiva il limite.
   Decisione dell'operatore prima della Fase 3 (vedi riepilogo in chat). Fase 6.4 da rivedere di conseguenza.
 - Correzione al piano: il controllo dell'artefatto in Fase 4 conta solo le 4 funzioni nuove.
+- Decisione dell'operatore (dopo la Fase 1): limite come tetto giornaliero del sito, default 30 nel DDL 003,
+  codice invariato (commit `fca8d07`; DDL riprovato su uno schema temporaneo del DB locale, poi eliminato).
+
+### 2026-10-26 13:12-13:15 (ora del laptop) — Fasi 2 e 3 ESEGUITE (ok dell'operatore); deploy NON eseguito
+- Fase 2: `git push origin restyle/ui-2026-r2` (`f535152..fca8d07`) e
+  `git push origin restyle/ui-2026-r2:release/wera2026` (`f535152..fca8d07`, fast-forward). Commit portati:
+  `75d5994` (nota CT di un'altra sessione), `b5efe99`, `e291d00`, `8560a77`, `cfe9bcc`, `74e25da`, `fca8d07`.
+- Prima del DDL (sola lettura, 13:13): server 192.168.0.75, DB `wera` 9.4.26, nessun commento di test, schema
+  `registrazioni` assente, 17 connessioni attive; impronta ordinata di `public` `0a991ca4...d273`.
+- DDL `003-registrazioni-ddl.sql` (identico al commit `fca8d07`, sha256 del file `3ae66e30b2e0...`), lanciato
+  dopo il controllo del server, 13:13:11-13:13:13, exit 0 (solo i 2 NOTICE attesi sui trigger non ancora
+  esistenti).
+- Parametri (transazione unica, blocco DO con controllo del server e di 1 riga per UPDATE): `MAIL.ATTIVA`=N,
+  `REGISTRAZIONE.ATTIVA`=N, `id_utente_mod`=0. NB: `now()` del DB ha dato 12:09:59 mentre il laptop segnava
+  circa 13:14: l'orologio (o il fuso) di .75 e' circa un'ora indietro; i `ts_*` delle righe useranno l'ora del DB.
+- Dopo (sola lettura): 4 tabelle, 1 vista, 2 funzioni, 2 trigger su `eventi`, 12 indici, 42 parametri;
+  cambiati solo `MAIL.ATTIVA`=N e `REGISTRAZIONE.ATTIVA`=N; `ANTIABUSO.MAX_RICHIESTE_IP_24H`=30;
+  `ATTIVAZIONE.AZIENDA_CODICE`=SIRBI, `ATTIVAZIONE.PROFILO`=AMM, `APPROVAZIONE.PROFILI`=ADM; 0 richieste, 0 eventi,
+  0 allegati; `valore_parametro('MAIL.ATTIVA')`=N; `v_richieste` interrogabile. Schema di proprieta' di `postgres`.
+- Struttura di `public`: impronta ordinata IDENTICA (`0a991ca4...d273`) e anche il file grezzo di pg_dump identico.
+- HTTP da laptop via weraweb.it: login wera2026 200, /wera 200 (in esercizio ancora il WAR `f535152`).
+- Prossimo (serve ok): Fase 4, Jenkins solo build con controllo dell'artefatto, poi `-Deploy`.

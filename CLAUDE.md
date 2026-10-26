@@ -90,7 +90,9 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   condomini + 9 scadenze TR in PROD; 22 file in attesa (condomini assenti in PROD). Gli ID condominio
   della copia locale del DB NON coincidono con PROD. Nota
   `.claude/2026-10-26-centrale-termica-caricamento-documenti-andrea.md`.
-- **Registrazione amministratore wera2026 (2026-10-26, SOLO laptop, non pushata)**: schema PostgreSQL nuovo
+- **Registrazione amministratore wera2026 (2026-10-26; pushata e su `release/wera2026` a `fca8d07`; schema
+  creato su .75 alle 13:13 con l'ok dell'operatore, `MAIL.ATTIVA=N` e `REGISTRAZIONE.ATTIVA=N`, limite invii
+  30/giorno per tutto il sito perche' dietro il NAT tutti i client sono 192.168.50.253; DEPLOY NON ANCORA FATTO)**: schema PostgreSQL nuovo
   **`registrazioni`** (DDL `src/resources/sql/wera2026/003-registrazioni-ddl.sql`: `richieste`, `allegati`,
   `parametri`, `eventi`, vista `v_richieste`), pacchetto Java `net.projectsrl.wera.registrazioni` (nessun
   dataset in config.cfg: query parametriche). Flusso approvato dall'operatore: il form pubblico
@@ -100,7 +102,7 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   (profilo AMM, azienda da `ATTIVAZIONE.AZIENDA_CODICE`). I condomini si collegano dall'anagrafica condominio.
   Mail governate da `MAIL.ATTIVA` (in PROD `N` finche' l'SMTP e' il mailcatcher). Disegno
   `.claude/2026-10-26-disegno-registrazione-amministratore.md`, note ondate 1-3 dello stesso giorno.
-  .75 NON toccato: DDL 003 e deploy solo con ok dell'operatore. Piano di produzione:
+  Deploy solo con ok dell'operatore. Piano di produzione e registro:
   `.claude/2026-10-26-piano-produzione-registrazione-amministratore.md` (niente eseguito). CTA amministratore della landing ricollegate.
 - **In attesa di backend/dataset** (non fattibili senza toccare config.cfg/Java):
   "Andamento letture mensili (HCA)" in home (serve un DS MESE/VALORE in config.cfg),

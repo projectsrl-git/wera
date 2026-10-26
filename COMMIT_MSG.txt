@@ -1,9 +1,8 @@
-fix(registrazioni): limite di invii come tetto giornaliero del sito (30)
+docs(registrazioni): schema registrazioni creato su .75 (Fasi 2-3 del piano)
 
-In PROD tutti i client arrivano da 192.168.50.253 (NAT a monte dell'Apache .50) e Tomcat su
-.106 legge gia' X-Forwarded-For: il limite per IP vale per l'intero sito. Decisione
-dell'operatore: default di ANTIABUSO.MAX_RICHIESTE_IP_24H a 30 nel DDL 003 (prima 5), codice
-invariato. Aggiornati descrizioni dei parametri, disegno e piano di produzione (passi sull'IP
-del proxy rimossi, verifica del valore dopo il DDL). DDL riprovato su uno schema temporaneo.
+Push del branch e fast-forward di release/wera2026 a fca8d07. DDL 003 su .75 con l'ok
+dell'operatore (exit 0), poi MAIL.ATTIVA=N e REGISTRAZIONE.ATTIVA=N. Verifiche: 4 tabelle,
+1 vista, 42 parametri, limite 30, nessuna richiesta; struttura di public identica.
+Deploy non eseguito. Registro nel piano, stato in CLAUDE.md.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
