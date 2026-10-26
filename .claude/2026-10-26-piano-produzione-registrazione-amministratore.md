@@ -271,3 +271,27 @@ Su https://weraweb.it/wera2026/ :
 - Struttura di `public`: impronta ordinata IDENTICA (`0a991ca4...d273`) e anche il file grezzo di pg_dump identico.
 - HTTP da laptop via weraweb.it: login wera2026 200, /wera 200 (in esercizio ancora il WAR `f535152`).
 - Prossimo (serve ok): Fase 4, Jenkins solo build con controllo dell'artefatto, poi `-Deploy`.
+
+### 2026-10-26 13:35-13:46 — Fase 4 ESEGUITA e Fase 5 (senza account) (ok dell'operatore); modulo ANCORA CHIUSO
+- `deploy/jenkins-wera2026.ps1` (copia di lavoro con l'opzione -Rollback di un'altra sessione, non committata:
+  passa solo `ROLLBACK=false` in piu') -> build #15, `release/wera2026` a `fca8d07`, BUILD SUCCESS, controllo
+  dello script "OK", nessun deploy.
+- Artefatto della #15 scaricato da Jenkins (100312008 byte, sha256 `13ef63a652e6d867...`): `Quartz-scheduler.tasklist=`
+  vuota, SMTP `127.0.0.1:1025`, `ResetPassword.Mail.Address.From=noreply@weraweb.it`,
+  `directory.external_files=/usr/share/webapps/wera/`, `jdbc/wera`; 4 funzioni nuove in functionList (piu' la
+  `Registrazione` inquilino invariata); template, JS, CSS e classi del pacchetto presenti; voce di menu e CTA
+  della landing presenti.
+- `-Deploy` -> build #16 (stesso commit, stesso controllo OK), backup della versione in esercizio
+  `/var/backups/deploy-war/wera2026.war.bak-20261026-134244-f535152` (sha256 5726a46c3c7b, prossimo rollback),
+  WAR integro 100312008 byte, ridistribuito in 15 s, HTTP 200. In esercizio `fca8d07` (sha256 9e6044bb5fb4).
+- Log su .106: undeploy 13:42:59, deploy 13:43:00-13:43:04; solo la NPE gia' nota in `InstanceManager.destroy()`
+  della vecchia istanza; nessun crash in `/usr/share/logs/wera2026/crash`; tomcat9 attivo dal 24/10 (mai
+  riavviato).
+- Via https://weraweb.it: login wera2026 200, landing con 4 link al modulo e `wera-landing.css?20261026`; modulo
+  200 con "Le registrazioni sono momentaneamente sospese..." e nessun form; POST diretto 503 con lo stesso
+  testo; CSS/JS nuovi 200; `RegistrazioniDati` senza login -> landing, nessun dato; /wera 200.
+- .75: 0 eventi, 0 richieste, `MAIL.ATTIVA`=N, `REGISTRAZIONE.ATTIVA`=N.
+- NON fatte (servono account di produzione, li ha l'operatore): superuser -> logout/login, voce "Registrazioni"
+  senza contatore, pagina con 0 richieste e avviso "mail spente"; amministratore reale -> nessuna voce, URL
+  della pagina rimanda alla Home; Centrale termica come prima.
+- Prossimo (serve ok): queste verifiche con gli account, poi Fase 6 (apertura).

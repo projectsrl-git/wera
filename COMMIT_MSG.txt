@@ -1,10 +1,8 @@
-feat(deploy): backup della versione in esercizio e ROLLBACK nel job wera2026
+docs(registrazioni): registrazione amministratore in esercizio su .106, modulo chiuso
 
-Il job Jenkins "wera2026 PROD" con DEPLOY ora salva la versione in esercizio su .106
-come passo a se' (/var/backups/deploy-war, ultimi 8, nome con data e commit) e ha
-l'opzione ROLLBACK, alternativa a DEPLOY: nessuna build ne' accesso a Internet, torna
-alla versione attiva prima dell'attuale (ripetuto risale). jenkins-wera2026.ps1 ha lo
-switch -Rollback; README con procedura e comandi di deploy-war. Nota di rilascio in
-.claude/2026-10-26-deploy-backup-e-rollback-wera2026.md.
+Jenkins #15 (solo build, artefatto controllato) e #16 con -Deploy: fca8d07 in esercizio dalle
+13:43, backup di f535152 pronto per il rollback, log puliti. Verifiche pubbliche: landing con
+le CTA, modulo "sospese", POST 503, nessun dato senza login, /wera invariato; su .75 nessun
+evento. Restano le verifiche con gli account reali e l'apertura (REGISTRAZIONE.ATTIVA=S).
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
