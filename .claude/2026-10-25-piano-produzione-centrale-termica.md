@@ -228,3 +228,12 @@ Rollback: WAR precedente; il DDL 002 e' innocuo per /wera (rollback SQL nell'int
   sparisce per chi ha la nuova dal login successivo, soglia "in scadenza" a 90 gg), `v_scadenze` con le
   colonne nuove; 10 tabelle e 3 viste. Impronta ordinata di `public` IDENTICA.
 - Restano: Jenkins (operatore), verifiche, cron degli avvisi.
+
+### 2026-10-26 08:24 — Jenkins build #10 DEPLOY=false da riga di comando (`deploy/jenkins-wera2026.ps1`)
+- Primo lancio con l'utente Jenkins `cli-deploy` (token in `%USERPROFILE%\.wera\`, fuori repo): coda -> build
+  #10, `release/wera2026` a `4320eeb`, BUILD SUCCESS (642 sorgenti, release 8), esito SUCCESS, uscita 0.
+- Artefatto patchato (profilo prod): `Quartz-scheduler.tasklist=` vuota e job `#PROD-OFF#`, SMTP
+  `127.0.0.1:1025`, mittenti `noreply@test.invalid`, `jdbc/wera`, log e crash in `/usr/share/logs/wera2026/`,
+  cartelle `/usr/share/webapps/wera/`; controllo dello script "OK". sha256 `99530fe3...6d8a`.
+- Sulla branch di release (git): 12 funzioni CentraleTermica in functionList, 25 dataset `DSCentraleTermica*`.
+- Nessun deploy. Prossimo: backup del WAR in esercizio su .106, poi `-Deploy` (ok dell'operatore).
