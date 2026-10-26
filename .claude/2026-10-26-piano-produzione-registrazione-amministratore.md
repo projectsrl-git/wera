@@ -295,3 +295,12 @@ Su https://weraweb.it/wera2026/ :
   senza contatore, pagina con 0 richieste e avviso "mail spente"; amministratore reale -> nessuna voce, URL
   della pagina rimanda alla Home; Centrale termica come prima.
 - Prossimo (serve ok): queste verifiche con gli account, poi Fase 6 (apertura).
+
+### 2026-10-26 13:57 (ora del laptop) — Fase 6.1 ESEGUITA: modulo APERTO (ok dell'operatore)
+- Verifiche con superuser e amministratore reali fatte dall'operatore dal browser; poi "ok apriamo".
+- `REGISTRAZIONE.ATTIVA`=S su .75 (blocco DO con controllo del server e di 1 riga, da N a S, `id_utente_mod`=0).
+  Parametri ora: `REGISTRAZIONE.ATTIVA`=S, `MAIL.ATTIVA`=N, `ANTIABUSO.MAX_RICHIESTE_IP_24H`=30.
+- https://weraweb.it/wera2026/astro?FUNCTIONID=RegistrazioneAmministratore: 200, form presente, nessun testo
+  "sospese", gettone anti-abuso generato, fasce dei condomini dai parametri.
+- Restano (Fase 6.2-6.5, facoltative): richiesta di prova dell'operatore dal telefono, controllo di foto, registro
+  (IP atteso 192.168.50.253) e annullamento della prova dalla pagina "Registrazioni".

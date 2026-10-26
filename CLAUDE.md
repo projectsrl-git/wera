@@ -92,7 +92,7 @@ e `demo_riferimento_landing.html` (riferimento visivo).
   `.claude/2026-10-26-centrale-termica-caricamento-documenti-andrea.md`.
 - **Registrazione amministratore wera2026 (2026-10-26; pushata e su `release/wera2026` a `fca8d07`; schema
   creato su .75 alle 13:13 con l'ok dell'operatore, `MAIL.ATTIVA=N` e `REGISTRAZIONE.ATTIVA=N`, limite invii
-  30/giorno per tutto il sito perche' dietro il NAT tutti i client sono 192.168.50.253; IN ESERCIZIO su .106 dalle 13:43, Jenkins #16, modulo pubblico ANCORA CHIUSO)**: schema PostgreSQL nuovo
+  30/giorno per tutto il sito perche' dietro il NAT tutti i client sono 192.168.50.253; IN ESERCIZIO su .106 dalle 13:43, Jenkins #16, modulo pubblico APERTO dalle 13:57 con REGISTRAZIONE.ATTIVA=S)**: schema PostgreSQL nuovo
   **`registrazioni`** (DDL `src/resources/sql/wera2026/003-registrazioni-ddl.sql`: `richieste`, `allegati`,
   `parametri`, `eventi`, vista `v_richieste`), pacchetto Java `net.projectsrl.wera.registrazioni` (nessun
   dataset in config.cfg: query parametriche). Flusso approvato dall'operatore: il form pubblico

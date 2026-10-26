@@ -1,8 +1,7 @@
-docs(registrazioni): registrazione amministratore in esercizio su .106, modulo chiuso
+docs(registrazioni): modulo di registrazione amministratore aperto in produzione
 
-Jenkins #15 (solo build, artefatto controllato) e #16 con -Deploy: fca8d07 in esercizio dalle
-13:43, backup di f535152 pronto per il rollback, log puliti. Verifiche pubbliche: landing con
-le CTA, modulo "sospese", POST 503, nessun dato senza login, /wera invariato; su .75 nessun
-evento. Restano le verifiche con gli account reali e l'apertura (REGISTRAZIONE.ATTIVA=S).
+REGISTRAZIONE.ATTIVA=S su .75 alle 13:57 (ok dell'operatore, dopo le sue verifiche con
+superuser e amministratore). Modulo pubblico verificato via weraweb.it: form presente,
+gettone generato. Mail ancora spente (MAIL.ATTIVA=N), tetto di 30 invii al giorno.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
