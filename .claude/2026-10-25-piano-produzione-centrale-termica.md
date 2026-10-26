@@ -198,8 +198,8 @@ Configurazione iniziale (superuser, dalla pagina Configurazione):
 
 ## Ondata 4 (2026-10-26) — menu, Panoramica, scadenziario, avvisi: passi per la PROD
 Nota: `2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`. Ordine obbligato: DDL 002 prima del deploy.
-1. [ ] Push del branch (fatto da Claude su richiesta, oppure dall'operatore).
-2. [ ] DDL 002 su .75 (ok a parte), verifiche in sola lettura come per lo 001 (server, schema `public`
+1. [x] Push del branch (Claude, 2026-10-26, su richiesta dell'operatore).
+2. [x] DDL 002 su .75 (ok dell'operatore, 2026-10-26 07:11, vedi registro), verifiche in sola lettura come per lo 001 (server, schema `public`
    invariato con `pg_dump -s -n public` ordinato):
    `psql -h 192.168.0.75 -U postgres -d wera -v ON_ERROR_STOP=1 -f src/resources/sql/wera2026/002-centrale_termica-scadenziario-avvisi.sql`
    Atteso: colonne `sigla`/`ente`, tipo `VERIFICA_TERRA`, tabella `invii_avvisi`, 8 parametri `ALERT.*`,
@@ -214,3 +214,16 @@ Nota: `2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`. Ordine obbl
    `15 6 * * * curl -s -o /dev/null 'http://localhost/wera2026/astro?FUNCTIONID=CentraleTermicaAvvisiInvio&TOKEN=<ALERT.TOKEN>'`
    Con il profilo prod le mail restano nel mailcatcher (`/usr/share/logs/wera2026/mailcatcher/`).
 Rollback: WAR precedente; il DDL 002 e' innocuo per /wera (rollback SQL nell'intestazione dello script).
+
+### 2026-10-26 07:11 — DDL 002 ESEGUITO su .75 (ok dell'operatore), deploy non eseguito
+- Prima (sessione in sola lettura): server 192.168.0.75, DB `wera` 9.4.26, nessun commento di test; schema
+  001 presente, colonne `sigla`/`ente` e tabella `invii_avvisi` assenti, 0 parametri `ALERT.*`,
+  `SCADENZE.GIORNI_PREAVVISO`=30 e `MENU.VOCE_WERA.PROFILI`='ADM,INS' mai modificati, 0 eccezioni per
+  azienda, nessun documento/scadenza/evento. Impronta ordinata di `public` = `0a991ca4...d273` (uguale
+  al 25/10).
+- `002-centrale_termica-scadenziario-avvisi.sql` (commit `d956dda`) alle 07:11:52, exit 0.
+- Dopo: 7 tipi con sigla/ente (nuovo VERIFICA_TERRA), `invii_avvisi` con 2 trigger, 8 parametri ALERT
+  (token di 32 caratteri), preavviso 90 e voce vecchia '' (anche con il WAR attuale: la vecchia voce
+  sparisce per chi ha la nuova dal login successivo, soglia "in scadenza" a 90 gg), `v_scadenze` con le
+  colonne nuove; 10 tabelle e 3 viste. Impronta ordinata di `public` IDENTICA.
+- Restano: Jenkins (operatore), verifiche, cron degli avvisi.
