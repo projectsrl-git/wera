@@ -263,7 +263,8 @@ Su https://weraweb.it/wera2026/ :
   esistenti).
 - Parametri (transazione unica, blocco DO con controllo del server e di 1 riga per UPDATE): `MAIL.ATTIVA`=N,
   `REGISTRAZIONE.ATTIVA`=N, `id_utente_mod`=0. NB: `now()` del DB ha dato 12:09:59 mentre il laptop segnava
-  circa 13:14: l'orologio (o il fuso) di .75 e' circa un'ora indietro; i `ts_*` delle righe useranno l'ora del DB.
+  circa 13:14: il DB .75 e' in UTC (verificato dopo: `now()` = 14:52 UTC alle 15:52 italiane), non indietro;
+  i `ts_*` delle righe sono in UTC.
 - Dopo (sola lettura): 4 tabelle, 1 vista, 2 funzioni, 2 trigger su `eventi`, 12 indici, 42 parametri;
   cambiati solo `MAIL.ATTIVA`=N e `REGISTRAZIONE.ATTIVA`=N; `ANTIABUSO.MAX_RICHIESTE_IP_24H`=30;
   `ATTIVAZIONE.AZIENDA_CODICE`=SIRBI, `ATTIVAZIONE.PROFILO`=AMM, `APPROVAZIONE.PROFILI`=ADM; 0 richieste, 0 eventi,
@@ -302,6 +303,28 @@ Su https://weraweb.it/wera2026/ :
   Parametri ora: `REGISTRAZIONE.ATTIVA`=S, `MAIL.ATTIVA`=N, `ANTIABUSO.MAX_RICHIESTE_IP_24H`=30.
 - https://weraweb.it/wera2026/astro?FUNCTIONID=RegistrazioneAmministratore: 200, form presente, nessun testo
   "sospese", gettone anti-abuso generato, fasce dei condomini dai parametri.
-- Fase 6.2-6.5 (richiesta di prova) SALTATA per decisione dell'operatore: la prima richiesta vera si controlla
-  quando arriva (foto in `/usr/share/webapps/wera/registrazioni/2026/<n>/`, registro con IP 192.168.50.253,
-  eventi MAIL `NON_INVIATA`). Rilascio chiuso.
+- Restano (Fase 6.2-6.5, facoltative): richiesta di prova dell'operatore dal telefono, controllo di foto, registro
+  (IP atteso 192.168.50.253) e annullamento della prova dalla pagina "Registrazioni".
+
+### 2026-10-26 15:40-15:55 (ora italiana) — prova completa dell'operatore e controlli (sola lettura)
+- Prova dell'operatore, invece della prova annullata prevista: richiesta n. 1 (STUDIO, nessuna foto) alle 15:40,
+  APPROVATA alle 15:46 dal superuser -> utente AMM id 116 (azienda SIRBI, lingua, password valida fino al
+  25/12, presente in V_LOGIN), hash della richiesta azzerato; login del nuovo utente alle 15:55; 1 condominio
+  collegato dall'anagrafica. Registro: RICHIESTA, APPROVAZIONE (profilo ADM), 2 x MAIL `NON_INVIATA (MAIL.ATTIVA=N)`
+  (ricevuta e approvazione; nessuna notifica perche' `MAIL.NOTIFICA_DESTINATARI` e' vuoto); IP 192.168.50.253
+  come atteso. Nessun allegato: la cartella `/usr/share/webapps/wera/registrazioni/` non esiste ancora (nascera'
+  con la prima foto; la scrittura di Tomcat sulla share e' stata provata il 25/10).
+- Segnalazione dell'operatore "la prova ha inviato una mail": verificato che NON e' uscita nessuna mail dalla
+  prova. (1) wera2026 in esercizio: unico SMTP configurato 127.0.0.1:1025; il mailcatcher (attivo dal 24/10) non
+  ha ricevuto nulla dopo il 25/10 09:07; nessun "Email sent" nel log di debug di wera2026. (2) `email_log` su .75
+  (dove scrive `DeferredMailSender`, coda in memoria, anche per /wera): una sola riga oggi, l'alert giornaliero
+  di /wera "Alert rilevatori in errore" delle 12:04 UTC (13:04 italiane, prima della prova, uguale ogni giorno),
+  destinatario diverso dall'email della prova. (3) I job mail di /wera (errori, riepilogo, file manager, crediti)
+  scrivono solo a `distribution_list` o all'email dell'azienda, mai agli amministratori dei condomini: il nuovo
+  utente non ricevera' mail da /wera per il condominio collegato.
+- Crash su .106 alle 15:33: ClassCastException in `getPathDescription` aprendo `FunctionLogin` con una sessione
+  attiva, il bug di sessione preesistente (stesso crash oggi alle 08:02, 11:10, 14:53, anche prima del deploy).
+  Nessuna eccezione nel journal di Tomcat fra 15:35 e 15:59.
+- Da decidere (operatore): l'utente AMM id 116 della prova e' attivo in PROD con un condominio collegato. Se era
+  solo una prova: disattivarlo dalla gestione utenti (`fl_disattivo`) e scollegare il condominio, non cancellarlo
+  (la richiesta resta APPROVATA nello storico).

@@ -1,6 +1,9 @@
-docs(registrazioni): rilascio chiuso senza richiesta di prova
+docs(registrazioni): esito della prova completa in produzione
 
-Su decisione dell'operatore niente richiesta di prova in produzione: la prima richiesta vera
-si controlla quando arriva. Registro del piano aggiornato.
+Richiesta di prova approvata dall'operatore (utente AMM id 116, login ok, un condominio
+collegato); registro con MAIL NON_INVIATA. Verificato che nessuna mail e' uscita: mailcatcher
+vuoto, solo SMTP locale in wera2026, in email_log solo l'alert giornaliero di /wera ad altro
+destinatario, i job di /wera non scrivono agli amministratori. Il crash delle 15:33 e' il bug
+di sessione preesistente. Corretta la nota sull'orologio di .75 (e' in UTC).
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
