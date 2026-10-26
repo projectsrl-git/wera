@@ -1,7 +1,9 @@
-feat(centrale-termica): icone delle sezioni nella Panoramica
+feat(registrazioni): schema DB per la registrazione amministratore
 
-Ogni cartella della Panoramica mostra l'icona della sezione scelta in Configurazione
-(fa-fw per l'allineamento) invece dell'icona cartella fissa; icona vuota o non valida ->
-fa-folder-o come prima. Cache-buster del JS 20261026c. Solo JS e template, nessun dato.
+Schema PostgreSQL nuovo "registrazioni" (DDL 003, idempotente, 9.4): richieste da approvare,
+allegati (foto dei ripartitori), parametri con override per azienda, eventi append-only e vista
+v_richieste. Nessun oggetto di /wera toccato; provato solo sul DB locale marcato WERA-TEST.
+Disegno approvato dall'operatore: approvazione SIRBI, password scelta nel form, legame ai
+condomini dall'anagrafica esistente.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
