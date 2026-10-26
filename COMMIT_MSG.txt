@@ -1,9 +1,9 @@
-docs(registrazioni): esito della Fase 1 del piano di produzione
+fix(registrazioni): limite di invii come tetto giornaliero del sito (30)
 
-Verifiche in sola lettura su .75, .106 e .50 (ok dell'operatore): DB e tabelle utenti
-compatibili, sequenze allineate, impronta di public invariata, share e config di .106 ok,
-nessun limite di dimensione su Apache. Scoperto che tutti i client arrivano da 192.168.50.253
-(NAT a monte di .50): il limite di invii per IP va deciso prima del DDL. Corretto il
-controllo dell'artefatto (4 funzioni nuove).
+In PROD tutti i client arrivano da 192.168.50.253 (NAT a monte dell'Apache .50) e Tomcat su
+.106 legge gia' X-Forwarded-For: il limite per IP vale per l'intero sito. Decisione
+dell'operatore: default di ANTIABUSO.MAX_RICHIESTE_IP_24H a 30 nel DDL 003 (prima 5), codice
+invariato. Aggiornati descrizioni dei parametri, disegno e piano di produzione (passi sull'IP
+del proxy rimossi, verifica del valore dopo il DDL). DDL riprovato su uno schema temporaneo.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>

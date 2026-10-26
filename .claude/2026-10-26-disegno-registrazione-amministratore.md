@@ -66,7 +66,8 @@ Riferimento visivo: `D:\SVILUPPO\wera_demo\registrazione-amministratore.html`
 `ATTIVAZIONE.AZIENDA_CODICE` (SIRBI), `ATTIVAZIONE.PROFILO` (AMM), `APPROVAZIONE.PROFILI` (ADM),
 `PASSWORD.LUNGHEZZA_MIN` (8), `PASSWORD.REGOLA`, `PASSWORD.GIORNI_VALIDITA` (60), `FASCE_CONDOMINI`
 (1-5,6-15,16-40,oltre 40), `FILE.CARTELLA`, `FILE.ESTENSIONI`, `FILE.DIMENSIONE_MAX_MB` (10),
-`FILE.MAX_PER_RICHIESTA` (6), `ANTIABUSO.SECONDI_MINIMI` (5), `ANTIABUSO.MAX_RICHIESTE_IP_24H` (5),
+`FILE.MAX_PER_RICHIESTA` (6), `ANTIABUSO.SECONDI_MINIMI` (5), `ANTIABUSO.MAX_RICHIESTE_IP_24H` (30: in PROD tutti i client hanno lo stesso IP dietro il NAT, quindi e' un
+tetto giornaliero per tutto il sito; decisione dell'operatore 2026-10-26),
 `ANTIABUSO.PROXY_FIDATI`, `MAIL.ATTIVA` (S), `MAIL.NOTIFICA_DESTINATARI` (vuoto), oggetti/testi delle mail,
 `LINK.ACCESSO`, `PRIVACY.TESTO`, `PRIVACY.LINK` (vuoto = nessun link), `TESTO.TEMPI_RISPOSTA`
 ("entro 2 giorni lavorativi"), contatti assistenza (vuoti = nascosti).

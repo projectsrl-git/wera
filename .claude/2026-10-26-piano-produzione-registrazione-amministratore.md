@@ -90,9 +90,9 @@ tail -5 /var/log/tomcat9/localhost_access_log.$(date +%F).txt # IP sorgente dell
 ```
 - [ ] La scrittura di Tomcat sulla share e' gia' stata provata il 25/10 (nel namespace della sandbox): basta
   che il mount sia lo stesso.
-- [ ] Nell'access log le richieste da Internet devono arrivare da 192.168.0.50 (Apache di frontend): e'
-  l'IP del parametro `ANTIABUSO.PROXY_FIDATI`. Se l'IP fosse un altro, va messo quello nel parametro
-  (dopo il DDL), altrimenti il limite per IP conterebbe tutti gli utenti come uno solo.
+- [x] (esito 2026-10-26) Tutti i client arrivano da `192.168.50.253` (NAT a monte di .50) e Tomcat ha gia' un
+  `RemoteIpValve`: il limite per IP vale come tetto giornaliero per tutto il sito. Decisione dell'operatore:
+  `ANTIABUSO.MAX_RICHIESTE_IP_24H` = 30 come default nel DDL 003; `ANTIABUSO.PROXY_FIDATI` non serve.
 
 Apache di frontend .50 (`webfe01`), sola lettura:
 - [ ] `grep -n -i -E 'LimitRequestBody|ProxyTimeout|Timeout|RequestHeader|X-Forwarded' /etc/apache2/sites-available/ssl.weraweb.it.conf /etc/apache2/apache2.conf`
@@ -122,7 +122,7 @@ UPDATE registrazioni.parametri SET valore='N', ts_mod=now(), id_utente_mod=0 WHE
 UPDATE registrazioni.parametri SET valore='N', ts_mod=now(), id_utente_mod=0 WHERE id_azienda IS NULL AND chiave='REGISTRAZIONE.ATTIVA'; -- deploy "spento"
 -- solo se decisi in Fase 0 (valori dell'operatore, mai nel repo):
 -- UPDATE ... SET valore='<...>' WHERE id_azienda IS NULL AND chiave IN ('MAIL.NOTIFICA_DESTINATARI','ASSISTENZA.EMAIL','ASSISTENZA.TELEFONO','PRIVACY.LINK','TESTO.TEMPI_RISPOSTA');
--- solo se la Fase 1 lo ha chiesto: ATTIVAZIONE.AZIENDA_CODICE, ANTIABUSO.PROXY_FIDATI, FILE.DIMENSIONE_MAX_MB, FILE.MAX_PER_RICHIESTA
+-- dalla Fase 1 non serve altro: SIRBI esiste (id 1), Apache non limita la dimensione, il tetto di 30 invii/24h e' gia' il default del DDL
 COMMIT;
 ```
 - [ ] Verifiche:
@@ -132,6 +132,7 @@ SELECT count(*) FROM pg_views  WHERE schemaname='registrazioni';                
 SELECT count(*) FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE nspname='registrazioni'; -- 2
 SELECT count(*) FROM pg_trigger WHERE tgrelid='registrazioni.eventi'::regclass AND NOT tgisinternal;      -- 2
 SELECT count(*) FROM registrazioni.parametri;                                       -- 42
+SELECT valore FROM registrazioni.parametri WHERE id_azienda IS NULL AND chiave='ANTIABUSO.MAX_RICHIESTE_IP_24H'; -- 30 (tetto giornaliero del sito)
 SELECT chiave, valore FROM registrazioni.parametri WHERE ts_mod IS NOT NULL ORDER BY 1; -- solo quelli cambiati sopra
 SELECT (SELECT count(*) FROM registrazioni.richieste), (SELECT count(*) FROM registrazioni.eventi); -- 0, 0
 ```
@@ -171,9 +172,8 @@ Su https://weraweb.it/wera2026/ :
    dalla fotocamera), con la sua email e dati fiscali formalmente validi. Atteso: esito "Richiesta inviata",
    contatore 1 nel menu del superuser, dettaglio con la foto, nessuna mail (registro `NON_INVIATA`).
 3. [ ] Sul server: `ls -l /usr/share/webapps/wera/registrazioni/2026/<n>/` (la foto, proprietario tomcat).
-4. [ ] IP del richiedente: `SELECT tipo_evento, ip FROM registrazioni.eventi ORDER BY id_evento DESC LIMIT 5;`
-   deve essere l'IP pubblico dell'operatore, NON 192.168.0.50. Se e' .50: rimettere
-   `REGISTRAZIONE.ATTIVA=N`, correggere `ANTIABUSO.PROXY_FIDATI` con l'IP visto da Tomcat, riprovare.
+4. [ ] Registro: `SELECT tipo_evento, ip FROM registrazioni.eventi ORDER BY id_evento DESC LIMIT 5;` -> RICHIESTA e
+   MAIL NON_INVIATA; l'IP sara' `192.168.50.253` (atteso, vedi Fase 1): conta per il tetto di 30 invii al giorno.
 5. [ ] Annullare la richiesta di prova dalla pagina ("Annulla (spam/doppione)"): nessun utente creato,
    nessuna mail.
 
@@ -207,7 +207,11 @@ Su https://weraweb.it/wera2026/ :
 - Il modulo e' pubblico: anti-abuso (trappola, tempo minimo, limite per IP, un'attesa per email/P.IVA) e
   approvazione umana; nessun captcha. Se arriva spam: `ANTIABUSO.MAX_RICHIESTE_IP_24H` piu' basso, o modulo
   chiuso.
-- L'IP del richiedente dipende da X-Forwarded-For tramite .50 (verifica della Fase 6.4).
+- Tetto di 30 invii al giorno per TUTTO il sito (tutti i client hanno lo stesso IP dietro il NAT): oltre, il
+  modulo risponde 429 a chiunque fino allo scorrere delle 24 ore, con il testo "Troppe richieste da questa
+  connessione..." (testo nel codice, non cambiato per decisione dell'operatore). Valore modificabile al volo
+  con un UPDATE del parametro; NON usare 0 (bloccherebbe tutto). Per un limite per singolo client servirebbe
+  far arrivare l'IP vero fino a Tomcat (FortiGate/Apache): lavoro di rete a parte.
 - Conservazione dei dati di richieste rifiutate o annullate: oggi restano (senza password). Regola di
   cancellazione da decidere con SIRBI (privacy).
 - Pagine non viste a occhio sul laptop (screenshot non riusciti): guardarle in Fase 5, desktop e telefono.
