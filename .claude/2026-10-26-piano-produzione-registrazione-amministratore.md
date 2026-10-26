@@ -328,3 +328,5 @@ Su https://weraweb.it/wera2026/ :
 - Da decidere (operatore): l'utente AMM id 116 della prova e' attivo in PROD con un condominio collegato. Se era
   solo una prova: disattivarlo dalla gestione utenti (`fl_disattivo`) e scollegare il condominio, non cancellarlo
   (la richiesta resta APPROVATA nello storico).
+  DECISO (operatore, 2026-10-26): l'utente 116 e' un amministratore VERO, resta attivo con il suo condominio.
+  Nessuna modifica al DB.
