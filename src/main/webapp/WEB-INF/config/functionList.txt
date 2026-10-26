@@ -143,6 +143,10 @@ CentraleTermicaStato					net.projectsrl.wera.centraletermica.core.FunctionCentra
 CentraleTermicaScadenza				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaScadenza					00
 CentraleTermicaConfigurazione			net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaConfigurazione				00
 CentraleTermicaConfigurazioneSalva		net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaConfigurazioneSalva			00
+CentraleTermicaScadenze				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaScadenziario				00
+CentraleTermicaCalendario				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaScadenziario				00
+CentraleTermicaAvvisi					net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaScadenziario				00
+CentraleTermicaAvvisiInvio				net.projectsrl.wera.centraletermica.core.FunctionCentraleTermicaAvvisiInvio				00
 
 ConfigurazioneErrori					net.projectsrl.wera.utility.core.FunctionConfigurazioneErrori								00
 InserimentoConfigurazioneErrori			net.projectsrl.wera.utility.core.FunctionInserimentoConfigurazioneErrori					00

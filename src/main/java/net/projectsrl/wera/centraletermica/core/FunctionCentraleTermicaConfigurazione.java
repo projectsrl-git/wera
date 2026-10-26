@@ -44,6 +44,7 @@ public class FunctionCentraleTermicaConfigurazione extends FunctionCentraleTermi
 
         Map<String, Object> templateData = createMapFromRequest(req, userInfo);
         templateData.put("CT_PAGINA", "S");
+        templateData.put("CT_SCHEDA", "configurazione");
         templateData.put("CT_TITOLO", _titolo);
         _applicationSrv.displayPage(getPageName(), templateData, res);
     }

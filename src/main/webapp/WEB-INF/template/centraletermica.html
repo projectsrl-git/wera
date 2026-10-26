@@ -23,85 +23,82 @@
 			     data-titolo="<#if CT_TITOLO?exists>${CT_TITOLO?html}</#if>"
 			     data-id-condominio="<#if CT_ID_CONDOMINIO?exists>${CT_ID_CONDOMINIO?html}</#if>">
 
-				<!-- testata: condominio e scelta -->
-				<section class="ct-hero" aria-labelledby="ct-nome-condominio">
-					<div class="ct-hero-testo">
-						<div class="ct-eyebrow"><i class="fa fa-fire" aria-hidden="true"></i> <span id="ct-titolo-pagina"><#if CT_TITOLO?exists>${CT_TITOLO?html}</#if></span></div>
-						<h1 id="ct-nome-condominio">&nbsp;</h1>
-						<p class="ct-indirizzo" id="ct-indirizzo">&nbsp;</p>
-						<p class="ct-gestione hidden" id="ct-gestione"></p>
+				<!-- testata (mockup di Andrea): titolo, condominio, gestione; scelta del condominio a destra -->
+				<section class="ctp-testa" aria-labelledby="ct-titolo-h1">
+					<div class="ctp-testa-sx">
+						<h1 id="ct-titolo-h1"><#if CT_TITOLO?exists>${CT_TITOLO?html}<#else>Centrale termica</#if></h1>
+						<p class="ctp-sotto"><span id="ct-nome-condominio">&nbsp;</span><span class="ctp-sep" aria-hidden="true">&middot;</span><span id="ct-indirizzo"></span></p>
 					</div>
-					<div class="ct-hero-azioni">
-						<label for="ct-condominio" class="ct-label">Condominio</label>
-						<select id="ct-condominio" class="form-control" style="width:100%"></select>
-						<button type="button" class="btn btn-primary ct-btn-carica hidden" id="ct-btn-carica">
-							<i class="fa fa-cloud-upload" aria-hidden="true"></i> Carica documenti
-						</button>
-						<a href="astro?FUNCTIONID=CentraleTermicaConfigurazione" class="btn btn-white btn-sm ct-btn-config hidden" id="ct-btn-config">
-							<i class="fa fa-sliders" aria-hidden="true"></i> Configurazione
-						</a>
+					<div class="ctp-testa-dx">
+						<div class="ctp-scelta">
+							<label for="ct-condominio">Seleziona condominio</label>
+							<select id="ct-condominio" class="form-control" style="width:100%"></select>
+						</div>
+						<div class="ctp-azioni">
+							<button type="button" class="btn btn-primary btn-sm hidden" id="ct-btn-carica">
+								<i class="fa fa-cloud-upload" aria-hidden="true"></i> Carica documenti
+							</button>
+							<a href="astro?FUNCTIONID=CentraleTermicaConfigurazione" class="btn btn-white btn-sm hidden" id="ct-btn-config">
+								<i class="fa fa-sliders" aria-hidden="true"></i> Configurazione
+							</a>
+						</div>
 					</div>
 				</section>
+				<p class="ctp-gestione hidden" id="ct-gestione"></p>
 
 				<div class="ct-avviso hidden" id="ct-avviso" role="alert"></div>
 
 				<!-- riquadri di sintesi -->
-				<section class="ct-kpi" aria-label="Sintesi">
-					<div class="ct-kpi-box">
-						<div class="ct-kpi-ico"><i class="fa fa-folder-open-o" aria-hidden="true"></i></div>
-						<div class="ct-kpi-val" id="ct-kpi-documenti">&ndash;</div>
-						<div class="ct-kpi-lbl">Documenti disponibili</div>
+				<section class="ctp-kpi" aria-label="Sintesi">
+					<div class="ctp-kpi-box">
+						<span class="ctp-kpi-ico"><i class="fa fa-file-text-o" aria-hidden="true"></i></span>
+						<div><div class="ctp-kpi-lbl">Documenti</div><div class="ctp-kpi-val" id="ct-kpi-documenti">&ndash;</div></div>
 					</div>
-					<div class="ct-kpi-box">
-						<div class="ct-kpi-ico"><i class="fa fa-calendar-check-o" aria-hidden="true"></i></div>
-						<div class="ct-kpi-val" id="ct-kpi-scadenza">&ndash;</div>
-						<div class="ct-kpi-lbl" id="ct-kpi-scadenza-lbl">Prossima scadenza</div>
+					<div class="ctp-kpi-box">
+						<span class="ctp-kpi-ico"><i class="fa fa-calendar" aria-hidden="true"></i></span>
+						<div><div class="ctp-kpi-lbl" id="ct-kpi-scadenza-lbl">Prossima scadenza</div><div class="ctp-kpi-val" id="ct-kpi-scadenza">&ndash;</div></div>
 					</div>
-					<div class="ct-kpi-box">
-						<div class="ct-kpi-ico"><i class="fa fa-wrench" aria-hidden="true"></i></div>
-						<div class="ct-kpi-val" id="ct-kpi-intervento">&ndash;</div>
-						<div class="ct-kpi-lbl">Ultimo intervento</div>
-					</div>
-					<div class="ct-kpi-box">
-						<div class="ct-kpi-ico"><i class="fa fa-check-circle-o" aria-hidden="true"></i></div>
-						<div class="ct-kpi-val" id="ct-kpi-completezza">&ndash;</div>
-						<div class="ct-kpi-lbl">Sezioni con documenti</div>
-						<div class="ct-barra" aria-hidden="true"><i id="ct-kpi-barra"></i></div>
+					<div class="ctp-kpi-box">
+						<span class="ctp-kpi-ico ctp-kpi-ico-grigio"><i class="fa fa-wrench" aria-hidden="true"></i></span>
+						<div><div class="ctp-kpi-lbl">Ultimo intervento</div><div class="ctp-kpi-val" id="ct-kpi-intervento">&ndash;</div></div>
 					</div>
 				</section>
 
-				<!-- cartelle -->
-				<section aria-labelledby="ct-titolo-sezioni">
-					<div class="ct-blocco-testa">
-						<h2 id="ct-titolo-sezioni">Documenti dell'impianto</h2>
-						<button type="button" class="btn btn-white btn-sm" id="ct-btn-archivio">
-							<i class="fa fa-archive" aria-hidden="true"></i> Consulta archivio storico
-						</button>
-					</div>
-					<div class="ct-cartelle" id="ct-cartelle"></div>
-					<div class="ct-altre hidden" id="ct-altre-blocco">
-						<h3 class="ct-sottotitolo">Altre sezioni</h3>
-						<div class="ct-cartelle ct-cartelle-piccole" id="ct-altre"></div>
-					</div>
-				</section>
-
-				<div class="row ct-riga">
-					<!-- ultimi documenti -->
+				<div class="row">
 					<div class="col-lg-8">
-						<section class="ct-card" aria-labelledby="ct-titolo-ultimi">
-							<div class="ct-card-testa">
-								<h3 id="ct-titolo-ultimi">Ultimi documenti aggiornati</h3>
+						<!-- documenti della centrale: ricerca + cartelle -->
+						<section class="ct-card ctp-docs" aria-labelledby="ct-titolo-sezioni">
+							<div class="ct-card-testa"><h3 id="ct-titolo-sezioni">Documenti della centrale</h3></div>
+							<div class="ctp-barra">
+								<div class="ctp-cerca">
+									<i class="fa fa-search" aria-hidden="true"></i>
+									<input type="search" id="ct-cerca" class="form-control" placeholder="Cerca un documento..." aria-label="Cerca un documento">
+								</div>
 								<button type="button" class="btn btn-primary btn-sm" id="ct-btn-scarica-sel" disabled>
 									<i class="fa fa-download" aria-hidden="true"></i> Scarica selezionati <span class="ct-conta" id="ct-conta-sel"></span>
 								</button>
 							</div>
+							<div class="hidden" id="ct-risultati">
+								<div class="table-responsive">
+									<table class="table ct-tabella"><tbody id="ct-risultati-righe"></tbody></table>
+								</div>
+							</div>
+							<ul class="ctp-cartelle" id="ct-cartelle"></ul>
+							<div class="hidden" id="ct-altre-blocco">
+								<h4 class="ctp-altre-tit">Altre sezioni</h4>
+								<ul class="ctp-cartelle" id="ct-altre"></ul>
+							</div>
+						</section>
+
+						<!-- ultimi documenti -->
+						<section class="ct-card" aria-labelledby="ct-titolo-ultimi">
+							<div class="ct-card-testa"><h3 id="ct-titolo-ultimi">Ultimi documenti aggiornati</h3></div>
 							<div class="table-responsive">
-								<table class="table ct-tabella">
+								<table class="table ct-tabella ctp-ultimi">
 									<thead>
 										<tr>
 											<th class="ct-col-sel"><input type="checkbox" id="ct-sel-tutti" aria-label="Seleziona tutti"></th>
 											<th>Documento</th>
-											<th class="hidden-xs">Sezione</th>
 											<th class="hidden-xs">Data</th>
 											<th class="text-right">Azioni</th>
 										</tr>
@@ -109,24 +106,28 @@
 									<tbody id="ct-ultimi"></tbody>
 								</table>
 							</div>
+							<a href="#" class="ctp-link" id="ct-btn-archivio">Consulta archivio storico <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 						</section>
 					</div>
 
-					<!-- scadenze e assistenza -->
 					<div class="col-lg-4">
+						<!-- scadenze e documenti -->
 						<section class="ct-card" aria-labelledby="ct-titolo-scadenze">
 							<div class="ct-card-testa">
-								<h3 id="ct-titolo-scadenze">Scadenze</h3>
+								<h3 id="ct-titolo-scadenze">Scadenze e documenti</h3>
 								<div class="ct-card-azioni">
 									<button type="button" class="btn btn-white btn-xs" id="ct-btn-storico-scad"><i class="fa fa-history" aria-hidden="true"></i> Storico</button>
 									<button type="button" class="btn btn-primary btn-xs hidden" id="ct-btn-nuova-scad"><i class="fa fa-plus" aria-hidden="true"></i> Nuova</button>
 								</div>
 							</div>
 							<ul class="ct-scadenze" id="ct-scadenze"></ul>
+							<a href="astro?FUNCTIONID=CentraleTermicaScadenze" class="ctp-link" id="ct-link-scadenziario">Apri lo scadenziario <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 						</section>
 
+						<!-- assistenza -->
 						<section class="ct-card ct-assistenza hidden" id="ct-assistenza" aria-labelledby="ct-titolo-assistenza">
 							<div class="ct-card-testa"><h3 id="ct-titolo-assistenza">Assistenza</h3></div>
+							<p class="ctp-assist-sotto">Referenti e contatti dell'impianto</p>
 							<p class="ct-ufficio" id="ct-ufficio"></p>
 							<ul class="ct-contatti" id="ct-contatti"></ul>
 							<div class="ct-assistenza-azioni" id="ct-assistenza-azioni"></div>
@@ -278,7 +279,7 @@
 
 	</div>
 
-	<script src="js/wera-centrale-termica.js?20261025b"></script>
+	<script src="js/wera-centrale-termica.js?20261026"></script>
 
 </body>
 

@@ -79,6 +79,9 @@ public final class CentraleTermicaCostanti {
     static final String          DS_CONFIG_PARAMETRI         = "DSCentraleTermicaConfigParametri";
     static final String          DS_CONFIG_CATEGORIE         = "DSCentraleTermicaConfigCategorie";
     static final String          DS_CONFIG_AZIENDE           = "DSCentraleTermicaConfigAziende";
+    static final String          DS_SCADENZIARIO             = "DSCentraleTermicaScadenziario";
+    static final String          DS_INVII                    = "DSCentraleTermicaInvii";
+    static final String          DS_AVVISI_DA_INVIARE        = "DSCentraleTermicaAvvisiDaInviare";
 
     private CentraleTermicaCostanti() {
 

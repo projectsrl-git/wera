@@ -40,6 +40,12 @@ public class FunctionCentraleTermicaDati extends FunctionCentraleTermica_base {
     private static final String[] COLONNE_STORICO    = { "ID_SCADENZA", "CODICE_TIPO", "DESCRIZIONE", "TITOLO_SEZIONE",
             "DATA_SCADENZA", "STATO", "DATA_ESECUZIONE", "ID_DOCUMENTO_CHIUSURA", "TITOLO_DOCUMENTO", "NOTA",
             "ID_SCADENZA_PRECEDENTE" };
+    private static final String[] COLONNE_SCADENZIARIO = { "ID_SCADENZA", "ID_CONDOMINIO", "DENOMINAZIONE",
+            "ID_TIPO_SCADENZA", "SIGLA", "DESCRIZIONE", "ENTE", "PERIODICITA_MESI", "ULTIMA_ESECUZIONE",
+            "ID_DOCUMENTO_ULTIMO", "DATA_SCADENZA", "GIORNI_MANCANTI", "GIORNI_PREAVVISO", "SEMAFORO", "ID_SEZIONE",
+            "TITOLO_SEZIONE", "FL_SCRITTURA" };
+    private static final String[] COLONNE_INVIO      = { "ID_INVIO", "TS_INVIO", "ID_CONDOMINIO", "DENOMINAZIONE",
+            "SIGLA", "DESCRIZIONE", "SOGLIA_GIORNI", "DESTINATARI", "OGGETTO", "ESITO", "DETTAGLIO" };
     private static final String[] COLONNE_RIEPILOGO  = { "NR_DOCUMENTI", "PROSSIMA_SCADENZA",
             "DESCR_PROSSIMA_SCADENZA", "SEMAFORO_PROSSIMA_SCADENZA", "ULTIMO_INTERVENTO", "NR_SEZIONI",
             "NR_SEZIONI_CON_DOCUMENTI", "NR_SCADUTE", "NR_IN_SCADENZA" };
@@ -75,6 +81,7 @@ public class FunctionCentraleTermicaDati extends FunctionCentraleTermica_base {
             accesso.put("titolo", getSessionField(userInfo, CAMPO_SESSIONE_TITOLO));
             accesso.put("nascondi_voce_wera", Boolean.valueOf("S".equals(getSessionField(userInfo,
                     CAMPO_SESSIONE_NASCONDI_WERA))));
+            accesso.put("configura", Boolean.valueOf("S".equals(getSessionField(userInfo, CAMPO_SESSIONE_CONFIGURA))));
             rispondi(res, "accesso", accesso);
             return;
         }
@@ -99,6 +106,10 @@ public class FunctionCentraleTermicaDati extends FunctionCentraleTermica_base {
             return;
         }
 
+        if ("scadenziario".equals(operazione) || "avvisi".equals(operazione)) {
+            perimetro(ctx, req, res, operazione);
+            return;
+        }
         if ("config".equals(operazione)) {
             if (!ctx.puoConfigurare()) {
                 negato(ctx, res, "Profilo non abilitato alla configurazione", null, "dati config");
@@ -182,6 +193,44 @@ public class FunctionCentraleTermicaDati extends FunctionCentraleTermica_base {
 
         rispondi(res, "documenti", LetturaDataset.leggi(CentraleTermicaCostanti.DS_DOCUMENTI, param,
                 COLONNE_DOCUMENTO));
+    }
+
+    /**
+     * Operazioni su tutti i condomini del perimetro (o su uno, con ID_CONDOMINIO):
+     * scadenziario = scadenze aperte con sigla, ente, periodicita', ultima esecuzione e documento;
+     * avvisi = configurazione ALERT.* (senza il token) e storico degli invii.
+     */
+    private void perimetro(ContestoUtente ctx, SsbServletRequest req, SsbServletResponse res, String operazione)
+            throws AppCrash {
+
+        Map<String, String> param = ctx.parametriBase();
+        Integer idCondominio = intero(req.getParameter("ID_CONDOMINIO"));
+        if (idCondominio != null) {
+            if (ctx.condominio(idCondominio.intValue()) == null) {
+                negato(ctx, res, "Condominio fuori dal perimetro dell'utente", idCondominio, operazione);
+                return;
+            }
+            param.put("FILTRO_CONDOMINIO", " AND C.ID_MODULO = " + idCondominio);
+        } else {
+            param.put("FILTRO_CONDOMINIO", "");
+        }
+
+        if ("scadenziario".equals(operazione)) {
+            rispondi(res, "scadenze", LetturaDataset.leggi(CentraleTermicaCostanti.DS_SCADENZIARIO, param, COLONNE_SCADENZIARIO));
+            return;
+        }
+
+        Map<String, Object> avvisi = new LinkedHashMap<String, Object>();
+        Map<String, Object> config = new LinkedHashMap<String, Object>();
+        for (String chiave : new String[] { "ALERT.ATTIVO", "ALERT.GIORNI", "ALERT.SCADUTE", "ALERT.AMMINISTRATORE",
+                "ALERT.CC", "ALERT.OGGETTO", "ALERT.LINK", "SCADENZE.GIORNI_PREAVVISO" }) {
+            config.put(chiave, ctx.parametro(chiave, ctx.getIdAzienda()));
+        }
+        avvisi.put("config", config);
+        avvisi.put("puo_configurare", Boolean.valueOf(ctx.puoConfigurare()));
+        avvisi.put("mail_di_prova", Boolean.valueOf(FunctionCentraleTermicaAvvisiInvio.mailDiProva()));
+        avvisi.put("invii", LetturaDataset.leggi(CentraleTermicaCostanti.DS_INVII, param, COLONNE_INVIO));
+        rispondi(res, "avvisi", avvisi);
     }
 
     /** Versioni di un documento (piu' recente in cima), solo se il documento e' del condominio e leggibile. */

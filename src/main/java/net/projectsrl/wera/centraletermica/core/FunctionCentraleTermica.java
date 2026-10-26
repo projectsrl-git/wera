@@ -64,11 +64,18 @@ public class FunctionCentraleTermica extends FunctionCentraleTermica_base {
 
         Map<String, Object> templateData = createMapFromRequest(req, userInfo);
         templateData.put("CT_PAGINA", "S");
+        templateData.put("CT_SCHEDA", scheda());
         templateData.put("CT_TITOLO", _titolo);
         Integer idCondominio = intero(req.getParameter("ID_CONDOMINIO"));
         templateData.put("CT_ID_CONDOMINIO", idCondominio == null ? "" : idCondominio.toString());
 
         _applicationSrv.displayPage(getPageName(), templateData, res);
+    }
+
+    /** Sottovoce del menu "Centrale termica" evidenziata (CT_SCHEDA nel template). */
+    protected String scheda() {
+
+        return "panoramica";
     }
 
     /** Percorso nella topbar (le voci sono separate da "/"). */

@@ -22,7 +22,8 @@ import net.project.servlet.security.UserSecurityInfo;
  * GIORNI_PREAVVISO, NOTA (facoltativi gli ultimi quattro)</li>
  * <li>AZIONE=chiudi: ID_CONDOMINIO, ID_SCADENZA, DATA_ESECUZIONE (default oggi), ID_DOCUMENTO
  * (facoltativo, documento dello stesso condominio), NOTA. Se il tipo (o la scadenza) e' periodico crea la
- * successiva: data di esecuzione + periodicita, collegata con id_scadenza_precedente.</li>
+ * successiva: data di esecuzione + periodicita, collegata con id_scadenza_precedente. DATA_PROSSIMA (facoltativa)
+ * impone la data della successiva (anche per i tipi non periodici).</li>
  * <li>AZIONE=annulla: ID_CONDOMINIO, ID_SCADENZA, NOTA</li>
  * </ul>
  * Serve il permesso di scrittura sulla sezione del tipo di scadenza. Le scadenze non si cancellano mai.
@@ -170,11 +171,17 @@ public class FunctionCentraleTermicaScadenza extends FunctionCentraleTermica_bas
 
         String nota = campo(req, "NOTA", 2000);
         java.sql.Date esecuzione = null;
+        java.sql.Date dataProssima = null;
         Integer idDocumento = null;
         if (chiudi) {
             esecuzione = dataSql(req.getParameter("DATA_ESECUZIONE"));
             if (esecuzione == null) {
                 esecuzione = new java.sql.Date(System.currentTimeMillis());
+            }
+            dataProssima = dataSql(req.getParameter("DATA_PROSSIMA"));
+            if (dataProssima != null && !dataProssima.after(esecuzione)) {
+                rispondiErrore(res, HttpServletResponse.SC_BAD_REQUEST, "La prossima scadenza deve seguire l'esecuzione");
+                return;
             }
             idDocumento = intero(req.getParameter("ID_DOCUMENTO"));
             if (idDocumento != null) {
@@ -202,11 +209,15 @@ public class FunctionCentraleTermicaScadenza extends FunctionCentraleTermica_bas
             if (chiudi) {
                 Sql.esegui(tx, SQL_CHIUDI, esecuzione, Sql.intero(idDocumento), adesso, ctx.getIdUtente(),
                         Sql.testo(nota), adesso, ctx.getIdUtente(), idScadenza);
-                if (periodicita != null && periodicita.intValue() > 0) {
-                    Calendar c = Calendar.getInstance();
-                    c.setTime(esecuzione);
-                    c.add(Calendar.MONTH, periodicita.intValue());
-                    prossima = new java.sql.Date(c.getTimeInMillis());
+                if (dataProssima != null || (periodicita != null && periodicita.intValue() > 0)) {
+                    if (dataProssima != null) {
+                        prossima = dataProssima;
+                    } else {
+                        Calendar c = Calendar.getInstance();
+                        c.setTime(esecuzione);
+                        c.add(Calendar.MONTH, periodicita.intValue());
+                        prossima = new java.sql.Date(c.getTimeInMillis());
+                    }
                     idSuccessiva = Sql.intero(tx, SQL_PROSSIMA);
                     Sql.esegui(tx, SQL_INSERISCI, idSuccessiva, idAzienda, idCondominio,
                             LetturaDataset.intero(scadenza, "ID_TIPO_SCADENZA"),

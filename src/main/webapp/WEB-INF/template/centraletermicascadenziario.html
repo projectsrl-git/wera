@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<#if INCLUDED_HEAD?exists><#include INCLUDED_HEAD></#if>
+
+	<#-- Centrale termica wera2026, scadenziario (2026-10-26, mockup wera_demo "Scadenziario / Documentazione
+	     Centrale Termica"). Una pagina, tre sottovoci del menu: CentraleTermicaScadenze, CentraleTermicaCalendario,
+	     CentraleTermicaAvvisi (CT_SCHEDA = scheda iniziale). Template ASCII con entita' HTML.
+	     Dati: CentraleTermicaDati (scadenziario, avvisi, tipi_scadenza); logica in js/wera-centrale-termica-scadenziario.js. -->
+</head>
+
+<body>
+
+	<div id="wrapper">
+
+		<#if INCLUDED_MENU?exists><#include INCLUDED_MENU></#if>
+
+		<div id="page-wrapper" class="gray-bg">
+
+			<#if INCLUDED_HEADER?exists><#include INCLUDED_HEADER></#if>
+
+			<div class="wrapper wrapper-content ct-page" id="cts-page"
+			     data-scheda="<#if CT_SCHEDA?exists>${CT_SCHEDA?html}</#if>"
+			     data-id-condominio="<#if CT_ID_CONDOMINIO?exists>${CT_ID_CONDOMINIO?html}</#if>">
+
+				<section class="ct-card cts-testa">
+					<div class="cts-filtro">
+						<label for="cts-condominio">Condominio (centrale termica)</label>
+						<select id="cts-condominio" class="form-control" style="width:100%"></select>
+					</div>
+					<div class="cts-contatori" aria-label="Riepilogo scadenze">
+						<div class="cts-cont cts-cont-ok"><b id="cts-validi">0</b><span>validi</span></div>
+						<div class="cts-cont cts-cont-warn"><b id="cts-in-scadenza">0</b><span>in scadenza</span></div>
+						<div class="cts-cont cts-cont-ko"><b id="cts-scaduti">0</b><span>scaduti</span></div>
+					</div>
+				</section>
+
+				<div class="ct-avviso hidden" id="ct-avviso" role="alert"></div>
+
+				<section class="ct-card">
+					<div class="tabs-container cts-schede">
+						<ul class="nav nav-tabs" role="tablist">
+							<li><a href="astro?FUNCTIONID=CentraleTermicaScadenze" data-scheda="scadenze" role="tab">Scadenze &amp; documenti</a></li>
+							<li><a href="astro?FUNCTIONID=CentraleTermicaCalendario" data-scheda="calendario" role="tab">Calendario</a></li>
+							<li><a href="astro?FUNCTIONID=CentraleTermicaAvvisi" data-scheda="avvisi" role="tab">Alerting &amp; storico invii</a></li>
+						</ul>
+						<div class="tab-content">
+
+							<!-- scadenze e documenti -->
+							<div class="tab-pane" id="cts-scadenze" role="tabpanel">
+								<div class="panel-body">
+									<div class="cts-barra">
+										<input type="search" class="form-control input-sm ct-filtro" id="cts-cerca" placeholder="Filtra per documento, condominio, ente" aria-label="Filtra scadenze">
+										<button type="button" class="btn btn-white btn-sm hidden" id="cts-nuova"><i class="fa fa-plus" aria-hidden="true"></i> Nuova scadenza</button>
+									</div>
+									<div class="table-responsive">
+										<table class="table ct-tabella cts-tabella">
+											<thead>
+												<tr>
+													<th>Documento / certificazione</th>
+													<th>Condominio</th>
+													<th class="hidden-xs">Ente</th>
+													<th class="hidden-xs">Periodicit&agrave;</th>
+													<th class="hidden-xs">Ultimo</th>
+													<th>Prossima scadenza</th>
+													<th>Stato</th>
+													<th class="text-right">Azioni</th>
+												</tr>
+											</thead>
+											<tbody id="cts-righe"></tbody>
+										</table>
+									</div>
+									<div class="cts-carica hidden" id="cts-carica">
+										<i class="fa fa-cloud-upload" aria-hidden="true"></i>
+										<p><b>Carica un documento della centrale termica</b></p>
+										<p class="ct-aiuto">PDF del certificato o verbale &mdash; associa tipo documento ed eventuale nuova data di scadenza</p>
+										<button type="button" class="btn btn-primary btn-sm" id="cts-btn-carica">Carica documento</button>
+									</div>
+								</div>
+							</div>
+
+							<!-- calendario -->
+							<div class="tab-pane" id="cts-calendario" role="tabpanel">
+								<div class="panel-body">
+									<div class="cts-calhead">
+										<button type="button" class="btn btn-white btn-sm" id="cts-mese-prec"><i class="fa fa-angle-left" aria-hidden="true"></i> Mese prec.</button>
+										<h3 id="cts-mese">&nbsp;</h3>
+										<button type="button" class="btn btn-white btn-sm" id="cts-mese-succ">Mese succ. <i class="fa fa-angle-right" aria-hidden="true"></i></button>
+									</div>
+									<div class="cts-calgrid" id="cts-calgrid"></div>
+									<div class="cts-legenda">
+										<span><i class="cts-punto cts-ok"></i> valido</span>
+										<span><i class="cts-punto cts-warn"></i> in scadenza (&le; <span id="cts-preavviso">90</span> gg)</span>
+										<span><i class="cts-punto cts-ko"></i> scaduto</span>
+									</div>
+								</div>
+							</div>
+
+							<!-- alerting e storico invii -->
+							<div class="tab-pane" id="cts-avvisi" role="tabpanel">
+								<div class="panel-body">
+									<div class="ct-avviso ct-avviso-info hidden" id="cts-mail-prova" role="note"></div>
+									<div class="row">
+										<div class="col-md-5">
+											<h3 class="cts-h3">Configurazione alert</h3>
+											<p class="ct-aiuto">Promemoria automatici via e-mail prima di ogni scadenza.</p>
+											<div id="cts-soglie" class="cts-spunte"></div>
+											<label class="cts-spunta"><input type="checkbox" id="cts-scadute"> Avviso anche a scadenza superata</label>
+											<div class="cts-dest">
+												<div class="ct-aiuto">Destinatari</div>
+												<label class="cts-chip-dest"><input type="checkbox" id="cts-amministratore"> A: Amministratore del condominio</label>
+												<div class="cts-cc"><span>Cc:</span><input type="text" class="form-control input-sm" id="cts-cc" placeholder="es. installatore@azienda.it" aria-label="Indirizzi in copia"></div>
+											</div>
+											<label class="cts-spunta"><input type="checkbox" id="cts-attivo"> Avvisi attivi</label>
+											<div class="cts-azioni-alert">
+												<button type="button" class="btn btn-primary btn-sm" id="cts-salva-alert">Salva configurazione</button>
+												<button type="button" class="btn btn-white btn-sm" id="cts-controlla"><i class="fa fa-refresh" aria-hidden="true"></i> Controlla ora</button>
+											</div>
+											<div class="ct-esito hidden" id="cts-esito-alert" role="status"></div>
+										</div>
+										<div class="col-md-7">
+											<h3 class="cts-h3">Storico invii</h3>
+											<div class="table-responsive">
+												<table class="table ct-tabella">
+													<thead><tr><th>Data invio</th><th>Cond.</th><th>Documento</th><th>Anticipo</th><th class="hidden-xs">Destinatari</th><th>Esito</th></tr></thead>
+													<tbody id="cts-invii"></tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</section>
+
+			</div>
+
+			<!-- caricamento documento + scadenza / esecuzione -->
+			<div class="modal inmodal fade" id="cts-modale" tabindex="-1" role="dialog" aria-labelledby="cts-modale-titolo" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content ct-modale">
+						<form id="cts-form" novalidate>
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Chiudi">&times;</button>
+								<h4 class="modal-title" id="cts-modale-titolo">Carica un documento</h4>
+								<p class="ct-carica-sotto" id="cts-modale-sotto"></p>
+							</div>
+							<div class="modal-body">
+								<input type="hidden" id="cts-id-scadenza" value="">
+								<div class="form-group">
+									<label for="cts-m-condominio">Condominio</label>
+									<select id="cts-m-condominio" class="form-control"></select>
+								</div>
+								<div class="form-group">
+									<label for="cts-m-tipo">Tipo documento</label>
+									<select id="cts-m-tipo" class="form-control"></select>
+									<p class="ct-aiuto" id="cts-m-tipo-info"></p>
+								</div>
+								<div class="row">
+									<div class="col-sm-6 form-group">
+										<label for="cts-m-data">Data del documento / esecuzione</label>
+										<input type="date" id="cts-m-data" class="form-control">
+									</div>
+									<div class="col-sm-6 form-group">
+										<label for="cts-m-prossima">Nuova data di scadenza</label>
+										<input type="date" id="cts-m-prossima" class="form-control">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="cts-m-file">File <span class="ct-facoltativo">(PDF del certificato o verbale; facoltativo per segnare solo l'esecuzione)</span></label>
+									<input type="file" id="cts-m-file" class="form-control">
+								</div>
+								<div class="form-group">
+									<label for="cts-m-nota">Nota</label>
+									<input type="text" id="cts-m-nota" class="form-control" maxlength="500">
+								</div>
+								<div class="ct-progresso hidden" id="cts-progresso"><i></i></div>
+								<div class="ct-esito hidden" id="cts-m-esito" role="status"></div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-white" data-dismiss="modal">Chiudi</button>
+								<button type="submit" class="btn btn-primary" id="cts-m-invia">Salva</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<#if INCLUDED_FOOTER?exists><#include INCLUDED_FOOTER></#if>
+
+		</div>
+
+	</div>
+
+	<script src="js/wera-centrale-termica-scadenziario.js?20261026b"></script>
+
+</body>
+
+</html>

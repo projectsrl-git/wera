@@ -195,3 +195,22 @@ Configurazione iniziale (superuser, dalla pagina Configurazione):
   con sezione 30b, JS `wera-centrale-termica[-config].js` 200, `/wera` 200. Nel browser, senza sessione,
   `FUNCTIONID=CentraleTermica` mostra la landing con il login (atteso). In console solo gli errori
   preesistenti della landing (2 x 404 e "Bootstrap's JavaScript requires jQuery" da `js/bootstrap.js`).
+
+## Ondata 4 (2026-10-26) — menu, Panoramica, scadenziario, avvisi: passi per la PROD
+Nota: `2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`. Ordine obbligato: DDL 002 prima del deploy.
+1. [ ] Push del branch (fatto da Claude su richiesta, oppure dall'operatore).
+2. [ ] DDL 002 su .75 (ok a parte), verifiche in sola lettura come per lo 001 (server, schema `public`
+   invariato con `pg_dump -s -n public` ordinato):
+   `psql -h 192.168.0.75 -U postgres -d wera -v ON_ERROR_STOP=1 -f src/resources/sql/wera2026/002-centrale_termica-scadenziario-avvisi.sql`
+   Atteso: colonne `sigla`/`ente`, tipo `VERIFICA_TERRA`, tabella `invii_avvisi`, 8 parametri `ALERT.*`,
+   `SCADENZE.GIORNI_PREAVVISO`=90 e `MENU.VOCE_WERA.PROFILI`='' (se mai modificati).
+3. [ ] Backup del WAR in esercizio (`/root/wera2026.war.bak-AAAAMMGG-HHMM-<commit>`), poi Jenkins
+   (DEPLOY=false, controllo artefatto: 12 funzioni CentraleTermica, 25 dataset, Quartz vuoto, SMTP
+   127.0.0.1:1025; poi DEPLOY=true).
+4. [ ] Verifiche: menu con sottovoci, Panoramica, Scadenze/Calendario/Alerting; logout/login per i campi
+   di sessione del menu.
+5. [ ] Cron giornaliero degli avvisi su .106 (root), con il valore del parametro `ALERT.TOKEN` letto dal DB
+   (NON nel repo):
+   `15 6 * * * curl -s -o /dev/null 'http://localhost/wera2026/astro?FUNCTIONID=CentraleTermicaAvvisiInvio&TOKEN=<ALERT.TOKEN>'`
+   Con il profilo prod le mail restano nel mailcatcher (`/usr/share/logs/wera2026/mailcatcher/`).
+Rollback: WAR precedente; il DDL 002 e' innocuo per /wera (rollback SQL nell'intestazione dello script).

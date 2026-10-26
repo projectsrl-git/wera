@@ -31,6 +31,7 @@ public abstract class FunctionCentraleTermica_base extends FunctionProjectWebApp
     static final String               CAMPO_SESSIONE_ACCESSO      = "CT_ACCESSO";
     static final String               CAMPO_SESSIONE_TITOLO       = "CT_TITOLO_MENU";
     static final String               CAMPO_SESSIONE_NASCONDI_WERA = "CT_NASCONDI_VOCE_WERA";
+    static final String               CAMPO_SESSIONE_CONFIGURA    = "CT_CONFIGURA";
 
     public FunctionCentraleTermica_base() {
 
@@ -68,6 +69,7 @@ public abstract class FunctionCentraleTermica_base extends FunctionProjectWebApp
                 CentraleTermicaCostanti.PAR_MENU_VOCE_WERA_PROFILI, ctx.getIdAzienda())).contains(ctx.getProfilo());
         // la vecchia voce si nasconde solo a chi ha la nuova (per gli altri, es. CON, resta com'e')
         setSessionField(req, CAMPO_SESSIONE_NASCONDI_WERA, abilitato && !voceWera ? "S" : "N");
+        setSessionField(req, CAMPO_SESSIONE_CONFIGURA, abilitato && ctx.puoConfigurare() ? "S" : "N");
     }
 
     /** Testo ripulito da un campo della richiesta: null se assente o vuoto, troncato a max caratteri. */

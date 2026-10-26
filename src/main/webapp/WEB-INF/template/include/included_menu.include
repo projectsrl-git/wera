@@ -31,7 +31,16 @@
 					     nascosta e lo script in fondo al menu chiede l'accesso al server. -->
 					<#if !(CT_ACCESSO?? && CT_ACCESSO == 'N')>
 					<li id="ct-voce-menu"<#if CT_PAGINA??> class="active"</#if><#if !CT_ACCESSO??> style="display:none"</#if>>
-						<a href="astro?FUNCTIONID=CentraleTermica"><i class="fa fa-fire"></i> <span class="nav-label" id="ct-voce-menu-testo"><#if CT_TITOLO_MENU??>${CT_TITOLO_MENU?html}<#else>Centrale termica</#if></span></a>
+						<a href="#"><i class="fa fa-fire"></i> <span class="nav-label" id="ct-voce-menu-testo"><#if CT_TITOLO_MENU??>${CT_TITOLO_MENU?html}<#else>Centrale termica</#if></span>&nbsp;<span class="fa arrow"></span></a>
+						<ul class="nav nav-second-level collapse">
+							<li<#if CT_SCHEDA?? && CT_SCHEDA == 'panoramica'> class="active"</#if>><a href="astro?FUNCTIONID=CentraleTermica">Panoramica</a></li>
+							<li<#if CT_SCHEDA?? && CT_SCHEDA == 'scadenze'> class="active"</#if>><a href="astro?FUNCTIONID=CentraleTermicaScadenze">Scadenze e documenti</a></li>
+							<li<#if CT_SCHEDA?? && CT_SCHEDA == 'calendario'> class="active"</#if>><a href="astro?FUNCTIONID=CentraleTermicaCalendario">Calendario</a></li>
+							<li<#if CT_SCHEDA?? && CT_SCHEDA == 'avvisi'> class="active"</#if>><a href="astro?FUNCTIONID=CentraleTermicaAvvisi">Alerting e storico invii</a></li>
+							<#if !CT_ACCESSO?? || (CT_CONFIGURA?? && CT_CONFIGURA == 'S')>
+							<li id="ct-voce-config"<#if CT_SCHEDA?? && CT_SCHEDA == 'configurazione'> class="active"</#if><#if !CT_CONFIGURA??> style="display:none"</#if>><a href="astro?FUNCTIONID=CentraleTermicaConfigurazione">Configurazione</a></li>
+							</#if>
+						</ul>
 					</li>
 					</#if>
 
@@ -98,6 +107,7 @@
 								if (a.abilitato) {
 									if (a.titolo) { $('#ct-voce-menu-testo').text(a.titolo); }
 									$('#ct-voce-menu').show();
+									if (a.configura) { $('#ct-voce-config').show(); }
 								} else {
 									$('#ct-voce-menu').remove();
 								}

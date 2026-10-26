@@ -192,14 +192,23 @@
             if (id) { scegliCondominio(id); }
         });
         $('#ct-btn-carica').on('click', function () { apriCaricamento(null, null); });
-        $('#ct-btn-archivio').on('click', apriArchivio);
+        $('#ct-btn-archivio').on('click', function (e) { e.preventDefault(); apriArchivio(); });
         $('#ct-btn-scarica-sel').on('click', scaricaSelezionati);
         $('#ct-sel-tutti').on('change', function () {
             var on = this.checked;
             $('#ct-ultimi input.ct-sel').each(function () { this.checked = on; segnaSelezione(this); });
             aggiornaSelezione();
         });
-        $('#ct-ultimi').on('change', 'input.ct-sel', function () { segnaSelezione(this); aggiornaSelezione(); });
+        $('#ct-ultimi, #ct-risultati-righe').on('change', 'input.ct-sel', function () {
+            segnaSelezione(this);
+            $('input.ct-sel[value="' + this.value + '"]').prop('checked', this.checked);
+            aggiornaSelezione();
+        });
+        var attesa = null;
+        $('#ct-cerca').on('input', function () {
+            window.clearTimeout(attesa);
+            attesa = window.setTimeout(cerca, 250);
+        });
         $('#ct-cartelle, #ct-altre').on('click', '.ct-cartella', function () {
             apriSezione(numero($(this).attr('data-id'), null));
         });
@@ -237,6 +246,8 @@
     function scegliCondominio(id) {
         st.id = id;
         st.selezione = {};
+        st.tutti = null;
+        $('#ct-cerca').val('');
         try { window.localStorage.setItem(CHIAVE_ULTIMO, String(id)); } catch (e) { /* storage assente */ }
         if (window.history && window.history.replaceState) {
             window.history.replaceState(null, '', API + '?FUNCTIONID=CentraleTermica&ID_CONDOMINIO=' + id);
@@ -265,6 +276,8 @@
                 disegnaUltimi();
                 disegnaScadenze();
                 disegnaAssistenza();
+                st.tutti = null;
+                if ($.trim($('#ct-cerca').val() || '').length >= 2) { cerca(); }
                 $('#ct-btn-carica').toggleClass('hidden', sezioniScrivibili().length === 0);
                 if (st.pannello) { st.pannello.ricarica(); }
             })
@@ -276,58 +289,58 @@
 
     function disegnaTestata(c) {
         $('#ct-nome-condominio').text(c.DENOMINAZIONE || '');
-        $('#ct-indirizzo').text([c.INDIRIZZO, c.LOCALITA, c.PROVINCIA ? '(' + c.PROVINCIA + ')' : '']
-            .join(' ').replace(/\s+/g, ' '));
+        var luogo = [c.INDIRIZZO, (c.LOCALITA || '') + (c.PROVINCIA ? ' (' + c.PROVINCIA + ')' : '')];
+        $('#ct-indirizzo').text($.grep(luogo, function (x) { return $.trim(x || '').length > 0; }).join(' \u00b7 '));
         var g = $.trim(st.par['ETICHETTA.GESTIONE'] || '');
-        $('#ct-gestione').toggleClass('hidden', !g).text(g ? 'Gestione: ' + g : '');
+        $('#ct-gestione').toggleClass('hidden', !g).html(g ? 'Gestione: <b>' + esc(g) + '</b>' : '');
         document.title = (st.par['ETICHETTA.TITOLO'] || 'Centrale termica') + ' - ' + (c.DENOMINAZIONE || '');
     }
 
     function disegnaSintesi(r) {
-        $('#ct-kpi-documenti').text(r.NR_DOCUMENTI === null || r.NR_DOCUMENTI === undefined ? '0' : r.NR_DOCUMENTI);
+        var n = numero(r.NR_DOCUMENTI, 0);
+        $('#ct-kpi-documenti').text(n === 1 ? '1 disponibile' : n + ' disponibili');
 
         var $s = $('#ct-kpi-scadenza');
         if (r.PROSSIMA_SCADENZA) {
             $s.html(esc(data(r.PROSSIMA_SCADENZA)) + ' ' + chip(r.SEMAFORO_PROSSIMA_SCADENZA));
-            $('#ct-kpi-scadenza-lbl').text(r.DESCR_PROSSIMA_SCADENZA || 'Prossima scadenza');
+            $('#ct-kpi-scadenza-lbl').text('Prossima scadenza \u00b7 ' + (r.DESCR_PROSSIMA_SCADENZA || ''));
         } else {
-            $s.html('<span class="ct-kpi-vuoto">Da verificare</span>');
+            $s.html('Da verificare');
             $('#ct-kpi-scadenza-lbl').text('Prossima scadenza');
         }
 
         $('#ct-kpi-intervento').html(r.ULTIMO_INTERVENTO ? esc(data(r.ULTIMO_INTERVENTO))
             : '<span class="ct-kpi-vuoto">Nessuno</span>');
-
-        var tot = numero(r.NR_SEZIONI, 0), con = numero(r.NR_SEZIONI_CON_DOCUMENTI, 0);
-        $('#ct-kpi-completezza').html(esc(con) + '<span class="ct-kpi-di">/' + esc(tot) + '</span>');
-        $('#ct-kpi-barra').css('width', tot ? Math.round(con * 100 / tot) + '%' : '0');
     }
 
-    function cartella(s, piccola) {
+    /** Riga-cartella come nel mockup: icona cartella, titolo, sottotitolo, contatore e freccia. */
+    function cartella(s) {
         var n = numero(s.NR_DOCUMENTI, 0), arch = numero(s.NR_ARCHIVIATI, 0);
-        var meta = n === 1 ? '1 documento' : n + ' documenti';
-        if (s.TS_ULTIMO_AGGIORNAMENTO) { meta += ' &middot; agg. ' + esc(data(s.TS_ULTIMO_AGGIORNAMENTO)); }
+        var meta = '<span class="ctp-conta' + (n ? '' : ' ctp-conta-zero') + '">' + n + '</span>';
         var scad = '';
         if (s.PROSSIMA_SCADENZA) {
-            scad = '<span class="ct-cartella-scad">' + chip(s.SEMAFORO) + ' ' + esc(data(s.PROSSIMA_SCADENZA)) + '</span>';
+            scad = chip(s.SEMAFORO);
         } else if (s.SEMAFORO === 'DA_REGISTRARE') {
-            scad = '<span class="ct-cartella-scad">' + chip('DA_REGISTRARE') + '</span>';
+            scad = chip('DA_REGISTRARE');
         }
-        return '<button type="button" class="ct-cartella' + (piccola ? ' ct-cartella-piccola' : '') +
-            (n === 0 ? ' ct-cartella-vuota' : '') + '" data-id="' + esc(s.ID_SEZIONE) + '">' +
-            '<span class="ct-cartella-ico"><i class="fa ' + esc(s.ICONA || 'fa-folder') + '" aria-hidden="true"></i></span>' +
-            '<span class="ct-cartella-testo"><span class="ct-cartella-titolo">' + esc(s.TITOLO) + '</span>' +
-            (piccola ? '' : '<span class="ct-cartella-sotto">' + esc(s.SOTTOTITOLO) + '</span>') +
-            '<span class="ct-cartella-meta">' + meta + (arch ? ' &middot; ' + arch + ' in archivio' : '') + '</span>' +
-            scad + '</span><i class="fa fa-angle-right ct-cartella-freccia" aria-hidden="true"></i></button>';
+        var sotto = s.SOTTOTITOLO || '';
+        if (s.TS_ULTIMO_AGGIORNAMENTO) { sotto += (sotto ? ' \u00b7 ' : '') + 'agg. ' + data(s.TS_ULTIMO_AGGIORNAMENTO); }
+        if (arch) { sotto += ' \u00b7 ' + arch + ' in archivio'; }
+        return '<li><button type="button" class="ct-cartella ctp-cartella' + (n === 0 ? ' ct-cartella-vuota' : '') +
+            '" data-id="' + esc(s.ID_SEZIONE) + '">' +
+            '<i class="fa fa-folder-o ctp-cartella-ico" aria-hidden="true"></i>' +
+            '<span class="ctp-cartella-testo"><span class="ctp-cartella-titolo">' + esc(s.TITOLO) + '</span>' +
+            '<span class="ctp-cartella-sotto">' + esc(sotto) + '</span></span>' +
+            '<span class="ctp-cartella-meta">' + scad + meta + '</span>' +
+            '<i class="fa fa-angle-right ctp-cartella-freccia" aria-hidden="true"></i></button></li>';
     }
 
     function disegnaCartelle() {
         var principali = '', altre = '';
         $.each(st.sezioni, function (i, s) {
-            if (s.TIPO === 'DOCUMENTI') { principali += cartella(s, false); } else { altre += cartella(s, true); }
+            if (s.TIPO === 'DOCUMENTI') { principali += cartella(s); } else { altre += cartella(s); }
         });
-        $('#ct-cartelle').html(principali || '<p class="ct-vuoto">Nessuna sezione disponibile per il tuo profilo.</p>');
+        $('#ct-cartelle').html(principali || '<li class="ct-vuoto">Nessuna sezione disponibile per il tuo profilo.</li>');
         $('#ct-altre').html(altre);
         $('#ct-altre-blocco').toggleClass('hidden', !altre);
     }
@@ -342,9 +355,9 @@
                 ' aria-label="Seleziona ' + esc(doc.TITOLO) + '"></td>' : '') +
             '<td><div class="ct-doc"><i class="fa ' + icona(doc.NOME_FILE) + ' ct-doc-ico" aria-hidden="true"></i><div>' +
             '<div class="ct-doc-titolo">' + esc(doc.TITOLO) + ' ' + badge + '</div>' +
-            '<div class="ct-doc-file">' + esc(doc.NOME_FILE) + (doc.DIMENSIONE_BYTE ? ' &middot; ' + esc(dimensione(doc.DIMENSIONE_BYTE)) : '') +
-            '</div></div></div></td>' +
-            '<td class="hidden-xs">' + esc(doc.TITOLO_SEZIONE) + '</td>' +
+            '<div class="ct-doc-file">' + esc(doc.TITOLO_SEZIONE) + ' \u00b7 ' + esc(doc.NOME_FILE) +
+            (doc.DIMENSIONE_BYTE ? ' \u00b7 ' + esc(dimensione(doc.DIMENSIONE_BYTE)) : '') +
+            '<span class="visible-xs-inline"> \u00b7 ' + esc(quando) + '</span></div></div></div></td>' +
             '<td class="hidden-xs ct-nowrap">' + esc(quando) + '</td>' +
             '<td class="text-right ct-nowrap">' + azioniFile(paramFile(doc), doc.NOME_FILE) + '</td></tr>';
     }
@@ -352,9 +365,35 @@
     function disegnaUltimi() {
         var h = '';
         $.each(st.ultimi, function (i, doc) { h += rigaDocumento(doc, true); });
-        $('#ct-ultimi').html(h || '<tr><td colspan="5" class="ct-vuoto">Nessun documento caricato per questo condominio.</td></tr>');
+        $('#ct-ultimi').html(h || '<tr><td colspan="4" class="ct-vuoto">Nessun documento caricato per questo condominio.</td></tr>');
         $('#ct-sel-tutti').prop('checked', false);
         aggiornaSelezione();
+    }
+
+    /** Ricerca su titolo, file e sezione fra tutti i documenti (correnti e archiviati) del condominio. */
+    function cerca() {
+        var q = $.trim($('#ct-cerca').val() || '').toLowerCase();
+        if (q.length < 2) {
+            $('#ct-risultati').addClass('hidden');
+            $('#ct-cartelle').removeClass('hidden');
+            $('#ct-altre-blocco').toggleClass('hidden', !$('#ct-altre').children().length);
+            return;
+        }
+        var mostra = function () {
+            var h = '', n = 0;
+            $.each(st.tutti || [], function (i, doc) {
+                var testo = (doc.TITOLO + ' ' + doc.NOME_FILE + ' ' + doc.TITOLO_SEZIONE + ' ' + (doc.DESCRIZIONE || '')).toLowerCase();
+                if (testo.indexOf(q) >= 0) { h += rigaDocumento(doc, true); n++; }
+            });
+            $('#ct-risultati-righe').html(h || '<tr><td class="ct-vuoto">Nessun documento trovato.</td></tr>');
+            $('#ct-risultati').removeClass('hidden');
+            $('#ct-cartelle, #ct-altre-blocco').addClass('hidden');
+        };
+        if (st.tutti) { mostra(); return; }
+        dati('documenti', { ID_CONDOMINIO: st.id, STATO: 'TUTTI' }).done(function (j) {
+            st.tutti = j.documenti || [];
+            mostra();
+        });
     }
 
     function segnaSelezione(cb) {
@@ -398,10 +437,10 @@
                 var registra = tipiDiSezione(s.ID_SEZIONE).length ? '<div class="ct-scad-azioni"><button type="button" ' +
                     'class="btn btn-white btn-xs" data-scad="crea" data-sezione="' + esc(s.ID_SEZIONE) +
                     '"><i class="fa fa-plus" aria-hidden="true"></i> Registra</button></div>' : '';
-                h += '<li class="ct-scad ct-scad-da_registrare"><span class="ct-scad-punto" aria-hidden="true"></span><div>' +
-                    '<div class="ct-scad-titolo">' + esc(s.TITOLO) + '</div>' +
-                    '<div class="ct-scad-meta">Nessuna scadenza registrata per questa sezione</div>' + registra + '</div>' +
-                    chip('DA_REGISTRARE') + '</li>';
+                h += '<li class="ctp-allarme"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><div>' +
+                    '<div class="ctp-allarme-tit">Scadenza non registrata</div>' +
+                    '<div class="ctp-allarme-sez">' + esc(s.TITOLO) + '</div>' +
+                    '<div class="ct-scad-meta">Verifica documentale richiesta.</div>' + registra + '</div></li>';
             }
         });
         $('#ct-scadenze').html(h || '<li class="ct-vuoto">Nessuna scadenza registrata.</li>');
@@ -431,7 +470,13 @@
         $('#ct-ufficio').text(ufficio).toggleClass('hidden', !ufficio);
         $('#ct-contatti').html(contatti);
         $('#ct-assistenza-azioni').html(azioni);
-        $('#ct-assistenza').toggleClass('hidden', !(ufficio || contatti || azioni));
+        var vuoto = !(ufficio || contatti || azioni);
+        if (vuoto && st.par.PUO_CONFIGURARE === true) {
+            $('#ct-contatti').html('<li class="ct-muto">Contatti non ancora configurati.</li>');
+            $('#ct-assistenza-azioni').html('<a class="btn btn-white btn-sm" href="astro?FUNCTIONID=CentraleTermicaConfigurazione">' +
+                '<i class="fa fa-sliders" aria-hidden="true"></i> Configura i contatti</a>');
+        }
+        $('#ct-assistenza').toggleClass('hidden', vuoto && st.par.PUO_CONFIGURARE !== true);
     }
 
     // ------------------------------------------------------------------ pannello laterale
