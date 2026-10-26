@@ -210,7 +210,7 @@ Nota: `2026-10-26-centrale-termica-menu-panoramica-scadenziario.md`. Ordine obbl
    127.0.0.1:1025; poi DEPLOY=true).
 4. [ ] Verifiche: menu con sottovoci, Panoramica, Scadenze/Calendario/Alerting; logout/login per i campi
    di sessione del menu.
-5. [ ] Cron giornaliero degli avvisi su .106 (root), con il valore del parametro `ALERT.TOKEN` letto dal DB
+5. [x] Cron giornaliero degli avvisi su .106 (root), con il valore del parametro `ALERT.TOKEN` letto dal DB
    (NON nel repo):
    `15 6 * * * curl -s -o /dev/null 'http://localhost/wera2026/astro?FUNCTIONID=CentraleTermicaAvvisiInvio&TOKEN=<ALERT.TOKEN>'`
    Con il profilo prod le mail restano nel mailcatcher (`/usr/share/logs/wera2026/mailcatcher/`).
@@ -255,3 +255,20 @@ Rollback: WAR precedente; il DDL 002 e' innocuo per /wera (rollback SQL nell'int
   `CentraleTermicaAvvisiInvio` senza credenziali 403. Dal laptop via https://weraweb.it: wera2026 (login, tema,
   JS) e /wera 200.
 - Restano: verifiche funzionali dell'operatore dal browser (logout/login per il menu), cron degli avvisi (punto 5).
+
+### 2026-10-26 09:02 — Cron giornaliero degli avvisi INSTALLATO su .106 (ok dell'operatore) e provato
+- Prima, su .75 in sola lettura: parametri `ALERT.*` globali (ATTIVO=S, GIORNI=90,60,30, SCADUTE=S,
+  AMMINISTRATORE=S, CC vuoto, LINK vuoto, TOKEN di 32 caratteri), nessuna eccezione per azienda; 0 documenti,
+  0 scadenze, 0 invii, 0 eventi.
+- `/etc/cron.d/wera2026-avvisi` (root:root 600, commentato): `15 6 * * * root (date -Iseconds; curl -s -m 300
+  'http://localhost/wera2026/astro?FUNCTIONID=CentraleTermicaAvvisiInvio&TOKEN=<ALERT.TOKEN>'; echo) >>
+  /var/log/wera2026-avvisi.log 2>&1` (log root 600). Il token e' stato letto dal DB e copiato sul server
+  senza passare dall'output; i file temporanei sono stati cancellati. Nessun `%` nella riga (date -Iseconds).
+  Se `ALERT.TOKEN` cambia sul DB, va aggiornato nel file.
+- Prova (la riga del cron eseguita a mano, 09:03): `{"esito":"OK","esaminate":0,"inviati":0,...,
+  "mail_di_prova":true}`; token errato 403; token giusto ma chiamato dall'IP di LAN 403 (solo loopback).
+- Da sapere: (1) con il profilo prod la posta va al mailcatcher, ma il motore registra comunque `INVIATO` in
+  `invii_avvisi` (append-only): quando si accendera' l'SMTP vero, le soglie gia' "consumate" non verranno
+  rimandate. Se serve, tenere `ALERT.ATTIVO=N` finche' l'SMTP non e' quello reale (decisione dell'operatore).
+  (2) il token compare nell'access log di Tomcat su .106 (`/var/log/tomcat9/localhost_access_log.*`, leggibile
+  solo da root/adm).
