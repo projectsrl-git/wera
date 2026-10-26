@@ -303,8 +303,8 @@ Su https://weraweb.it/wera2026/ :
   Parametri ora: `REGISTRAZIONE.ATTIVA`=S, `MAIL.ATTIVA`=N, `ANTIABUSO.MAX_RICHIESTE_IP_24H`=30.
 - https://weraweb.it/wera2026/astro?FUNCTIONID=RegistrazioneAmministratore: 200, form presente, nessun testo
   "sospese", gettone anti-abuso generato, fasce dei condomini dai parametri.
-- Restano (Fase 6.2-6.5, facoltative): richiesta di prova dell'operatore dal telefono, controllo di foto, registro
-  (IP atteso 192.168.50.253) e annullamento della prova dalla pagina "Registrazioni".
+- Fase 6.2-6.5 (richiesta di prova): alle 13:59 annotata come saltata (commit 7c1531f, poi sovrascritto); l'operatore
+  ha invece fatto una prova completa alle 15:40, richiesta approvata e utente reale: vedi la sezione sotto.
 
 ### 2026-10-26 15:40-15:55 (ora italiana) — prova completa dell'operatore e controlli (sola lettura)
 - Prova dell'operatore, invece della prova annullata prevista: richiesta n. 1 (STUDIO, nessuna foto) alle 15:40,

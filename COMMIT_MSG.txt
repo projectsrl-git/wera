@@ -1,6 +1,6 @@
-docs(registrazioni): l'utente 116 della prova e' un amministratore vero
+docs(registrazioni): registro coerente sulla prova in produzione
 
-Decisione dell'operatore: l'utente AMM id 116 creato dalla richiesta n. 1 resta attivo con il
-suo condominio. Nessuna modifica al DB.
+La riga delle 13:59 dava la prova come saltata; l'operatore l'ha poi fatta alle 15:40
+(sezione "prova completa"). Corretta la riga, nessun altro cambiamento.
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
